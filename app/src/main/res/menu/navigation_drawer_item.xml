@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/menuGroup1"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/drawer_item_notification"
+            android:title="공지사항"
+            android:checkable="true"/>
+
+        <item
+            android:id="@+id/drawer_item_scan_history"
+            android:title="SCAN 히스토리"
+            android:checkable="true"/>
+
+        <item
+            android:id="@+id/drawer_item_company_info"
+            android:title="인증업체"
+            android:checkable="true"/>
+
+        <item
+            android:id="@+id/drawer_item_report_copy"
+            android:title="복제품 신고"
+            android:checkable="true"/>
+    </group>
+
+    <group
+        android:id="@+id/menuGroup2"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/drawer_item_manual"
+            android:title="사용법 안내"
+            android:checkable="true"/>
+
+        <item
+            android:id="@+id/drawer_item_FAQ"
+            android:title="FAQ"
+            android:checkable="true"/>
+
+        <item
+            android:id="@+id/drawer_item_purchasing"
+            android:title="구매 문의"
+            android:checkable="true"/>
+
+        <item
+            android:id="@+id/drawer_item_APP_info"
+            android:title="어플 정보"
+            android:checkable="true"/>
+
+    </group>
+</menu>

@@ -1,0 +1,2 @@
+rootProject.name = "Swebs_sampleApplication_210612"
+include ':app'
