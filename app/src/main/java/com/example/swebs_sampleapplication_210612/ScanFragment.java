@@ -22,6 +22,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -81,6 +82,14 @@ public class ScanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentScanBinding.inflate(getLayoutInflater());
+
+        binding.includedAppbarScan.imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)requireActivity()).drawer.openDrawer(GravityCompat.START);
+            }
+        });
+
 
         previewView = binding.cameraPreView;
         requireActivity().getWindow().setFlags(1024, 1024);
@@ -236,4 +245,5 @@ public class ScanFragment extends Fragment {
         }
 
     }
+
 }

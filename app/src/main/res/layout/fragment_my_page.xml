@@ -20,6 +20,7 @@
             tools:context=".myPageFragment">
 
             <include
+                android:id="@+id/included_appbar_my"
                 layout="@layout/appbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

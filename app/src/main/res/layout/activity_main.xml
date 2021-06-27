@@ -18,18 +18,12 @@
 
     </androidx.viewpager2.widget.ViewPager2>
 
-    <com.google.android.material.navigation.NavigationView
+    <include
         android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
+        layout="@layout/navigation_drawer_header_item"
         android:layout_height="match_parent"
+        android:layout_width="match_parent"
         android:layout_gravity="start"
-        android:background="@drawable/radius_navigation_drawer_background"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/navigation_drawer_header_item" >
-
-
-
-    </com.google.android.material.navigation.NavigationView>
-
+        android:fitsSystemWindows="true"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
