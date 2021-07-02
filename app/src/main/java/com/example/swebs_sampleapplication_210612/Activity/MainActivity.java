@@ -1,4 +1,4 @@
-package com.example.swebs_sampleapplication_210612;
+package com.example.swebs_sampleapplication_210612.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -23,7 +23,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.swebs_sampleapplication_210612.R;
+import com.example.swebs_sampleapplication_210612.ScanFragment;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityMainBinding;
+import com.example.swebs_sampleapplication_210612.myPageFragment;
+import com.example.swebs_sampleapplication_210612.productionInfoFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import org.jetbrains.annotations.NotNull;

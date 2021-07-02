@@ -10,5 +10,6 @@
 
     <style name="MyAppTheme" parent="android:Theme.Holo.Light">
         <item name="android:windowContentOverlay">@null</item>
-    </style>s
+    </style>
+
 </resources>

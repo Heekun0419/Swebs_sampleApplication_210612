@@ -1,4 +1,4 @@
-package com.example.swebs_sampleapplication_210612;
+package com.example.swebs_sampleapplication_210612.Activity;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
@@ -10,6 +10,7 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.databinding.ActivitySplashBinding;
 
 public class splashActivity extends AppCompatActivity {
@@ -67,7 +68,7 @@ public class splashActivity extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     finish();
                 }

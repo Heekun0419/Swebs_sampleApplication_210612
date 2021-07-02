@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -100,7 +100,7 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:id="@+id/btn_survey"
+                        android:id="@+id/btn_event"
                         android:layout_width="75dp"
                         android:layout_height="75dp"
                         android:background="@drawable/ic_baseline_circle_24"
@@ -113,11 +113,11 @@
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:background="@drawable/survey_icon"
-                        app:layout_constraintBottom_toBottomOf="@+id/btn_survey"
-                        app:layout_constraintEnd_toEndOf="@+id/btn_survey"
-                        app:layout_constraintStart_toStartOf="@+id/btn_survey"
-                        app:layout_constraintTop_toTopOf="@+id/btn_survey" />
+                        android:background="@drawable/event_icon"
+                        app:layout_constraintBottom_toBottomOf="@+id/btn_event"
+                        app:layout_constraintEnd_toEndOf="@+id/btn_event"
+                        app:layout_constraintStart_toStartOf="@+id/btn_event"
+                        app:layout_constraintTop_toTopOf="@+id/btn_event" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -127,7 +127,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/btn_survey" />
+                        app:layout_constraintTop_toBottomOf="@+id/btn_event" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -175,7 +175,7 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:id="@+id/btn_event"
+                        android:id="@+id/btn_survey"
                         android:layout_width="75dp"
                         android:layout_height="75dp"
                         android:background="@drawable/ic_baseline_circle_24"
@@ -188,11 +188,11 @@
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:background="@drawable/event_icon"
-                        app:layout_constraintBottom_toBottomOf="@+id/btn_event"
-                        app:layout_constraintEnd_toEndOf="@+id/btn_event"
-                        app:layout_constraintStart_toStartOf="@+id/btn_event"
-                        app:layout_constraintTop_toTopOf="@+id/btn_event" />
+                        android:background="@drawable/survey_icon"
+                        app:layout_constraintBottom_toBottomOf="@+id/btn_survey"
+                        app:layout_constraintEnd_toEndOf="@+id/btn_survey"
+                        app:layout_constraintStart_toStartOf="@+id/btn_survey"
+                        app:layout_constraintTop_toTopOf="@+id/btn_survey" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -202,7 +202,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/btn_event" />
+                        app:layout_constraintTop_toBottomOf="@+id/btn_survey" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -307,7 +307,65 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView_review" />
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/banner_view"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView_review">
+
+                <ImageView
+                    android:id="@+id/imageView_banner_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/banner_sample_image" />
+
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:id="@+id/textView_survey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="서베이"
+                android:textColor="@color/black"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/banner_view" />
+
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/ic_baseline_arrow_forward_ios_24"
+                app:layout_constraintBottom_toBottomOf="@+id/textView_survey"
+                app:layout_constraintEnd_toEndOf="@+id/textView_survey"
+                app:layout_constraintTop_toTopOf="@+id/textView_survey" />
+
+            <!-- 서베이 Recycler view -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_survey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_survey" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
-</androidx.core.widget.NestedScrollView>
+</ScrollView>

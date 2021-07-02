@@ -1,5 +1,6 @@
 package com.example.swebs_sampleapplication_210612;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.core.view.GravityCompat;
@@ -10,17 +11,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
+import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity;
 import com.example.swebs_sampleapplication_210612.adapter.CertifiedCompanyAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.EventAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.ReviewAdapter;
+import com.example.swebs_sampleapplication_210612.adapter.SurveyAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMainProductBinding;
 
 public class productionInfoFragment extends Fragment {
 
    private FragmentMainProductBinding binding;
-   private CertifiedCompanyAdapter certifiedCompanyAdapter;
-   private EventAdapter eventAdapter;
-   private ReviewAdapter reviewAdapter;
+
 
     public productionInfoFragment() {
         // Required empty public constructor
@@ -48,21 +50,32 @@ public class productionInfoFragment extends Fragment {
                 ((MainActivity)requireActivity()).drawer.openDrawer(GravityCompat.START));
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
-        certifiedCompanyAdapter = new CertifiedCompanyAdapter(requireContext());
+        CertifiedCompanyAdapter certifiedCompanyAdapter = new CertifiedCompanyAdapter(requireContext());
         binding.recyclerViewCertifiedCompany.setLayoutManager(linearLayoutManager);
         binding.recyclerViewCertifiedCompany.setAdapter(certifiedCompanyAdapter);
 
-        eventAdapter = new EventAdapter(requireContext());
+        EventAdapter eventAdapter = new EventAdapter(requireContext());
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
         binding.recyclerViewEvent.setLayoutManager(linearLayoutManager2);
         binding.recyclerViewEvent.setAdapter(eventAdapter);
 
-        reviewAdapter = new ReviewAdapter(requireContext());
+        ReviewAdapter reviewAdapter = new ReviewAdapter(requireContext());
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
         binding.recyclerViewReview.setLayoutManager(linearLayoutManager3);
         binding.recyclerViewReview.setAdapter(reviewAdapter);
 
+        SurveyAdapter surveyAdapter = new SurveyAdapter(requireContext());
+        LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
+        binding.recyclerViewSurvey.setLayoutManager(linearLayoutManager4);
+        binding.recyclerViewSurvey.setAdapter(surveyAdapter);
 
+        binding.btnEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), TopMenuActivity.class);
+                startActivity(intent);
+            }
+        });
         return binding.getRoot();
     }
 }

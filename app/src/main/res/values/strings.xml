@@ -12,4 +12,6 @@
     <string name="make_account_email">
       회원이 아니시라면? <b> <u>회원가입 하기</u> </b>
     </string>
+
+    <string name="link">링크접속</string>
 </resources>

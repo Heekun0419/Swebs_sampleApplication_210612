@@ -10,4 +10,5 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="lower_gray">#AEAEAE</color>
     <color name="swebs_main_color1">#93E3BE</color>
+    <color name="swebs_main_color2">#21CCB2</color>
 </resources>

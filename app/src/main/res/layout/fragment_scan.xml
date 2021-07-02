@@ -50,4 +50,9 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <include
+        android:id="@+id/tutorial_scan_page"
+        android:visibility="visible"
+        layout="@layout/tutorial_scan_layout"/>
+
 </FrameLayout>
