@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
+import com.example.swebs_sampleapplication_210612.Activity.PurchaseInfoActivity;
 import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity;
 import com.example.swebs_sampleapplication_210612.adapter.CertifiedCompanyAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.EventAdapter;
@@ -75,6 +76,13 @@ public class productionInfoFragment extends Fragment {
                 Intent intent = new Intent(requireContext(), TopMenuActivity.class);
                 startActivity(intent);
             }
+        });
+
+        binding.btnSurvey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), PurchaseInfoActivity.class);
+                startActivity(intent);            }
         });
         return binding.getRoot();
     }

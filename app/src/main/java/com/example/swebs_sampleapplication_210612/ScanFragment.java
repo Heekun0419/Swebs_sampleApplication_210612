@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
+import com.example.swebs_sampleapplication_210612.Activity.ScanSettingActivity;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentScanBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -91,6 +92,14 @@ public class ScanFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 binding.tutorialScanPage.getRoot().setVisibility(View.GONE);
+            }
+        });
+
+        binding.btnScanSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), ScanSettingActivity.class);
+                startActivity(intent);
             }
         });
 

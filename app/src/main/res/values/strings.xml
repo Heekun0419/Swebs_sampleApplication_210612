@@ -14,4 +14,7 @@
     </string>
 
     <string name="link">링크접속</string>
+    
+    <string name="as_info">AS요청시 본인식별, 정품사용여부에 사용되며 본인의 동의 없이 제3자에게 제공되지 않으며 또한 본인의 요청시 언제든 즉시 삭제 될 수 있습니다.
+        \n\n <b>본인의 신상정보를 제3자에게 제공하는 것에 동의 합니다.</b> </string>
 </resources>
