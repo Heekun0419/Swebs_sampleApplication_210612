@@ -23,10 +23,18 @@ public class TopMenuActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // intent 넘길때 result code 받아와야함.
-        int requestCode = getIntent().getIntExtra("FragmentCode",100);
+        String requestCode = getIntent().getStringExtra("resultCode");
 
-        manager = getSupportFragmentManager();
-        manager.beginTransaction().add(R.id.frameLayout_more_top,new MoreCertifiedFragment()).commit();
+        if(requestCode.equals("event")) {
+            binding.textViewTopMenuName.setText("이벤트");
+            manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.frameLayout_more_top, new MoreEventFragment()).commit();
+        }else if(requestCode.equals("certified")){
+            binding.textViewTopMenuName.setText("인증업체");
+            manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.frameLayout_more_top, new MoreCertifiedFragment()).commit();
+        }
+
 
 
     }

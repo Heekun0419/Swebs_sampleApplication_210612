@@ -10,10 +10,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.swebs_sampleapplication_210612.R;
+import com.example.swebs_sampleapplication_210612.adapter.GridMoreCretifiedAdapter;
+import com.example.swebs_sampleapplication_210612.databinding.FragmentMoreCertifiedCompanyBinding;
 
 import org.jetbrains.annotations.NotNull;
 
 public class MoreCertifiedFragment extends Fragment {
+
+    private FragmentMoreCertifiedCompanyBinding binding;
 
     public MoreCertifiedFragment(){
 
@@ -26,6 +30,13 @@ public class MoreCertifiedFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_more_certified_company, container, false);
+
+        binding = FragmentMoreCertifiedCompanyBinding.inflate(inflater,container,false);
+
+        GridMoreCretifiedAdapter adapter = new GridMoreCretifiedAdapter(requireContext());
+        binding.gridViewMoreCertified.setAdapter(adapter);
+
+        return binding.getRoot();
+
     }
 }

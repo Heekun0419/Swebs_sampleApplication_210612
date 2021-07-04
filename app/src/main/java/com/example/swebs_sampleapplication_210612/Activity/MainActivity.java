@@ -15,6 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -62,6 +63,17 @@ public class MainActivity extends FragmentActivity {
                 this, drawer, toolbar, R.string.open, R.string.closed);
         drawer.addDrawerListener(toggle);
 
+        binding.navView.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+                if(item.getItemId() == R.id.drawer_item_scan_history){
+                    Intent intent = new Intent(getApplicationContext(),ScanHistoryActivity.class);
+                    startActivity(intent);
+                }
+
+                return true;
+            }
+        });
 
     }
 

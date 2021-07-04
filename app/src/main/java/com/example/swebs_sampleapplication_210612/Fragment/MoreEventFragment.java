@@ -3,34 +3,39 @@ package com.example.swebs_sampleapplication_210612.Fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.swebs_sampleapplication_210612.R;
+import com.example.swebs_sampleapplication_210612.adapter.EventAdapter;
+import com.example.swebs_sampleapplication_210612.databinding.FragmentMoreEventBinding;
 
 public class MoreEventFragment extends Fragment {
 
-    public MoreEventFragment() {
-    }
+    private FragmentMoreEventBinding binding;
 
-    public static MoreEventFragment newInstance() {
-        MoreEventFragment fragment = new MoreEventFragment();
-        return fragment;
+    public MoreEventFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_more_event, container, false);
+        binding = FragmentMoreEventBinding.inflate(inflater,container,false);
+
+        EventAdapter adapter = new EventAdapter(requireContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
+        binding.recyclerViewMoreEvent.setLayoutManager(linearLayoutManager);
+        binding.recyclerViewMoreEvent.setAdapter(adapter);
+
+        return binding.getRoot();
     }
 }

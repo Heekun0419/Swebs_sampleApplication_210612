@@ -70,19 +70,21 @@ public class productionInfoFragment extends Fragment {
         binding.recyclerViewSurvey.setLayoutManager(linearLayoutManager4);
         binding.recyclerViewSurvey.setAdapter(surveyAdapter);
 
-        binding.btnEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(requireContext(), TopMenuActivity.class);
-                startActivity(intent);
-            }
+        binding.btnEvent.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), TopMenuActivity.class);
+            intent.putExtra("resultCode", "event");
+            startActivity(intent);
         });
 
-        binding.btnSurvey.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(requireContext(), PurchaseInfoActivity.class);
-                startActivity(intent);            }
+        binding.btnCertifiedCompany.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), TopMenuActivity.class);
+            intent.putExtra("resultCode", "certified");
+            startActivity(intent);
+        });
+
+        binding.btnSurvey.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), PurchaseInfoActivity.class);
+            startActivity(intent);
         });
         return binding.getRoot();
     }

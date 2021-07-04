@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Swebs_sampleApplication_210612">
+        <activity android:name=".Activity.ScanHistoryActivity"/>
         <activity android:name=".Activity.PurchaseInfoActivity"></activity>
         <activity android:name=".Activity.ScanSettingActivity" />
         <activity android:name=".Activity.TopMenuActivity" />
