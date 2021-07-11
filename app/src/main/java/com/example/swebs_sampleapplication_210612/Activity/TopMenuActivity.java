@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.example.swebs_sampleapplication_210612.Fragment.MoreCertifiedFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MoreEventFragment;
+import com.example.swebs_sampleapplication_210612.Fragment.MoreReviewFragment;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityTopMenuBinding;
 
@@ -25,17 +26,17 @@ public class TopMenuActivity extends AppCompatActivity {
         // intent 넘길때 result code 받아와야함.
         String requestCode = getIntent().getStringExtra("resultCode");
 
+        manager = getSupportFragmentManager();
         if(requestCode.equals("event")) {
             binding.textViewTopMenuName.setText("이벤트");
-            manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.frameLayout_more_top, new MoreEventFragment()).commit();
         }else if(requestCode.equals("certified")){
             binding.textViewTopMenuName.setText("인증업체");
-            manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.frameLayout_more_top, new MoreCertifiedFragment()).commit();
+        } else if(requestCode.equals("review")){
+            binding.textViewTopMenuName.setText("리뷰");
+            manager.beginTransaction().replace(R.id.frameLayout_more_top, new MoreReviewFragment()).commit();
         }
-
-
 
     }
 }

@@ -14,7 +14,12 @@
     </string>
 
     <string name="link">링크접속</string>
-    
+
     <string name="as_info">AS요청시 본인식별, 정품사용여부에 사용되며 본인의 동의 없이 제3자에게 제공되지 않으며 또한 본인의 요청시 언제든 즉시 삭제 될 수 있습니다.
         \n\n <b>본인의 신상정보를 제3자에게 제공하는 것에 동의 합니다.</b> </string>
+
+    <string name="show"> <u>보기</u> </string>
+
+    <string name="makeAccount_success">감사합니다.\n믿음과 신뢰를 바탕으로 한 정품보안 및 인증 통합 플랫폼 <b>스웹스에 가입되었습니다.</b> </string>
+    <string name="makeAccount_success2"><b>가입축하 포인트 50P</b>가 지급되었습니다. 회원정보에서 추가정보를 입력하시면 <b>추가 포인트 50P</b>가 더 지급됩니다</string>
 </resources>

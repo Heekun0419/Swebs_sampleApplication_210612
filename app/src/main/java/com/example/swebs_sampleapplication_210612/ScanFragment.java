@@ -95,6 +95,13 @@ public class ScanFragment extends Fragment {
             }
         });
 
+        binding.includedAppbarScan.imageButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)requireActivity()).BottomSheetOpen();
+            }
+        });
+
         binding.btnScanSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

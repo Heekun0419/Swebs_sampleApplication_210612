@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.swebs_sampleapplication_210612.Fragment.bottomSheetFragment;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ScanFragment;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityMainBinding;
@@ -39,12 +40,15 @@ public class MainActivity extends FragmentActivity {
     private boolean isFirst = true;
     private FragmentStateAdapter adapter;
     private ActivityMainBinding binding;
+    private FragmentManager manager;
 
     public DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        manager = getSupportFragmentManager();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -68,6 +72,7 @@ public class MainActivity extends FragmentActivity {
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 if(item.getItemId() == R.id.drawer_item_scan_history){
                     Intent intent = new Intent(getApplicationContext(),ScanHistoryActivity.class);
+                    intent.putExtra("TopMenu","scanHistory");
                     startActivity(intent);
                 }
 
@@ -111,6 +116,10 @@ public class MainActivity extends FragmentActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void BottomSheetOpen(){
+        manager.beginTransaction().add(new bottomSheetFragment(),"dialog").commit();
     }
 }
 

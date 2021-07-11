@@ -82,9 +82,22 @@ public class productionInfoFragment extends Fragment {
             startActivity(intent);
         });
 
+        binding.btnReview.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), TopMenuActivity.class);
+            intent.putExtra("resultCode", "review");
+            startActivity(intent);
+        });
+
         binding.btnSurvey.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), PurchaseInfoActivity.class);
             startActivity(intent);
+        });
+
+        binding.includedAppbarProduct.imageButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)requireActivity()).BottomSheetOpen();
+            }
         });
         return binding.getRoot();
     }

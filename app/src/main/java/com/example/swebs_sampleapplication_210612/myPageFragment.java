@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ public class myPageFragment extends Fragment {
 
     private FragmentMyPageBinding binding;
 
+
     public myPageFragment() {
         // Required empty public constructor
     }
@@ -24,7 +26,6 @@ public class myPageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -38,6 +39,13 @@ public class myPageFragment extends Fragment {
 
         binding.tutorialMyPage.textViewMyPageTutorialClose.setOnClickListener(v -> {
             binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
+        });
+
+        binding.includedAppbarMy.imageButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)requireActivity()).BottomSheetOpen();
+            }
         });
         return binding.getRoot();
 
