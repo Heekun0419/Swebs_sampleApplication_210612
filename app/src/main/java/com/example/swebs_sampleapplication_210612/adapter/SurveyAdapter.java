@@ -21,12 +21,14 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.surveyView
 
 
     private ItemSurveyBinding binding;
+    OnItemClickListener listener;
     String ImageUrl = "https://cdn.pixabay.com/photo/2020/04/02/05/19/beauty-4993472_1280.jpg";
     Context context;
 
 
-    public SurveyAdapter(Context context){
+    public SurveyAdapter(Context context, OnItemClickListener listener){
         this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -34,7 +36,7 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.surveyView
     public surveyViewHolder onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
 
         binding = ItemSurveyBinding.inflate(LayoutInflater.from(context),parent,false);
-        return new surveyViewHolder(binding.getRoot());
+        return new surveyViewHolder(binding.getRoot(),listener);
     }
 
     @Override
@@ -60,11 +62,19 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.surveyView
         return 10;
     }
 
-    public static class surveyViewHolder extends RecyclerView.ViewHolder {
+    public static class surveyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView view;
-        public surveyViewHolder(@NonNull View itemView) {
+        OnItemClickListener listener;
+        public surveyViewHolder(@NonNull View itemView,OnItemClickListener listener) {
             super(itemView);
+            this.listener = listener;
             view = itemView.findViewById(R.id.imageView_product_survey_profile);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            listener.onItemSelected(itemView,getAdapterPosition(),"survey");
         }
     }
 

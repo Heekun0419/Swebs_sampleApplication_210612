@@ -20,9 +20,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     Context context;
     private ItemProductEventBinding binding;
     String ImageUrl = "https://images.otwojob.com/product/l/r/P/lrP1mUhYpnR780M.jpg";
+    OnItemClickListener listener;
 
-    public EventAdapter (Context context){
+    public EventAdapter (Context context, OnItemClickListener listener){
         this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -30,7 +32,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     @Override
     public EventViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         binding = ItemProductEventBinding.inflate(LayoutInflater.from(context),parent,false);
-        return new EventViewHolder(binding.getRoot());
+        return new EventViewHolder(binding.getRoot(), listener);
     }
 
     @Override
@@ -56,11 +58,19 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         return 7;
     }
 
-    public static class EventViewHolder extends RecyclerView.ViewHolder {
+    public static class EventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView view;
-        public EventViewHolder(@NonNull @NotNull View itemView) {
+        OnItemClickListener listener;
+        public EventViewHolder(@NonNull @NotNull View itemView, OnItemClickListener listener) {
             super(itemView);
+            this.listener = listener;
             view = itemView.findViewById(R.id.imageView_product_event_profile);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            listener.onItemSelected(itemView,getAdapterPosition(),"event");
         }
     }
     private void GlideImage(ImageView view){

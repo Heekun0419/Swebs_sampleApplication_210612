@@ -20,9 +20,9 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
     Context context;
 
     String[] title ={"SCAN 히스토리","구매등록 리스트","복제품 신고"};
-    Integer[] Image ={R.drawable.ic_qr_code,
+    Integer[] Image ={R.drawable.ic_qr_code_bottom,
             R.drawable.ic_baseline_purchase_list,
-            R.drawable.ic_alert};
+            R.drawable.ic_alert_bottom};
 
     public BottomSheetAdapter(Context context, OnItemClickListener listener){
         this.context = context;
@@ -62,7 +62,7 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
 
         @Override
         public void onClick(View v) {
-            listener.onItemSelected(itemView, getAdapterPosition());
+            listener.onItemSelected(itemView, getAdapterPosition(),"");
         }
     }
 }

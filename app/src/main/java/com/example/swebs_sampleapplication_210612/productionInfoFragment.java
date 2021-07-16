@@ -11,16 +11,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.swebs_sampleapplication_210612.Activity.ItemClickViewActivty;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.PurchaseInfoActivity;
 import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity;
 import com.example.swebs_sampleapplication_210612.adapter.CertifiedCompanyAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.EventAdapter;
+import com.example.swebs_sampleapplication_210612.adapter.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.ReviewAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.SurveyAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMainProductBinding;
 
-public class productionInfoFragment extends Fragment {
+public class productionInfoFragment extends Fragment implements OnItemClickListener {
 
    private FragmentMainProductBinding binding;
 
@@ -55,7 +57,7 @@ public class productionInfoFragment extends Fragment {
         binding.recyclerViewCertifiedCompany.setLayoutManager(linearLayoutManager);
         binding.recyclerViewCertifiedCompany.setAdapter(certifiedCompanyAdapter);
 
-        EventAdapter eventAdapter = new EventAdapter(requireContext());
+        EventAdapter eventAdapter = new EventAdapter(requireContext(),this);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
         binding.recyclerViewEvent.setLayoutManager(linearLayoutManager2);
         binding.recyclerViewEvent.setAdapter(eventAdapter);
@@ -65,7 +67,7 @@ public class productionInfoFragment extends Fragment {
         binding.recyclerViewReview.setLayoutManager(linearLayoutManager3);
         binding.recyclerViewReview.setAdapter(reviewAdapter);
 
-        SurveyAdapter surveyAdapter = new SurveyAdapter(requireContext());
+        SurveyAdapter surveyAdapter = new SurveyAdapter(requireContext(),this);
         LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
         binding.recyclerViewSurvey.setLayoutManager(linearLayoutManager4);
         binding.recyclerViewSurvey.setAdapter(surveyAdapter);
@@ -100,5 +102,18 @@ public class productionInfoFragment extends Fragment {
             }
         });
         return binding.getRoot();
+    }
+
+    @Override
+    public void onItemSelected(View view, int position, String code) {
+       if(code.equals("event")){
+           Intent intent = new Intent(requireContext(), ItemClickViewActivty.class);
+           intent.putExtra("resultCode", "event");
+           startActivity(intent);
+       }else if(code.equals("survey")){
+           Intent intent = new Intent(requireContext(), ItemClickViewActivty.class);
+           intent.putExtra("resultCode", "survey");
+           startActivity(intent);
+       }
     }
 }

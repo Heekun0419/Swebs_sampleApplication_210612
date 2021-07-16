@@ -15,6 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -70,12 +71,41 @@ public class MainActivity extends FragmentActivity {
         binding.navView.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                if(item.getItemId() == R.id.drawer_item_scan_history){
-                    Intent intent = new Intent(getApplicationContext(),ScanHistoryActivity.class);
-                    intent.putExtra("TopMenu","scanHistory");
-                    startActivity(intent);
-                }
+                switch (item.getItemId()){
+                    case R.id.drawer_item_scan_history:
+                        Intent intent = new Intent(getApplicationContext(),ScanHistoryActivity.class);
+                        intent.putExtra("TopMenu","scanHistory");
+                        startActivity(intent);
+                        break;
+                    case R.id.drawer_item_report_copy:
+                        intent = new Intent(getApplicationContext(),ScanHistoryActivity.class);
+                        intent.putExtra("TopMenu","copy");
+                        startActivity(intent);
+                        break;
+                    case R.id.drawer_item_APP_info:
+                        intent = new Intent(getApplicationContext(),InformationActivity.class);
+                        intent.putExtra("resultCode","app_info");
+                        startActivity(intent);
+                        break;
 
+                    case R.id.drawer_item_FAQ:
+                        intent = new Intent(getApplicationContext(),InformationActivity.class);
+                        intent.putExtra("resultCode","FAQ");
+                        startActivity(intent);
+                        break;
+
+                    case R.id.drawer_item_manual:
+                        intent = new Intent(getApplicationContext(),InformationActivity.class);
+                        intent.putExtra("resultCode","manual");
+                        startActivity(intent);
+                        break;
+
+                    case R.id.drawer_item_purchasing:
+                        intent = new Intent(getApplicationContext(),InformationActivity.class);
+                        intent.putExtra("resultCode","purchase_question");
+                        startActivity(intent);
+                        break;
+                }
                 return true;
             }
         });

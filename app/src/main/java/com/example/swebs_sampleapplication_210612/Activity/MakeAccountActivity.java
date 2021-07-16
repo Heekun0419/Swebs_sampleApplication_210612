@@ -30,4 +30,12 @@ public class MakeAccountActivity extends AppCompatActivity {
         manager = getSupportFragmentManager();
         manager.beginTransaction().add(R.id.frame_make_account, fragment).addToBackStack(null).commit();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(manager.getBackStackEntryCount() ==0){
+            finish();
+        }
+    }
 }

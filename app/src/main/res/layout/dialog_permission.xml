@@ -5,12 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout_product_event"
+    android:background="@drawable/dialog_background"
     android:orientation="vertical"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:layout_height="wrap_content">
 
 
     <androidx.cardview.widget.CardView
@@ -197,7 +197,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
             <TextView
-                android:id="@+id/textView22"
+                android:id="@+id/textView_moreInfo_of_permission"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
@@ -218,11 +218,11 @@
                 android:text="위 권한은 선택가능하며 한번 동의로 스웹스 서비스를 이용할 수 있습니다"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView22" />
+                app:layout_constraintTop_toBottomOf="@+id/textView_moreInfo_of_permission" />
 
 
             <ImageButton
-                android:id="@+id/imageButton9"
+                android:id="@+id/btn_all_permission"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="50dp"
@@ -242,10 +242,10 @@
                 android:textColor="@color/white"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/imageButton9"
-                app:layout_constraintEnd_toEndOf="@+id/imageButton9"
-                app:layout_constraintStart_toStartOf="@+id/imageButton9"
-                app:layout_constraintTop_toTopOf="@+id/imageButton9" />
+                app:layout_constraintBottom_toBottomOf="@+id/btn_all_permission"
+                app:layout_constraintEnd_toEndOf="@+id/btn_all_permission"
+                app:layout_constraintStart_toStartOf="@+id/btn_all_permission"
+                app:layout_constraintTop_toTopOf="@+id/btn_all_permission" />
 
 
 

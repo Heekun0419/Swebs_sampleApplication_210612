@@ -57,15 +57,16 @@
         <GridView
             android:id="@+id/gridView_more_certified"
             android:layout_width="match_parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_height="0dp"
             app:layout_constraintVertical_weight="1"
             android:numColumns="2"
-            android:verticalSpacing="5dp"
-            android:horizontalSpacing="5dp"
+            android:verticalSpacing="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-            tools:listitem="@layout/item_product_certified_company" />
+            tools:listitem="@layout/item_more_certified_company" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

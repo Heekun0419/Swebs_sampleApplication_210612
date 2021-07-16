@@ -1,32 +1,41 @@
-package com.example.swebs_sampleapplication_210612.Activity;
+package com.example.swebs_sampleapplication_210612.Fragment.Information_menu;
 
-import android.content.Context;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.LanguageDialog;
+import com.example.swebs_sampleapplication_210612.Dialog.PermissionDialog;
 import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.databinding.ActivityScanSettingBinding;
+import com.example.swebs_sampleapplication_210612.databinding.FragmentAppInformationBinding;
 
-public class ScanSettingActivity extends AppCompatActivity {
+public class AppInformationFragment extends Fragment {
 
-    private ActivityScanSettingBinding binding;
+    private FragmentAppInformationBinding binding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityScanSettingBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        binding = FragmentAppInformationBinding.inflate(inflater,container,false);
 
         binding.btnChangeLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LanguageDialog dialog = new LanguageDialog(ScanSettingActivity.this , new DialogClickListener() {
+                LanguageDialog dialog = new LanguageDialog(requireContext(), new DialogClickListener() {
                     @Override
                     public void onPositiveClick(int position) {
                         String pickValue = "";
@@ -36,7 +45,7 @@ public class ScanSettingActivity extends AppCompatActivity {
                         else if(position == 3) pickValue = "일본어";
                         else pickValue ="한국어";
 
-                        Toast.makeText(getApplicationContext(),"선택 언어 : "+ pickValue ,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(),"선택 언어 : "+ pickValue ,Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onNegativeClick() {
@@ -48,5 +57,7 @@ public class ScanSettingActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+
+        return binding.getRoot();
     }
 }

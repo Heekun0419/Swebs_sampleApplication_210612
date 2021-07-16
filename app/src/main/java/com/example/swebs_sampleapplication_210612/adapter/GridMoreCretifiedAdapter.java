@@ -7,13 +7,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
+import com.example.swebs_sampleapplication_210612.databinding.ItemMoreCertifiedCompanyBinding;
 import com.example.swebs_sampleapplication_210612.databinding.ItemProductCertifiedCompanyBinding;
 
 public class GridMoreCretifiedAdapter extends BaseAdapter {
 
     private Context context;
-    private ItemProductCertifiedCompanyBinding binding;
+    private ItemMoreCertifiedCompanyBinding binding;
     String ImageUrl = "https://i.pinimg.com/originals/a2/4f/e6/a24fe6cabab71872039e30af52e7dd9e.png";
 
 
@@ -38,8 +41,9 @@ public class GridMoreCretifiedAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        binding = ItemProductCertifiedCompanyBinding.inflate(LayoutInflater.from(context),parent,false);
+        binding = ItemMoreCertifiedCompanyBinding.inflate(LayoutInflater.from(context),parent,false);
         convertView = binding.getRoot();
+
         GlideImage(binding.imageViewProductMainProfile);
         return convertView;
     }
