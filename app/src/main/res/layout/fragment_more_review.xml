@@ -55,12 +55,14 @@
     </com.google.android.material.tabs.TabLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_more_review"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-            tools:listitem="@layout/item_review_list" />
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

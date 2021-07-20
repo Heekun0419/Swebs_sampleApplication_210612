@@ -8,13 +8,14 @@
     android:orientation="vertical"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:layout_width="320dp"
-    android:layout_height="305dp"
-    android:paddingEnd="5dp"
-    android:paddingStart="5dp"
+    android:layout_marginStart="25dp"
+    android:layout_marginEnd="25dp"
     android:paddingTop="5dp"
-    android:paddingBottom="20dp">
-
+    android:paddingStart="5dp"
+    android:paddingBottom="20dp"
+    android:paddingEnd="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="340dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -32,9 +33,9 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView_product_event_profile"
+                android:id="@+id/imageView_product_survey_profile"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,18 +45,19 @@
                 android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="25dp"
                 android:background="@color/transparent"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView_product_event_profile"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView_product_survey_profile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
                 android:id="@+id/imageView6"
-                android:layout_width="70dp"
-                android:layout_height="20dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginEnd="5dp"
-                android:background="@drawable/product_event_stroke_radius"
+                android:background="@drawable/ic_baseline_circle_24"
+                android:backgroundTint="@color/swebs_main_color2"
                 app:layout_constraintEnd_toEndOf="@+id/view"
                 app:layout_constraintTop_toTopOf="@+id/view" />
 
@@ -66,7 +68,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:text="오늘은 어디로 떠나볼까요?"
+                android:text="제이준 블랙마스크 접착력은 어떤가요?"
                 android:textStyle="bold"
                 android:textSize="14dp"
                 android:textColor="#4A4A4A"
@@ -80,34 +82,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="3dp"
                 android:layout_marginEnd="12dp"
-                android:text="함소아"
-                android:textColor="@color/swebs_main_color1"
+                android:layout_marginTop="10dp"
+                android:text="화장품"
+                android:textColor="#F35A79"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView_product_survey_profile" />
 
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="이벤트기간 : "
+                android:text="기간 : "
                 app:layout_constraintStart_toStartOf="@+id/textView_productName"
                 app:layout_constraintTop_toBottomOf="@+id/textView_productName" />
 
             <TextView
+                android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="2021.02.05 ~ 2021.03.07"
                 android:textColor="@color/swebs_main_color1"
                 app:layout_constraintBottom_toBottomOf="@+id/textView8"
-                app:layout_constraintEnd_toEndOf="@+id/textView_productName"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/textView8"
                 app:layout_constraintTop_toTopOf="@+id/textView8" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="54,321명 참여"
+                android:textSize="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView9"
+                app:layout_constraintTop_toTopOf="@+id/textView9" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,8 +6,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 
-import com.example.swebs_sampleapplication_210612.Fragment.MakeAccountFragment_terms;
-import com.example.swebs_sampleapplication_210612.Fragment.MoreEventFragment;
+import com.example.swebs_sampleapplication_210612.Fragment.MakeAccountFragment.MakeAccountFragment_terms;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityMakeAccountBinding;
 

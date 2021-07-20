@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Swebs_sampleApplication_210612">
-        <activity android:name=".Activity.ItemClickViewActivty"></activity>
+        <activity android:name=".Activity.AuthenticScanActivity"></activity>
+        <activity android:name=".Activity.ItemClickViewActivty" />
         <activity android:name=".Activity.InformationActivity" />
         <activity android:name=".Activity.PermissionCheckActivity" />
         <activity android:name=".Activity.MakeAccountActivity" />

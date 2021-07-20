@@ -1,4 +1,4 @@
-package com.example.swebs_sampleapplication_210612.Fragment;
+package com.example.swebs_sampleapplication_210612.Fragment.MakeAccountFragment;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -63,6 +63,7 @@
             app:layout_constraintVertical_weight="1"
             android:numColumns="2"
             android:verticalSpacing="10dp"
+            android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

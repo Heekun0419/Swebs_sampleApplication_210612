@@ -1,4 +1,4 @@
-package com.example.swebs_sampleapplication_210612;
+package com.example.swebs_sampleapplication_210612.Fragment.MainFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -91,7 +91,8 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         });
 
         binding.btnSurvey.setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), PurchaseInfoActivity.class);
+            Intent intent = new Intent(requireContext(), TopMenuActivity.class);
+            intent.putExtra("resultCode", "survey");
             startActivity(intent);
         });
 

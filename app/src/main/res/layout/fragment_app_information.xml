@@ -103,7 +103,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView_scan_animation" />
 
         <TextView
-            android:id="@+id/textView_scan_autofocus"
+            android:id="@+id/textView_appInfo_delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -130,7 +130,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_scan_autofocus" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_appInfo_delete" />
 
 
         <ImageButton
@@ -158,9 +158,9 @@
             android:layout_height="20dp"
             android:background="@drawable/ic_baseline_arrow_forward_ios_24"
             android:layout_marginEnd="25dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView_scan_autofocus"
-            app:layout_constraintEnd_toEndOf="@+id/textView_scan_autofocus"
-            app:layout_constraintTop_toTopOf="@+id/textView_scan_autofocus" />
+            app:layout_constraintBottom_toBottomOf="@+id/textView_appInfo_delete"
+            app:layout_constraintEnd_toEndOf="@+id/textView_appInfo_delete"
+            app:layout_constraintTop_toTopOf="@+id/textView_appInfo_delete" />
 
 
         <ImageButton

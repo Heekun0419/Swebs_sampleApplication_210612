@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Fragment.MakeAccountFragment_success">
+    tools:context=".Fragment.MakeAccountFragment.MakeAccountFragment_success">
 
     <LinearLayout
         android:layout_width="match_parent"

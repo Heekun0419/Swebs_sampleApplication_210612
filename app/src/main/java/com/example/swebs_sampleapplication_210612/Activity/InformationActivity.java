@@ -1,9 +1,11 @@
 package com.example.swebs_sampleapplication_210612.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.swebs_sampleapplication_210612.Fragment.Information_menu.AppInformationFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.Information_menu.FAQFragment;
@@ -27,21 +29,36 @@ public class InformationActivity extends AppCompatActivity {
         binding = ActivityInfomationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.btnInformationActivityBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         String requestCode = getIntent().getStringExtra("resultCode");
 
         manager = getSupportFragmentManager();
         if(requestCode.equals("manual")) {
-            binding.textViewInformationActivityName.setText("사용법 안내");
-            manager.beginTransaction().add(R.id.frameLayout_information_activity, new ManualFragment()).commit();
+            moveFragment(new ManualFragment(),"사용법안내");
         }else if(requestCode.equals("FAQ")){
-            binding.textViewInformationActivityName.setText("FAQ");
-            manager.beginTransaction().add(R.id.frameLayout_information_activity, new FAQFragment()).commit();
+            moveFragment(new FAQFragment(),"FAQ");
         } else if(requestCode.equals("purchase_question")){
-            binding.textViewInformationActivityName.setText("구매문의");
-            manager.beginTransaction().add(R.id.frameLayout_information_activity, new PurchaseQuestionFragment()).commit();
+            moveFragment(new PurchaseQuestionFragment(),"구매문의");
         } else if(requestCode.equals("app_info")){
-            binding.textViewInformationActivityName.setText("어플정보");
-            manager.beginTransaction().add(R.id.frameLayout_information_activity, new AppInformationFragment()).commit();
+            moveFragment(new AppInformationFragment(),"어플정보");
+        }
+    }
+    public void moveFragment(Fragment fragment, String string){
+        binding.textViewInformationActivityName.setText(string);
+        manager.beginTransaction().replace(R.id.frameLayout_information_activity, fragment).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(manager.getBackStackEntryCount() ==0){
+            finish();
         }
     }
 }

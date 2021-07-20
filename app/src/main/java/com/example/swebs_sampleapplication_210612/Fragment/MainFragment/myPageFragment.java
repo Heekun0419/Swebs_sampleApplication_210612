@@ -1,4 +1,4 @@
-package com.example.swebs_sampleapplication_210612;
+package com.example.swebs_sampleapplication_210612.Fragment.MainFragment;
 
 import android.os.Bundle;
 

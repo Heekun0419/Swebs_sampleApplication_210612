@@ -1,15 +1,12 @@
-package com.example.swebs_sampleapplication_210612;
+package com.example.swebs_sampleapplication_210612.Fragment.MainFragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,8 +31,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.swebs_sampleapplication_210612.Activity.AuthenticScanActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ScanSettingActivity;
+import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentScanBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -64,6 +63,8 @@ public class ScanFragment extends Fragment {
     private int CAMERA_PERMISSION_CODE = 4655;
     private MyImageAnalyser imageAnalyser;
     private FragmentScanBinding binding;
+
+    private boolean isScan = false;
 
     public ScanFragment() {
         // Required empty public constructor
@@ -142,6 +143,7 @@ public class ScanFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        isScan = false;
         cameraProviderFuture.addListener(new Runnable() {
             @Override
             public void run() {
@@ -208,6 +210,7 @@ public class ScanFragment extends Fragment {
                             // ...
                             readerBarCodeData(barcodes);
                             imageProxy.close();
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -241,7 +244,12 @@ public class ScanFragment extends Fragment {
                     case Barcode.TYPE_URL:
                             String Url = barcode.getUrl().getUrl();
                             String title = barcode.getUrl().getTitle();
-                            ShowMyDialog(Url);
+                            if(!isScan){
+                                isScan =true;
+                            Intent intent = new Intent(requireContext(), AuthenticScanActivity.class);
+                            intent.putExtra("URL",Url);
+                            startActivity(intent);
+                            }
                             break;
                 }
             }

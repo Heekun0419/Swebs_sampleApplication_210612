@@ -1,4 +1,4 @@
-package com.example.swebs_sampleapplication_210612.Fragment;
+package com.example.swebs_sampleapplication_210612.Fragment.MakeAccountFragment;
 
 import android.os.Bundle;
 
@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.swebs_sampleapplication_210612.Activity.MakeAccountActivity;
-import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMakeAccountTermsBinding;
 
 public class MakeAccountFragment_terms extends Fragment {

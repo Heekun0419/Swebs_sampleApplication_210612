@@ -53,7 +53,7 @@ public class bottomSheetFragment extends BottomSheetDialogFragment implements On
 
     private void IntentActivity(String string){
         Intent intent = new Intent(requireContext(), ScanHistoryActivity.class);
-        intent.putExtra("TopMenu",string);
+        intent.putExtra("resultCode",string);
         startActivity(intent);
     }
 

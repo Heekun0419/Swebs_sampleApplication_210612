@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.swebs_sampleapplication_210612.Fragment.BuyingListFragment;
@@ -22,7 +23,6 @@ public class ScanHistoryActivity extends AppCompatActivity {
     private ActivityScanHistoryBinding binding;
     private FragmentManager manager;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,24 +30,33 @@ public class ScanHistoryActivity extends AppCompatActivity {
         binding = ActivityScanHistoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        String requestCode = getIntent().getStringExtra("TopMenu");
+        String requestCode = getIntent().getStringExtra("resultCode");
 
         manager = getSupportFragmentManager();
         switch (requestCode) {
             case "scanHistory":
-                binding.textViewTopMenuName.setText("SCAN 히스토리");
-                manager.beginTransaction().add(R.id.frame_scan_history, new ScanHistory_SwebsFragment()).commit();
+                moveFragment(new ScanHistory_SwebsFragment(),"SCAN 히스토리");
                 break;
             case "purchaseList":
-                binding.textViewTopMenuName.setText("구매등록 리스트");
-                manager.beginTransaction().add(R.id.frame_scan_history, new BuyingListFragment()).commit();
+                moveFragment( new BuyingListFragment() ,"구매등록 리스트");
                 break;
             case "copy":
                 binding.btnFloatingScan.setVisibility(View.GONE);
-                binding.textViewTopMenuName.setText("복제품 신고");
-                manager.beginTransaction().add(R.id.frame_scan_history, new CloneReportFragment()).commit();
+                moveFragment( new CloneReportFragment() ,"복제품 신고");
                 break;
         }
+    }
 
+    public void moveFragment(Fragment fragment, String string){
+        binding.textViewTopMenuName.setText(string);
+        manager.beginTransaction().replace(R.id.frame_scan_history, fragment).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(manager.getBackStackEntryCount() ==0){
+            finish();
+        }
     }
 }

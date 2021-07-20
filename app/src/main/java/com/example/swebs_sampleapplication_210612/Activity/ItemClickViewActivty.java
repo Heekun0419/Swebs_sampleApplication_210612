@@ -37,4 +37,9 @@ public class ItemClickViewActivty extends AppCompatActivity {
             manager.beginTransaction().add(R.id.frameLayout_itemClicked_activity, new SurveyInfoFragment()).commit();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
