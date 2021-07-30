@@ -10,7 +10,9 @@
     <androidx.camera.view.PreviewView
         android:id="@+id/camera_preView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+    </androidx.camera.view.PreviewView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,33 +23,33 @@
             android:id="@+id/included_appbar_scan"
             layout="@layout/appbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent" />
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="150dp"
+            android:layout_width="125dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="230dp"
             android:background="@drawable/ic_swebs_logo"
             android:backgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/included_appbar_scan" />
 
 
-        <ImageView
-            android:id="@+id/imageView8"
+        <TextView
+            android:id="@+id/textVIew_scan_explain"
             android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:background="@drawable/scan_rectangle"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
+            android:text="@string/scan_explain"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_scan_setting"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
+
 
         <ImageButton
             android:id="@+id/btn_scan_setting"
@@ -60,13 +62,30 @@
             app:layout_constraintStart_toStartOf="parent" />
 
 
+        <ImageButton
+            android:id="@+id/btn_scan_flash"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="25dp"
+            android:background="@drawable/ic_scan_flash"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_scan_setting"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_scan_setting" />
 
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/qrscan" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <include
         android:id="@+id/tutorial_scan_page"
         android:visibility="visible"
         layout="@layout/tutorial_scan_layout"/>
+
 </FrameLayout>

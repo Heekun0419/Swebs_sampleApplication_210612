@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Swebs_sampleApplication_210612</string>
+    <string name="app_name">SWEBS</string>
     <!-- TODO: Remove or change this placeholder text -->
 
     <string name="open">open</string>
@@ -15,6 +15,7 @@
 
     <string name="online_question"> <u>온라인 문의 바로가기 ></u></string>
 
+    <string name="scan_explain"> 사각형 안에 QR코드를 정확하게 맞춰 주세요 </string>
 
     <string name="link">링크접속</string>
 

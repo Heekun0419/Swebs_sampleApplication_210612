@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:enterFadeDuration="@android:integer/config_shortAnimTime"
+    android:exitFadeDuration="@android:integer/config_shortAnimTime">
+
+    <item
+        android:state_selected="true"
+        android:drawable="@drawable/stroke_radius_button_maincolor"/>
+
+    <item android:state_selected="false">
+        <shape>
+            <stroke android:color="#D8D8D8" android:width="2dp"/>
+            <corners android:radius="12dp"/>
+            <solid android:color="@color/white"/>
+        </shape>
+    </item>
+
+</animated-selector>

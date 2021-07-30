@@ -74,7 +74,10 @@
             app:layout_constraintTop_toBottomOf="@+id/view7">
 
             <CheckBox
+                android:id="@+id/checkBox_permission_phone"
                 android:layout_gravity="center"
+                android:background="@drawable/checkbox_custom"
+                android:button="@color/transparent"
                 android:layout_width="30dp"
                 android:layout_height="30dp" />
 
@@ -123,7 +126,10 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout17">
 
             <CheckBox
+                android:id="@+id/checkBox_permission_camera"
                 android:layout_gravity="center"
+                android:background="@drawable/checkbox_custom"
+                android:button="@color/transparent"
                 android:layout_width="30dp"
                 android:layout_height="30dp" />
 
@@ -172,7 +178,10 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout18">
 
             <CheckBox
+                android:id="@+id/checkBox_permission_location"
                 android:layout_gravity="center"
+                android:background="@drawable/checkbox_custom"
+                android:button="@color/transparent"
                 android:layout_width="30dp"
                 android:layout_height="30dp" />
 
@@ -220,7 +229,10 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout19">
 
             <CheckBox
+                android:id="@+id/checkBox_permission_storage"
                 android:layout_gravity="top"
+                android:background="@drawable/checkbox_custom"
+                android:button="@color/transparent"
                 android:layout_marginTop="10dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp" />
@@ -266,7 +278,9 @@
             tools:layout_editor_absoluteX="20dp" />
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/checkBox_permission_all"
+            android:background="@drawable/checkbox_custom"
+            android:button="@color/transparent"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="25dp"
@@ -285,7 +299,7 @@
             android:textColor="@color/black"
             android:textSize="15dp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/checkBox"
+            app:layout_constraintStart_toEndOf="@+id/checkBox_permission_all"
             app:layout_constraintTop_toBottomOf="@+id/view8" />
 
         <TextView
@@ -299,7 +313,7 @@
             android:textSize="15dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBox_permission_all" />
 
         <LinearLayout
             android:id="@+id/linearLayout23"
@@ -314,6 +328,9 @@
             app:layout_constraintTop_toBottomOf="@+id/textView33">
 
             <CheckBox
+                android:id="@+id/checkBox_permission_service"
+                android:background="@drawable/checkbox_custom"
+                android:button="@color/transparent"
                 android:layout_width="30dp"
                 android:layout_height="30dp" />
 

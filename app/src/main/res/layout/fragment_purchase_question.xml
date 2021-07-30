@@ -185,30 +185,49 @@
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
-
-            <TextView
-                android:id="@+id/TextView_address"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
-                android:text="ex) 경기도 군포시 고산로148번길 17 "
-                android:background="@drawable/radius_login_edittext"
-                android:backgroundTint="#E8EAEA"
-                android:paddingStart="20dp"
-                android:textSize="13dp" />
+                android:orientation="horizontal">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
+                <TextView
+                    android:id="@+id/TextView_address"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ex) 165013"
+                    android:background="@drawable/radius_login_edittext"
+                    android:backgroundTint="#E8EAEA"
+                    android:paddingTop="15dp"
+                    android:paddingStart="20dp"
+                    android:textSize="13dp" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="주소검색"
+                    android:layout_marginStart="30dp"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:background="@drawable/radious_button_graycolor"/>
+
+
+            </LinearLayout>
+
+            <TextView
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="25dp"
-                android:text="주소검색"
-                android:textStyle="bold"
-                android:textSize="15dp"
-                android:background="@drawable/stroke_radius_button"/>
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingTop="15dp"
+                android:paddingStart="20dp"
+                android:background="@drawable/radious_button_graycolor"
+                android:backgroundTint="#E8EAEA"/>
 
         </LinearLayout>
 

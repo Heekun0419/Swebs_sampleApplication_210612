@@ -71,6 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView36">
 
         <CheckBox
+            android:id="@+id/checkBox1"
             android:layout_width="30dp"
             android:layout_height="30dp" />
 
@@ -98,6 +99,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout17">
 
         <CheckBox
+            android:id="@+id/checkBox2"
             android:layout_width="30dp"
             android:layout_height="30dp" />
 
@@ -125,8 +127,11 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout18">
 
         <CheckBox
+            android:id="@+id/checkBox3"
             android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_height="30dp"
+            android:button="@color/transparent"
+            android:background="@drawable/checkbox_custom"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -153,7 +158,9 @@
 
         <CheckBox
             android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_height="30dp"
+            android:button="@color/transparent"
+            android:background="@drawable/checkbox_custom"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -180,7 +187,9 @@
 
         <CheckBox
             android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_height="30dp"
+            android:button="@color/transparent"
+            android:background="@drawable/checkbox_custom"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -207,7 +216,9 @@
 
         <CheckBox
             android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_height="30dp"
+            android:button="@color/transparent"
+            android:background="@drawable/checkbox_custom"/>
 
         <TextView
             android:layout_width="wrap_content"

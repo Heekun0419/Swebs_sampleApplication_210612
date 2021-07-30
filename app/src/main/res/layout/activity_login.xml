@@ -12,7 +12,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="70dp"
         android:text="이메일"
         android:textColor="@color/black"
         android:textSize="12dp"
@@ -34,10 +34,10 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="150dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/ic_swebs_logo"
+        android:layout_width="125dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="130dp"
+        android:background="@drawable/logo_gradient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -89,12 +89,12 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="25dp"
         android:background="@drawable/radious_button_swebscolor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/textView5"
@@ -108,34 +108,15 @@
         app:layout_constraintStart_toStartOf="@+id/btn_login"
         app:layout_constraintTop_toTopOf="@+id/btn_login" />
 
-    <RadioButton
-        android:id="@+id/radioButton"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_login_pass" />
-
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:textStyle="bold"
-        android:text="로그인 유지"
-        app:layout_constraintBottom_toBottomOf="@+id/radioButton"
-        app:layout_constraintStart_toEndOf="@+id/radioButton"
-        app:layout_constraintTop_toTopOf="@+id/radioButton" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
         android:text="@string/find_password"
-        app:layout_constraintBottom_toBottomOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_login_pass" />
 
 
     <ImageButton
@@ -174,9 +155,9 @@
         android:id="@+id/textView_makeAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/make_account_email"
+        android:layout_marginTop="10dp"
         android:gravity="center"
+        android:text="@string/make_account_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_naver_login" />

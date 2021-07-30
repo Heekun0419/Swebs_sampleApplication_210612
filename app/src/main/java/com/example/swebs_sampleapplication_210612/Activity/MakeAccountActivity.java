@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.swebs_sampleapplication_210612.Fragment.MakeAccountFragment.MakeAccountFragment_terms;
 import com.example.swebs_sampleapplication_210612.R;
@@ -18,11 +19,16 @@ public class MakeAccountActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityMakeAccountBinding.inflate(getLayoutInflater());
-
-        moveFragment(new MakeAccountFragment_terms());
         setContentView(binding.getRoot());
+
+        //String requestCode = getIntent().getStringExtra("resultCode");
+
+        // 회원가입 Fragment
+        moveFragment(new MakeAccountFragment_terms());
+
+        //뒤로가기
+        binding.btnTopMenuBack.setOnClickListener(v -> onBackPressed());
     }
 
     public void moveFragment(Fragment fragment){

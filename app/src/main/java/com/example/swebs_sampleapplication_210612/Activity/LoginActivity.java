@@ -5,7 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Toast;
 
+import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
+import com.example.swebs_sampleapplication_210612.Dialog.PermissionDialog;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityLoginBinding;
 
@@ -21,21 +25,32 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
 
-        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
+        PermissionDialog dialog = new PermissionDialog(LoginActivity.this, new DialogClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            public void onPositiveClick(int position) {
+                Intent intent = new Intent(LoginActivity.this, PermissionCheckActivity.class);
                 startActivity(intent);
-                finish();
+            }
+
+            @Override
+            public void onNegativeClick() {
+                Intent intent = new Intent(LoginActivity.this, PermissionCheckActivity.class);
+                startActivity(intent);
             }
         });
+        dialog.setCancelable(false);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        dialog.show();
 
-        binding.textViewMakeAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MakeAccountActivity.class);
-                startActivity(intent);
-            }
+        binding.btnLogin.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        binding.textViewMakeAccount.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(),MakeAccountActivity.class);
+            startActivity(intent);
         });
     }
 }

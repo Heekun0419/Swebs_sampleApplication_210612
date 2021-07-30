@@ -16,6 +16,7 @@
             android:id="@+id/textView23"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
             android:paddingStart="25dp"
             android:paddingTop="20dp"
             android:text="* 아이디 (email)"
@@ -34,13 +35,25 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="25dp"
             android:background="@drawable/radius_login_edittext"
-            android:backgroundTint="#E8EAEA"
+            android:backgroundTint="#F9FAFC"
             android:hint="example@swebs.com"
             android:paddingStart="20dp"
             android:textSize="13dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginEnd="20dp"
+            android:text="중복확인"
+            android:gravity="center_vertical"
+            android:textColor="@color/swebs_main_color2"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/editText"
+            app:layout_constraintEnd_toEndOf="@+id/editText"
+            app:layout_constraintTop_toTopOf="@+id/editText" />
 
         <LinearLayout
             android:id="@+id/linearLayout6"
@@ -70,7 +83,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/radius_login_edittext"
-                android:backgroundTint="#E8EAEA"
+                android:backgroundTint="#F9FAFC"
                 android:hint="6~12 영문, 숫자 조합 입력"
                 android:paddingStart="20dp"
                 android:textSize="13dp" />
@@ -106,7 +119,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/radius_login_edittext"
-                android:backgroundTint="#E8EAEA"
+                android:backgroundTint="#F9FAFC"
                 android:hint="비밀번호 확인"
                 android:paddingStart="20dp"
                 android:textSize="13dp" />
@@ -150,7 +163,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/radius_login_edittext"
-                android:backgroundTint="#E8EAEA"
+                android:backgroundTint="#F9FAFC"
                 android:hint="스마트 강사"
                 android:paddingStart="20dp"
                 android:textSize="13dp" />
@@ -185,7 +198,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/radius_login_edittext"
-                android:backgroundTint="#E8EAEA"
+                android:backgroundTint="#F9FAFC"
                 android:hint="홍길동"
                 android:paddingStart="20dp"
                 android:textSize="13dp" />
@@ -227,7 +240,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/radius_login_edittext"
-                android:backgroundTint="#E8EAEA"
+                android:backgroundTint="#F9FAFC"
                 android:hint="19801112"
                 android:paddingStart="20dp"
                 android:textSize="13dp" />
@@ -262,7 +275,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/radius_login_edittext"
-                android:backgroundTint="#E8EAEA"
+                android:backgroundTint="#F9FAFC"
                 android:hint="010-1234-5678"
                 android:paddingStart="20dp"
                 android:textSize="13dp" />
@@ -284,7 +297,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout11" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -296,22 +309,48 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_gender">
 
-            <Button
-                android:layout_width="0dp"
+            <ImageButton
+                android:id="@+id/btn_gender_male"
+                android:layout_width="155dp"
                 android:layout_height="50dp"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:text="남자" />
+                android:layout_marginStart="5dp"
+                android:background="@drawable/gender_btn_selector"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView_makeAccount_gender_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="남자"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_gender_male"
+                app:layout_constraintEnd_toEndOf="@+id/btn_gender_male"
+                app:layout_constraintStart_toStartOf="@+id/btn_gender_male"
+                app:layout_constraintTop_toTopOf="@+id/btn_gender_male" />
 
 
-            <Button
-                android:layout_width="0dp"
+            <ImageButton
+                android:id="@+id/btn_gender_female"
+                android:layout_width="155dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_weight="1"
-                android:text="여자" />
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/gender_btn_selector"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/textView_makeAccount_gender_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="여자"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_gender_female"
+                app:layout_constraintEnd_toEndOf="@+id/btn_gender_female"
+                app:layout_constraintStart_toStartOf="@+id/btn_gender_female"
+                app:layout_constraintTop_toTopOf="@+id/btn_gender_female" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/textView_country"
@@ -392,7 +431,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/radius_login_edittext"
-                android:backgroundTint="#E8EAEA"
+                android:backgroundTint="#F9FAFC"
                 android:hint="알엠지"
                 android:paddingStart="20dp"
                 android:textSize="13dp" />

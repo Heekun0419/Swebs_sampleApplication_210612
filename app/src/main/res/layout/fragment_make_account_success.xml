@@ -26,7 +26,7 @@
         android:layout_marginEnd="25dp"
         android:text="@string/makeAccount_success"
         android:textColor="#333333"
-        android:textSize="16dp"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +38,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="25dp"
         android:text="@string/makeAccount_success2"
-        android:textSize="12dp"
+        android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView25" />

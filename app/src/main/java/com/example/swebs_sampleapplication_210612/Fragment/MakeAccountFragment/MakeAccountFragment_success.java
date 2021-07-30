@@ -34,22 +34,6 @@ public class MakeAccountFragment_success extends Fragment {
                              Bundle savedInstanceState) {
         binding =FragmentMakeAccountSuccessBinding.inflate(inflater,container,false);
 
-        PermissionDialog dialog = new PermissionDialog(requireContext(), new DialogClickListener() {
-            @Override
-            public void onPositiveClick(int position) {
-                Toast.makeText(requireContext(),"권한 모두 허용",Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNegativeClick() {
-                Intent intent = new Intent(requireContext(), PermissionCheckActivity.class);
-                startActivity(intent);
-            }
-        });
-        dialog.setCancelable(false);
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        dialog.show();
-
         binding.btnMakeAccountOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

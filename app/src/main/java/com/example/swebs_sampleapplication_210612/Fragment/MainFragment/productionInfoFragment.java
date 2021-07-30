@@ -24,7 +24,7 @@ import com.example.swebs_sampleapplication_210612.databinding.FragmentMainProduc
 
 public class productionInfoFragment extends Fragment implements OnItemClickListener {
 
-   private FragmentMainProductBinding binding;
+    private FragmentMainProductBinding binding;
 
 
     public productionInfoFragment() {
@@ -49,8 +49,10 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
 
         binding = FragmentMainProductBinding.inflate(inflater,container,false);
 
-        binding.includedAppbarProduct.imageButton.setOnClickListener((View.OnClickListener) v ->
+        // 네비게이션 드로어 열기
+        binding.includedAppbarProduct.imageButton.setOnClickListener(v ->
                 ((MainActivity)requireActivity()).drawer.openDrawer(GravityCompat.START));
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
         CertifiedCompanyAdapter certifiedCompanyAdapter = new CertifiedCompanyAdapter(requireContext());
@@ -73,27 +75,19 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         binding.recyclerViewSurvey.setAdapter(surveyAdapter);
 
         binding.btnEvent.setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), TopMenuActivity.class);
-            intent.putExtra("resultCode", "event");
-            startActivity(intent);
+          moveActivity("event");
         });
 
         binding.btnCertifiedCompany.setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), TopMenuActivity.class);
-            intent.putExtra("resultCode", "certified");
-            startActivity(intent);
+           moveActivity("certified");
         });
 
         binding.btnReview.setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), TopMenuActivity.class);
-            intent.putExtra("resultCode", "review");
-            startActivity(intent);
+          moveActivity("review");
         });
 
         binding.btnSurvey.setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), TopMenuActivity.class);
-            intent.putExtra("resultCode", "survey");
-            startActivity(intent);
+          moveActivity("survey");
         });
 
         binding.includedAppbarProduct.imageButton2.setOnClickListener(new View.OnClickListener() {
@@ -116,5 +110,11 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
            intent.putExtra("resultCode", "survey");
            startActivity(intent);
        }
+    }
+
+    private void moveActivity(String code){
+        Intent intent = new Intent(requireContext(), TopMenuActivity.class);
+        intent.putExtra("resultCode",code);
+        startActivity(intent);
     }
 }

@@ -50,6 +50,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
+                    android:id="@+id/imageView19"
                     android:layout_width="100dp"
                     android:layout_height="20dp"
                     android:background="@drawable/ic_swebs_logo"
@@ -58,6 +59,16 @@
                     app:layout_constraintStart_toEndOf="@+id/imageView"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <ImageView
+                    android:id="@+id/btn_appbar_more_white"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_baseline_more_horiz_24"
+                    android:backgroundTint="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
+                    app:layout_constraintEnd_toEndOf="@+id/imageButton2"
+                    app:layout_constraintStart_toStartOf="@+id/imageButton2"
+                    app:layout_constraintTop_toTopOf="@+id/imageButton2" />
 
                 <ImageButton
                     android:id="@+id/imageButton2"
@@ -67,8 +78,9 @@
                     android:background="@drawable/ic_baseline_more_horiz_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                </ImageButton>
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
