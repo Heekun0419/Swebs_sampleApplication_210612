@@ -25,7 +25,7 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#10000000"
+            android:background="@drawable/top_dark_gradient"
             app:elevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

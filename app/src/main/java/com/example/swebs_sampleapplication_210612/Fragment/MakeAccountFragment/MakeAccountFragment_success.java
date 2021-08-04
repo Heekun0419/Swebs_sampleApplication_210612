@@ -1,5 +1,6 @@
 package com.example.swebs_sampleapplication_210612.Fragment.MakeAccountFragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,6 +18,7 @@ import com.example.swebs_sampleapplication_210612.Activity.PermissionCheckActivi
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.PermissionDialog;
 import com.example.swebs_sampleapplication_210612.R;
+import com.example.swebs_sampleapplication_210612.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMakeAccountSuccessBinding;
 
 import java.security.Permission;
@@ -24,6 +26,7 @@ import java.security.Permission;
 public class MakeAccountFragment_success extends Fragment {
 
     private FragmentMakeAccountSuccessBinding binding;
+    private SPmanager sPmanager;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +36,9 @@ public class MakeAccountFragment_success extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding =FragmentMakeAccountSuccessBinding.inflate(inflater,container,false);
-
-        binding.btnMakeAccountOk.setOnClickListener(new View.OnClickListener() {
+       Context context = container.getContext();
+       sPmanager = new SPmanager(context);
+       binding.btnMakeAccountOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(requireContext(), MainActivity.class);
@@ -43,6 +47,13 @@ public class MakeAccountFragment_success extends Fragment {
             }
         });
 
+
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        sPmanager.setUserType(2);
     }
 }

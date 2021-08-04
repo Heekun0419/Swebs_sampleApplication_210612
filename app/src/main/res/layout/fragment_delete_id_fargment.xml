@@ -29,7 +29,7 @@
         android:layout_marginTop="10dp"
         android:text="@string/delete_id_info"
         android:textColor="@color/lower_gray"
-        android:textSize="14dp"
+        android:textSize="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView34" />
@@ -73,7 +73,9 @@
         <CheckBox
             android:id="@+id/checkBox1"
             android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_height="30dp"
+            android:button="@color/transparent"
+            android:background="@drawable/checkbox_custom"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -101,7 +103,9 @@
         <CheckBox
             android:id="@+id/checkBox2"
             android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_height="30dp"
+            android:button="@color/transparent"
+            android:background="@drawable/checkbox_custom"/>
 
         <TextView
             android:layout_width="wrap_content"

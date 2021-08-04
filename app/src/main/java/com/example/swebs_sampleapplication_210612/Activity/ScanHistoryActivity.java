@@ -30,6 +30,13 @@ public class ScanHistoryActivity extends AppCompatActivity {
         binding = ActivityScanHistoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.btnScanHistoryBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         String requestCode = getIntent().getStringExtra("resultCode");
 
         manager = getSupportFragmentManager();

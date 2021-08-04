@@ -14,10 +14,12 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Fragment.bottomSheetFragment;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Fragment.MainFragment.ScanFragment;
+import com.example.swebs_sampleapplication_210612.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityMainBinding;
 import com.example.swebs_sampleapplication_210612.Fragment.MainFragment.myPageFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MainFragment.productionInfoFragment;
@@ -28,12 +30,14 @@ import org.jetbrains.annotations.NotNull;
 public class MainActivity extends FragmentActivity {
 
     public static final int NUM_PAGES = 3;
-    private boolean isFirst = true;
+
     private FragmentStateAdapter adapter;
     private ActivityMainBinding binding;
     private FragmentManager manager;
 
+    private final SPmanager sPmanager = new SPmanager(this);
     public DrawerLayout drawer;
+    private long backBtnTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,7 @@ public class MainActivity extends FragmentActivity {
         setContentView(binding.getRoot());
 
        ViewPager2 viewPager =  binding.viewpager2Main;
-        adapter = new ScreenSlidePagerAdapter(this);
+        adapter = new ScreenSlidePagerAdapter(this,sPmanager.getUserType());
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1);
@@ -109,10 +113,13 @@ public class MainActivity extends FragmentActivity {
 
     private static class ScreenSlidePagerAdapter extends FragmentStateAdapter {
 
-        public ScreenSlidePagerAdapter(FragmentActivity fa) {
+        private int userType; // mypage Fragment에 유저타입 넘겨줌
+        public ScreenSlidePagerAdapter(FragmentActivity fa, int userType) {
             super(fa);
+            this.userType = userType;
         }
 
+        @NotNull
         @Override
         public Fragment createFragment(int position) {
 
@@ -121,7 +128,7 @@ public class MainActivity extends FragmentActivity {
             else if (position == 1)
                 return new ScanFragment();
             else if (position == 2)
-                return new myPageFragment();
+                return myPageFragment.newInstance(userType);
             else
                 return new ScanFragment();
 
@@ -139,11 +146,21 @@ public class MainActivity extends FragmentActivity {
         if(drawer.isDrawerOpen(GravityCompat.START)){
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            long curTime = System.currentTimeMillis();
+            long gapTime = curTime - backBtnTime;
+
+            if(0 <= gapTime && 2000 >= gapTime) {
+                super.onBackPressed();
+            }
+            else {
+                backBtnTime = curTime;
+                Toast.makeText(this, "한번 더 누르면 종료됩니다.",Toast.LENGTH_SHORT).show();
+            }
         }
+
     }
 
-    public void BottomSheetOpen(){
+        public void BottomSheetOpen(){
         manager.beginTransaction().add(new bottomSheetFragment(),"dialog").commit();
     }
 }

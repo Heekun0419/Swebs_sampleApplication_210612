@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.swebs_sampleapplication_210612.Fragment.MakeAccountFragment.FindPassFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MakeAccountFragment.MakeAccountFragment_terms;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityMakeAccountBinding;
@@ -22,11 +23,15 @@ public class MakeAccountActivity extends AppCompatActivity {
         binding = ActivityMakeAccountBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //String requestCode = getIntent().getStringExtra("resultCode");
+        String requestCode = getIntent().getStringExtra("resultCode");
 
-        // 회원가입 Fragment
-        moveFragment(new MakeAccountFragment_terms());
-
+        if(requestCode.equals("findPass")){
+            binding.textViewTopMenuName.setText("비밀번호 찾기");
+            moveFragment(new FindPassFragment());
+        }else if(requestCode.equals("makeAccount")){
+            // 회원가입 Fragment
+            moveFragment(new MakeAccountFragment_terms());
+        }
         //뒤로가기
         binding.btnTopMenuBack.setOnClickListener(v -> onBackPressed());
     }

@@ -40,11 +40,11 @@ public class MakeAccountFragment_terms extends Fragment {
 
 
         binding.btnTermsAgree.setOnClickListener(v -> {
-            if(binding.checkBoxMakeAccountTermsAll.isChecked()){
+            if(binding.checkBoxMakeAccountTerms1.isChecked() && binding.checkBoxMakeAccountTerms2.isChecked()){
                 ((MakeAccountActivity)requireActivity()).moveFragment(new MakeAccountFragment_userInfo());
             }
             else {
-                Toast.makeText(requireContext(),"약관동의를 해주세요.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(),"필수약관 동의를 해주세요.", Toast.LENGTH_SHORT).show();
             }
         });
 

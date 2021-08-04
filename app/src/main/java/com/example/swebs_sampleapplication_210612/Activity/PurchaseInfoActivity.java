@@ -21,6 +21,13 @@ public class PurchaseInfoActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
 
+        binding.btnPurchaseInfoBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         binding.btnPurchaseDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

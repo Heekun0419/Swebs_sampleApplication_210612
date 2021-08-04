@@ -43,7 +43,7 @@
                     android:orientation="horizontal">
 
                     <ImageButton
-                        android:id="@+id/btn_Top_menu_back"
+                        android:id="@+id/btn_purchaseInfo_back"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:backgroundTint="@color/white"
