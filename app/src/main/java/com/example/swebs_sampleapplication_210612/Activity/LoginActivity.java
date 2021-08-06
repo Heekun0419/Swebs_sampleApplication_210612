@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import com.example.swebs_sampleapplication_210612.Retrofit.Model.LoginModel;
 import com.example.swebs_sampleapplication_210612.Retrofit.Model.SignUpModel;
 import com.example.swebs_sampleapplication_210612.Retrofit.RetroAPI;
 import com.example.swebs_sampleapplication_210612.Retrofit.RetroClient;
+import com.example.swebs_sampleapplication_210612.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityLoginBinding;
 
 import java.util.HashMap;
@@ -31,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private FindPasswordDialog dialog_findPass;
     private RetroAPI retroAPI;
-
+    private SPmanager sPmanager = new SPmanager(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +48,9 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnLogin.setOnClickListener(v -> {
             // 서버와 로그인 체크
             loginCheck();
-            finish();
+            finishAffinity();
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
         });
 
         binding.textViewMakeAccount.setOnClickListener(v -> {
@@ -86,15 +90,40 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+                if(response.isSuccessful()){
+                    LoginModel responseData = response.body();
+                    if (responseData != null) {
+                        if (responseData.isSuccess()) {
+
+                            sPmanager.setUserBirth(responseData.getDateofbirth());
+                            sPmanager.setUserType(responseData.getUser_type());
+                            sPmanager.setUserEmail(responseData.getUser_email());
+                            sPmanager.setUserName(responseData.getName());
+                            sPmanager.setUserGender(responseData.getGender());
+                            sPmanager.setUserPoint(responseData.getPoints());
+
+                        /*    Log.d("Net_Test", "Data : " + responseData.isSuccess());
+                        HashMap<String, String> responseMap = new HashMap<>();
+                        responseMap.put("userSrl", responseData.getMemberSrl());
+                        responseMap.put("userNickname", responseData.getUserNick());
+                        responseMap.put("token", responseData.getToken());
+                        responseMap.put("userName", responseData.getUserName());
+
+                        saveInfo(responseMap);
+                        */
+                        }
+
+                    }
+                }
+
 
             }
 
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
-
+                Toast.makeText(getApplicationContext(), "로그인에 실패 하였습니다.", Toast.LENGTH_LONG).show();
             }
         });
-
-
     }
+
 }

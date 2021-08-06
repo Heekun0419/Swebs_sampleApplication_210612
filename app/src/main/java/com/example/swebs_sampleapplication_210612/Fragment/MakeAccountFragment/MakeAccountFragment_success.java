@@ -38,6 +38,7 @@ public class MakeAccountFragment_success extends Fragment {
         binding =FragmentMakeAccountSuccessBinding.inflate(inflater,container,false);
        Context context = container.getContext();
        sPmanager = new SPmanager(context);
+
        binding.btnMakeAccountOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +55,5 @@ public class MakeAccountFragment_success extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        sPmanager.setUserType(2);
     }
 }

@@ -11,8 +11,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -44,12 +46,11 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         manager = getSupportFragmentManager();
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-       ViewPager2 viewPager =  binding.viewpager2Main;
-        adapter = new ScreenSlidePagerAdapter(this,sPmanager.getUserType());
+        ViewPager2 viewPager =  binding.viewpager2Main;
+        adapter = new ScreenSlidePagerAdapter(this,this);
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1);
@@ -113,10 +114,10 @@ public class MainActivity extends FragmentActivity {
 
     private static class ScreenSlidePagerAdapter extends FragmentStateAdapter {
 
-        private int userType; // mypage Fragment에 유저타입 넘겨줌
-        public ScreenSlidePagerAdapter(FragmentActivity fa, int userType) {
+        Context context;// mypage Fragment에 유저타입 넘겨줌
+        public ScreenSlidePagerAdapter(FragmentActivity fa, Context context) {
             super(fa);
-            this.userType = userType;
+            this.context = context;
         }
 
         @NotNull
@@ -128,7 +129,7 @@ public class MainActivity extends FragmentActivity {
             else if (position == 1)
                 return new ScanFragment();
             else if (position == 2)
-                return myPageFragment.newInstance(userType);
+                return new myPageFragment(context);
             else
                 return new ScanFragment();
 
@@ -162,6 +163,12 @@ public class MainActivity extends FragmentActivity {
 
         public void BottomSheetOpen(){
         manager.beginTransaction().add(new bottomSheetFragment(),"dialog").commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("Net", "mainOnResume");
     }
 }
 

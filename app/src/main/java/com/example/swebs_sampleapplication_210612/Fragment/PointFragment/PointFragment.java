@@ -9,11 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.swebs_sampleapplication_210612.R;
+import com.example.swebs_sampleapplication_210612.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentPointBinding;
 
 public class PointFragment extends Fragment {
 
     private FragmentPointBinding binding;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +26,10 @@ public class PointFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentPointBinding.inflate(inflater,container,false);
+        SPmanager sPmanager = new SPmanager(container.getContext());
+
+        binding.textViewPointName.setText(sPmanager.getUserName());
+        binding.textviewPoint.setText(sPmanager.getUserPoint());
 
         return binding.getRoot();
     }

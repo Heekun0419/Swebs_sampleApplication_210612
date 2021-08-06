@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -41,13 +42,16 @@ public class PermissionCheckActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         isChecked = sPmanager.getPermission();
+        PermissionCheck();
 
         dialog = new PermissionDialog(PermissionCheckActivity.this, new DialogClickListener() {
             @Override
             public void onPositiveClick(int position) {
-                if(!isChecked){
-                    PermissionCheck();
+
+                int count = PermissionCheck();
+                if(count ==4){
                     sPmanager.setPermissionIsChecked(true);
+                    StartMainActivity();
                 }
             }
 
@@ -66,9 +70,10 @@ public class PermissionCheckActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(binding.checkBoxPermissionAll.isChecked() && binding.checkBoxPermissionService.isChecked() ){
-                    if(!isChecked){
-                        PermissionCheck();
+                    int count = PermissionCheck();
+                    if(count ==4){
                         sPmanager.setPermissionIsChecked(true);
+                        StartMainActivity();
                     }
                 }else if(!binding.checkBoxPermissionService.isChecked()){
                     Toast.makeText(getApplicationContext(), "서비스 권한 허용이 필요합니다.", Toast.LENGTH_LONG).show();
@@ -79,7 +84,6 @@ public class PermissionCheckActivity extends AppCompatActivity {
         });
 
         binding.btnPermissionCheckBack.setOnClickListener(v -> onBackPressed());
-
 
         binding.checkBoxPermissionAll.setOnClickListener(v -> {
             if(binding.checkBoxPermissionAll.isChecked()){
@@ -117,16 +121,18 @@ public class PermissionCheckActivity extends AppCompatActivity {
         }
     }
 
-    private void PermissionCheck(){
-
+    private int PermissionCheck(){
+        int counter =0;
         for (String permission : permission_list){
             int check = checkCallingOrSelfPermission(permission);
 
             if(check == PackageManager.PERMISSION_DENIED){
                 requestPermissions(permission_list,0);
+            }else if(check == PackageManager.PERMISSION_GRANTED){
+                counter++;
             }
         }
-
+        return counter;
     }
 
     @Override
@@ -146,15 +152,10 @@ public class PermissionCheckActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        isChecked = sPmanager.getPermission();
-        if(isChecked) {
-            Intent intent = new Intent(PermissionCheckActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
+    private void StartMainActivity(){
+        Intent intent = new Intent(PermissionCheckActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
+
 }

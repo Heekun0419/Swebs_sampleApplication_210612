@@ -41,6 +41,16 @@
     <string name="point_text11">포인트 정책</string>
     <string name="point_text12">스웹스의 포인트는 정품을 구매한 고객들이 정품스캔을 하여 확실한 서비스를 제공받고 실구매자의 직접적인 리뷰를 통한 신뢰를 바탕으로 한 시장창출을 하기 위해 사용될 예정입니다.\n\n2021년 3월 16일 부터 포인트는 사용가능합니다.</string>
 
+   <!-- 이벤트 배송지 수정 -->
+    <string name="modify_address0">이벤트 배송지 수정</string>
+    <string name="modify_address1">받는분</string>
+    <string name="modify_address2">이름을 적어주세요</string>
+    <string name="modify_address3">휴대폰 번호</string>
+    <string name="modify_address4">휴대폰번호를 적어주세요</string>
+    <string name="modify_address5">배송지</string>
+    <string name="modify_address6">주소검색</string>
+    <string name="modify_address7">* 입력하신 주소는 기본배송지로 설정합니다.</string>
+    <string name="modify_address8">저장하기</string>
 
     <string name="show"> <u>보기</u> </string>
 
