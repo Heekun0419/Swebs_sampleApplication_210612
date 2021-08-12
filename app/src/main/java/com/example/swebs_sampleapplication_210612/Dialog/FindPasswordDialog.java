@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 
@@ -50,6 +51,10 @@ public class FindPasswordDialog extends Dialog {
         });
         binding.btnFindPassBack.setOnClickListener(v -> {
             listener.onNegativeClick();
+            dismiss();
+        });
+        binding.imageButton6.setOnClickListener(v -> {
+            listener.onCloseClick();
             dismiss();
         });
     }

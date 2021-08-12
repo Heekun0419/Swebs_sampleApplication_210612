@@ -22,7 +22,7 @@ public class InformationActivity extends AppCompatActivity {
 
     private ActivityInfomationBinding binding;
     private FragmentManager manager;
-
+    String requestCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +37,7 @@ public class InformationActivity extends AppCompatActivity {
             }
         });
 
-        String requestCode = getIntent().getStringExtra("resultCode");
+        requestCode = getIntent().getStringExtra("resultCode");
 
         manager = getSupportFragmentManager();
         if(requestCode.equals("manual")) {
@@ -61,6 +61,9 @@ public class InformationActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        if (requestCode.equals("app_info") && manager.getBackStackEntryCount()==1){
+            binding.textViewInformationActivityName.setText("어플정보");
+        }
         if(manager.getBackStackEntryCount() ==0){
             finish();
         }

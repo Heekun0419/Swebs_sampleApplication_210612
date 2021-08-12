@@ -11,6 +11,8 @@ public class LoginModel {
     @Nullable
     private String user_email;
     @Nullable
+    private String reason;
+    @Nullable
     private String user_type;
     @Nullable
     private String token;
@@ -112,6 +114,11 @@ public class LoginModel {
     @Nullable
     public String getRegdate() {
         return regdate;
+    }
+
+    @Nullable
+    public String getReason() {
+        return reason;
     }
 }
 

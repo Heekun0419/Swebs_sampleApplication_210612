@@ -14,14 +14,20 @@ import retrofit2.http.PartMap;
 public interface RetroAPI {
 
     @Multipart
-    @POST("login/test.php")
+    @POST("login/sign_up.php")
     Call<SignUpModel> userSingUp(
             @PartMap Map<String, RequestBody> prams
     );
 
     @Multipart
-    @POST("login/logintest.php")
+    @POST("login/login.php")
     Call<LoginModel> userLogin(
+            @PartMap Map<String, RequestBody> prams
+    );
+
+    @Multipart
+    @POST("login/guest_sign_up.php")
+    Call<SignUpModel> guest_signUp(
             @PartMap Map<String, RequestBody> prams
     );
 }

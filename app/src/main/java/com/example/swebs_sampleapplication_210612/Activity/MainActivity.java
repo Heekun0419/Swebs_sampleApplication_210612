@@ -11,13 +11,16 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.Fragment.bottomSheetFragment;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Fragment.MainFragment.ScanFragment;
@@ -41,6 +44,7 @@ public class MainActivity extends FragmentActivity {
     public DrawerLayout drawer;
     private long backBtnTime = 0;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +67,9 @@ public class MainActivity extends FragmentActivity {
                 this, drawer, toolbar, R.string.open, R.string.closed);
         drawer.addDrawerListener(toggle);
 
+        GlideImage(binding.navView.imageViewProfile);
+        binding.navView.textViewUserName.setText(sPmanager.getUserName());
+        binding.navView.textViewUserPoint.setText("잔여포인트 : "+ sPmanager.getUserPoint()+" P");
         binding.navView.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
@@ -169,6 +176,10 @@ public class MainActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         Log.d("Net", "mainOnResume");
+    }
+
+    private void GlideImage(ImageView view){
+        Glide.with(getApplicationContext()).load(R.drawable.userprofile).circleCrop().into(view);
     }
 }
 

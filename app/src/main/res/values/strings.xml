@@ -27,6 +27,8 @@
     <string name="as_info">AS요청시 본인식별, 정품사용여부에 사용되며 본인의 동의 없이 제3자에게 제공되지 않으며 또한 본인의 요청시 언제든 즉시 삭제 될 수 있습니다.
         \n\n <b>본인의 신상정보를 제3자에게 제공하는 것에 동의 합니다.</b> </string>
 
+    <string name="as_not_ready">본제품은 AS관련하여 \n서비스 준비중입니다</string>
+
     <!-- 포인트 페이지 관련 -->
     <string name="point_text1">회원가입하시면 100p가 지급됩니다</string>
     <string name="point_text2">정품(등록)포인트</string>
@@ -41,7 +43,7 @@
     <string name="point_text11">포인트 정책</string>
     <string name="point_text12">스웹스의 포인트는 정품을 구매한 고객들이 정품스캔을 하여 확실한 서비스를 제공받고 실구매자의 직접적인 리뷰를 통한 신뢰를 바탕으로 한 시장창출을 하기 위해 사용될 예정입니다.\n\n2021년 3월 16일 부터 포인트는 사용가능합니다.</string>
 
-   <!-- 이벤트 배송지 수정 -->
+    <!-- 이벤트 배송지 수정 -->
     <string name="modify_address0">이벤트 배송지 수정</string>
     <string name="modify_address1">받는분</string>
     <string name="modify_address2">이름을 적어주세요</string>
@@ -51,6 +53,21 @@
     <string name="modify_address6">주소검색</string>
     <string name="modify_address7">* 입력하신 주소는 기본배송지로 설정합니다.</string>
     <string name="modify_address8">저장하기</string>
+
+    <!-- 서비스 이용동의 페이지 -->
+    <string name="service_terms_agree1">서비스 이용동의</string>
+    <string name="service_terms_agree2">스웹스 서비스 약관에 동의</string>
+    <string name="service_terms_agree3">스웹스 통합서비스 약관</string>
+    <string name="service_terms_agree4">개인정보 수집 및 이용동의</string>
+    <string name="service_terms_agree5">서비스 약관 및 개인정보 처리 방침 (필수)</string>
+    <string name="service_terms_agree6">위치기반서비스 이용약관 (필수)</string>
+    <string name="service_terms_agree7">3. 마케팅 수신 정보 (선택)</string>
+    <string name="service_terms_agree8">제 3자에게 정보 제공 (선택)</string>
+    <string name="service_terms_agree9"> </string>
+    <string name="service_terms_agree10"> </string>
+
+
+
 
     <string name="show"> <u>보기</u> </string>
 

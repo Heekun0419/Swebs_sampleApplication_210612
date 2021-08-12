@@ -16,6 +16,7 @@ import com.example.swebs_sampleapplication_210612.databinding.ActivityScanSettin
 public class ScanSettingActivity extends AppCompatActivity {
 
     private ActivityScanSettingBinding binding;
+    LanguageDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class ScanSettingActivity extends AppCompatActivity {
         binding.btnChangeLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LanguageDialog dialog = new LanguageDialog(ScanSettingActivity.this , new DialogClickListener() {
+                dialog = new LanguageDialog(ScanSettingActivity.this , new DialogClickListener() {
                     @Override
                     public void onPositiveClick(int position) {
                         String pickValue = "";
@@ -40,7 +41,12 @@ public class ScanSettingActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onNegativeClick() {
+                        dialog.dismiss();
+                    }
 
+                    @Override
+                    public void onCloseClick() {
+                        dialog.dismiss();
                     }
                 });
                 dialog.setCancelable(false);

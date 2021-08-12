@@ -28,4 +28,5 @@ public class DeleteIdFargment extends Fragment {
 
         return binding.getRoot();
     }
+
 }

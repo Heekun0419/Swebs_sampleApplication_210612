@@ -2,22 +2,18 @@ package com.example.swebs_sampleapplication_210612.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
+
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.PermissionDialog;
-import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityPermissionCheckBinding;
 
@@ -47,7 +43,6 @@ public class PermissionCheckActivity extends AppCompatActivity {
         dialog = new PermissionDialog(PermissionCheckActivity.this, new DialogClickListener() {
             @Override
             public void onPositiveClick(int position) {
-
                 int count = PermissionCheck();
                 if(count ==4){
                     sPmanager.setPermissionIsChecked(true);
@@ -58,6 +53,11 @@ public class PermissionCheckActivity extends AppCompatActivity {
             @Override
             public void onNegativeClick() {
                 dialog.dismiss();
+            }
+
+            @Override
+            public void onCloseClick() {
+
             }
         });
         dialog.setCancelable(false);

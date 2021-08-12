@@ -9,6 +9,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
+    <!--주소검색 및 서버연결 위한 인터넷 연결-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <uses-feature android:name="android.hardware.camera2.full" />
 
     <application
@@ -19,7 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Swebs_sampleApplication_210612"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.AdressModifyActivity"></activity>
+        <activity android:name=".Activity.AdressModifyActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Activity.AuthenticScanActivity"
             android:screenOrientation="portrait"

@@ -12,20 +12,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textview_nav_drawer_productList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:padding="15dp"
+        android:text="제품등록 리스트"
+        android:textColor="@color/black"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton3" />
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:paddingStart="10dp"
+        app:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
-        app:elevation="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/textview_nav_drawer_productList"
         app:menu="@menu/navigation_drawer_item" />
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:background="@drawable/userprofile"
+        android:id="@+id/imageView_profile"
         android:scaleType="centerCrop"
         android:layout_width="70dp"
         android:layout_height="70dp"
@@ -44,22 +57,21 @@
         android:textColor="@color/black"
         android:textSize="15dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+        app:layout_constraintStart_toEndOf="@+id/imageView_profile"
+        app:layout_constraintTop_toTopOf="@+id/imageView_profile" />
 
     <TextView
         android:id="@+id/textView_userPoint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="잔여 포인트 : 00P"
         android:textColor="#21CCB2"
         android:textSize="11dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_profile"
         app:layout_constraintStart_toStartOf="@+id/textView_userName"
         app:layout_constraintTop_toBottomOf="@+id/textView_userName" />
 
     <ImageButton
-        android:id="@+id/imageButton4"
+        android:id="@+id/imageButton_setting"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginEnd="20dp"
@@ -68,19 +80,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView_userName"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+        app:layout_constraintTop_toTopOf="@+id/imageView_profile" />
 
     <ImageButton
         android:id="@+id/imageButton3"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="30dp"
         android:background="@drawable/radious_button_swebscolor"
+        android:backgroundTint="#93E3BE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_profile" />
 
 
     <ImageView

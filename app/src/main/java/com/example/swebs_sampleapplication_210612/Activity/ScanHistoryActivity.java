@@ -22,6 +22,7 @@ public class ScanHistoryActivity extends AppCompatActivity {
 
     private ActivityScanHistoryBinding binding;
     private FragmentManager manager;
+    String requestCode;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class ScanHistoryActivity extends AppCompatActivity {
             }
         });
 
-        String requestCode = getIntent().getStringExtra("resultCode");
+        requestCode = getIntent().getStringExtra("resultCode");
 
         manager = getSupportFragmentManager();
         switch (requestCode) {
@@ -45,6 +46,7 @@ public class ScanHistoryActivity extends AppCompatActivity {
                 moveFragment(new ScanHistory_SwebsFragment(),"SCAN 히스토리");
                 break;
             case "purchaseList":
+                binding.btnScanHistoryMenu.setVisibility(View.GONE);
                 moveFragment( new BuyingListFragment() ,"구매등록 리스트");
                 break;
             case "copy":
@@ -65,5 +67,22 @@ public class ScanHistoryActivity extends AppCompatActivity {
         if(manager.getBackStackEntryCount() ==0){
             finish();
         }
+        if (requestCode.equals("scanHistory") && manager.getBackStackEntryCount()==1){
+            ViewVisible();
+            binding.textViewTopMenuName.setText("SCAN 히스토리");
+        }
+        else if (requestCode.equals("purchaseList") && manager.getBackStackEntryCount()==1){
+            binding.btnFloatingScan.setVisibility(View.VISIBLE);
+            binding.textViewTopMenuName.setText("구매등록 리스트");
+        }
+    }
+
+    public void ViewGone(){
+        binding.btnFloatingScan.setVisibility(View.GONE);
+        binding.btnScanHistoryMenu.setVisibility(View.GONE);
+    }
+    public void ViewVisible(){
+        binding.btnScanHistoryMenu.setVisibility(View.VISIBLE);
+        binding.btnFloatingScan.setVisibility(View.VISIBLE);
     }
 }

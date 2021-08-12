@@ -6,25 +6,31 @@ import androidx.core.content.ContextCompat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.swebs_sampleapplication_210612.R;
+import com.example.swebs_sampleapplication_210612.databinding.ActivityAuthenticScan2Binding;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityAuthenticScanBinding;
 
 public class AuthenticScanActivity extends AppCompatActivity {
 
-    private ActivityAuthenticScanBinding binding;
+    private ActivityAuthenticScan2Binding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityAuthenticScanBinding.inflate(getLayoutInflater());
-
+        //binding = ActivityAuthenticScanBinding.inflate(getLayoutInflater());
+        binding = ActivityAuthenticScan2Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         String URL = getIntent().getStringExtra("URL");
-        ShowMyDialog(URL);
+        URL = URL.replaceFirst("http://", "https://");
+        //ShowMyDialog(URL);
+
+        binding.webView.loadUrl(URL);
 
         binding.btnAuthenticScanBack.setOnClickListener(new View.OnClickListener() {
             @Override

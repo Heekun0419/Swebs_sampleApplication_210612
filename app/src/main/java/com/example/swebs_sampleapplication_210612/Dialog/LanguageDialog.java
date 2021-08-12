@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
@@ -37,9 +38,9 @@ public class LanguageDialog extends Dialog {
 
         picker = binding.numberPicker;
         picker.setMinValue(0);
-        picker.setMaxValue(3);
+        picker.setMaxValue(2);
         picker.setDisplayedValues(new String[]{
-                "한국어", "ENGLISH", "中文", "日本語"});
+                "한국어", "ENGLISH", "中文"});
 
 
         binding.btnLanguageOk.setOnClickListener(v -> {
@@ -48,6 +49,10 @@ public class LanguageDialog extends Dialog {
         });
         binding.btnLanguageBack.setOnClickListener(v -> {
             listener.onNegativeClick();
+            dismiss();
+        });
+        binding.imageButton6.setOnClickListener(v -> {
+            listener.onCloseClick();
             dismiss();
         });
     }

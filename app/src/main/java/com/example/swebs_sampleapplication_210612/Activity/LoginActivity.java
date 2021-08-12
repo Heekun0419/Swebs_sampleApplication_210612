@@ -3,15 +3,19 @@ package com.example.swebs_sampleapplication_210612.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.example.swebs_sampleapplication_210612.Dialog.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.FindPasswordDialog;
+import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.PermissionDialog;
+import com.example.swebs_sampleapplication_210612.Dialog.TwoButtonBasicDialog;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Retrofit.Model.LoginModel;
 import com.example.swebs_sampleapplication_210612.Retrofit.Model.SignUpModel;
@@ -34,6 +38,9 @@ public class LoginActivity extends AppCompatActivity {
     private FindPasswordDialog dialog_findPass;
     private RetroAPI retroAPI;
     private SPmanager sPmanager = new SPmanager(this);
+
+    private boolean isLogin = false;
+    private String reason;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +53,18 @@ public class LoginActivity extends AppCompatActivity {
         retroAPI = RetroClient.getRetrofitClient().create(RetroAPI.class);
 
         binding.btnLogin.setOnClickListener(v -> {
-            // 서버와 로그인 체크
-            loginCheck();
-            finishAffinity();
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
+            if(!binding.edtLoginId.getText().toString().equals("") && !binding.edtLoginPass.getText().toString().equals("")){
+                // 서버와 로그인 체크
+                loginCheck();
+            }else if(binding.edtLoginId.getText().toString().equals("")){
+               Toast("아이디를 입력해주세요.");
+            }else if(binding.edtLoginPass.getText().toString().equals(""))
+                Toast("비밀번호를 입력해주세요.");
+            if(isLogin){
+                finishAffinity();
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+            }
         });
 
         binding.textViewMakeAccount.setOnClickListener(v -> {
@@ -68,9 +82,13 @@ public class LoginActivity extends AppCompatActivity {
                     intent.putExtra("resultCode","findPass");
                     startActivity(intent);
                 }
-
                 @Override
                 public void onNegativeClick() {
+                    dialog_findPass.dismiss();
+                }
+
+                @Override
+                public void onCloseClick() {
                     dialog_findPass.dismiss();
                 }
             });
@@ -94,31 +112,48 @@ public class LoginActivity extends AppCompatActivity {
                     LoginModel responseData = response.body();
                     if (responseData != null) {
                         if (responseData.isSuccess()) {
-
+                            isLogin = true;
                             sPmanager.setUserBirth(responseData.getDateofbirth());
                             sPmanager.setUserType(responseData.getUser_type());
                             sPmanager.setUserEmail(responseData.getUser_email());
                             sPmanager.setUserName(responseData.getName());
                             sPmanager.setUserGender(responseData.getGender());
                             sPmanager.setUserPoint(responseData.getPoints());
+                        }else {
+                            isLogin =false;
+                            reason = responseData.getReason();
+                            if(reason!=null){
+                                Log.d("not",reason);
+                                if(reason.equals("NotFoundEmail")){
+                                    OneButtonBasicDialog dialog = new OneButtonBasicDialog(LoginActivity.this, new BasicDialogTextModel(
+                                            "오류", "아이디 혹은 비밀번호가 일치하지 않습니다.", "확인", ""), new DialogClickListener() {
+                                        @Override
+                                        public void onPositiveClick(int position) {
 
-                        /*    Log.d("Net_Test", "Data : " + responseData.isSuccess());
-                        HashMap<String, String> responseMap = new HashMap<>();
-                        responseMap.put("userSrl", responseData.getMemberSrl());
-                        responseMap.put("userNickname", responseData.getUserNick());
-                        responseMap.put("token", responseData.getToken());
-                        responseMap.put("userName", responseData.getUserName());
+                                        }
 
-                        saveInfo(responseMap);
-                        */
+                                        @Override
+                                        public void onNegativeClick() {
+
+                                        }
+
+                                        @Override
+                                        public void onCloseClick() {
+
+                                        }
+                                    });
+                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                                    dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+                                    dialog.show();
+                                }else{
+                                    Toast("이메일 형식에 맞지 않습니다.");
+                                }
+                            }
+
                         }
-
                     }
                 }
-
-
             }
-
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "로그인에 실패 하였습니다.", Toast.LENGTH_LONG).show();
@@ -126,4 +161,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void Toast(String msg){
+        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+    }
 }
