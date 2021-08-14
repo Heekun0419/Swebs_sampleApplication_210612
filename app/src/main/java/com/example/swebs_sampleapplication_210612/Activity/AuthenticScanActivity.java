@@ -19,6 +19,8 @@ import com.example.swebs_sampleapplication_210612.databinding.ActivityAuthenticS
 public class AuthenticScanActivity extends AppCompatActivity {
 
     private ActivityAuthenticScan2Binding binding;
+
+    private String resultUrl, resultCompany, resultCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,11 +28,14 @@ public class AuthenticScanActivity extends AppCompatActivity {
         binding = ActivityAuthenticScan2Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        String URL = getIntent().getStringExtra("URL");
-        URL = URL.replaceFirst("http://", "https://");
-        //ShowMyDialog(URL);
+        resultUrl = getIntent().getStringExtra("url");
+        resultCompany = getIntent().getStringExtra("company");
+        resultCode = getIntent().getStringExtra("code");
 
-        binding.webView.loadUrl(URL);
+        ShowMyDialog("URL : " + resultUrl + "\nCompany : " + resultCompany + "\nCode : " + resultCode);
+
+        String loadUrl = "https://www.swebs.co.kr/certchk/" + resultCompany + "/swebs_result.html?q=" + resultCode;
+        binding.webView.loadUrl(loadUrl);
 
         binding.btnAuthenticScanBack.setOnClickListener(new View.OnClickListener() {
             @Override

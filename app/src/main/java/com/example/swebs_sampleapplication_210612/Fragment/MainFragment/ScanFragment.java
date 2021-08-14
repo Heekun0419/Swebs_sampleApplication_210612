@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,7 @@ import com.example.swebs_sampleapplication_210612.Activity.AuthenticScanActivity
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ScanSettingActivity;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentScanBinding;
+import com.example.swebs_sampleapplication_210612.util.GpsTracker;
 import com.google.android.gms.tasks.Task;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.mlkit.vision.barcode.Barcode;
@@ -50,10 +52,17 @@ import com.google.mlkit.vision.common.InputImage;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import retrofit2.http.PartMap;
 
 public class ScanFragment extends Fragment {
 
@@ -69,6 +78,8 @@ public class ScanFragment extends Fragment {
     private boolean isScan = false;
     private boolean flash = false;
 
+    GpsTracker gpsTracker;
+
     public ScanFragment() {
         // Required empty public constructor
     }
@@ -77,6 +88,7 @@ public class ScanFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        gpsTracker = new GpsTracker(requireContext());
     }
 
     @Override
@@ -252,19 +264,97 @@ public class ScanFragment extends Fragment {
                         int type = barcode.getWifi().getEncryptionType();
                         break;
                     case Barcode.TYPE_URL:
-                            String Url = barcode.getUrl().getUrl();
-                            String title = barcode.getUrl().getTitle();
-                            if(!isScan){
-                                isScan =true;
-                            Intent intent = new Intent(requireContext(), AuthenticScanActivity.class);
-                            intent.putExtra("URL",Url);
-                            startActivity(intent);
-                            }
-                            break;
+                        String Url = barcode.getUrl().getUrl();
+                        String title = barcode.getUrl().getTitle();
+                        if (!isScan) {
+                            isScan = true;
+                            openScanResult(Url);
+                        }
+                        break;
                 }
             }
         }
+    }
 
+    HashMap<String, String> getGpsLocation() {
+        HashMap<String, String> resultMap = new HashMap<String, String>();
+
+        resultMap.put("latitude", Double.toString(gpsTracker.getLatitude()));
+        resultMap.put("longitude", Double.toString(gpsTracker.getLongitude()));
+
+        return resultMap;
+    }
+
+    void openScanResult(String url) {
+        String company = null, code = null;
+        HashMap<String, String> location;
+
+        if (authSwebsFromUrl(url)) {
+            company = getCompanyFromUrl(url);
+            code = getCodeFromUrl(url);
+        }
+
+        // get Gps
+        location = getGpsLocation();
+
+        // Scan Log Server Upload
+        Log.d("scanLog", "링크 : " + url);
+        Log.d("scanLog", "위도 : " + location.get("latitude") + " | 경도 : " + location.get("longitude"));
+        Log.d("scanLog", "인증 업체 : " + company + " | 코드 : " + code);
+
+        if (company != null && code != null) {
+            Intent intent = new Intent(requireContext(), AuthenticScanActivity.class);
+            intent.putExtra("url", url)
+                  .putExtra("company", company)
+                  .putExtra("code", code);
+            startActivity(intent);
+        } else {
+
+        }
+    }
+
+    boolean authSwebsFromUrl(String url) {
+        ArrayList<String> swebsUrlList = new ArrayList<>();
+        swebsUrlList.add("swebs.co.kr");
+
+        for (int i=0; i<swebsUrlList.size(); i++)
+            if (url.contains(swebsUrlList.get(i)))
+                if (certifySwebsForm(url))
+                    return true;
+        return false;
+    }
+
+    boolean certifySwebsForm(String url) {
+        if (url.contains("certchk"))
+            if (url.contains("q="))
+                return true;
+        return false;
+    }
+
+    String getCompanyFromUrl(String url) {
+        String resultString;
+        Pattern pattern = Pattern.compile("certchk/(([^/])*)?");
+        Matcher matcher = pattern.matcher(url);
+
+        if (matcher.find())
+            resultString = matcher.group(1);
+        else
+            resultString = "fail";
+
+        return resultString;
+    }
+
+    String getCodeFromUrl(String url) {
+        String resultString;
+        Pattern pattern = Pattern.compile("\\?q=((([^/])?)*)");
+        Matcher matcher = pattern.matcher(url);
+
+        if (matcher.find())
+            resultString = matcher.group(1);
+        else
+            resultString = "fail";
+
+        return resultString;
     }
 
 }
