@@ -56,15 +56,12 @@ public class LoginActivity extends AppCompatActivity {
             if(!binding.edtLoginId.getText().toString().equals("") && !binding.edtLoginPass.getText().toString().equals("")){
                 // 서버와 로그인 체크
                 loginCheck();
+
             }else if(binding.edtLoginId.getText().toString().equals("")){
                Toast("아이디를 입력해주세요.");
             }else if(binding.edtLoginPass.getText().toString().equals(""))
                 Toast("비밀번호를 입력해주세요.");
-            if(isLogin){
-                finishAffinity();
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
-            }
+
         });
 
         binding.textViewMakeAccount.setOnClickListener(v -> {
@@ -112,18 +109,20 @@ public class LoginActivity extends AppCompatActivity {
                     LoginModel responseData = response.body();
                     if (responseData != null) {
                         if (responseData.isSuccess()) {
-                            isLogin = true;
                             sPmanager.setUserBirth(responseData.getDateofbirth());
                             sPmanager.setUserType(responseData.getUser_type());
                             sPmanager.setUserEmail(responseData.getUser_email());
                             sPmanager.setUserName(responseData.getName());
                             sPmanager.setUserGender(responseData.getGender());
                             sPmanager.setUserPoint(responseData.getPoints());
+
+                                finishAffinity();
+                                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                                startActivity(intent);
+
                         }else {
-                            isLogin =false;
                             reason = responseData.getReason();
                             if(reason!=null){
-                                Log.d("not",reason);
                                 if(reason.equals("NotFoundEmail")){
                                     OneButtonBasicDialog dialog = new OneButtonBasicDialog(LoginActivity.this, new BasicDialogTextModel(
                                             "오류", "아이디 혹은 비밀번호가 일치하지 않습니다.", "확인", ""), new DialogClickListener() {

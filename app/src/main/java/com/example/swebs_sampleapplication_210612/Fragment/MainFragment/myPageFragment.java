@@ -171,12 +171,12 @@ public class myPageFragment extends Fragment {
 
     private void Check_gender(){
         switch (sPmanager.getUserGender()){
-            case "M": // 남자
+            case "male": // 남자
                 binding.mypageGenderTextView.setText("남자");
                 binding.mypageImageViewGender.setVisibility(View.VISIBLE);
                 binding.mypageImageViewGender.setImageResource(R.drawable.ic_male);
                 break;
-            case "F":// 여자
+            case "female":// 여자
                 binding.mypageGenderTextView.setText("여자");
                 binding.mypageImageViewGender.setVisibility(View.VISIBLE);
                 binding.mypageImageViewGender.setImageResource(R.drawable.ic_female);

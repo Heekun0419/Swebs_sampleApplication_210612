@@ -137,15 +137,13 @@
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/radious_button_graycolor"
-                android:backgroundTint="#F3F4F8" />
+                android:background="@drawable/ic_share_link" />
 
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="15dp"
-                android:background="@drawable/radious_button_graycolor"
-                android:backgroundTint="#F3F4F8" />
+                android:background="@drawable/ic_heart_not_filled" />
 
             <Button
                 android:layout_width="0dp"
