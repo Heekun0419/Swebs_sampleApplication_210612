@@ -63,6 +63,8 @@ public class InformationActivity extends AppCompatActivity {
         super.onBackPressed();
         if (requestCode.equals("app_info") && manager.getBackStackEntryCount()==1){
             binding.textViewInformationActivityName.setText("어플정보");
+        }if (requestCode.equals("point") && manager.getBackStackEntryCount()==1){
+            binding.textViewInformationActivityName.setText("스웹스 포인트");
         }
         if(manager.getBackStackEntryCount() ==0){
             finish();

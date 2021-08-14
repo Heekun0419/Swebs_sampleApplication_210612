@@ -48,7 +48,6 @@ public class MakeAccountFragment_success extends Fragment {
             }
         });
 
-
         return binding.getRoot();
     }
 

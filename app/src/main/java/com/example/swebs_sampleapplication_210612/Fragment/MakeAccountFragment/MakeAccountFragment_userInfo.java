@@ -71,10 +71,9 @@ public class MakeAccountFragment_userInfo extends Fragment {
     private void userSingUpUpload() {
         // 서버로 전송할 데이터 만들기.
         HashMap<String, RequestBody> map = new HashMap<>();
-        map.put("inputEmail", RequestBody.create(MediaType.parse("text/plane"), binding.editTextUserInfoUsername.getText().toString()));
+        map.put("inputEmail", RequestBody.create(MediaType.parse("text/plane"), binding.editTextEmail.getText().toString()));
         map.put("inputPassword", RequestBody.create(MediaType.parse("text/plane"), binding.editTextUserInfoPassword.getText().toString()));
-        map.put("inputType", RequestBody.create(MediaType.parse("text/plane"), "guest"));
-        map.put("inputToken", RequestBody.create(MediaType.parse("text/plane"), "token_test"));
+        map.put("inputType", RequestBody.create(MediaType.parse("text/plane"), "normal"));
         map.put("inputName", RequestBody.create(MediaType.parse("text/plane"), binding.editTextUserInfoUsername.getText().toString()));
         map.put("inputNickName", RequestBody.create(MediaType.parse("text/plane"), binding.editTextUserInfoNickname.getText().toString()));
         map.put("inputBday", RequestBody.create(MediaType.parse("text/plane"),binding.editTextUserInfoBirthday.getText().toString()));

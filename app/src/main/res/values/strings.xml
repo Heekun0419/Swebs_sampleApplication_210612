@@ -66,7 +66,27 @@
     <string name="service_terms_agree9"> </string>
     <string name="service_terms_agree10"> </string>
 
+    <!-- 포인트 사용 주의사항 페이지 -->
+    <string name="point_advice_0">포인트 사용시 주의사항</string>
+    <string name="point_advice_1">포인트 적립 안내</string>
+    <string name="point_advice_2"><b>기본적립 :</b> 회원가입, 스캔횟수, 리뷰, \n서베이 참여에 따른 적립과 이벤트 참여시 배송비와 적립금 \n사용분을 제외한 적립</string>
+    <string name="point_advice_3">포인트 적립 기준</string>
+    <string name="point_advice_4">- 구매 후 정품 QR스캔 시 \n- 구매 등록 후 확정 시 \n- 리뷰 작성 후 5일 후 \n- 서베이 참여 후 5일 후 \n- 기타 활동 후 주최 측 승인 후</string>
+    <string name="point_advice_5">탈퇴 후 소멸 : </string>
+    <string name="point_advice_6">소멸된 포인트는 복구 불가</string>
+    <string name="point_advice_7">포인트 사용 안내</string>
+    <string name="point_advice_8"><b>사용기준 :</b> 스웹스에서 이벤트 참여 및 제휴맺은 쇼핑몰 구매결제시에만 사용 가능</string>
+    <string name="point_advice_9">사용제한 : </string>
+    <string name="point_advice_10">상품금액기준 30,000원 이상 구매 시 사용 가능하며, 10000p이상부터 사용가능하고, 최종 실결제금액의 100%까지 사용 가능</string>
+    <string name="point_advice_11">유의사항</string>
+    <string name="point_advice_12">- 특정 이벤트 혹은 프로모션에 의해 적립되는 포인트는 적립과 사용에 있어 별도의 기준(적립율, 유효기간, 사용제한 등)들이 적용될 수 있습니다. \n- 결제 취소 혹은 반품 시, 구매 시 사용했던 포인트는 환불 완료 후 복구됩니다 (단, 유효기간이 남아있지 않은 포인트는 복구 불가) \n- 배송완료된 제품의 반품 시, 결제금액에 따라 지급됐던 포인트는 환불 완료 후 회수됩니다 \n- 포인트 정책 및 관련 규정은 개별적 예고 없이 변동될 수 있습니다.</string>
 
+    <!-- qr code link activity 페이지-->
+    <string name="qr_link_1">해당 상품은 일반 QR/바코드입니다.</string>
+    <string name="qr_link_2">Not certification code</string>
+    <string name="qr_link_3">방금 스캔한 QR코드는 SWEBS 정품과는 관계없는 \n일반 QR/바코드입니다.</string>
+    <string name="qr_link_4">스캔정보 : </string>
+    <string name="qr_link_5">Link 연결</string>
 
 
     <string name="show"> <u>보기</u> </string>
