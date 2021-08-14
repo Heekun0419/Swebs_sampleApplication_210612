@@ -85,7 +85,7 @@
     <string name="qr_link_1">해당 상품은 일반 QR/바코드입니다.</string>
     <string name="qr_link_2">Not certification code</string>
     <string name="qr_link_3">방금 스캔한 QR코드는 SWEBS 정품과는 관계없는 \n일반 QR/바코드입니다.</string>
-    <string name="qr_link_4">스캔정보 : </string>
+    <string name="qr_link_4">스캔정보 </string>
     <string name="qr_link_5">Link 연결</string>
 
 

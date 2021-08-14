@@ -7,14 +7,11 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.camera.core.AspectRatio;
-import androidx.camera.core.Camera;
-import androidx.camera.core.CameraControl;
-import androidx.camera.core.CameraProvider;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageCapture;
@@ -36,10 +33,18 @@ import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.example.swebs_sampleapplication_210612.Activity.AuthenticScanActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
+import com.example.swebs_sampleapplication_210612.Activity.QRLinkActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ScanSettingActivity;
+import com.example.swebs_sampleapplication_210612.Dialog.BasicDialogTextModel;
+import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
+import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
+import com.example.swebs_sampleapplication_210612.Retrofit.Model.ScanHistoryAllDataModel;
+import com.example.swebs_sampleapplication_210612.Retrofit.RetroAPI;
+import com.example.swebs_sampleapplication_210612.Retrofit.RetroClient;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentScanBinding;
 import com.example.swebs_sampleapplication_210612.util.GpsTracker;
 import com.google.android.gms.tasks.Task;
@@ -55,14 +60,17 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import retrofit2.http.PartMap;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ScanFragment extends Fragment {
 
@@ -78,6 +86,8 @@ public class ScanFragment extends Fragment {
     private boolean isScan = false;
     private boolean flash = false;
 
+    private RetroAPI retroAPI;
+
     GpsTracker gpsTracker;
 
     public ScanFragment() {
@@ -89,6 +99,7 @@ public class ScanFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         gpsTracker = new GpsTracker(requireContext());
+        retroAPI = RetroClient.getRetrofitClient().create(RetroAPI.class);
     }
 
     @Override
@@ -257,20 +268,15 @@ public class ScanFragment extends Fragment {
 
                 int valueType = barcode.getValueType();
                 // See API reference for complete list of supported types
-                switch (valueType) {
-                    case Barcode.TYPE_WIFI:
-                        String ssid = barcode.getWifi().getSsid();
-                        String password = barcode.getWifi().getPassword();
-                        int type = barcode.getWifi().getEncryptionType();
-                        break;
-                    case Barcode.TYPE_URL:
-                        String Url = barcode.getUrl().getUrl();
-                        String title = barcode.getUrl().getTitle();
-                        if (!isScan) {
-                            isScan = true;
-                            openScanResult(Url);
-                        }
-                        break;
+                if (!isScan) {
+                    isScan = true;
+
+                    if (valueType == Barcode.TYPE_URL) {
+                        if (barcode.getUrl() != null)
+                            openScanResult(barcode.getUrl().getUrl());
+                    } else {
+                        showQrException("지원하지 않는 형식의 QR CODE");
+                    }
                 }
             }
         }
@@ -301,15 +307,81 @@ public class ScanFragment extends Fragment {
         Log.d("scanLog", "링크 : " + url);
         Log.d("scanLog", "위도 : " + location.get("latitude") + " | 경도 : " + location.get("longitude"));
         Log.d("scanLog", "인증 업체 : " + company + " | 코드 : " + code);
+        HashMap<String, String> pushData = new HashMap<String, String>();
 
+        pushData.put("qrData", url);
+        pushData.put("company", company);
+        pushData.put("code", code);
+        pushData.put("locationLatitude", location.get("latitude"));
+        pushData.put("locationLongitude", location.get("longitude"));
+        pushScanAllData(pushData);
+
+        Intent intent;
         if (company != null && code != null) {
-            Intent intent = new Intent(requireContext(), AuthenticScanActivity.class);
+            intent = new Intent(requireContext(), AuthenticScanActivity.class);
             intent.putExtra("url", url)
                   .putExtra("company", company)
                   .putExtra("code", code);
-            startActivity(intent);
         } else {
+            intent = new Intent(requireContext(), QRLinkActivity.class);
+            intent.putExtra("url", url);
+        }
+        startActivity(intent);
 
+    }
+
+    HashMap<String, RequestBody> setPushScanAllDataBody(HashMap<String, String> data) {
+        HashMap<String, RequestBody> body = new HashMap<>();
+
+        body.put("input_user_srl", RequestBody.create("11", MediaType.parse("text/plane")));
+        body.put("input_os_type", RequestBody.create("Android", MediaType.parse("text/plane")));
+        if (data.get("qrData") != null)
+            body.put("input_qr_data", RequestBody.create(data.get("qrData"), MediaType.parse("text/plane")));
+
+        if (data.get("company") != null)
+            body.put("input_company", RequestBody.create(data.get("company"), MediaType.parse("text/plane")));
+
+        if (data.get("code") != null)
+            body.put("input_code", RequestBody.create(data.get("code"), MediaType.parse("text/plane")));
+
+        if (data.get("locationLatitude") != null)
+            body.put("input_location_latitude", RequestBody.create(data.get("locationLatitude"), MediaType.parse("text/plane")));
+
+        if (data.get("locationLongitude") != null)
+            body.put("input_location_longitude", RequestBody.create(data.get("locationLongitude"), MediaType.parse("text/plane")));
+
+        return body;
+    }
+
+    void pushScanAllData(HashMap<String, String> data) {
+        HashMap<String, RequestBody> body;
+
+        body = setPushScanAllDataBody(data);
+
+        try {
+            Call<ScanHistoryAllDataModel> call = retroAPI.pushScanHistoryAllData(body);
+            call.enqueue(new Callback<ScanHistoryAllDataModel>() {
+                @Override
+                public void onResponse(Call<ScanHistoryAllDataModel> call, Response<ScanHistoryAllDataModel> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            ScanHistoryAllDataModel responseData = response.body();
+                            if (responseData.getSuccess()) {
+                                Log.d("scanLog", "서버 전송 성공");
+                            } else {
+                                Log.d("scanLog", "서버 전송 실패");
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ScanHistoryAllDataModel> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            Log.d("scanLog", "" + e);
         }
     }
 
@@ -355,6 +427,30 @@ public class ScanFragment extends Fragment {
             resultString = "fail";
 
         return resultString;
+    }
+
+    void showQrException(String content) {
+        OneButtonBasicDialog oneButtonBasicDialog = new OneButtonBasicDialog(requireContext()
+                , new BasicDialogTextModel("QR 오류", content, "확인", "")
+                , new DialogClickListener() {
+            @Override
+            public void onPositiveClick(int position) {
+                isScan = false;
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+
+            @Override
+            public void onCloseClick() {
+
+            }
+        });
+        oneButtonBasicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        oneButtonBasicDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        oneButtonBasicDialog.show();
     }
 
 }

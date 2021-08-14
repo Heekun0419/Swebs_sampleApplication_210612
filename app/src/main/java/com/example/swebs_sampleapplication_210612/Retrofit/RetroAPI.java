@@ -1,6 +1,7 @@
 package com.example.swebs_sampleapplication_210612.Retrofit;
 
 import com.example.swebs_sampleapplication_210612.Retrofit.Model.LoginModel;
+import com.example.swebs_sampleapplication_210612.Retrofit.Model.ScanHistoryAllDataModel;
 import com.example.swebs_sampleapplication_210612.Retrofit.Model.SignUpModel;
 
 import java.util.Map;
@@ -12,6 +13,12 @@ import retrofit2.http.POST;
 import retrofit2.http.PartMap;
 
 public interface RetroAPI {
+
+    @Multipart
+    @POST("scan/scan_history_alldata.php")
+    Call<ScanHistoryAllDataModel> pushScanHistoryAllData(
+            @PartMap Map<String, RequestBody> prams
+    );
 
     @Multipart
     @POST("login/sign_up.php")

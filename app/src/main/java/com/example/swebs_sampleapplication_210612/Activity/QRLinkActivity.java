@@ -2,22 +2,31 @@ package com.example.swebs_sampleapplication_210612.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.view.View;
 
 import com.example.swebs_sampleapplication_210612.databinding.ActivityQrlinkBinding;
 
 public class QRLinkActivity extends AppCompatActivity {
 
     private ActivityQrlinkBinding binding;
+
+    private String resultUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding =ActivityQrlinkBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        resultUrl = getIntent().getStringExtra("url");
+        binding.textViewUrlLink.setText(resultUrl);
 
         String content = binding.textViewQrLinkContent.getText().toString();
         SpannableString spannableString = new SpannableString(content);
@@ -26,7 +35,18 @@ public class QRLinkActivity extends AppCompatActivity {
         int end = start + word.length();
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#93E3BE")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         binding.textViewQrLinkContent.setText(spannableString);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        binding.btnQrLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(resultUrl));
+                startActivity(browserIntent);
+            }
+        });
     }
 }
