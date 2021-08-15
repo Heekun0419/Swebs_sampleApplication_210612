@@ -1,8 +1,8 @@
-package com.example.swebs_sampleapplication_210612.Retrofit;
+package com.example.swebs_sampleapplication_210612.Data.Retrofit;
 
-import com.example.swebs_sampleapplication_210612.Retrofit.Model.LoginModel;
-import com.example.swebs_sampleapplication_210612.Retrofit.Model.ScanHistoryAllDataModel;
-import com.example.swebs_sampleapplication_210612.Retrofit.Model.SignUpModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.LoginModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.ScanHistoryAllDataModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.SignUpModel;
 
 import java.util.Map;
 

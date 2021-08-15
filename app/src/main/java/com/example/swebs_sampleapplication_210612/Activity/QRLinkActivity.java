@@ -18,6 +18,7 @@ public class QRLinkActivity extends AppCompatActivity {
     private ActivityQrlinkBinding binding;
 
     private String resultUrl;
+    private int resultBarcodeType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,12 @@ public class QRLinkActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         resultUrl = getIntent().getStringExtra("url");
+        resultBarcodeType = getIntent().getIntExtra("barcodeType", 7);
+
         binding.textViewUrlLink.setText(resultUrl);
+        if (resultBarcodeType != 8) {
+            binding.btnQrLink.setVisibility(View.GONE);
+        }
 
         String content = binding.textViewQrLinkContent.getText().toString();
         SpannableString spannableString = new SpannableString(content);

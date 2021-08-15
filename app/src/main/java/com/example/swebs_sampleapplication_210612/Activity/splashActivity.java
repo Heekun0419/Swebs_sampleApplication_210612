@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
+import com.example.swebs_sampleapplication_210612.Data.Room.MyInfo.MyInfoDatabase;
 import com.example.swebs_sampleapplication_210612.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.ActivitySplashBinding;
 
@@ -45,6 +46,8 @@ public class splashActivity extends AppCompatActivity {
         objectAnimator.setRepeatCount(ValueAnimator.INFINITE);
         objectAnimator.setRepeatMode(ValueAnimator.REVERSE);
         objectAnimator.start();
+
+        MyInfoDatabase myInfoDB = MyInfoDatabase.getDatabase(getApplicationContext());
 
         animateText("정품인증 NO.1 플랫폼");
         permissionCheck();

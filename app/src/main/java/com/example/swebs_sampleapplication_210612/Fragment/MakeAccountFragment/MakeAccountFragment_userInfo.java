@@ -10,10 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.swebs_sampleapplication_210612.Activity.MakeAccountActivity;
-import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.Retrofit.Model.SignUpModel;
-import com.example.swebs_sampleapplication_210612.Retrofit.RetroAPI;
-import com.example.swebs_sampleapplication_210612.Retrofit.RetroClient;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.SignUpModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroAPI;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroClient;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMakeAccountUserInfoBinding;
 
 import java.util.HashMap;

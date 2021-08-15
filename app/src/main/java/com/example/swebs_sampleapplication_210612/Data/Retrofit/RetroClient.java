@@ -1,4 +1,4 @@
-package com.example.swebs_sampleapplication_210612.Retrofit;
+package com.example.swebs_sampleapplication_210612.Data.Retrofit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

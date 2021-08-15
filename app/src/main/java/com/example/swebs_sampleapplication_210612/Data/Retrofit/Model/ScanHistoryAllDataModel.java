@@ -1,4 +1,4 @@
-package com.example.swebs_sampleapplication_210612.Retrofit.Model;
+package com.example.swebs_sampleapplication_210612.Data.Retrofit.Model;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

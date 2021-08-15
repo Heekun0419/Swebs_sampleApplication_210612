@@ -39,12 +39,12 @@ import com.example.swebs_sampleapplication_210612.Activity.AuthenticScanActivity
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.QRLinkActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ScanSettingActivity;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroClient;
 import com.example.swebs_sampleapplication_210612.Dialog.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
-import com.example.swebs_sampleapplication_210612.Retrofit.Model.ScanHistoryAllDataModel;
-import com.example.swebs_sampleapplication_210612.Retrofit.RetroAPI;
-import com.example.swebs_sampleapplication_210612.Retrofit.RetroClient;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.ScanHistoryAllDataModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroAPI;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentScanBinding;
 import com.example.swebs_sampleapplication_210612.util.GpsTracker;
 import com.google.android.gms.tasks.Task;
@@ -86,9 +86,10 @@ public class ScanFragment extends Fragment {
     private boolean isScan = false;
     private boolean flash = false;
 
-    private RetroAPI retroAPI;
+    private final int barcodeTypeUrl = 1;
+    private final int barcodeTypeText = 2;
 
-    GpsTracker gpsTracker;
+    private RetroAPI retroAPI;
 
     public ScanFragment() {
         // Required empty public constructor
@@ -97,8 +98,6 @@ public class ScanFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        gpsTracker = new GpsTracker(requireContext());
         retroAPI = RetroClient.getRetrofitClient().create(RetroAPI.class);
     }
 
@@ -139,10 +138,10 @@ public class ScanFragment extends Fragment {
         binding.includedAppbarScan.imageButton.setOnClickListener(v ->
                 ((MainActivity)requireActivity()).drawer.openDrawer(GravityCompat.START));
 
-
         // 튜토리얼 페이지 닫기
         binding.tutorialScanPage.textViewScanTutorialClose.setOnClickListener(v ->
                 binding.tutorialScanPage.getRoot().setVisibility(View.GONE));
+
         binding.tutorialScanPage.imageButton5.setOnClickListener(v -> {
             binding.tutorialScanPage.getRoot().setVisibility(View.GONE);
         });
@@ -270,32 +269,31 @@ public class ScanFragment extends Fragment {
                 // See API reference for complete list of supported types
                 if (!isScan) {
                     isScan = true;
-
-                    if (valueType == Barcode.TYPE_URL) {
+                    String scanData = null;
+                    if (valueType == Barcode.TYPE_URL) { // int 8
                         if (barcode.getUrl() != null)
-                            openScanResult(barcode.getUrl().getUrl());
+                            scanData = barcode.getUrl().getUrl();
+                    } else if (valueType == Barcode.TYPE_TEXT) { // int 7
+                        if (barcode.getRawValue() != null)
+                            scanData = barcode.getRawValue();
+                    }
+
+                    if (scanData != null) {
+                        openScanResult(scanData, barcode.getValueType());
                     } else {
                         showQrException("지원하지 않는 형식의 QR CODE");
                     }
                 }
             }
         }
+
     }
 
-    HashMap<String, String> getGpsLocation() {
-        HashMap<String, String> resultMap = new HashMap<String, String>();
-
-        resultMap.put("latitude", Double.toString(gpsTracker.getLatitude()));
-        resultMap.put("longitude", Double.toString(gpsTracker.getLongitude()));
-
-        return resultMap;
-    }
-
-    void openScanResult(String url) {
+    void openScanResult(String url, int barcodeType) {
         String company = null, code = null;
         HashMap<String, String> location;
 
-        if (authSwebsFromUrl(url)) {
+        if (barcodeType == 8 && authSwebsFromUrl(url)) {
             company = getCompanyFromUrl(url);
             code = getCodeFromUrl(url);
         }
@@ -324,7 +322,8 @@ public class ScanFragment extends Fragment {
                   .putExtra("code", code);
         } else {
             intent = new Intent(requireContext(), QRLinkActivity.class);
-            intent.putExtra("url", url);
+            intent.putExtra("url", url)
+                  .putExtra("barcodeType", barcodeType);
         }
         startActivity(intent);
 
@@ -351,6 +350,17 @@ public class ScanFragment extends Fragment {
             body.put("input_location_longitude", RequestBody.create(data.get("locationLongitude"), MediaType.parse("text/plane")));
 
         return body;
+    }
+
+    HashMap<String, String> getGpsLocation() {
+        HashMap<String, String> resultMap = new HashMap<String, String>();
+
+        GpsTracker gpsTracker = new GpsTracker(requireContext());
+
+        resultMap.put("latitude", Double.toString(gpsTracker.getLatitude()));
+        resultMap.put("longitude", Double.toString(gpsTracker.getLongitude()));
+
+        return resultMap;
     }
 
     void pushScanAllData(HashMap<String, String> data) {
