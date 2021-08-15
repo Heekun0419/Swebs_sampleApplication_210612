@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class EventInfoFragment extends Fragment {
+
     private FragmentEventInfoBinding binding;
     private ArrayList<ChattingItem> chattingItems = new ArrayList<>();
     private ChatViewModel chatViewModel;

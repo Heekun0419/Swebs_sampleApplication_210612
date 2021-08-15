@@ -55,7 +55,7 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
-        CertifiedCompanyAdapter certifiedCompanyAdapter = new CertifiedCompanyAdapter(requireContext());
+        CertifiedCompanyAdapter certifiedCompanyAdapter = new CertifiedCompanyAdapter(requireContext(),this);
         binding.recyclerViewCertifiedCompany.setLayoutManager(linearLayoutManager);
         binding.recyclerViewCertifiedCompany.setAdapter(certifiedCompanyAdapter);
 
@@ -108,6 +108,10 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
        }else if(code.equals("survey")){
            Intent intent = new Intent(requireContext(), ItemClickViewActivty.class);
            intent.putExtra("resultCode", "survey");
+           startActivity(intent);
+       }else if(code.equals("certified")){
+           Intent intent = new Intent(requireContext(), ItemClickViewActivty.class);
+           intent.putExtra("resultCode", "certified");
            startActivity(intent);
        }
     }

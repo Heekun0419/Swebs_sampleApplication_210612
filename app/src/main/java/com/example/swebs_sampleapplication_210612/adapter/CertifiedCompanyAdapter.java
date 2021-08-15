@@ -21,9 +21,11 @@ public class CertifiedCompanyAdapter extends RecyclerView.Adapter<CertifiedCompa
     Context context;
     private ItemProductCertifiedCompanyBinding binding;
     String ImageUrl = "https://i.pinimg.com/originals/a2/4f/e6/a24fe6cabab71872039e30af52e7dd9e.png";
+    OnItemClickListener listener;
 
-    public CertifiedCompanyAdapter(Context context){
+    public CertifiedCompanyAdapter(Context context, OnItemClickListener listener){
         this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -33,7 +35,7 @@ public class CertifiedCompanyAdapter extends RecyclerView.Adapter<CertifiedCompa
 
         binding = ItemProductCertifiedCompanyBinding.inflate(LayoutInflater.from(context),parent,false);
 
-        return new Certified_itemViewHolder(binding.getRoot());
+        return new Certified_itemViewHolder(binding.getRoot(),listener);
     }
 
     @Override
@@ -59,15 +61,21 @@ public class CertifiedCompanyAdapter extends RecyclerView.Adapter<CertifiedCompa
         return 10;
     }
 
-    public static class Certified_itemViewHolder extends RecyclerView.ViewHolder{
-
+    public static class Certified_itemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView view;
 
-        public Certified_itemViewHolder(@NonNull @NotNull View itemView) {
+        OnItemClickListener listener;
+        public Certified_itemViewHolder(@NonNull @NotNull View itemView, OnItemClickListener listener) {
             super(itemView);
+            this.listener =listener;
             view = itemView.findViewById(R.id.imageView_product_main_profile);
+            itemView.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View v) {
+            listener.onItemSelected(itemView,getAdapterPosition(),"certified");
+        }
     }
 
     private void GlideImage(ImageView view){
