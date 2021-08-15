@@ -24,7 +24,7 @@ import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.Fragment.bottomSheetFragment;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Fragment.MainFragment.ScanFragment;
-import com.example.swebs_sampleapplication_210612.SharedPreference.SPmanager;
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityMainBinding;
 import com.example.swebs_sampleapplication_210612.Fragment.MainFragment.myPageFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MainFragment.productionInfoFragment;

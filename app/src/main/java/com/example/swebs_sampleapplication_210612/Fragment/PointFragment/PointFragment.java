@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
 import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.SharedPreference.SPmanager;
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentPointBinding;
 
 public class PointFragment extends Fragment {

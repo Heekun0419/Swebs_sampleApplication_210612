@@ -40,6 +40,7 @@ import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.QRLinkActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ScanSettingActivity;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroClient;
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.Dialog.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
@@ -90,7 +91,7 @@ public class ScanFragment extends Fragment {
     private final int barcodeTypeText = 2;
 
     private RetroAPI retroAPI;
-
+    private SPmanager sPmanager;
     public ScanFragment() {
         // Required empty public constructor
     }
@@ -105,6 +106,8 @@ public class ScanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentScanBinding.inflate(getLayoutInflater());
+        sPmanager = new SPmanager(requireContext());
+        binding.tutorialScanPage.getRoot().setVisibility(View.GONE);
 
         String content = binding.textVIewScanExplain.getText().toString();
         SpannableString spannableString = new SpannableString(content);
@@ -139,11 +142,14 @@ public class ScanFragment extends Fragment {
                 ((MainActivity)requireActivity()).drawer.openDrawer(GravityCompat.START));
 
         // 튜토리얼 페이지 닫기
-        binding.tutorialScanPage.textViewScanTutorialClose.setOnClickListener(v ->
-                binding.tutorialScanPage.getRoot().setVisibility(View.GONE));
+        binding.tutorialScanPage.textViewScanTutorialClose.setOnClickListener(v -> {
+            binding.tutorialScanPage.getRoot().setVisibility(View.GONE);
+            sPmanager.setScanTutorialExit(true);
+        });
 
         binding.tutorialScanPage.imageButton5.setOnClickListener(v -> {
             binding.tutorialScanPage.getRoot().setVisibility(View.GONE);
+            sPmanager.setScanTutorialExit(true);
         });
 
         // Bottom Sheet 열기
@@ -187,21 +193,25 @@ public class ScanFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         isScan = false;
-        cameraProviderFuture.addListener(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if(ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-                        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
-                    }
-                    ProcessCameraProvider processCameraProvider = (ProcessCameraProvider) cameraProviderFuture.get();
-                    bindPreView(processCameraProvider);
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
+        cameraProviderFuture.addListener(() -> {
+            try {
+                if(ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
                 }
+                ProcessCameraProvider processCameraProvider = (ProcessCameraProvider) cameraProviderFuture.get();
+                bindPreView(processCameraProvider);
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
             }
         }, ContextCompat.getMainExecutor(requireContext()));
+
+        if(sPmanager.getScanTutorialExit()){
+            binding.tutorialScanPage.getRoot().setVisibility(View.GONE);
+        }else {
+            binding.tutorialScanPage.getRoot().setVisibility(View.VISIBLE);
+        }
     }
 
     private void bindPreView(ProcessCameraProvider processCameraProvider) {

@@ -1,4 +1,4 @@
-package com.example.swebs_sampleapplication_210612.SharedPreference;
+package com.example.swebs_sampleapplication_210612.Data.SharedPreference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -118,6 +118,36 @@ public class SPmanager {
         return (context.getSharedPreferences(SP_data.USER_INFO.USER_POINT, Context.MODE_PRIVATE))
                 .getString(SP_data.USER_INFO.USER_POINT,"0");
     }
+    public void setScanTutorialExit(boolean exit){
+        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.SCAN_TUTORIAL, Context.MODE_PRIVATE)).edit();
+        editor.putBoolean(SP_data.SCAN_TUTORIAL,exit);
+        editor.apply();
+    }
 
+    public void removeScanTutorialExit(){
+        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.SCAN_TUTORIAL, Context.MODE_PRIVATE)).edit();
+        editor.remove(SP_data.SCAN_TUTORIAL);
+        editor.apply();
+    }
+    public boolean getScanTutorialExit(){
+        return (context.getSharedPreferences(SP_data.SCAN_TUTORIAL, Context.MODE_PRIVATE))
+                .getBoolean(SP_data.SCAN_TUTORIAL,false);
+    }
+
+    public void setMyTutorialExit(boolean exit){
+        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.MY_TUTORIAL, Context.MODE_PRIVATE)).edit();
+        editor.putBoolean(SP_data.MY_TUTORIAL,exit);
+        editor.apply();
+    }
+
+    public void removeMyTutorialExit(){
+        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.MY_TUTORIAL, Context.MODE_PRIVATE)).edit();
+        editor.remove(SP_data.MY_TUTORIAL);
+        editor.apply();
+    }
+    public boolean getMyTutorialExit(){
+        return (context.getSharedPreferences(SP_data.MY_TUTORIAL, Context.MODE_PRIVATE))
+                .getBoolean(SP_data.MY_TUTORIAL,false);
+    }
 
 }

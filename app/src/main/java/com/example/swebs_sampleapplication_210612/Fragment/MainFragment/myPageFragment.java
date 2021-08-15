@@ -2,20 +2,11 @@ package com.example.swebs_sampleapplication_210612.Fragment.MainFragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,15 +17,10 @@ import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
 import com.example.swebs_sampleapplication_210612.Activity.LoginActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.SharedPreference.SP_data;
-import com.example.swebs_sampleapplication_210612.SharedPreference.SPmanager;
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMyPageBinding;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Locale;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class myPageFragment extends Fragment {
 
@@ -62,13 +48,19 @@ public class myPageFragment extends Fragment {
         binding = FragmentMyPageBinding.inflate(inflater,container,false);
         // user type 검사해서 View 변환
         sPmanager = new SPmanager(context);
+        binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
+
         Check_userType();
         SetUserInfo();
         // 닫기버튼 누르면 튜토리얼 닫힘.
         binding.tutorialMyPage.textViewMyPageTutorialClose.setOnClickListener(v -> {
-            binding.tutorialMyPage.getRoot().setVisibility(View.GONE); });
+            binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
+            sPmanager.setMyTutorialExit(true);
+        });
         binding.tutorialMyPage.imageButton5.setOnClickListener(v -> {
-            binding.tutorialMyPage.getRoot().setVisibility(View.GONE); });
+            binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
+            sPmanager.setMyTutorialExit(true);
+        });
 
         // 네비게이션 드로어 열기
         binding.includedAppbarMy.imageButton.setOnClickListener(v -> {
@@ -134,9 +126,14 @@ public class myPageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("Net", "mypageOnResume");
         Check_userType();
         SetUserInfo();
+        if(sPmanager.getMyTutorialExit()){
+            binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
+        }else{
+            binding.tutorialMyPage.getRoot().setVisibility(View.VISIBLE);
+        }
+
     }
 
     private void setEmail(){

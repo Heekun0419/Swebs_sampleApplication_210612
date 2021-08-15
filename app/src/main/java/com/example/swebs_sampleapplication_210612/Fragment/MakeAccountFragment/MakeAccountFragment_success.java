@@ -9,19 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MakeAccountActivity;
-import com.example.swebs_sampleapplication_210612.Activity.PermissionCheckActivity;
-import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
-import com.example.swebs_sampleapplication_210612.Dialog.PermissionDialog;
-import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.SharedPreference.SPmanager;
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMakeAccountSuccessBinding;
-
-import java.security.Permission;
 
 public class MakeAccountFragment_success extends Fragment {
 

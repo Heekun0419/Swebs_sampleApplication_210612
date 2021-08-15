@@ -15,7 +15,7 @@ import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.LoginModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroClient;
-import com.example.swebs_sampleapplication_210612.SharedPreference.SPmanager;
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityLoginBinding;
 
 import java.util.HashMap;

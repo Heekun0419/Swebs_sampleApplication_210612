@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -15,15 +14,13 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
-import com.example.swebs_sampleapplication_210612.Activity.LoginActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Dialog.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.LanguageDialog;
-import com.example.swebs_sampleapplication_210612.Dialog.PermissionDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.TwoButtonBasicDialog;
 import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.SharedPreference.SPmanager;
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentAppInformationBinding;
 
 public class AppInformationFragment extends Fragment {

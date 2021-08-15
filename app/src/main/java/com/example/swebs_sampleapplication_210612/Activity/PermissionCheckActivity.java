@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.PermissionDialog;
-import com.example.swebs_sampleapplication_210612.SharedPreference.SPmanager;
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityPermissionCheckBinding;
 
 public class PermissionCheckActivity extends AppCompatActivity {
