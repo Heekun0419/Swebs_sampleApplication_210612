@@ -3,14 +3,20 @@ package com.example.swebs_sampleapplication_210612.Activity;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.swebs_sampleapplication_210612.Data.Room.MyInfo.MyInfoDatabase;
+import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
+import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.SwebsDatabase;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.ActivitySplashBinding;
 
@@ -45,10 +51,16 @@ public class splashActivity extends AppCompatActivity {
         objectAnimator.setRepeatMode(ValueAnimator.REVERSE);
         objectAnimator.start();
 
-        MyInfoDatabase myInfoDB = MyInfoDatabase.getDatabase(getApplicationContext());
+        dbInstanceCreate dbInstanceCreate = new dbInstanceCreate(getApplicationContext());
+        dbInstanceCreate.execute();
 
         animateText("정품인증 NO.1 플랫폼");
-        permissionCheck();
+        //permissionCheck();
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 
     Runnable runnable = new Runnable() {
@@ -78,7 +90,7 @@ public class splashActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        },2400);
+        },1200);
     }
     private void startPermissionActivity(){
         new Handler().postDelayed(new Runnable() {
@@ -97,6 +109,31 @@ public class splashActivity extends AppCompatActivity {
             startMainActivity();
         }else{
             startPermissionActivity();
+        }
+    }
+
+    private class dbInstanceCreate extends AsyncTask<Void, Void, Void> {
+        @SuppressLint("StaticFieldLeak")
+        private final Context context;
+
+        public dbInstanceCreate(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                SwebsDatabase db = SwebsDatabase.getDatabase(context);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            permissionCheck();
         }
     }
 }
