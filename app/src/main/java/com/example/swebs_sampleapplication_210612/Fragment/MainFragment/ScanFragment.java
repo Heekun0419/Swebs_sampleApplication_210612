@@ -34,6 +34,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 
 import com.example.swebs_sampleapplication_210612.Activity.AuthenticScanActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
@@ -92,6 +94,8 @@ public class ScanFragment extends Fragment {
 
     private RetroAPI retroAPI;
     private SPmanager sPmanager;
+    private Animation fadeOut = new AlphaAnimation(1,0);
+    private Animation fadeIn = new AlphaAnimation(0,1);
     public ScanFragment() {
         // Required empty public constructor
     }
@@ -208,9 +212,13 @@ public class ScanFragment extends Fragment {
         }, ContextCompat.getMainExecutor(requireContext()));
 
         if(sPmanager.getScanTutorialExit()){
+            fadeOut.setDuration(500);
             binding.tutorialScanPage.getRoot().setVisibility(View.GONE);
+            binding.tutorialScanPage.getRoot().setAnimation(fadeOut);
         }else {
+            fadeIn.setDuration(700);
             binding.tutorialScanPage.getRoot().setVisibility(View.VISIBLE);
+            binding.tutorialScanPage.getRoot().setAnimation(fadeIn);
         }
     }
 
