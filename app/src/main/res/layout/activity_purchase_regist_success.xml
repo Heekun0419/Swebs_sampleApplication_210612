@@ -256,11 +256,14 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/textView_purchase_store_name"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
+                android:textColor="#999999"
+                android:layout_gravity="center_vertical"
                 android:textSize="15dp" />
 
             <TextView
@@ -274,8 +277,11 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/textView_product_name"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:textColor="#999999"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
@@ -292,8 +298,11 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/textView_product_srl"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="#999999"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
@@ -305,15 +314,18 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="25dp"
                 android:paddingTop="20dp"
-                android:text="* 구매일"
+                android:text="구매일"
                 android:textColor="@color/black"
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
 
             <TextView
+                android:id="@+id/textView_purchase_date"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="#999999"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"

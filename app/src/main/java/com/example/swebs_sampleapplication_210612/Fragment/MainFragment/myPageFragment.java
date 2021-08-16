@@ -19,6 +19,7 @@ import com.example.swebs_sampleapplication_210612.Activity.AdressModifyActivity;
 import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
 import com.example.swebs_sampleapplication_210612.Activity.LoginActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
+import com.example.swebs_sampleapplication_210612.Activity.ModifyUserInfoActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.Entity.MyInfo;
 import com.example.swebs_sampleapplication_210612.R;
@@ -89,6 +90,14 @@ public class myPageFragment extends Fragment {
         binding.includedAppbarMy.imageButton2.setOnClickListener(v ->
                 ((MainActivity) requireActivity()).BottomSheetOpen()
         );
+
+        binding.mypageBirthday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent modify_userInfo_intent = new Intent(requireContext(), ModifyUserInfoActivity.class);
+                startActivity(modify_userInfo_intent);
+            }
+        });
 
         // Point 정책 자세히 보기
         binding.mypagePoint.setOnClickListener(v -> {

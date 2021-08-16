@@ -16,7 +16,15 @@ public class PurchaseRegistSuccessActivity extends AppCompatActivity {
         binding = ActivityPurchaseRegistSuccessBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        String store = getIntent().getStringExtra("store");
+        String productName = getIntent().getStringExtra("productName");
+        String productSrl = getIntent().getStringExtra("productSrl");
+        String Date = getIntent().getStringExtra("date");
 
+        binding.textViewProductName.setText(productName);
+        binding.textViewPurchaseDate.setText(Date);
+        binding.textViewPurchaseStoreName.setText(store);
+        binding.textViewProductSrl.setText(productSrl);
 
     }
 }
