@@ -1,6 +1,7 @@
 package com.example.swebs_sampleapplication_210612.Data.Room.Swebs;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -15,10 +16,17 @@ import java.util.List;
 public interface SwebsDao {
     // MyInfo Table Start
     @Query("SELECT * FROM myinfo")
-    LiveData<List<MyInfo>> myInfo_getAll();
+    LiveData<List<MyInfo>> getAllLiveDataForMyInfo();
 
-    @Query("SELECT value FROM myinfo WHERE 'key' = :inputKey")
-    LiveData<String> myInfo_getValue(String inputKey);
+    @Query("SELECT * FROM myinfo")
+    List<MyInfo> getAllForMyInfo();
+
+    @Query("SELECT value FROM myinfo WHERE `key` = :inputKey")
+    LiveData<String> getValueLiveDataForMyInfo(String inputKey);
+
+    @Query("SELECT value FROM myinfo WHERE `key` = :inputKey")
+    String getValueForMyInfo(String inputKey);
+
 
     @Insert
     void myInfo_insert(MyInfo myInfo);

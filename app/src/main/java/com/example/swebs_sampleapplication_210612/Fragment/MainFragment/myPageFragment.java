@@ -39,7 +39,6 @@ public class myPageFragment extends Fragment {
         Locale locale;
         locale = requireContext().getResources().getConfiguration().getLocales().get(0);
         country = locale.getCountry();
-
     }
 
     @Override
@@ -99,7 +98,6 @@ public class myPageFragment extends Fragment {
     }
 
     private void SetUserInfo(){
-
         //국가 설정
         if(country.equals("KR")) {
           binding.mypageCountryTextView.setText("대한민국");

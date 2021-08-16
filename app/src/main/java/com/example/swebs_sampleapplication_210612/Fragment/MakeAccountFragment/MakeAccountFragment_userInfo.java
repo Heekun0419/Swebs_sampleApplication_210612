@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.swebs_sampleapplication_210612.Activity.MakeAccountActivity;
+import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.SignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroClient;
@@ -28,6 +29,9 @@ public class MakeAccountFragment_userInfo extends Fragment {
     private FragmentMakeAccountUserInfoBinding binding;
     RetroAPI retroAPI;
     private String gender;
+
+    private MyInfoRepository myInfoRepository;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,9 @@ public class MakeAccountFragment_userInfo extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentMakeAccountUserInfoBinding.inflate(inflater,container,false);
+
+        myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
+        myInfoRepository.insertMyInfo("heegun", "123123123");
 
         binding.btnMakeAccount.setOnClickListener(v -> {
             userSingUpUpload();

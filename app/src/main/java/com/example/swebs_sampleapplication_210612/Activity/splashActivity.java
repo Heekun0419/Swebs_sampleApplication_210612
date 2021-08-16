@@ -14,11 +14,18 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
+import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
+import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.Entity.MyInfo;
 import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.SwebsDatabase;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.ActivitySplashBinding;
+import com.example.swebs_sampleapplication_210612.util.UserSignUp;
+
+import java.util.List;
 
 public class splashActivity extends AppCompatActivity {
 
@@ -29,6 +36,7 @@ public class splashActivity extends AppCompatActivity {
     Handler handler = new Handler();
     private SPmanager sPmanager = new SPmanager(this);
 
+    private MyInfoRepository myInfoRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +44,8 @@ public class splashActivity extends AppCompatActivity {
 
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        myInfoRepository = new MyInfoRepository(getApplication());
 
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -46,6 +56,7 @@ public class splashActivity extends AppCompatActivity {
                 PropertyValuesHolder.ofFloat("scaleX",1.1f),
                 PropertyValuesHolder.ofFloat("scaleY",1.1f)
         );
+
         objectAnimator.setDuration(1000);
         objectAnimator.setRepeatCount(ValueAnimator.INFINITE);
         objectAnimator.setRepeatMode(ValueAnimator.REVERSE);
@@ -54,9 +65,19 @@ public class splashActivity extends AppCompatActivity {
         dbInstanceCreate dbInstanceCreate = new dbInstanceCreate(getApplicationContext());
         dbInstanceCreate.execute();
 
-        animateText("정품인증 NO.1 플랫폼");
-        //permissionCheck();
+        loginCheck();
     }
+
+    private void loginCheck() {
+        if (myInfoRepository.getValue("userSrl") != null) {
+            Log.d("guest", "이미 로그인 되어있다.");
+        } else {
+            // 로그인 데이터가 없다.
+            Log.d("guest", "로그인 안되어있으니 게스트 생성");
+            new UserSignUp(getApplication()).signUpForGuest();
+        }
+    }
+
 
     @Override
     public void onBackPressed() {
