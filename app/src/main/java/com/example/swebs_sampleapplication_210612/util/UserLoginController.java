@@ -9,6 +9,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.GuestSignU
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroClient;
 import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.Entity.MyInfo;
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,19 +21,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserSignUp {
-    private RetroAPI retroAPI;
-    private Context context;
-    private MyInfoRepository myInfoRepository;
+public class UserLoginController {
+    private final RetroAPI retroAPI;
+    private final Context context;
+    private final MyInfoRepository myInfoRepository;
+    private SPmanager sPmanager;
 
-    public UserSignUp(Application application) {
+    public UserLoginController(Application application) {
         this.retroAPI = RetroClient.getRetrofitClient().create(RetroAPI.class);
         this.context = application.getApplicationContext();
         this.myInfoRepository = new MyInfoRepository(application);
+        this.sPmanager = new SPmanager(application.getApplicationContext());
     }
 
-    public boolean signUpForGuest() {
-        Log.d("signUp", "guest signUp Progress");
+    public void signUpForGuest() {
         HashMap<String, RequestBody> body = new HashMap<>();
 
         getRegionFromSystem getRegionFromSystem = new getRegionFromSystem(context);
@@ -43,27 +45,30 @@ public class UserSignUp {
         call.enqueue(new Callback<GuestSignUpModel>() {
             @Override
             public void onResponse(Call<GuestSignUpModel> call, Response<GuestSignUpModel> response) {
-                Log.d("signUp", "1");
                 if (!response.isSuccessful())
                     return;
-                Log.d("signUp", "2");
+
                 if (response.body() != null) {
                     GuestSignUpModel responseData = response.body();
                     if (responseData.isSuccess()) {
                         myInfoRepository.insertMyInfo("userSrl", responseData.getUserSrl());
                         myInfoRepository.insertMyInfo("token", responseData.getToken());
                         myInfoRepository.insertMyInfo("nickName", responseData.getNickname());
+                        myInfoRepository.insertMyInfo("name", responseData.getNickname());
+                        myInfoRepository.insertMyInfo("point", responseData.getPoint());
                         myInfoRepository.insertMyInfo("userType", "guest");
+
+
+                        sPmanager.setUserType("guest");
+                        sPmanager.setUserSrl(responseData.getUserSrl());
+                        sPmanager.setUserToken(responseData.getToken());
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<GuestSignUpModel> call, Throwable t) {
-
             }
         });
-
-        return false;
     }
 }

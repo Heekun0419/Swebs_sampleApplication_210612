@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoReposito
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.SignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroClient;
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMakeAccountUserInfoBinding;
 
 import java.util.HashMap;
@@ -30,6 +32,8 @@ public class MakeAccountFragment_userInfo extends Fragment {
     RetroAPI retroAPI;
     private String gender;
 
+    private SPmanager sPmanager;
+
     private MyInfoRepository myInfoRepository;
 
     @Override
@@ -37,7 +41,10 @@ public class MakeAccountFragment_userInfo extends Fragment {
         super.onCreate(savedInstanceState);
 
         retroAPI = RetroClient.getRetrofitClient().create(RetroAPI.class);
+        sPmanager = new SPmanager(requireContext());
 
+        myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
+        myInfoRepository.insertMyInfo("data11", "dddddd");
     }
 
     @Override
@@ -45,9 +52,6 @@ public class MakeAccountFragment_userInfo extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentMakeAccountUserInfoBinding.inflate(inflater,container,false);
-
-        myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
-        myInfoRepository.insertMyInfo("heegun", "123123123");
 
         binding.btnMakeAccount.setOnClickListener(v -> {
             userSingUpUpload();
@@ -62,6 +66,7 @@ public class MakeAccountFragment_userInfo extends Fragment {
             binding.textViewMakeAccountGenderMale.setTextColor(Color.parseColor("#C2C3C7"));
             gender = "female";
         });
+
         binding.btnGenderMale.setOnClickListener(v -> {
             binding.btnGenderMale.setSelected(true);
             binding.textViewMakeAccountGenderMale.setTextColor(Color.parseColor("#21CCB2"));
@@ -86,6 +91,7 @@ public class MakeAccountFragment_userInfo extends Fragment {
         map.put("inputPhoneNumber", RequestBody.create(MediaType.parse("text/plane"), binding.editTextUserInfoPhoneNumber.getText().toString()));
         map.put("inputGender", RequestBody.create(MediaType.parse("text/plane"),gender));
         map.put("inputRegion", RequestBody.create(MediaType.parse("text/plane"), "korea"));
+        map.put("inputSrl", RequestBody.create(sPmanager.getUserSrl(), MediaType.parse("text/plane")));
 
         Call<SignUpModel> call = retroAPI.userSingUp(map);
         call.enqueue(new Callback<SignUpModel>() {

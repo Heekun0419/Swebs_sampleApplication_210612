@@ -17,39 +17,27 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MyInfoRepository {
-    Application application;
-    SwebsDao swebsDao;
-    List<MyInfo> mMyInfoAll;
-
-    HashMap<String, String> mMyInfoAllFormHashMap;
+    public SwebsDao swebsDao;
+    LiveData<List<MyInfo>> mMyInfoAll;
 
     public MyInfoRepository(Application application) {
-        this.application = application;
-        SwebsDatabase swebsDatabase = SwebsDatabase.getDatabase(this.application);
+        SwebsDatabase swebsDatabase = SwebsDatabase.getDatabase(application);
         this.swebsDao = swebsDatabase.swebsDao();
 
-        new getAllFromDao(this.swebsDao).execute();
+        mMyInfoAll = this.swebsDao.getAllLiveDataForMyInfo();
+    }
+
+    public LiveData<List<MyInfo>> getAllToLiveData() {
+        return mMyInfoAll;
+    }
+
+    public LiveData<String> getValueToLiveData(String key) {
+        return swebsDao.getValueLiveDataForMyInfo(key);
     }
 
     public void insertMyInfo(String key, String value) {
         MyInfo myInfo = new MyInfo(key, value);
         new insertAsyncTask(swebsDao).execute(myInfo);
-    }
-
-    public List<MyInfo> getMyInfo() {
-        return mMyInfoAll;
-    }
-
-
-    public String getValue(String key) {
-        String returnData;
-        Log.d("testtest", "발싸");
-        if (mMyInfoAllFormHashMap.get(key) != null)
-            returnData = mMyInfoAllFormHashMap.get(key);
-        else
-            returnData = "NotFoundKey";
-
-        return returnData;
     }
 
     // Insert AsyncTask
@@ -69,26 +57,6 @@ public class MyInfoRepository {
             } else {
                 Log.d("Dao", "Update");
                 mDao.myInfo_update(myInfos[0]);
-            }
-            return null;
-        }
-    }
-
-
-    private class getAllFromDao extends AsyncTask<Void, Void, Void> {
-        private SwebsDao dao;
-
-        public getAllFromDao(SwebsDao dao) {
-            this.dao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            mMyInfoAll = dao.getAllForMyInfo();
-
-            Log.d("testtest", "히힛 : " + mMyInfoAll.size());
-            for(int i=0; i<mMyInfoAll.size(); i++) {
-                mMyInfoAllFormHashMap.put(mMyInfoAll.get(i).getKey(), mMyInfoAll.get(i).getValue());
             }
             return null;
         }

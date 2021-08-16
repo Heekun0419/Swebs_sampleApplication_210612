@@ -13,6 +13,8 @@ public class GuestSignUpModel {
     @Nullable
     private String nickname;
     @Nullable
+    private String point;
+    @Nullable
     private String reason;
 
     public boolean isSuccess() {
@@ -61,5 +63,14 @@ public class GuestSignUpModel {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    @Nullable
+    public String getPoint() {
+        return point;
+    }
+
+    public void setPoint(@Nullable String point) {
+        this.point = point;
     }
 }

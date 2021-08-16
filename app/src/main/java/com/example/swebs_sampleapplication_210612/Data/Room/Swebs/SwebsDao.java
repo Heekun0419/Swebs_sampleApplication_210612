@@ -18,9 +18,6 @@ public interface SwebsDao {
     @Query("SELECT * FROM myinfo")
     LiveData<List<MyInfo>> getAllLiveDataForMyInfo();
 
-    @Query("SELECT * FROM myinfo")
-    List<MyInfo> getAllForMyInfo();
-
     @Query("SELECT value FROM myinfo WHERE `key` = :inputKey")
     LiveData<String> getValueLiveDataForMyInfo(String inputKey);
 

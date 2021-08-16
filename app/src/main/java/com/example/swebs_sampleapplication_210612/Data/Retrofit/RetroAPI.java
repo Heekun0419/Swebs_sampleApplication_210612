@@ -34,7 +34,7 @@ public interface RetroAPI {
     );
 
     @Multipart
-    @POST("login/login.php")
+    @POST("login/login_email.php")
     Call<LoginModel> userLogin(
             @PartMap Map<String, RequestBody> prams
     );

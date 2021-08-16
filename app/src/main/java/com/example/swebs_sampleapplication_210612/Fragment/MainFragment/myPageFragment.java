@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,10 +19,13 @@ import com.example.swebs_sampleapplication_210612.Activity.AdressModifyActivity;
 import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
 import com.example.swebs_sampleapplication_210612.Activity.LoginActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
+import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
+import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.Entity.MyInfo;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMyPageBinding;
 
+import java.util.List;
 import java.util.Locale;
 
 public class myPageFragment extends Fragment {
@@ -32,6 +36,9 @@ public class myPageFragment extends Fragment {
     private SPmanager sPmanager;
     private Animation fadeOut = new AlphaAnimation(1,0);
     private Animation fadeIn = new AlphaAnimation(0,1);
+
+    private MyInfoRepository myInfoRepository;
+
     public myPageFragment(Context context) {
         this.context = context;
     }
@@ -43,6 +50,8 @@ public class myPageFragment extends Fragment {
         Locale locale;
         locale = requireContext().getResources().getConfiguration().getLocales().get(0);
         country = locale.getCountry();
+
+        myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
     }
 
     @Override
@@ -61,6 +70,7 @@ public class myPageFragment extends Fragment {
             binding.tutorialMyPage.getRoot().setAnimation(fadeOut);
             sPmanager.setMyTutorialExit(true);
         });
+
         binding.tutorialMyPage.imageButton5.setOnClickListener(v -> {
             binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
             binding.tutorialMyPage.getRoot().setAnimation(fadeOut);
@@ -74,9 +84,11 @@ public class myPageFragment extends Fragment {
 
         // APP bar 로고 안보이기
         binding.includedAppbarMy.imageView19.setVisibility(View.INVISIBLE);
+
         // 바텀시트 열기
         binding.includedAppbarMy.imageButton2.setOnClickListener(v ->
-                ((MainActivity) requireActivity()).BottomSheetOpen());
+                ((MainActivity) requireActivity()).BottomSheetOpen()
+        );
 
         // Point 정책 자세히 보기
         binding.mypagePoint.setOnClickListener(v -> {
@@ -87,8 +99,9 @@ public class myPageFragment extends Fragment {
 
         // Login Page 이동
         binding.mypageLogin.setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), LoginActivity.class);
-            startActivity(intent);
+            myInfoRepository.insertMyInfo("data123", "gfdgdf");
+            //Intent intent = new Intent(requireContext(), LoginActivity.class);
+            //startActivity(intent);
         });
 
         binding.mypageModifyMyAdress.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +113,6 @@ public class myPageFragment extends Fragment {
         });
 
         return binding.getRoot();
-
     }
 
     private void SetUserInfo(){
@@ -114,14 +126,14 @@ public class myPageFragment extends Fragment {
         }
 
         //이름 설정
-        binding.mypageProfileName.setText(sPmanager.getUserName() + " 님");
+        //binding.mypageProfileName.setText(sPmanager.getUserName() + " 님");
         binding.mypageTextViewName.setText(sPmanager.getUserName());
         //email
         setEmail();
         // 생일설정
         binding.mypageBirthdayTextview.setText(sPmanager.getUserBirth());
         // 포인트 설정
-        binding.mypagePointText.setText(sPmanager.getUserPoint() + " P");
+        //binding.mypagePointText.setText(sPmanager.getUserPoint() + " P");
         //성별
         Check_gender();
     }
@@ -142,6 +154,27 @@ public class myPageFragment extends Fragment {
             binding.tutorialMyPage.getRoot().setAnimation(fadeIn);
         }
 
+
+        // Data Observe -- START
+        // Name
+        myInfoRepository.swebsDao.getValueLiveDataForMyInfo("name").observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                String viewText = s + " 님";
+                binding.mypageProfileName.setText(viewText);
+            }
+        });
+
+        // Point
+        myInfoRepository.swebsDao.getValueLiveDataForMyInfo("point").observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                String viewText = s + " P";
+                binding.mypagePointText.setText(viewText);
+            }
+        });
+
+        // Data observe -- END
     }
 
     private void setEmail(){
