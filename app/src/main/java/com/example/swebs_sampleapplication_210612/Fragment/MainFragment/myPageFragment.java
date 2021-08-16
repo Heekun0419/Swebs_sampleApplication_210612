@@ -62,8 +62,9 @@ public class myPageFragment extends Fragment {
         sPmanager = new SPmanager(context);
         binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
 
-        Check_userType();
+        RenderMyPageFromUserType(sPmanager.getUserType());
         SetUserInfo();
+
         // 닫기버튼 누르면 튜토리얼 닫힘.
         binding.tutorialMyPage.textViewMyPageTutorialClose.setOnClickListener(v -> {
             binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
@@ -99,9 +100,8 @@ public class myPageFragment extends Fragment {
 
         // Login Page 이동
         binding.mypageLogin.setOnClickListener(v -> {
-            myInfoRepository.insertMyInfo("data123", "gfdgdf");
-            //Intent intent = new Intent(requireContext(), LoginActivity.class);
-            //startActivity(intent);
+            Intent intent = new Intent(requireContext(), LoginActivity.class);
+            startActivity(intent);
         });
 
         binding.mypageModifyMyAdress.setOnClickListener(new View.OnClickListener() {
@@ -124,25 +124,12 @@ public class myPageFragment extends Fragment {
         }else {
             binding.mypageCountryTextView.setText("中國");
         }
-
-        //이름 설정
-        //binding.mypageProfileName.setText(sPmanager.getUserName() + " 님");
-        binding.mypageTextViewName.setText(sPmanager.getUserName());
-        //email
-        setEmail();
-        // 생일설정
-        binding.mypageBirthdayTextview.setText(sPmanager.getUserBirth());
-        // 포인트 설정
-        //binding.mypagePointText.setText(sPmanager.getUserPoint() + " P");
-        //성별
-        Check_gender();
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-        Check_userType();
         SetUserInfo();
         if(sPmanager.getMyTutorialExit()){
             fadeOut.setDuration(300);
@@ -156,17 +143,34 @@ public class myPageFragment extends Fragment {
 
 
         // Data Observe -- START
+        // userType
+        myInfoRepository.getValueToLiveData("userType").observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                RenderMyPageFromUserType(s);
+            }
+        });
+        // Email
+        myInfoRepository.getValueToLiveData("email").observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s != null)
+                    setEmail(s);
+            }
+        });
+
         // Name
-        myInfoRepository.swebsDao.getValueLiveDataForMyInfo("name").observe(getViewLifecycleOwner(), new Observer<String>() {
+        myInfoRepository.getValueToLiveData("name").observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 String viewText = s + " 님";
                 binding.mypageProfileName.setText(viewText);
+                binding.mypageTextViewName.setText(s);
             }
         });
 
         // Point
-        myInfoRepository.swebsDao.getValueLiveDataForMyInfo("point").observe(getViewLifecycleOwner(), new Observer<String>() {
+        myInfoRepository.getValueToLiveData("point").observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 String viewText = s + " P";
@@ -174,11 +178,34 @@ public class myPageFragment extends Fragment {
             }
         });
 
+        // Birthday
+        myInfoRepository.getValueToLiveData("birthday").observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                String viewText;
+                if (s != null) {
+                    viewText = s;
+                } else {
+                    viewText = "미등록";
+                }
+
+                binding.mypageBirthdayTextview.setText(viewText);
+            }
+        });
+
+        // Gender
+        myInfoRepository.getValueToLiveData("gender").observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                renderGenderView(s);
+            }
+        });
+
         // Data observe -- END
     }
 
-    private void setEmail(){
-        String content = sPmanager.getUserEmail();
+    private void setEmail(String email){
+        String content = email;
         char s = content.charAt(0);
 
       /*  int startIndex = content.indexOf("@");
@@ -193,8 +220,8 @@ public class myPageFragment extends Fragment {
         binding.mypageTextViewID.setText(buffer);
     }
 
-    private void Check_userType(){
-        switch (sPmanager.getUserType()) {
+    private void RenderMyPageFromUserType(String userType){
+        switch (userType) {
             case "guest":  // 게스트
                 setVisible_of_Guest();
                 break;
@@ -207,23 +234,20 @@ public class myPageFragment extends Fragment {
         }
     }
 
-    private void Check_gender(){
-        switch (sPmanager.getUserGender()){
-            case "male": // 남자
-                binding.mypageGenderTextView.setText("남자");
-                binding.mypageImageViewGender.setVisibility(View.VISIBLE);
-                binding.mypageImageViewGender.setImageResource(R.drawable.ic_male);
-                break;
-            case "female":// 여자
-                binding.mypageGenderTextView.setText("여자");
-                binding.mypageImageViewGender.setVisibility(View.VISIBLE);
-                binding.mypageImageViewGender.setImageResource(R.drawable.ic_female);
-            case "미등록":
-                binding.mypageImageViewGender.setVisibility(View.GONE);
-                binding.mypageGenderTextView.setText("미등록");
+    private void renderGenderView(String gender) {
+        if (gender == null) {
+            binding.mypageImageViewGender.setVisibility(View.GONE);
+            binding.mypageGenderTextView.setText("미등록");
+        } else if (gender.equals("male")) {
+            binding.mypageGenderTextView.setText("남자");
+            binding.mypageImageViewGender.setVisibility(View.VISIBLE);
+            binding.mypageImageViewGender.setImageResource(R.drawable.ic_male);
+        } else if (gender.equals("female")) {
+            binding.mypageGenderTextView.setText("여자");
+            binding.mypageImageViewGender.setVisibility(View.VISIBLE);
+            binding.mypageImageViewGender.setImageResource(R.drawable.ic_female);
         }
     }
-
 
     private void setVisible_of_Guest(){
         // 프로필 이미지, 기업 아이콘, 추천인코드
