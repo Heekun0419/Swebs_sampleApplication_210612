@@ -23,7 +23,11 @@
             android:id="@+id/included_appbar_scan"
             layout="@layout/appbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -34,21 +38,22 @@
             android:backgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/included_appbar_scan" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
             android:id="@+id/textVIew_scan_explain"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="100dp"
+            android:layout_marginTop="300dp"
             android:text="@string/scan_explain"
             android:textAlignment="center"
             android:textColor="@color/white"
+
             android:textSize="15dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_scan_setting"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
 
         <ImageButton
@@ -86,6 +91,7 @@
     <include
         android:id="@+id/tutorial_scan_page"
         android:visibility="visible"
-        layout="@layout/tutorial_scan_layout"/>
+        layout="@layout/tutorial_scan_layout"
+        android:animateLayoutChanges="true"/>
 
 </FrameLayout>

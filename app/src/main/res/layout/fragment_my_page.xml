@@ -645,7 +645,8 @@
     <include
         android:id="@+id/tutorial_my_page"
         android:visibility="visible"
-        layout="@layout/tutorial_mypage_layout"/>
+        layout="@layout/tutorial_mypage_layout"
+        android:animateLayoutChanges="true"/>
 
 
 </FrameLayout>

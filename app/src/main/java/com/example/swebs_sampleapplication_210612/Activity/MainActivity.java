@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -59,8 +60,16 @@ public class MainActivity extends FragmentActivity {
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1);
 
-
         Toolbar toolbar = findViewById(R.id.toolBar);
+
+        String userType = sPmanager.getUserType();
+        if(userType.equals("company")){
+            binding.navView.textviewNavDrawerProductList.setVisibility(View.VISIBLE);
+            binding.navView.companyProductRegister.setVisibility(View.VISIBLE);
+        }else{
+            binding.navView.textviewNavDrawerProductList.setVisibility(View.GONE);
+            binding.navView.companyProductRegister.setVisibility(View.GONE);
+        }
 
         drawer = binding.drawerLayout;
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

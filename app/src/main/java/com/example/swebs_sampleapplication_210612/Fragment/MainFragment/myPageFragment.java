@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 
 import com.example.swebs_sampleapplication_210612.Activity.AdressModifyActivity;
 import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
@@ -28,6 +30,8 @@ public class myPageFragment extends Fragment {
     private String country;
     private final Context context;
     private SPmanager sPmanager;
+    private Animation fadeOut = new AlphaAnimation(1,0);
+    private Animation fadeIn = new AlphaAnimation(0,1);
     public myPageFragment(Context context) {
         this.context = context;
     }
@@ -54,10 +58,12 @@ public class myPageFragment extends Fragment {
         // 닫기버튼 누르면 튜토리얼 닫힘.
         binding.tutorialMyPage.textViewMyPageTutorialClose.setOnClickListener(v -> {
             binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
+            binding.tutorialMyPage.getRoot().setAnimation(fadeOut);
             sPmanager.setMyTutorialExit(true);
         });
         binding.tutorialMyPage.imageButton5.setOnClickListener(v -> {
             binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
+            binding.tutorialMyPage.getRoot().setAnimation(fadeOut);
             sPmanager.setMyTutorialExit(true);
         });
 
@@ -127,9 +133,13 @@ public class myPageFragment extends Fragment {
         Check_userType();
         SetUserInfo();
         if(sPmanager.getMyTutorialExit()){
+            fadeOut.setDuration(300);
             binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
+            binding.tutorialMyPage.getRoot().setAnimation(fadeOut);
         }else{
+            fadeIn.setDuration(500);
             binding.tutorialMyPage.getRoot().setVisibility(View.VISIBLE);
+            binding.tutorialMyPage.getRoot().setAnimation(fadeIn);
         }
 
     }
