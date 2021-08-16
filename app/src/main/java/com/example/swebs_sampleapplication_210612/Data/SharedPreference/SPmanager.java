@@ -9,6 +9,41 @@ public class SPmanager {
 
     public SPmanager(Context context){this.context = context;}
 
+
+    //userSrl - START
+    public void setUserSrl(String userSrl){
+        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_SRL, Context.MODE_PRIVATE)).edit();
+        editor.putString(SP_data.USER_INFO.USER_SRL, userSrl);
+        editor.apply();
+    }
+    public void removeUserSrl(){
+        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_SRL, Context.MODE_PRIVATE)).edit();
+        editor.remove(SP_data.USER_INFO.USER_SRL);
+        editor.apply();
+    }
+
+    public String getUserSrl(){
+        return (context.getSharedPreferences(SP_data.USER_INFO.USER_SRL, Context.MODE_PRIVATE))
+                .getString(SP_data.USER_INFO.USER_SRL,"notFound");
+    }
+    // userSrl - END
+
+    public void setUserToken(String token){
+        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_TOKEN, Context.MODE_PRIVATE)).edit();
+        editor.putString(SP_data.USER_INFO.USER_TOKEN,token);
+        editor.apply();
+    }
+    public void removeUserToken(){
+        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_TOKEN, Context.MODE_PRIVATE)).edit();
+        editor.remove(SP_data.USER_INFO.USER_TOKEN);
+        editor.apply();
+    }
+
+    public String getUserToken(){
+        return (context.getSharedPreferences(SP_data.USER_INFO.USER_TOKEN, Context.MODE_PRIVATE))
+                .getString(SP_data.USER_INFO.USER_TOKEN,"notFound");
+    }
+
     public void setUserType(String type){
         SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USERTYPE, Context.MODE_PRIVATE)).edit();
         editor.putString(SP_data.USER_INFO.USERTYPE,type);
@@ -22,7 +57,7 @@ public class SPmanager {
     }
     public String getUserType(){
         return (context.getSharedPreferences(SP_data.USER_INFO.USERTYPE, Context.MODE_PRIVATE))
-                .getString(SP_data.USER_INFO.USERTYPE,"guest");
+                .getString(SP_data.USER_INFO.USERTYPE,"notFound");
     }
 
     public void setPermissionIsChecked(boolean checked){
@@ -46,7 +81,7 @@ public class SPmanager {
     }
     public String getUserName(){
         return (context.getSharedPreferences(SP_data.USER_INFO.USER_NAME, Context.MODE_PRIVATE))
-                .getString(SP_data.USER_INFO.USER_NAME,"GUEST");
+                .getString(SP_data.USER_INFO.USER_NAME,"notFound");
     }
 
     public void setUserBirth(String birth){
@@ -61,7 +96,7 @@ public class SPmanager {
     }
     public String getUserBirth(){
         return (context.getSharedPreferences(SP_data.USER_INFO.USER_BIRTHDAY, Context.MODE_PRIVATE))
-                .getString(SP_data.USER_INFO.USER_BIRTHDAY,"미등록");
+                .getString(SP_data.USER_INFO.USER_BIRTHDAY,"notFound");
     }
 
     public void setUserGender(String gender){
@@ -76,7 +111,7 @@ public class SPmanager {
     }
     public String getUserGender(){
         return (context.getSharedPreferences(SP_data.USER_INFO.USER_GENDER, Context.MODE_PRIVATE))
-                .getString(SP_data.USER_INFO.USER_GENDER,"미등록");
+                .getString(SP_data.USER_INFO.USER_GENDER,"notFound");
     }
 
     public void setUserRegion(String Region){
@@ -86,7 +121,7 @@ public class SPmanager {
     }
     public String getUserRegion(){
         return (context.getSharedPreferences(SP_data.USER_INFO.USER_REGION, Context.MODE_PRIVATE))
-                .getString(SP_data.USER_INFO.USER_REGION,"");
+                .getString(SP_data.USER_INFO.USER_REGION,"notFound");
     }
 
     public void setUserEmail(String email){
@@ -101,7 +136,7 @@ public class SPmanager {
     }
     public String getUserEmail(){
         return (context.getSharedPreferences(SP_data.USER_INFO.USER_EMAIL, Context.MODE_PRIVATE))
-                .getString(SP_data.USER_INFO.USER_EMAIL,"미등록");
+                .getString(SP_data.USER_INFO.USER_EMAIL,"notFound");
     }
 
     public void setUserPoint(String email){
@@ -116,7 +151,7 @@ public class SPmanager {
     }
     public String getUserPoint(){
         return (context.getSharedPreferences(SP_data.USER_INFO.USER_POINT, Context.MODE_PRIVATE))
-                .getString(SP_data.USER_INFO.USER_POINT,"0");
+                .getString(SP_data.USER_INFO.USER_POINT,"notFound");
     }
     public void setScanTutorialExit(boolean exit){
         SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.SCAN_TUTORIAL, Context.MODE_PRIVATE)).edit();

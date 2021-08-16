@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -15,10 +14,11 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
+import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.SwebsDatabase;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.ActivitySplashBinding;
+import com.example.swebs_sampleapplication_210612.util.UserLoginController;
 
 public class splashActivity extends AppCompatActivity {
 
@@ -29,6 +29,7 @@ public class splashActivity extends AppCompatActivity {
     Handler handler = new Handler();
     private SPmanager sPmanager = new SPmanager(this);
 
+    private MyInfoRepository myInfoRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,8 @@ public class splashActivity extends AppCompatActivity {
 
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        myInfoRepository = new MyInfoRepository(getApplication());
 
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -46,6 +49,7 @@ public class splashActivity extends AppCompatActivity {
                 PropertyValuesHolder.ofFloat("scaleX",1.1f),
                 PropertyValuesHolder.ofFloat("scaleY",1.1f)
         );
+
         objectAnimator.setDuration(1000);
         objectAnimator.setRepeatCount(ValueAnimator.INFINITE);
         objectAnimator.setRepeatMode(ValueAnimator.REVERSE);
@@ -54,9 +58,20 @@ public class splashActivity extends AppCompatActivity {
         dbInstanceCreate dbInstanceCreate = new dbInstanceCreate(getApplicationContext());
         dbInstanceCreate.execute();
 
-        animateText("정품인증 NO.1 플랫폼");
-        //permissionCheck();
+        animateText("정품 인증 No 1");
+        Log.d("login", "Token : " + sPmanager.getUserToken());
+        loginCheck();
     }
+
+    private void loginCheck() {
+        if (!sPmanager.getUserToken().equals("notFound")) {
+            Log.d("login", "이미 로그인 되어있다. : " + sPmanager.getUserToken());
+        } else {
+            Log.d("login", "로그인 되어있지 않다.");
+            new UserLoginController(getApplication()).signUpForGuest();
+        }
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -90,7 +105,7 @@ public class splashActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        },1200);
+        },2400);
     }
     private void startPermissionActivity(){
         new Handler().postDelayed(new Runnable() {

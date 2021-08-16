@@ -25,6 +25,8 @@ public class SP_data {
         public static final String USER_BIRTHDAY = "USER_BIRTHDAY";
         public static final String USER_REGION = "USER_REGION";
         public static final String USER_POINT ="USER_POINT";
+        public static final String USER_TOKEN ="USER_TOKEN";
+        public static final String USER_SRL = "USER_SRL";
     }
 
 
