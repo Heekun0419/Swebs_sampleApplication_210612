@@ -88,6 +88,9 @@
     <string name="qr_link_4">스캔정보 </string>
     <string name="qr_link_5">Link 연결</string>
 
+    <!-- purchaseRegisterSuccessActivity -->
+    <string name="reg_success_1">제품 등록이 완료되었습니다.</string>
+
 
     <string name="show"> <u>보기</u> </string>
 

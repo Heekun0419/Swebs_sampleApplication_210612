@@ -158,4 +158,11 @@ public class PermissionCheckActivity extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(sPmanager.getPermission()){
+            StartMainActivity();
+        }
+    }
 }

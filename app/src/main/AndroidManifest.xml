@@ -22,7 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Swebs_sampleApplication_210612"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.QRLinkActivity"></activity>
+        <activity android:name=".Activity.PurchaseRegistSuccessActivity"></activity>
+        <activity android:name=".Activity.QRLinkActivity" />
         <activity
             android:name=".Activity.AdressModifyActivity"
             android:screenOrientation="portrait"
