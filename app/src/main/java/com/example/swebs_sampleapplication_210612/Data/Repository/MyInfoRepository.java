@@ -35,6 +35,7 @@ public class MyInfoRepository {
         return swebsDao.getValueLiveDataForMyInfo(key);
     }
 
+
     public void insertMyInfo(String key, String value) {
         MyInfo myInfo = new MyInfo(key, value);
         new insertAsyncTask(swebsDao).execute(myInfo);
