@@ -276,6 +276,7 @@
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/radius_login_edittext"
                 android:backgroundTint="#F9FAFC"
+                android:inputType="phone"
                 android:hint="010-1234-5678"
                 android:paddingStart="20dp"
                 android:textSize="13dp" />

@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroClient;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMakeAccountUserInfoBinding;
+import com.example.swebs_sampleapplication_210612.util.getRegionFromSystem;
 
 import java.util.HashMap;
 
@@ -78,20 +80,30 @@ public class MakeAccountFragment_userInfo extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.editTextUserInfoPhoneNumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+    }
+
     private void userSingUpUpload() {
         // 서버로 전송할 데이터 만들기.
+        String inputEmail = binding.editTextEmail.getText().toString().toLowerCase();
+        String inputPhoneNumber = binding.editTextUserInfoPhoneNumber.getText().toString().replace("-", "");
+
         HashMap<String, RequestBody> body = new HashMap<>();
-        body.put("inputEmail", RequestBody.create(binding.editTextEmail.getText().toString(), MediaType.parse("text/plane")));
+        body.put("inputEmail", RequestBody.create(inputEmail, MediaType.parse("text/plane")));
         body.put("inputPassword", RequestBody.create(binding.editTextUserInfoPassword.getText().toString(), MediaType.parse("text/plane")));
         body.put("inputName", RequestBody.create(binding.editTextUserInfoUsername.getText().toString(), MediaType.parse("text/plane")));
         body.put("inputNickName", RequestBody.create(binding.editTextUserInfoNickname.getText().toString(), MediaType.parse("text/plane")));
         body.put("inputBday", RequestBody.create(binding.editTextUserInfoBirthday.getText().toString(), MediaType.parse("text/plane")));
-        body.put("inputPhoneNumber", RequestBody.create(binding.editTextUserInfoPhoneNumber.getText().toString(), MediaType.parse("text/plane")));
+        body.put("inputPhoneNumber", RequestBody.create(inputPhoneNumber, MediaType.parse("text/plane")));
         body.put("inputGender", RequestBody.create(gender, MediaType.parse("text/plane")));
-
         body.put("inputSrl", RequestBody.create(sPmanager.getUserSrl(), MediaType.parse("text/plane")));
         body.put("inputType", RequestBody.create("normal", MediaType.parse("text/plane")));
-        body.put("inputRegion", RequestBody.create("korea", MediaType.parse("text/plane")));
+
+        // 추후 변경하기...
+        body.put("inputRegion", RequestBody.create("KR", MediaType.parse("text/plane")));
 
         Call<NormalSignUpModel> call = retroAPI.userSingUp(body);
         call.enqueue(new Callback<NormalSignUpModel>() {
@@ -112,7 +124,7 @@ public class MakeAccountFragment_userInfo extends Fragment {
                         myInfoRepository.insertMyInfo("birthday", responseData.getBirthday());
                         myInfoRepository.insertMyInfo("userType", responseData.getUserType());
                         myInfoRepository.insertMyInfo("gender", responseData.getGender());
-                        myInfoRepository.insertMyInfo("email", binding.editTextEmail.getText().toString());
+                        myInfoRepository.insertMyInfo("email", inputEmail);
 
                         sPmanager.setUserType(responseData.getUserType());
                         sPmanager.setUserToken(responseData.getToken());
