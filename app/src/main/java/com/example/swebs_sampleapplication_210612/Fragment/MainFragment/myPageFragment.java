@@ -2,6 +2,7 @@ package com.example.swebs_sampleapplication_210612.Fragment.MainFragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.core.view.GravityCompat;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
@@ -22,6 +24,9 @@ import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ModifyUserInfoActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.Entity.MyInfo;
+import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
+import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog;
+import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerModel;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMyPageBinding;
@@ -34,10 +39,12 @@ public class myPageFragment extends Fragment {
     private FragmentMyPageBinding binding;
     private String country;
     private final Context context;
+    private String userType, userBirthDay;
     private SPmanager sPmanager;
     private Animation fadeOut = new AlphaAnimation(1,0);
     private Animation fadeIn = new AlphaAnimation(0,1);
     private MyInfoRepository myInfoRepository;
+
     public myPageFragment(Context context) {
         this.context = context;
     }
@@ -80,12 +87,35 @@ public class myPageFragment extends Fragment {
         binding.includedAppbarMy.imageButton2.setOnClickListener(v ->
                 ((MainActivity) requireActivity()).BottomSheetOpen()
         );
-        binding.mypageBirthday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.mypageBirthday.setOnClickListener(v -> {
+            if(userType.equals("guest")){
+                NumberPickerDialog dialog = new NumberPickerDialog(requireContext(), new NumberPickerModel(
+                        "출생년도", new String[]{""}, "확인", "취소"), new DialogClickListener() {
+                    @Override
+                    public void onPositiveClick(int position) {
+                        userBirthDay = position + " 년도";
+                        binding.mypageBirthdayTextview.setText(userBirthDay);
+                    }
+
+                    @Override
+                    public void onNegativeClick() {
+
+                    }
+
+                    @Override
+                    public void onCloseClick() {
+
+                    }
+                });
+                dialog.setCancelable(false);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+                dialog.show();
+            }else{
                 Intent modify_userInfo_intent = new Intent(requireContext(), ModifyUserInfoActivity.class);
                 startActivity(modify_userInfo_intent);
             }
+
         });
         // Point 정책 자세히 보기
         binding.mypagePoint.setOnClickListener(v -> {
@@ -146,6 +176,7 @@ public class myPageFragment extends Fragment {
             public void onChanged(String s) {
                 if (s != null)
                     RenderMyPageFromUserType(s);
+                userType =s;
             }
         });
         // Email

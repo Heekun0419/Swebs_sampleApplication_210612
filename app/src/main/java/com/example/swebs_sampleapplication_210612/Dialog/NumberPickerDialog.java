@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import com.example.swebs_sampleapplication_210612.databinding.DialogLanguageBinding;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Objects;
 
 public class NumberPickerDialog extends Dialog {
@@ -22,6 +23,8 @@ public class NumberPickerDialog extends Dialog {
     Context context;
     DialogClickListener listener;
     NumberPicker picker;
+
+    private Calendar cal = Calendar.getInstance();
 
     public NumberPickerDialog(@NonNull Context context, NumberPickerModel model, DialogClickListener listener) {
         super(context);
@@ -41,14 +44,20 @@ public class NumberPickerDialog extends Dialog {
         binding.textViewTitle.setText(model.getTitle());
         binding.textViewNegativeBtn.setText(model.getNegative_btn());
         binding.textViewPositiveBtn.setText(model.getPositive_btn());
-
-
-        String[] list = model.getList();
-        //numberPicker 세팅
         picker = binding.numberPicker;
-        picker.setMinValue(0);
-        picker.setMaxValue(list.length-1);
-        picker.setDisplayedValues(list);
+
+        if(model.getTitle().equals("출생년도")) {
+            int year = cal.get(Calendar.YEAR);
+            picker.setMinValue(1900);
+            picker.setMaxValue(2020);
+            picker.setValue(year);
+        }else{
+            String[] list = model.getList();
+            //numberPicker 세팅
+            picker.setMinValue(0);
+            picker.setMaxValue(list.length-1);
+            picker.setDisplayedValues(list);
+        }
 
         binding.btnLanguageOk.setOnClickListener(v -> {
             // picker.getValue 로 Position 받아올 수 있음.
