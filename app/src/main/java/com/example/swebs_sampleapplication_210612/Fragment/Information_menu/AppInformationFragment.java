@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
+import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Dialog.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.LanguageDialog;
@@ -22,6 +25,7 @@ import com.example.swebs_sampleapplication_210612.Dialog.TwoButtonBasicDialog;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentAppInformationBinding;
+import com.example.swebs_sampleapplication_210612.util.UserLoginController;
 
 public class AppInformationFragment extends Fragment {
 
@@ -30,10 +34,13 @@ public class AppInformationFragment extends Fragment {
     LanguageDialog dialog;
     TwoButtonBasicDialog logOutDialog;
 
+    MyInfoRepository myInfoRepository;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
     }
 
     @Override
@@ -75,18 +82,21 @@ public class AppInformationFragment extends Fragment {
                     "정말로 로그아웃 하시겠습니까?", "로그아웃", "취소"), new DialogClickListener() {
                 @Override
                 public void onPositiveClick(int position) {
+
                     if (sPmanager.getUserType().equals("guest")) {
                         Toast.makeText(requireContext(), "게스트 계정입니다", Toast.LENGTH_SHORT).show();
                     } else {
-                        sPmanager.removeUserBirth();
-                        sPmanager.removeUserGender();
-                        sPmanager.removeUserInfo();
-                        sPmanager.removeUserPoint();
                         sPmanager.removeUserType();
-                        sPmanager.removeUserName();
-                        ((InformationActivity) requireActivity()).finishAffinity();
-                        Intent intent = new Intent(requireContext(), MainActivity.class);
-                        startActivity(intent);
+                        sPmanager.removeUserSrl();
+                        sPmanager.removeUserToken();
+                        myInfoRepository.deleteAllMyInfo();
+
+                        new UserLoginController(requireActivity().getApplication()).signUpForGuest();
+                        Toast.makeText(requireContext(), "로그아웃 완료", Toast.LENGTH_SHORT).show();
+
+                        //((InformationActivity) requireActivity()).finishAffinity();
+                        //Intent intent = new Intent(requireContext(), MainActivity.class);
+                        //startActivity(intent);
                     }
                 }
 

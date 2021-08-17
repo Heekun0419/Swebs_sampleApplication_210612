@@ -25,6 +25,7 @@ import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.Entity.MyInfo;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMyPageBinding;
+import com.example.swebs_sampleapplication_210612.util.UserLoginController;
 
 import java.util.List;
 import java.util.Locale;
@@ -152,11 +153,20 @@ public class myPageFragment extends Fragment {
 
 
         // Data Observe -- START
+        myInfoRepository.getValueToLiveData("userSrl").observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s == null)
+                    new UserLoginController(requireActivity().getApplication()).signUpForGuest();
+            }
+        });
+
         // userType
         myInfoRepository.getValueToLiveData("userType").observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                RenderMyPageFromUserType(s);
+                if (s != null)
+                    RenderMyPageFromUserType(s);
             }
         });
         // Email
@@ -172,9 +182,11 @@ public class myPageFragment extends Fragment {
         myInfoRepository.getValueToLiveData("name").observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                String viewText = s + " 님";
-                binding.mypageProfileName.setText(viewText);
-                binding.mypageTextViewName.setText(s);
+                if (s != null) {
+                    String viewText = s + " 님";
+                    binding.mypageProfileName.setText(viewText);
+                    binding.mypageTextViewName.setText(s);
+                }
             }
         });
 
@@ -182,8 +194,10 @@ public class myPageFragment extends Fragment {
         myInfoRepository.getValueToLiveData("point").observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                String viewText = s + " P";
-                binding.mypagePointText.setText(viewText);
+                if (s != null) {
+                    String viewText = s + " P";
+                    binding.mypagePointText.setText(viewText);
+                }
             }
         });
 
@@ -263,6 +277,7 @@ public class myPageFragment extends Fragment {
         binding.mypageCompanyIcon.setVisibility(View.GONE);
         binding.mypageBtnRecommendCode.setVisibility(View.GONE);
         binding.mypageImageProfile.setVisibility(View.GONE);
+
         // 버튼 3개
         binding.linearLayout.setVisibility(View.GONE);
         //아이디, 실명
@@ -280,6 +295,8 @@ public class myPageFragment extends Fragment {
         binding.mypageCompanyAccount2.setVisibility(View.GONE);
         binding.mypageSnsAccount.setVisibility(View.GONE);
 
+
+        binding.mypageLogin.setVisibility(View.VISIBLE);
     }
 
     private void setVisible_of_NormalUser(){

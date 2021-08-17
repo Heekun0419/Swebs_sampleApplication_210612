@@ -58,7 +58,6 @@ public class UserLoginController {
                         myInfoRepository.insertMyInfo("point", responseData.getPoint());
                         myInfoRepository.insertMyInfo("userType", "guest");
 
-
                         sPmanager.setUserType("guest");
                         sPmanager.setUserSrl(responseData.getMember_srl());
                         sPmanager.setUserToken(responseData.getToken());

@@ -40,6 +40,10 @@ public class MyInfoRepository {
         new insertAsyncTask(swebsDao).execute(myInfo);
     }
 
+    public void deleteAllMyInfo() {
+        new deleteAllAsyncTask(swebsDao).execute();
+    }
+
     // Insert AsyncTask
     private static class insertAsyncTask extends AsyncTask<MyInfo, Void, Void> {
         private SwebsDao mDao;
@@ -58,6 +62,21 @@ public class MyInfoRepository {
                 Log.d("Dao", "Update");
                 mDao.myInfo_update(myInfos[0]);
             }
+            return null;
+        }
+    }
+
+    // Delete All AsyncTask
+    private static class deleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
+        private SwebsDao swebsDao;
+
+        public deleteAllAsyncTask(SwebsDao swebsDao) {
+            this.swebsDao = swebsDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            swebsDao.deleteAllForMyInfo();
             return null;
         }
     }

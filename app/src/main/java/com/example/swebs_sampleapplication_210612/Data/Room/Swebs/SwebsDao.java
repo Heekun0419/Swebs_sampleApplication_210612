@@ -24,6 +24,9 @@ public interface SwebsDao {
     @Query("SELECT value FROM myinfo WHERE `key` = :inputKey")
     String getValueForMyInfo(String inputKey);
 
+    @Query("DELETE FROM myinfo")
+    void deleteAllForMyInfo();
+
 
     @Insert
     void myInfo_insert(MyInfo myInfo);
