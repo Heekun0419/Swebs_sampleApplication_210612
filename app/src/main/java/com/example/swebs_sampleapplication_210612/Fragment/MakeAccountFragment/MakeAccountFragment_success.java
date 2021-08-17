@@ -34,9 +34,7 @@ public class MakeAccountFragment_success extends Fragment {
        binding.btnMakeAccountOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(requireContext(), MainActivity.class);
-                startActivity(intent);
-                ((MakeAccountActivity)requireActivity()).finish();
+                requireActivity().finish();
             }
         });
 

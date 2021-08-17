@@ -45,6 +45,10 @@ public class MyInfoRepository {
         new insertAsyncTask(swebsDao).execute(myInfo);
     }
 
+    public void deleteAllMyInfo() {
+        new deleteAllAsyncTask(swebsDao).execute();
+    }
+
     // Insert AsyncTask
     private static class insertAsyncTask extends AsyncTask<MyInfo, Void, Void> {
         private SwebsDao mDao;

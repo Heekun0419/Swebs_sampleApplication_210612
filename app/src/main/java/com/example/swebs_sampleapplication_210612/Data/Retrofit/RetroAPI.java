@@ -2,6 +2,7 @@ package com.example.swebs_sampleapplication_210612.Data.Retrofit;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.GuestSignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.LoginModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.NormalSignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.ScanHistoryAllDataModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.SignUpModel;
 
@@ -29,7 +30,7 @@ public interface RetroAPI {
 
     @Multipart
     @POST("login/sign_up.php")
-    Call<SignUpModel> userSingUp(
+    Call<NormalSignUpModel> userSingUp(
             @PartMap Map<String, RequestBody> prams
     );
 

@@ -33,7 +33,6 @@ public class UserLoginController {
         this.myInfoRepository = new MyInfoRepository(application);
         this.sPmanager = new SPmanager(application.getApplicationContext());
     }
-
     public void signUpForGuest() {
         HashMap<String, RequestBody> body = new HashMap<>();
 
@@ -51,16 +50,16 @@ public class UserLoginController {
                 if (response.body() != null) {
                     GuestSignUpModel responseData = response.body();
                     if (responseData.isSuccess()) {
-                        myInfoRepository.insertMyInfo("userSrl", responseData.getUserSrl());
+                        myInfoRepository.insertMyInfo("userSrl", responseData.getMember_srl());
                         myInfoRepository.insertMyInfo("token", responseData.getToken());
                         myInfoRepository.insertMyInfo("nickName", responseData.getNickname());
                         myInfoRepository.insertMyInfo("name", responseData.getNickname());
+                        myInfoRepository.insertMyInfo("region", responseData.getRegion());
                         myInfoRepository.insertMyInfo("point", responseData.getPoint());
                         myInfoRepository.insertMyInfo("userType", "guest");
 
-
                         sPmanager.setUserType("guest");
-                        sPmanager.setUserSrl(responseData.getUserSrl());
+                        sPmanager.setUserSrl(responseData.getMember_srl());
                         sPmanager.setUserToken(responseData.getToken());
                     }
                 }

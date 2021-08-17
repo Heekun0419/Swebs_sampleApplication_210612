@@ -2,22 +2,35 @@ package com.example.swebs_sampleapplication_210612.Data.Retrofit.Model;
 
 import org.jetbrains.annotations.Nullable;
 
-public class GuestSignUpModel {
+public class NormalSignUpModel {
     private boolean success;
+
     @Nullable
     private String member_srl;
+
     @Nullable
     private String userType;
+
     @Nullable
-    private String token;
+    private String name;
+
     @Nullable
     private String nickname;
+
     @Nullable
-    private String point;
+    private String birthday;
+
+    @Nullable
+    private String gender;
+
     @Nullable
     private String region;
+
     @Nullable
-    private String reason;
+    private String point;
+
+    @Nullable
+    private String token;
 
     public boolean isSuccess() {
         return success;
@@ -36,28 +49,58 @@ public class GuestSignUpModel {
         this.member_srl = member_srl;
     }
 
+    @Nullable
     public String getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(@Nullable String userType) {
         this.userType = userType;
     }
 
-    public String getToken() {
-        return token;
+    @Nullable
+    public String getName() {
+        return name;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setName(@Nullable String name) {
+        this.name = name;
     }
 
+    @Nullable
     public String getNickname() {
         return nickname;
     }
 
-    public void setNickname(String nickname) {
+    public void setNickname(@Nullable String nickname) {
         this.nickname = nickname;
+    }
+
+    @Nullable
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(@Nullable String birthday) {
+        this.birthday = birthday;
+    }
+
+    @Nullable
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(@Nullable String gender) {
+        this.gender = gender;
+    }
+
+    @Nullable
+    public String getPoint() {
+        return point;
+    }
+
+    public void setPoint(@Nullable String point) {
+        this.point = point;
     }
 
     @Nullable
@@ -69,20 +112,12 @@ public class GuestSignUpModel {
         this.region = region;
     }
 
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
-
     @Nullable
-    public String getPoint() {
-        return point;
+    public String getToken() {
+        return token;
     }
 
-    public void setPoint(@Nullable String point) {
-        this.point = point;
+    public void setToken(@Nullable String token) {
+        this.token = token;
     }
 }

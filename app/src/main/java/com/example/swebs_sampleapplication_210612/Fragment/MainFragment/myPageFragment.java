@@ -7,16 +7,13 @@ import android.os.Bundle;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Activity.AdressModifyActivity;
 import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
@@ -25,14 +22,9 @@ import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ModifyUserInfoActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.Entity.MyInfo;
-import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
-import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog;
-import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerModel;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
-import com.example.swebs_sampleapplication_210612.ViewModel.MypageViewModel;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMyPageBinding;
-import com.example.swebs_sampleapplication_210612.util.UserLoginController;
 
 import java.util.List;
 import java.util.Locale;
@@ -43,8 +35,6 @@ public class myPageFragment extends Fragment {
     private String country;
     private final Context context;
     private SPmanager sPmanager;
-    private NumberPickerDialog num_dialog;
-   // private MypageViewModel viewModel;
     private Animation fadeOut = new AlphaAnimation(1,0);
     private Animation fadeIn = new AlphaAnimation(0,1);
 
@@ -61,7 +51,7 @@ public class myPageFragment extends Fragment {
         Locale locale;
         locale = requireContext().getResources().getConfiguration().getLocales().get(0);
         country = locale.getCountry();
-        //viewModel = new MypageViewModel(requireActivity().getApplication());
+
         myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
     }
 
@@ -73,7 +63,7 @@ public class myPageFragment extends Fragment {
         sPmanager = new SPmanager(context);
         binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
 
-        RenderMyPageFromUserType(sPmanager.getUserType());
+        Check_userType();
         SetUserInfo();
         // 닫기버튼 누르면 튜토리얼 닫힘.
         binding.tutorialMyPage.textViewMyPageTutorialClose.setOnClickListener(v -> {
@@ -118,8 +108,9 @@ public class myPageFragment extends Fragment {
 
         // Login Page 이동
         binding.mypageLogin.setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), LoginActivity.class);
-            startActivity(intent);
+            myInfoRepository.insertMyInfo("data123", "gfdgdf");
+            //Intent intent = new Intent(requireContext(), LoginActivity.class);
+            //startActivity(intent);
         });
 
         binding.mypageModifyMyAdress.setOnClickListener(new View.OnClickListener() {
@@ -135,30 +126,32 @@ public class myPageFragment extends Fragment {
 
     private void SetUserInfo(){
         //국가 설정
-
-        if (!sPmanager.getUserRegion().isEmpty()){
-            SetUserRegion(sPmanager.getUserRegion());
-        }else{
-            SetUserRegion(country);
-        }
-        // Gender
-        renderGenderView(sPmanager.getUserGender());
-    }
-
-    private void SetUserRegion(String region){
-        if(region.equals("KR")) {
-            binding.mypageCountryTextView.setText("대한민국");
-        }else if(region.equals("US")){
-            binding.mypageCountryTextView.setText("United States");
+        if(country.equals("KR")) {
+          binding.mypageCountryTextView.setText("대한민국");
+        }else if(country.equals("US")){
+          binding.mypageCountryTextView.setText("United States");
         }else {
             binding.mypageCountryTextView.setText("中國");
         }
+
+        //이름 설정
+        //binding.mypageProfileName.setText(sPmanager.getUserName() + " 님");
+        binding.mypageTextViewName.setText(sPmanager.getUserName());
+        //email
+        setEmail();
+        // 생일설정
+        binding.mypageBirthdayTextview.setText(sPmanager.getUserBirth());
+        // 포인트 설정
+        //binding.mypagePointText.setText(sPmanager.getUserPoint() + " P");
+        //성별
+        Check_gender();
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
+        Check_userType();
         SetUserInfo();
         if(sPmanager.getMyTutorialExit()){
             fadeOut.setDuration(300);
@@ -169,52 +162,15 @@ public class myPageFragment extends Fragment {
             binding.tutorialMyPage.getRoot().setVisibility(View.VISIBLE);
             binding.tutorialMyPage.getRoot().setAnimation(fadeIn);
         }
-        // Guest 정보수정 Dialog -- START
-        // 성별 수정
-        binding.mypageGender.setOnClickListener(v -> {
-            SetNumberPickerDialog(new NumberPickerModel("성별",new String[]{"남자", "여자"},"확인","취소"));
-         });
-        // 국가 지역
-        binding.mypageCountry.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SetNumberPickerDialog(new NumberPickerModel("국가",new String[]{"대한민국", "UNITED STATES", "中國"},"확인","취소"));
-            }
-        });
-        // Data Observe -- START
-        myInfoRepository.getValueToLiveData("userSrl").observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if (s == null)
-                    new UserLoginController(requireActivity().getApplication()).signUpForGuest();
-            }
-        });
 
-        // userType
-        myInfoRepository.getValueToLiveData("userType").observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if (s != null)
-                    RenderMyPageFromUserType(s);
-            }
-        });
-        // Email
-        myInfoRepository.getValueToLiveData("email").observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if (s != null)
-                    setEmail(s);
-            }
-        });
+
+        // Data Observe -- START
         // Name
         myInfoRepository.swebsDao.getValueLiveDataForMyInfo("name").observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                if (s != null) {
-                    String viewText = s + " 님";
-                    binding.mypageProfileName.setText(viewText);
-                    binding.mypageTextViewName.setText(s);
-                }
+                String viewText = s + " 님";
+                binding.mypageProfileName.setText(viewText);
             }
         });
 
@@ -222,40 +178,16 @@ public class myPageFragment extends Fragment {
         myInfoRepository.swebsDao.getValueLiveDataForMyInfo("point").observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                if (s != null) {
-                    String viewText = s + " P";
-                    binding.mypagePointText.setText(viewText);
-                }
-            }
-        });
-        // Birthday
-        myInfoRepository.getValueToLiveData("birthday").observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                String viewText;
-                if (s != null) {
-                    viewText = s;
-                } else {
-                    viewText = "미등록";
-                }
-
-                binding.mypageBirthdayTextview.setText(viewText);
-            }
-        });
-
-        // Gender
-        myInfoRepository.getValueToLiveData("gender").observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                renderGenderView(s);
+                String viewText = s + " P";
+                binding.mypagePointText.setText(viewText);
             }
         });
 
         // Data observe -- END
     }
 
-    private void setEmail(String email){
-        String content = email;
+    private void setEmail(){
+        String content = sPmanager.getUserEmail();
         char s = content.charAt(0);
 
       /*  int startIndex = content.indexOf("@");
@@ -270,8 +202,8 @@ public class myPageFragment extends Fragment {
         binding.mypageTextViewID.setText(buffer);
     }
 
-    private void RenderMyPageFromUserType(String userType){
-        switch (userType) {
+    private void Check_userType(){
+        switch (sPmanager.getUserType()) {
             case "guest":  // 게스트
                 setVisible_of_Guest();
                 break;
@@ -284,18 +216,20 @@ public class myPageFragment extends Fragment {
         }
     }
 
-    private void renderGenderView(String gender) {
-        if (gender == null) {
-            binding.mypageImageViewGender.setVisibility(View.GONE);
-            binding.mypageGenderTextView.setText("미등록");
-        } else if (gender.equals("male")) {
-            binding.mypageGenderTextView.setText("남자");
-            binding.mypageImageViewGender.setVisibility(View.VISIBLE);
-            binding.mypageImageViewGender.setImageResource(R.drawable.ic_male);
-        } else if (gender.equals("female")) {
-            binding.mypageGenderTextView.setText("여자");
-            binding.mypageImageViewGender.setVisibility(View.VISIBLE);
-            binding.mypageImageViewGender.setImageResource(R.drawable.ic_female);
+    private void Check_gender(){
+        switch (sPmanager.getUserGender()){
+            case "male": // 남자
+                binding.mypageGenderTextView.setText("남자");
+                binding.mypageImageViewGender.setVisibility(View.VISIBLE);
+                binding.mypageImageViewGender.setImageResource(R.drawable.ic_male);
+                break;
+            case "female":// 여자
+                binding.mypageGenderTextView.setText("여자");
+                binding.mypageImageViewGender.setVisibility(View.VISIBLE);
+                binding.mypageImageViewGender.setImageResource(R.drawable.ic_female);
+            case "미등록":
+                binding.mypageImageViewGender.setVisibility(View.GONE);
+                binding.mypageGenderTextView.setText("미등록");
         }
     }
 
@@ -321,7 +255,6 @@ public class myPageFragment extends Fragment {
         binding.mypageCompanyAccount.setVisibility(View.GONE);
         binding.mypageCompanyAccount2.setVisibility(View.GONE);
         binding.mypageSnsAccount.setVisibility(View.GONE);
-        binding.mypageLogin.setVisibility(View.VISIBLE);
 
     }
 
@@ -385,28 +318,4 @@ public class myPageFragment extends Fragment {
 
     }
 
-
-    public void SetNumberPickerDialog(NumberPickerModel model){
-        num_dialog = new NumberPickerDialog(requireContext()
-                ,model ,new DialogClickListener() {
-            @Override
-            public void onPositiveClick(int position) {
-                String pickValue = null;
-                if(position == 0) pickValue = model.getList()[0];
-                else if(position == 1) pickValue = model.getList()[1];
-                else if(position == 2) pickValue = model.getList()[2];
-
-            }
-            @Override
-            public void onNegativeClick() {
-            }
-
-            @Override
-            public void onCloseClick() {
-            }
-        });
-        num_dialog.setCancelable(false);
-        num_dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        num_dialog.show();
-    }
 }

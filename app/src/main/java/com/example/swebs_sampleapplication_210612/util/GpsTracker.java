@@ -31,6 +31,7 @@ public class GpsTracker extends Service implements LocationListener {
     public GpsTracker(Context context) {
         this.mContext = context;
         getLocation();
+        Log.d("gpsLocation", "getget");
     }
 
 
@@ -55,15 +56,12 @@ public class GpsTracker extends Service implements LocationListener {
                         hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {
 
                     ;
-                } else
+                } else {
                     return null;
-
+                }
 
                 if (isNetworkEnabled) {
-
-
                     locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-
                     if (locationManager != null)
                     {
                         location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -76,16 +74,12 @@ public class GpsTracker extends Service implements LocationListener {
                 }
 
 
-                if (isGPSEnabled)
-                {
-                    if (location == null)
-                    {
+                if (isGPSEnabled) {
+                    if (location == null) {
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                        if (locationManager != null)
-                        {
+                        if (locationManager != null) {
                             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                            if (location != null)
-                            {
+                            if (location != null) {
                                 latitude = location.getLatitude();
                                 longitude = location.getLongitude();
                             }
@@ -94,9 +88,10 @@ public class GpsTracker extends Service implements LocationListener {
                 }
             }
         }
+
         catch (Exception e)
         {
-            Log.d("@@@", ""+e.toString());
+            Log.d("gpsLocation", ""+e.toString());
         }
 
         return location;

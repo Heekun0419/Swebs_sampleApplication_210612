@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +13,13 @@ import android.view.ViewGroup;
 
 import com.example.swebs_sampleapplication_210612.Activity.MakeAccountActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.NormalSignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.SignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroClient;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMakeAccountUserInfoBinding;
+import com.example.swebs_sampleapplication_210612.util.getRegionFromSystem;
 
 import java.util.HashMap;
 
@@ -44,7 +47,6 @@ public class MakeAccountFragment_userInfo extends Fragment {
         sPmanager = new SPmanager(requireContext());
 
         myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
-        myInfoRepository.insertMyInfo("data11", "dddddd");
     }
 
     @Override
@@ -55,7 +57,6 @@ public class MakeAccountFragment_userInfo extends Fragment {
 
         binding.btnMakeAccount.setOnClickListener(v -> {
             userSingUpUpload();
-            ((MakeAccountActivity) requireActivity()).moveFragment(new MakeAccountFragment_success());
         });
 
         // 성별 설정 버튼 이벤트
@@ -79,29 +80,63 @@ public class MakeAccountFragment_userInfo extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.editTextUserInfoPhoneNumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+    }
+
     private void userSingUpUpload() {
         // 서버로 전송할 데이터 만들기.
-        HashMap<String, RequestBody> map = new HashMap<>();
-        map.put("inputEmail", RequestBody.create(MediaType.parse("text/plane"), binding.editTextEmail.getText().toString()));
-        map.put("inputPassword", RequestBody.create(MediaType.parse("text/plane"), binding.editTextUserInfoPassword.getText().toString()));
-        map.put("inputType", RequestBody.create(MediaType.parse("text/plane"), "normal"));
-        map.put("inputName", RequestBody.create(MediaType.parse("text/plane"), binding.editTextUserInfoUsername.getText().toString()));
-        map.put("inputNickName", RequestBody.create(MediaType.parse("text/plane"), binding.editTextUserInfoNickname.getText().toString()));
-        map.put("inputBday", RequestBody.create(MediaType.parse("text/plane"),binding.editTextUserInfoBirthday.getText().toString()));
-        map.put("inputPhoneNumber", RequestBody.create(MediaType.parse("text/plane"), binding.editTextUserInfoPhoneNumber.getText().toString()));
-        map.put("inputGender", RequestBody.create(MediaType.parse("text/plane"),gender));
-        map.put("inputRegion", RequestBody.create(MediaType.parse("text/plane"), "korea"));
-        map.put("inputSrl", RequestBody.create(sPmanager.getUserSrl(), MediaType.parse("text/plane")));
+        String inputEmail = binding.editTextEmail.getText().toString().toLowerCase();
+        String inputPhoneNumber = binding.editTextUserInfoPhoneNumber.getText().toString().replace("-", "");
 
-        Call<SignUpModel> call = retroAPI.userSingUp(map);
-        call.enqueue(new Callback<SignUpModel>() {
+        HashMap<String, RequestBody> body = new HashMap<>();
+        body.put("inputEmail", RequestBody.create(inputEmail, MediaType.parse("text/plane")));
+        body.put("inputPassword", RequestBody.create(binding.editTextUserInfoPassword.getText().toString(), MediaType.parse("text/plane")));
+        body.put("inputName", RequestBody.create(binding.editTextUserInfoUsername.getText().toString(), MediaType.parse("text/plane")));
+        body.put("inputNickName", RequestBody.create(binding.editTextUserInfoNickname.getText().toString(), MediaType.parse("text/plane")));
+        body.put("inputBday", RequestBody.create(binding.editTextUserInfoBirthday.getText().toString(), MediaType.parse("text/plane")));
+        body.put("inputPhoneNumber", RequestBody.create(inputPhoneNumber, MediaType.parse("text/plane")));
+        body.put("inputGender", RequestBody.create(gender, MediaType.parse("text/plane")));
+        body.put("inputSrl", RequestBody.create(sPmanager.getUserSrl(), MediaType.parse("text/plane")));
+        body.put("inputType", RequestBody.create("normal", MediaType.parse("text/plane")));
+
+        // 추후 변경하기...
+        body.put("inputRegion", RequestBody.create("KR", MediaType.parse("text/plane")));
+
+        Call<NormalSignUpModel> call = retroAPI.userSingUp(body);
+        call.enqueue(new Callback<NormalSignUpModel>() {
             @Override
-            public void onResponse(Call<SignUpModel> call, Response<SignUpModel> response) {
+            public void onResponse(Call<NormalSignUpModel> call, Response<NormalSignUpModel> response) {
+                if (!response.isSuccessful())
+                    return;
 
+                if (response.body() != null) {
+                    NormalSignUpModel responseData = response.body();
+                    if (responseData.isSuccess()) {
+                        myInfoRepository.insertMyInfo("userSrl", responseData.getMember_srl());
+                        myInfoRepository.insertMyInfo("token", responseData.getToken());
+                        myInfoRepository.insertMyInfo("nickName", responseData.getNickname());
+                        myInfoRepository.insertMyInfo("name", responseData.getName());
+                        myInfoRepository.insertMyInfo("region", responseData.getRegion());
+                        myInfoRepository.insertMyInfo("point", responseData.getPoint());
+                        myInfoRepository.insertMyInfo("birthday", responseData.getBirthday());
+                        myInfoRepository.insertMyInfo("userType", responseData.getUserType());
+                        myInfoRepository.insertMyInfo("gender", responseData.getGender());
+                        myInfoRepository.insertMyInfo("email", inputEmail);
+
+                        sPmanager.setUserGender(responseData.getGender());
+                        sPmanager.setUserType(responseData.getUserType());
+                        sPmanager.setUserToken(responseData.getToken());
+
+                        ((MakeAccountActivity) requireActivity()).moveFragment(new MakeAccountFragment_success());
+                    }
+                }
             }
 
             @Override
-            public void onFailure(Call<SignUpModel> call, Throwable t) {
+            public void onFailure(Call<NormalSignUpModel> call, Throwable t) {
 
             }
         });

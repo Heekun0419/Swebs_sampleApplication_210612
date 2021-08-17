@@ -59,7 +59,6 @@ public class splashActivity extends AppCompatActivity {
         dbInstanceCreate.execute();
 
         animateText("정품 인증 No 1");
-        Log.d("login", "Token : " + sPmanager.getUserToken());
         loginCheck();
     }
 
