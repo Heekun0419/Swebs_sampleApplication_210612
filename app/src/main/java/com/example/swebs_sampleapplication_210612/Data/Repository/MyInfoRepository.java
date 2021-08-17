@@ -27,11 +27,6 @@ public class MyInfoRepository {
         mMyInfoAll = this.swebsDao.getAllLiveDataForMyInfo();
     }
 
-    public void deleteAllMyInfo() {
-        new deleteAllAsyncTask(swebsDao).execute();
-    }
-
-
     public LiveData<List<MyInfo>> getAllToLiveData() {
         return mMyInfoAll;
     }

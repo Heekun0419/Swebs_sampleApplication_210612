@@ -17,7 +17,8 @@ import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Dialog.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
-import com.example.swebs_sampleapplication_210612.Dialog.LanguageDialog;
+import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog;
+import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerModel;
 import com.example.swebs_sampleapplication_210612.Dialog.TwoButtonBasicDialog;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
@@ -27,7 +28,7 @@ public class AppInformationFragment extends Fragment {
 
     private FragmentAppInformationBinding binding;
     private SPmanager sPmanager;
-    LanguageDialog dialog;
+    NumberPickerDialog dialog;
     TwoButtonBasicDialog logOutDialog;
 
     @Override
@@ -43,10 +44,12 @@ public class AppInformationFragment extends Fragment {
         sPmanager = new SPmanager(context);
         binding = FragmentAppInformationBinding.inflate(inflater,container,false);
         binding.btnChangeLanguage.setOnClickListener(v -> {
-            dialog = new LanguageDialog(requireContext(), new DialogClickListener() {
+            dialog = new NumberPickerDialog(requireContext(),
+                    new NumberPickerModel("언어",new String[]{"한국어","ENGLISH","中文"},"확인","취소")
+                    , new DialogClickListener() {
                 @Override
                 public void onPositiveClick(int position) {
-                    String pickValue = "";
+                    String pickValue ;
                     if(position == 0) pickValue = "한국어";
                     else if(position == 1) pickValue = "영어";
                     else if(position == 2) pickValue = "중국어";
@@ -57,12 +60,9 @@ public class AppInformationFragment extends Fragment {
                 }
                 @Override
                 public void onNegativeClick() {
-                    dialog.dismiss();
                 }
-
                 @Override
                 public void onCloseClick() {
-                    dialog.dismiss();
                 }
             });
             dialog.setCancelable(false);

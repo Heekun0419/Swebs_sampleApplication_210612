@@ -59,22 +59,22 @@ public class myPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMyPageBinding.inflate(inflater,container,false);
-        // user type 검사해서 View 변환
-        sPmanager = new SPmanager(context);
-        binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
-
-        Check_userType();
-        SetUserInfo();
-        // 닫기버튼 누르면 튜토리얼 닫힘.
-        binding.tutorialMyPage.textViewMyPageTutorialClose.setOnClickListener(v -> {
+            // user type 검사해서 View 변환
+            sPmanager = new SPmanager(context);
             binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
-            binding.tutorialMyPage.getRoot().setAnimation(fadeOut);
-            sPmanager.setMyTutorialExit(true);
-        });
 
-        binding.tutorialMyPage.imageButton5.setOnClickListener(v -> {
-            binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
-            binding.tutorialMyPage.getRoot().setAnimation(fadeOut);
+            Check_userType();
+            SetUserInfo();
+            // 닫기버튼 누르면 튜토리얼 닫힘.
+            binding.tutorialMyPage.textViewMyPageTutorialClose.setOnClickListener(v -> {
+                binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
+                binding.tutorialMyPage.getRoot().setAnimation(fadeOut);
+                sPmanager.setMyTutorialExit(true);
+            });
+
+            binding.tutorialMyPage.imageButton5.setOnClickListener(v -> {
+                binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
+                binding.tutorialMyPage.getRoot().setAnimation(fadeOut);
             sPmanager.setMyTutorialExit(true);
         });
 
