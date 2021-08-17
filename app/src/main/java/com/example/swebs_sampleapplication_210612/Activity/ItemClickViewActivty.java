@@ -43,4 +43,5 @@ public class ItemClickViewActivty extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
 }

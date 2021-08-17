@@ -12,7 +12,6 @@
     android:layout_height="wrap_content"
     android:padding="10dp">
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
@@ -28,33 +27,31 @@
             android:layout_height="match_parent">
 
             <ImageButton
-                android:id="@+id/imageButton6"
+                android:id="@+id/btn_close_dialog"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/ic_baseline_close_24"
-                android:backgroundTint="@color/black"
+                android:backgroundTint="#999999"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/textView_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="언어선택"
                 android:textColor="@color/black"
                 android:textSize="17dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageButton6" />
+                app:layout_constraintTop_toBottomOf="@+id/btn_close_dialog" />
 
             <View
-                android:layout_width="300dp"
+                android:layout_width="320dp"
                 android:layout_height="1dp"
-                app:layout_constraintBottom_toTopOf="@+id/textView10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -67,7 +64,7 @@
                 android:layout_marginEnd="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+                app:layout_constraintTop_toBottomOf="@+id/textView_title" />
 
             <LinearLayout
                 android:id="@+id/linearLayout22"
@@ -114,20 +111,21 @@
                 app:layout_constraintTop_toTopOf="@+id/linearLayout22">
 
                 <TextView
+                    android:id="@+id/textView_negative_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:text="취소"
-                    android:textColor="@color/white"
+                    android:textColor="#818181"
                     android:textSize="15dp"
                     android:textStyle="bold"/>
 
                 <TextView
+                    android:id="@+id/textView_positive_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="확인"
+
                     android:textColor="@color/white"
                     android:gravity="center_horizontal"
                     android:textSize="15dp"

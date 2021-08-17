@@ -10,8 +10,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,8 +21,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.ImagePickerDialog;
+import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityModifyUserInfoBinding;
 
 import java.io.File;
@@ -33,8 +37,10 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
     private ActivityModifyUserInfoBinding binding;
     private ImagePickerDialog dialog;
     private File photoFile;
-    private String realPath, photoPath;
+    private String realPath= null, photoPath =null;
     private Uri imageUri = null;
+
+    private ImageView profileImage;
     public static final int TAKE_PHOTO_REQUEST = 11;
     public static final int PICK_IMAGE_REQUEST = 12;
     @Override
@@ -45,8 +51,12 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
 
         // 퍼미션 허용 한번 더 검사
         requestStoragePermission();
+
         //뒤로가기 버튼
         binding.btnInformationActivityBack.setOnClickListener(v -> onBackPressed());
+        profileImage = binding.imageViewProfileModify;
+        //디폴트 프로필 이미지 생성
+        GlideImage("default",profileImage);
 
         binding.imageViewProfileModify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +92,6 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
 
                     }
                 });
-                dialog.setCancelable(false);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
                 dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
                 dialog.show();
@@ -117,17 +126,19 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         switch (requestCode) {
             case TAKE_PHOTO_REQUEST:
                 if (resultCode == Activity.RESULT_OK) {
+                    Log.d("photo", photoPath);
+                    GlideImage(photoPath, profileImage);
                 }
                 break;
 
             case PICK_IMAGE_REQUEST:
                 if (resultCode == Activity.RESULT_OK) {
-                    assert data != null;
                     imageUri = data.getData();
                     // You can update this bitmap to your server
                     realPath = getPath(imageUri);
                     //  Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), imageUri);
-
+                    Log.d("photo", realPath);
+                    GlideImage(realPath,profileImage);
                 }
                 break;
         }
@@ -147,5 +158,11 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         return result;
     }
 
-
+    private void GlideImage(String uri, ImageView view) {
+        Glide.with(getApplicationContext()).load(uri)
+                .placeholder(R.drawable.ic_profile_basic)
+                .override(600, 600)
+                .circleCrop()
+                .into(view);
+    }
 }

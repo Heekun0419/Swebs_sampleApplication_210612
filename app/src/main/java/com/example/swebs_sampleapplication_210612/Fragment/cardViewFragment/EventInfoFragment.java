@@ -15,11 +15,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.Activity.ItemClickViewActivty;
-import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.ChatViewModel;
-import com.example.swebs_sampleapplication_210612.ViewModel.ChattingItem;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.ChattingItem;
 import com.example.swebs_sampleapplication_210612.adapter.Comment_EventInfoAdapter;
-import com.example.swebs_sampleapplication_210612.adapter.SurveyAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentEventInfoBinding;
 
 import java.text.SimpleDateFormat;

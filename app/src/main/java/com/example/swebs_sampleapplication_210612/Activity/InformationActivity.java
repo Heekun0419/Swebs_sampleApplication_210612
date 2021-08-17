@@ -15,6 +15,7 @@ import com.example.swebs_sampleapplication_210612.Fragment.MoreCertifiedFragment
 import com.example.swebs_sampleapplication_210612.Fragment.MoreEventFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MoreReviewFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.PointFragment.PointFragment;
+import com.example.swebs_sampleapplication_210612.Fragment.ServiceNotReadyFragment;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityInfomationBinding;
 
@@ -50,6 +51,8 @@ public class InformationActivity extends AppCompatActivity {
             moveFragment(new AppInformationFragment(),"어플정보");
         } else if(requestCode.equals("point")){
             moveFragment(new PointFragment(),"스웹스 포인트");
+        }else if(requestCode.equals("AS")){
+            moveFragment(new ServiceNotReadyFragment(),"");
         }
 
     }

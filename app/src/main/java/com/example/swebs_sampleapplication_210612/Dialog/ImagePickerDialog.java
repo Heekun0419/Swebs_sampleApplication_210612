@@ -36,10 +36,5 @@ public class ImagePickerDialog extends Dialog {
             dismiss();
         });
 
-        // x 버튼
-        binding.closeDialog.setOnClickListener(v -> {
-            listener.onCloseClick();
-            dismiss();
-        });
     }
 }

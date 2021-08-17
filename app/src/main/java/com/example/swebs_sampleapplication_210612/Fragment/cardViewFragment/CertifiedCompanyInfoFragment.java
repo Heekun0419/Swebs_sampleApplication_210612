@@ -1,5 +1,6 @@
 package com.example.swebs_sampleapplication_210612.Fragment.cardViewFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentCertifiedCompanyInfoBinding;
 
@@ -36,6 +38,15 @@ public class CertifiedCompanyInfoFragment extends Fragment {
                 binding.gradientWhite.setVisibility(View.GONE);
                 binding.constraintLayoutBtnLayout.setVisibility(View.GONE);
                 binding.textViewProductInfo.setMaxLines(300);
+            }
+        });
+
+        binding.btnAS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), InformationActivity.class);
+                intent.putExtra("resultCode", "AS");
+                startActivity(intent);
             }
         });
 

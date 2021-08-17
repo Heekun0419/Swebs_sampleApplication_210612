@@ -64,8 +64,8 @@ public class splashActivity extends AppCompatActivity {
     }
 
     private void loginCheck() {
-        if (!sPmanager.getUserToken().equals("notFound")) {
-            Log.d("login", "이미 로그인 되어있다. : " + sPmanager.getUserToken());
+        if (!sPmanager.getUserToken().equals("notFound") && !sPmanager.getUserSrl().equals("notFound")) {
+            Log.d("login", "이미 로그인 되어있다. : " + sPmanager.getUserSrl() + " / " + sPmanager.getUserToken());
         } else {
             Log.d("login", "로그인 되어있지 않다.");
             new UserLoginController(getApplication()).signUpForGuest();

@@ -3,6 +3,8 @@ package com.example.swebs_sampleapplication_210612.ViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.ChattingItem;
+
 import java.util.ArrayList;
 
 public class ChatViewModel extends ViewModel {
