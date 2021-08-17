@@ -63,6 +63,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -104,6 +105,7 @@ public class ScanFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         retroAPI = RetroClient.getRetrofitClient().create(RetroAPI.class);
+        sPmanager = new SPmanager(getContext());
     }
 
     @Override
@@ -350,22 +352,22 @@ public class ScanFragment extends Fragment {
     HashMap<String, RequestBody> setPushScanAllDataBody(HashMap<String, String> data) {
         HashMap<String, RequestBody> body = new HashMap<>();
 
-        body.put("input_user_srl", RequestBody.create("11", MediaType.parse("text/plane")));
+        body.put("input_user_srl", RequestBody.create(sPmanager.getUserSrl(), MediaType.parse("text/plane")));
         body.put("input_os_type", RequestBody.create("Android", MediaType.parse("text/plane")));
         if (data.get("qrData") != null)
-            body.put("input_qr_data", RequestBody.create(data.get("qrData"), MediaType.parse("text/plane")));
+            body.put("input_qr_data", RequestBody.create(Objects.requireNonNull(data.get("qrData")), MediaType.parse("text/plane")));
 
         if (data.get("company") != null)
-            body.put("input_company", RequestBody.create(data.get("company"), MediaType.parse("text/plane")));
+            body.put("input_company", RequestBody.create(Objects.requireNonNull(data.get("company")), MediaType.parse("text/plane")));
 
         if (data.get("code") != null)
-            body.put("input_code", RequestBody.create(data.get("code"), MediaType.parse("text/plane")));
+            body.put("input_code", RequestBody.create(Objects.requireNonNull(data.get("code")), MediaType.parse("text/plane")));
 
         if (data.get("locationLatitude") != null)
-            body.put("input_location_latitude", RequestBody.create(data.get("locationLatitude"), MediaType.parse("text/plane")));
+            body.put("input_location_latitude", RequestBody.create(Objects.requireNonNull(data.get("locationLatitude")), MediaType.parse("text/plane")));
 
         if (data.get("locationLongitude") != null)
-            body.put("input_location_longitude", RequestBody.create(data.get("locationLongitude"), MediaType.parse("text/plane")));
+            body.put("input_location_longitude", RequestBody.create(Objects.requireNonNull(data.get("locationLongitude")), MediaType.parse("text/plane")));
 
         return body;
     }
@@ -476,6 +478,7 @@ public class ScanFragment extends Fragment {
 
             }
         });
+
         oneButtonBasicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         oneButtonBasicDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         oneButtonBasicDialog.show();
