@@ -88,6 +88,13 @@
     <string name="qr_link_4">스캔정보 </string>
     <string name="qr_link_5">Link 연결</string>
 
+    <!-- purchaseRegisterSuccessActivity -->
+    <string name="reg_success_1">제품 등록이 완료되었습니다.</string>
+
+    <!-- 회원정보 수정 페이지+ 다이얼로그 -->
+    <string name="modify_user_info_1">회원정보 수정</string>
+    <string name="modify_user_info_2">촬영하기</string>
+    <string name="modify_user_info_3">가져오기</string>
 
     <string name="show"> <u>보기</u> </string>
 
