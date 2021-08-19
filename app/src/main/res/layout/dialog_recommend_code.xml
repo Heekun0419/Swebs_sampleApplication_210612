@@ -63,8 +63,8 @@
                 android:id="@+id/cardView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="20dp"
                 android:backgroundTint="#F0FEF9"
                 app:cardCornerRadius="10dp"
@@ -84,15 +84,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="20dp"
-                        android:textSize="17dp"
+                        android:layout_marginStart="5dp"
                         android:text="@string/recommend_code2"
-                        android:textColor="@color/swebs_main_color2" />
+                        android:textColor="@color/swebs_main_color2"
+                        android:textSize="17dp" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="1dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                     <ImageView
                         android:layout_width="20dp"
@@ -107,7 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="30dp"
                 android:backgroundTint="#F0FEF9"
@@ -128,7 +128,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="20dp"
+                        android:layout_marginStart="5dp"
                         android:text="@string/recommend_code3"
                         android:textColor="@color/swebs_main_color2"
                         android:textSize="17dp" />

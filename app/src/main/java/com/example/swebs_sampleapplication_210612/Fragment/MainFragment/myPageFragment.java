@@ -22,6 +22,7 @@ import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
 import com.example.swebs_sampleapplication_210612.Activity.LoginActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ModifyUserInfoActivity;
+import com.example.swebs_sampleapplication_210612.Activity.MyTopMenuActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.Entity.MyInfo;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
@@ -110,6 +111,16 @@ public class myPageFragment extends Fragment {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
             dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
             dialog.show();
+        });
+
+        // 내리뷰 버튼 클릭시
+        binding.btnMypageMyReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), MyTopMenuActivity.class);
+                intent.putExtra("resultCode","review");
+                startActivity(intent);
+            }
         });
 
         //출생년도 클릭시

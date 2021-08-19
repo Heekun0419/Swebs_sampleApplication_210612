@@ -40,7 +40,7 @@ public class ReviewActivity extends AppCompatActivity {
             binding.btnCloseReviewWrite.setVisibility(View.VISIBLE);
             binding.textViewReviewActivityName.setText(string);
             binding.btnReviewActivityBack.setVisibility(View.GONE);
-            manager.beginTransaction().setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_right)
+            manager.beginTransaction().setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left)
                     .replace(R.id.frameLayout_review_activity, fragment).addToBackStack(null).commit();
         }else{
             binding.textViewReviewActivityName.setText(string);

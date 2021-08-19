@@ -59,7 +59,7 @@ public class InformationActivity extends AppCompatActivity {
     public void moveFragment(Fragment fragment, String string){
         if(string.equals(getString(R.string.point_advice_0))){
             binding.textViewInformationActivityName.setText(string);
-            manager.beginTransaction().setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_right)
+            manager.beginTransaction().setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left)
                     .replace(R.id.frameLayout_information_activity, fragment).addToBackStack(null).commit();
         }else{
             binding.textViewInformationActivityName.setText(string);
