@@ -12,4 +12,9 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <!-- Custom font 적용 -->
+    <style name="customTextViewFontStyle" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/apple_sandol_gothic_font_family</item>
+    </style>
+
 </resources>

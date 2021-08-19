@@ -27,6 +27,7 @@ import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.Entity.MyInfo;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerModel;
+import com.example.swebs_sampleapplication_210612.Dialog.RecommendCodeDialog;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMyPageBinding;
@@ -87,6 +88,29 @@ public class myPageFragment extends Fragment {
         binding.includedAppbarMy.imageButton2.setOnClickListener(v ->
                 ((MainActivity) requireActivity()).BottomSheetOpen()
         );
+
+        //추천인 코드 클릭시
+        binding.mypageBtnRecommendCode.setOnClickListener(v -> {
+            RecommendCodeDialog dialog = new RecommendCodeDialog(requireContext(), new DialogClickListener() {
+                @Override
+                public void onPositiveClick(int position) {
+
+                }
+
+                @Override
+                public void onNegativeClick() {
+
+                }
+
+                @Override
+                public void onCloseClick() {
+
+                }
+            });
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+            dialog.show();
+        });
 
         //출생년도 클릭시
         binding.mypageBirthday.setOnClickListener(v -> {
@@ -151,8 +175,6 @@ public class myPageFragment extends Fragment {
                 }
             }
         });
-
-
 
         // Point 정책 자세히 보기
         binding.mypagePoint.setOnClickListener(v -> {

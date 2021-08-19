@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.telephony.PhoneNumberFormattingTextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +13,10 @@ import android.view.ViewGroup;
 import com.example.swebs_sampleapplication_210612.Activity.MakeAccountActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.NormalSignUpModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.SignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroClient;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMakeAccountUserInfoBinding;
-import com.example.swebs_sampleapplication_210612.util.getRegionFromSystem;
 
 import java.util.HashMap;
 
@@ -130,7 +127,7 @@ public class MakeAccountFragment_userInfo extends Fragment {
                         sPmanager.setUserType(responseData.getUserType());
                         sPmanager.setUserToken(responseData.getToken());
 
-                        ((MakeAccountActivity) requireActivity()).moveFragment(new MakeAccountFragment_success());
+                        ((MakeAccountActivity)requireActivity()).moveFragment(new MakeAccountFragment_success());
                     }
                 }
             }

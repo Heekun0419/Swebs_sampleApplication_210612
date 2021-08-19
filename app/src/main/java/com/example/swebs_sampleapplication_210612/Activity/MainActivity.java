@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -22,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Fragment.bottomSheetFragment;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Fragment.MainFragment.ScanFragment;
@@ -40,6 +42,7 @@ public class MainActivity extends FragmentActivity {
     private FragmentStateAdapter adapter;
     private ActivityMainBinding binding;
     private FragmentManager manager;
+    private MyInfoRepository myInfoRepository;
 
     private final SPmanager sPmanager = new SPmanager(this);
     public DrawerLayout drawer;
@@ -53,7 +56,7 @@ public class MainActivity extends FragmentActivity {
         manager = getSupportFragmentManager();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        myInfoRepository = new MyInfoRepository(getApplication());
         ViewPager2 viewPager =  binding.viewpager2Main;
         adapter = new ScreenSlidePagerAdapter(this,this);
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
@@ -62,23 +65,14 @@ public class MainActivity extends FragmentActivity {
 
         Toolbar toolbar = findViewById(R.id.toolBar);
 
-        String userType = sPmanager.getUserType();
-        if(userType.equals("company")){
-            binding.navView.textviewNavDrawerProductList.setVisibility(View.VISIBLE);
-            binding.navView.companyProductRegister.setVisibility(View.VISIBLE);
-        }else{
-            binding.navView.textviewNavDrawerProductList.setVisibility(View.GONE);
-            binding.navView.companyProductRegister.setVisibility(View.GONE);
-        }
-
         drawer = binding.drawerLayout;
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.open, R.string.closed);
         drawer.addDrawerListener(toggle);
 
         GlideImage(binding.navView.imageViewProfile);
-        binding.navView.textViewUserName.setText(sPmanager.getUserName());
-        binding.navView.textViewUserPoint.setText("잔여포인트 : "+ sPmanager.getUserPoint()+" P");
+
+
         binding.navView.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
@@ -184,11 +178,47 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("Net", "mainOnResume");
+
+        // userType -> 네비게이션 뷰 변환
+        myInfoRepository.getValueToLiveData("userType").observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s != null)
+                    if(s.equals("company")){
+                        binding.navView.textviewNavDrawerProductList.setVisibility(View.VISIBLE);
+                        binding.navView.constraintLayout3.setVisibility(View.VISIBLE);
+                    }else{
+                        binding.navView.textviewNavDrawerProductList.setVisibility(View.GONE);
+                        binding.navView.constraintLayout3.setVisibility(View.GONE);
+                    }
+            }
+        });
+
+        // Point
+        myInfoRepository.getValueToLiveData("point").observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s != null) {
+                    String viewText = s + " P";
+                    binding.navView.textViewUserPoint.setText("잔여포인트 : "+ viewText);
+                }
+            }
+        });
+
+        // Name
+        myInfoRepository.getValueToLiveData("name").observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s != null) {
+                    String viewText = s + " 님";
+                    binding.navView.textViewUserName.setText(viewText);
+                }
+            }
+        });
     }
 
     private void GlideImage(ImageView view){
-        Glide.with(getApplicationContext()).load(R.drawable.userprofile).circleCrop().into(view);
+        Glide.with(getApplicationContext()).load(R.drawable.ic_profile_basic).circleCrop().into(view);
     }
 }
 

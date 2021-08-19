@@ -24,7 +24,7 @@
         android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/company_product_register" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
@@ -69,45 +69,58 @@
         app:layout_constraintStart_toStartOf="@+id/textView_userName"
         app:layout_constraintTop_toBottomOf="@+id/textView_userName" />
 
-    <ImageButton
-        android:id="@+id/company_product_register"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginStart="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/radious_button_swebscolor"
-        android:backgroundTint="#93E3BE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_profile" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_profile">
+
+        <ImageButton
+            android:id="@+id/company_product_register"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/radious_button_swebscolor"
+            android:backgroundTint="#93E3BE"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/ic_baseline_file_upload_24"
-        android:backgroundTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/company_product_register"
-        app:layout_constraintEnd_toEndOf="@+id/company_product_register"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/company_product_register"
-        app:layout_constraintTop_toTopOf="@+id/company_product_register" />
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/ic_baseline_file_upload_24"
+            android:backgroundTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/company_product_register"
+            app:layout_constraintEnd_toEndOf="@+id/company_product_register"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/company_product_register"
+            app:layout_constraintTop_toTopOf="@+id/company_product_register" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="기업사 제품등록"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/company_product_register"
-        app:layout_constraintEnd_toStartOf="@+id/imageView4"
-        app:layout_constraintStart_toStartOf="@+id/company_product_register"
-        app:layout_constraintTop_toTopOf="@+id/company_product_register" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="기업사 제품등록"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/company_product_register"
+            app:layout_constraintEnd_toStartOf="@+id/imageView4"
+            app:layout_constraintStart_toStartOf="@+id/company_product_register"
+            app:layout_constraintTop_toTopOf="@+id/company_product_register" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,12 +3,14 @@ package com.example.swebs_sampleapplication_210612.Fragment.PointFragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
+import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentPointBinding;
@@ -16,10 +18,12 @@ import com.example.swebs_sampleapplication_210612.databinding.FragmentPointBindi
 public class PointFragment extends Fragment {
 
     private FragmentPointBinding binding;
-
+    private MyInfoRepository myInfoRepository;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
+
     }
 
     @Override
@@ -29,8 +33,8 @@ public class PointFragment extends Fragment {
         binding = FragmentPointBinding.inflate(inflater,container,false);
         SPmanager sPmanager = new SPmanager(container.getContext());
 
-        binding.textViewPointName.setText(sPmanager.getUserName());
-        binding.textviewPoint.setText(sPmanager.getUserPoint());
+
+
 
         binding.pointUseCaution.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,5 +45,31 @@ public class PointFragment extends Fragment {
         });
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Point
+        myInfoRepository.getValueToLiveData("point").observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s != null) {
+                    String viewText = s + " P";
+                    binding.textviewPoint.setText(viewText);
+                }
+            }
+        });
+
+        // Name
+        myInfoRepository.getValueToLiveData("name").observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s != null) {
+                    binding.textViewPointName.setText(s);
+                }
+            }
+        });
     }
 }

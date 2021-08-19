@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Dialog.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.FindPasswordDialog;
@@ -32,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private FindPasswordDialog dialog_findPass;
     private RetroAPI retroAPI;
     private SPmanager sPmanager = new SPmanager(this);
+    private MyInfoRepository myInfoRepository;
 
     private boolean isLogin = false;
     private String reason;
@@ -42,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
+        myInfoRepository = new MyInfoRepository(getApplication());
 
         //retrofit Api 설정
         retroAPI = RetroClient.getRetrofitClient().create(RetroAPI.class);
@@ -103,16 +106,22 @@ public class LoginActivity extends AppCompatActivity {
                     LoginModel responseData = response.body();
                     if (responseData != null) {
                         if (responseData.isSuccess()) {
-                            sPmanager.setUserBirth(responseData.getDateofbirth());
-                            sPmanager.setUserType(responseData.getUser_type());
-                            sPmanager.setUserEmail(responseData.getUser_email());
-                            sPmanager.setUserName(responseData.getName());
-                            sPmanager.setUserGender(responseData.getGender());
-                            sPmanager.setUserPoint(responseData.getPoints());
+                            myInfoRepository.insertMyInfo("userSrl", responseData.getMember_srl());
+                            myInfoRepository.insertMyInfo("token", responseData.getToken());
+                            myInfoRepository.insertMyInfo("nickName", responseData.getNickname());
+                            myInfoRepository.insertMyInfo("name", responseData.getName());
+                            myInfoRepository.insertMyInfo("region", responseData.getRegion());
+                            myInfoRepository.insertMyInfo("point", responseData.getPoints());
+                            myInfoRepository.insertMyInfo("birthday", responseData.getDateofbirth());
+                            myInfoRepository.insertMyInfo("userType", responseData.getUser_type());
+                            myInfoRepository.insertMyInfo("gender", responseData.getGender());
+                            myInfoRepository.insertMyInfo("email", responseData.getUser_email());
 
-                                finishAffinity();
-                                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                                startActivity(intent);
+                            sPmanager.setUserGender(responseData.getGender());
+                            sPmanager.setUserType(responseData.getUser_type());
+                            sPmanager.setUserToken(responseData.getToken());
+
+                            finish();
 
                         }else {
                             reason = responseData.getReason();
