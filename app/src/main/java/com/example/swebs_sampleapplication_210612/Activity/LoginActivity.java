@@ -106,23 +106,21 @@ public class LoginActivity extends AppCompatActivity {
                     LoginModel responseData = response.body();
                     if (responseData != null) {
                         if (responseData.isSuccess()) {
-                            myInfoRepository.insertMyInfo("userSrl", responseData.getMember_srl());
+                            myInfoRepository.insertMyInfo("userSrl", responseData.getUserSrl());
                             myInfoRepository.insertMyInfo("token", responseData.getToken());
                             myInfoRepository.insertMyInfo("nickName", responseData.getNickname());
                             myInfoRepository.insertMyInfo("name", responseData.getName());
                             myInfoRepository.insertMyInfo("region", responseData.getRegion());
-                            myInfoRepository.insertMyInfo("point", responseData.getPoints());
-                            myInfoRepository.insertMyInfo("birthday", responseData.getDateofbirth());
-                            myInfoRepository.insertMyInfo("userType", responseData.getUser_type());
+                            myInfoRepository.insertMyInfo("point", responseData.getPoint());
+                            myInfoRepository.insertMyInfo("userType", responseData.getUserType());
                             myInfoRepository.insertMyInfo("gender", responseData.getGender());
-                            myInfoRepository.insertMyInfo("email", responseData.getUser_email());
+                            myInfoRepository.insertMyInfo("email", responseData.getUserEmail());
 
                             sPmanager.setUserGender(responseData.getGender());
-                            sPmanager.setUserType(responseData.getUser_type());
+                            sPmanager.setUserType(responseData.getUserType());
                             sPmanager.setUserToken(responseData.getToken());
 
                             finish();
-
                         }else {
                             reason = responseData.getReason();
                             if(reason!=null){

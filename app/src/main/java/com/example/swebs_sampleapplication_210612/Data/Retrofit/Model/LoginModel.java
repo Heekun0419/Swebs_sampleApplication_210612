@@ -7,19 +7,19 @@ public class LoginModel {
     private boolean success;
 
     @Nullable
-    private String member_srl;
+    private String userSrl;
     @Nullable
-    private String user_email;
+    private String userEmail;
     @Nullable
     private String reason;
     @Nullable
-    private String user_type;
+    private String userType;
     @Nullable
     private String token;
     @Nullable
     private String password;
     @Nullable
-    private String points;
+    private String point;
     @Nullable
     private String name;
 
@@ -27,43 +27,34 @@ public class LoginModel {
     private String nickname;
 
     @Nullable
-    private String dateofbirth;
-    @Nullable
-    private String phonenumber;
-
-    @Nullable
     private String gender;
 
     @Nullable
     private String region;
 
-    @Nullable
-    private String lastlogindate;
-    @Nullable
-    private String regdate;
 
     public boolean isSuccess() {
         return success;
     }
 
     @Nullable
-    public String getPoints() {
-        return points;
+    public String getUserSrl() {
+        return userSrl;
     }
 
     @Nullable
-    public String getMember_srl() {
-        return member_srl;
+    public String getUserEmail() {
+        return userEmail;
     }
 
     @Nullable
-    public String getUser_email() {
-        return user_email;
+    public String getReason() {
+        return reason;
     }
 
     @Nullable
-    public String getUser_type() {
-        return user_type;
+    public String getUserType() {
+        return userType;
     }
 
     @Nullable
@@ -77,6 +68,11 @@ public class LoginModel {
     }
 
     @Nullable
+    public String getPoint() {
+        return point;
+    }
+
+    @Nullable
     public String getName() {
         return name;
     }
@@ -87,16 +83,6 @@ public class LoginModel {
     }
 
     @Nullable
-    public String getDateofbirth() {
-        return dateofbirth;
-    }
-
-    @Nullable
-    public String getPhonenumber() {
-        return phonenumber;
-    }
-
-    @Nullable
     public String getGender() {
         return gender;
     }
@@ -104,21 +90,6 @@ public class LoginModel {
     @Nullable
     public String getRegion() {
         return region;
-    }
-
-    @Nullable
-    public String getLastlogindate() {
-        return lastlogindate;
-    }
-
-    @Nullable
-    public String getRegdate() {
-        return regdate;
-    }
-
-    @Nullable
-    public String getReason() {
-        return reason;
     }
 }
 

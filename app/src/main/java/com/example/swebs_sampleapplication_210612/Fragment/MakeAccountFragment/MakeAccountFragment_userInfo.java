@@ -112,7 +112,7 @@ public class MakeAccountFragment_userInfo extends Fragment {
                 if (response.body() != null) {
                     NormalSignUpModel responseData = response.body();
                     if (responseData.isSuccess()) {
-                        myInfoRepository.insertMyInfo("userSrl", responseData.getMember_srl());
+                        myInfoRepository.insertMyInfo("userSrl", responseData.getUserSrl());
                         myInfoRepository.insertMyInfo("token", responseData.getToken());
                         myInfoRepository.insertMyInfo("nickName", responseData.getNickname());
                         myInfoRepository.insertMyInfo("name", responseData.getName());

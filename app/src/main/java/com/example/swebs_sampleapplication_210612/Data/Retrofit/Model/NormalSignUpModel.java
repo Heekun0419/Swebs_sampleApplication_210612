@@ -6,7 +6,7 @@ public class NormalSignUpModel {
     private boolean success;
 
     @Nullable
-    private String member_srl;
+    private String userSrl;
 
     @Nullable
     private String userType;
@@ -41,12 +41,8 @@ public class NormalSignUpModel {
     }
 
     @Nullable
-    public String getMember_srl() {
-        return member_srl;
-    }
-
-    public void setMember_srl(@Nullable String member_srl) {
-        this.member_srl = member_srl;
+    public String getUserSrl() {
+        return userSrl;
     }
 
     @Nullable
