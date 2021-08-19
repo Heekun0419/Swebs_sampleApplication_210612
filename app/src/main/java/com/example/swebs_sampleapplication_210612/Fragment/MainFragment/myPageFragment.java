@@ -87,7 +87,10 @@ public class myPageFragment extends Fragment {
         binding.includedAppbarMy.imageButton2.setOnClickListener(v ->
                 ((MainActivity) requireActivity()).BottomSheetOpen()
         );
+
+        //출생년도 클릭시
         binding.mypageBirthday.setOnClickListener(v -> {
+            // 게스트 일때 다이얼로그 표시
             if(userType.equals("guest")){
                 NumberPickerDialog dialog = new NumberPickerDialog(requireContext(), new NumberPickerModel(
                         "출생년도", new String[]{""}, "확인", "취소"), new DialogClickListener() {
@@ -96,15 +99,11 @@ public class myPageFragment extends Fragment {
                         userBirthDay = position + " 년도";
                         binding.mypageBirthdayTextview.setText(userBirthDay);
                     }
-
                     @Override
                     public void onNegativeClick() {
-
                     }
-
                     @Override
                     public void onCloseClick() {
-
                     }
                 });
                 dialog.setCancelable(false);
@@ -112,11 +111,49 @@ public class myPageFragment extends Fragment {
                 dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
                 dialog.show();
             }else{
+                // 게스트 아닐땐 회원정보 수정 표시
                 Intent modify_userInfo_intent = new Intent(requireContext(), ModifyUserInfoActivity.class);
                 startActivity(modify_userInfo_intent);
             }
 
         });
+
+        // 성별 클릭시
+        binding.mypageGender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(userType.equals("guest")){
+                    NumberPickerDialog dialog = new NumberPickerDialog(requireContext(), new NumberPickerModel(
+                            "성별", new String[]{"남자", "여자"}, "확인", "취소"), new DialogClickListener() {
+                        @Override
+                        public void onPositiveClick(int position) {
+                           if(position==0) {
+                               renderGenderView("male");
+                           }else{
+                               renderGenderView("female");
+                           }
+                        }
+                        @Override
+                        public void onNegativeClick() {
+                        }
+                        @Override
+                        public void onCloseClick() {
+                        }
+                    });
+                    dialog.setCancelable(false);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                    dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+                    dialog.show();
+                }else{
+                    // 게스트 아닐땐 회원정보 수정 표시
+                    Intent modify_userInfo_intent = new Intent(requireContext(), ModifyUserInfoActivity.class);
+                    startActivity(modify_userInfo_intent);
+                }
+            }
+        });
+
+
+
         // Point 정책 자세히 보기
         binding.mypagePoint.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), InformationActivity.class);

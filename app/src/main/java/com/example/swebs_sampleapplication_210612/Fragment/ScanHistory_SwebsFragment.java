@@ -1,5 +1,6 @@
 package com.example.swebs_sampleapplication_210612.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.swebs_sampleapplication_210612.Activity.ReviewActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ScanHistoryActivity;
 import com.example.swebs_sampleapplication_210612.Fragment.Information_menu.ServiceTermsFragment;
 import com.example.swebs_sampleapplication_210612.R;
@@ -47,7 +49,8 @@ public class ScanHistory_SwebsFragment extends Fragment implements HistoryListCl
 
     @Override
     public void negativeButtonClicked(ImageButton button, int position, @Nullable @org.jetbrains.annotations.Nullable String code) {
-
+        Intent intent = new Intent(requireActivity(), ReviewActivity.class);
+        startActivity(intent);
     }
 
     @Override

@@ -104,6 +104,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:background="?attr/selectableItemBackground"
                         android:orientation="horizontal"
                         android:padding="25dp">
 
@@ -148,6 +149,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
                         android:layout_weight="1">
 
                         <ImageButton
@@ -190,6 +192,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
                         android:layout_weight="1">
 
                         <ImageButton
@@ -233,6 +236,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
                         android:layout_weight="1">
 
                         <ImageButton
@@ -356,6 +360,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:background="?attr/selectableItemBackground"
                     android:orientation="horizontal"
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp">
@@ -392,6 +397,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:background="?attr/selectableItemBackground"
                     android:orientation="horizontal"
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp">
@@ -413,7 +419,6 @@
                         android:id="@+id/mypage_birthday_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="미등록"
                         android:textColor="@color/lower_gray"
                         android:textSize="16dp" />
                 </LinearLayout>
@@ -424,6 +429,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:background="?attr/selectableItemBackground"
                     android:orientation="horizontal"
                     android:paddingTop="20dp"
                     android:paddingBottom="20dp">
@@ -461,6 +467,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:background="?attr/selectableItemBackground"
                     android:orientation="horizontal"
                     android:paddingTop="20dp">
 

@@ -22,17 +22,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Swebs_sampleApplication_210612"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.PurchaseRegistSuccessActivity"
+        <activity
+            android:name=".Activity.ReviewActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.PurchaseRegistSuccessActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
-        <activity android:name=".Activity.QRLinkActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Activity.QRLinkActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Activity.ModifyUserInfoActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Activity.AdressModifyActivity"
             android:screenOrientation="portrait"

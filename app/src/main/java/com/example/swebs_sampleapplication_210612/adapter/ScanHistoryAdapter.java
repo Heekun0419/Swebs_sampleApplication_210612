@@ -49,7 +49,7 @@ public class ScanHistoryAdapter extends RecyclerView.Adapter<ScanHistoryAdapter.
         return 10;
     }
 
-    public static class ScanHistoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class ScanHistoryViewHolder extends RecyclerView.ViewHolder{
         ImageView view;
         ImageButton positiveButton, negativeButton; TextView textView;
         ItemScanHistoryListBinding binding;
@@ -62,17 +62,26 @@ public class ScanHistoryAdapter extends RecyclerView.Adapter<ScanHistoryAdapter.
             positiveButton = binding.btnScanHistoryAs;
             negativeButton = binding.btnReview;
             textView = binding.textViewReviewBrandName;
-            positiveButton.setOnClickListener(this);
-            negativeButton.setOnClickListener(this);
-            textView.setOnClickListener(this);
+            positiveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.positiveButtonClicked(positiveButton,getAdapterPosition(),"");
+                }
+            });
+            negativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.negativeButtonClicked(negativeButton,getAdapterPosition(),"");
+                }
+            });
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.companyNameClicked(textView,getAdapterPosition(),textView.getText().toString());
+                }
+            });
         }
 
-        @Override
-        public void onClick(View v) {
-            listener.positiveButtonClicked(positiveButton,getAdapterPosition(),"");
-            listener.negativeButtonClicked(negativeButton,getAdapterPosition(),"");
-            listener.companyNameClicked(textView,getAdapterPosition(),textView.getText().toString());
-        }
     }
     private void GlideImage(ImageView view) {
         Glide.with(context).load(ImageUrl).into(view);

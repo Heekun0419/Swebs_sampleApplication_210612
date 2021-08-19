@@ -108,6 +108,7 @@
                 android:rating="4.5"
                 android:progressTint="#FADB32"
                 android:progressBackgroundTint="#575757"
+                android:secondaryProgressTint="@color/white"
                 android:stepSize="0.5"/>
 
             <TextView

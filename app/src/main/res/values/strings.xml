@@ -96,9 +96,35 @@
     <string name="modify_user_info_2">촬영하기</string>
     <string name="modify_user_info_3">가져오기</string>
 
+    <!-- 리뷰 작성관련 -->
+    <string name="review_write_0">리뷰작성</string>
+    <string name="review_write_1">리뷰 작성 전에 꼭 보세요</string>
+    <string name="review_write_2">리뷰 남길 제품을 등록해주세요 (리뷰작성시 50p 지급)</string>
+    <string name="review_write_3">제 점수는요?</string>
+    <string name="review_write_4">30자 이내로 제목을 적어주세요</string>
+    <string name="review_write_5">20자 ~ 5000자 \n내용을 적어주세요</string>
+    <string name="review_write_6">* 리뷰 제목</string>
+    <string name="review_write_7">* 리뷰 내용</string>
+    <string name="review_write_8">사진 첨부하기</string>
+    <string name="review_write_9">사진첨부시 추가 50p 지급</string>
+    <string name="review_write_10">상품과 무관한 리뷰나 사진(동영상)은 수정요청을 드리거나 통보없이 삭제되며 검수 후 포인트 지급이 됩니다. 포인트 지급은 1인당 최대 월 3000P까지 입니다.</string>
+    <string name="review_write_11">리뷰 등록</string>
+
+    <!-- 리뷰 작성 메뉴얼 -->
+    <string name="manual_review_1">리뷰작성 메뉴얼</string>
+    <string name="manual_review_2">리뷰 수정 요청 및 삭제 기준</string>
+    <string name="manual_review_3">스웹스는 실구매자들이 안심하고 제품을 사용할 수 있도록 정품인증 및 사용리뷰를 요청 드리고 있습니다.</string>
+    <string name="manual_review_4">(삭제)</string>
+    <string name="manual_review_5">1. 욕설, 음란, 고의성 악평에 대한 리뷰는 통보없이 삭제 \n2. 반복, 도배성 리뷰 \n3. 실 구매자 아닌 경우</string>
+    <string name="manual_review_6">(수정요청)</string>
+    <string name="manual_review_7">1. 정보성이 부족하거나 매우 간략한 리뷰 \n2. 제품의 장단점이 잘 표현되지 않은 리뷰 \n3. 알아보기 힘든 문자나 오타가 심한 리뷰 \n4. 각 제품과 맞지 않은 리뷰나 사진 \n5. 개인정보를 포함한 리뷰 \n6. 거래 및 홍보를 목적으로 한 리뷰 \n7. 명예훼손, 저작권 침해등의 우려가 있는 리뷰 \n8. 기본 에티켓을 침해한 리뷰</string>
+    <string name="manual_review_8">확 인</string>
+
     <string name="show"> <u>보기</u> </string>
 
     <string name="event_info_sample"> • 담당자가 예약확정 여부를 문자로 알려드립니다.\n※본 상품의 항공/객실은 구매 확인 후 확정여부에 대해 개별 안내 드립니다. \n\n별도의 해피콜 없이 예약시 기재된 번호로 예약문자 발송 됩니다. (미확정 상품이므로, 좌석마감으로 인한 이용불가 시 100% 환불 or 타항공사 대체가능성 있음) 구매 시 연락 받으실 번호를 정확하게 기재 부탁드립니다. \n\n·최소출발인원 : 2인 (1인일 경우 문의바랍니다.) \n\n·여행 요금은 1인 요금이므로, 인원수에 맞게 쿠폰을 구매해주세요. (대인/소인 동일) \n\n·소인(만2세~만13세미만)요금은 성인 요금과 동일합니다. ·유아(24개월 미만)요금은 무료이며, 별도 항공좌석이 배정되지 않습니다. \n(단, 의료보험증 또는 가족관계증명서 지참/ 학생은 신분증 필히 지참) \n\n·구매 시 별도입력창에 실탑승자성함을 주민등록증상 실명과 동일하게 기입해주세요. (대인/소인 구분) \n\n·출발일별로 구매 부탁 드리며 구매 후 출발일/귀국일 변경 불가합니다. (취소수수료발생)</string>
+
+    <!-- 회원가입 성공 페이지 -->
     <string name="makeAccount_success">감사합니다.\n믿음과 신뢰를 바탕으로 한 정품보안 및 인증 통합 플랫폼 <b>스웹스에 가입되었습니다.</b> </string>
     <string name="makeAccount_success2"><b>가입축하 포인트 50P</b>가 지급되었습니다. 회원정보에서 추가정보를 입력하시면 <b>추가 포인트 50P</b>가 더 지급됩니다</string>
 

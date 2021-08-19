@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityPurchaseInfoBinding;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -22,6 +24,7 @@ public class PurchaseInfoActivity extends AppCompatActivity {
     private ActivityPurchaseInfoBinding binding;
     private String Date;
     private MaterialDatePicker datePicker;
+    private String ImageUrI = "https://i.pinimg.com/originals/a2/4f/e6/a24fe6cabab71872039e30af52e7dd9e.png";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +32,9 @@ public class PurchaseInfoActivity extends AppCompatActivity {
         binding = ActivityPurchaseInfoBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
+        // 이미지 뷰 Glide
+        ImageView view = binding.ImageViewPurchaseImage;
+        GlideImage(view);
 
         binding.btnPurchaseInfoBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,5 +92,9 @@ public class PurchaseInfoActivity extends AppCompatActivity {
         });
         datePicker.show(getSupportFragmentManager(),"datePicker");
 
+    }
+
+    private void GlideImage(ImageView view) {
+        Glide.with(this).load(ImageUrI).into(view);
     }
 }
