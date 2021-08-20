@@ -16,22 +16,20 @@ public class MyTopMenuActivity extends AppCompatActivity {
     private ActivityMyTopMenuBinding binding;
     String requestCode;
     private FragmentManager manager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMyTopMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         manager = getSupportFragmentManager();
         requestCode = getIntent().getStringExtra("resultCode");
+
         if(requestCode.equals("review"))
         moveFragment(new MyReviewFragment(),"내 리뷰");
 
-        binding.btnMyTopActivityBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        binding.btnMyTopActivityBack.setOnClickListener(v -> onBackPressed());
 
     }
 

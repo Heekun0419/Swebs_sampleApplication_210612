@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 public class GuestSignUpModel {
     private boolean success;
     @Nullable
-    private String member_srl;
+    private String userSrl;
     @Nullable
     private String userType;
     @Nullable
@@ -28,12 +28,12 @@ public class GuestSignUpModel {
     }
 
     @Nullable
-    public String getMember_srl() {
-        return member_srl;
+    public String getUserSrl() {
+        return userSrl;
     }
 
-    public void setMember_srl(@Nullable String member_srl) {
-        this.member_srl = member_srl;
+    public void setUserSrl(@Nullable String userSrl) {
+        this.userSrl = userSrl;
     }
 
     public String getUserType() {

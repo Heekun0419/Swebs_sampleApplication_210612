@@ -50,7 +50,7 @@ public class UserLoginController {
                 if (response.body() != null) {
                     GuestSignUpModel responseData = response.body();
                     if (responseData.isSuccess()) {
-                        myInfoRepository.insertMyInfo("userSrl", responseData.getMember_srl());
+                        myInfoRepository.insertMyInfo("userSrl", responseData.getUserSrl());
                         myInfoRepository.insertMyInfo("token", responseData.getToken());
                         myInfoRepository.insertMyInfo("nickName", responseData.getNickname());
                         myInfoRepository.insertMyInfo("name", responseData.getNickname());
@@ -59,7 +59,7 @@ public class UserLoginController {
                         myInfoRepository.insertMyInfo("userType", "guest");
 
                         sPmanager.setUserType("guest");
-                        sPmanager.setUserSrl(responseData.getMember_srl());
+                        sPmanager.setUserSrl(responseData.getUserSrl());
                         sPmanager.setUserToken(responseData.getToken());
                     }
                 }

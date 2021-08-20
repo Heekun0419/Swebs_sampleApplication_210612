@@ -49,8 +49,8 @@ public class NumberPickerDialog extends Dialog {
         if(model.getTitle().equals("출생년도")) {
             int year = cal.get(Calendar.YEAR);
             picker.setMinValue(1900);
-            picker.setMaxValue(2020);
-            picker.setValue(year);
+            picker.setMaxValue(year);
+            picker.setValue(1990);
         }else{
             String[] list = model.getList();
             //numberPicker 세팅
@@ -58,6 +58,7 @@ public class NumberPickerDialog extends Dialog {
             picker.setMaxValue(list.length-1);
             picker.setDisplayedValues(list);
         }
+
 
         binding.btnLanguageOk.setOnClickListener(v -> {
             // picker.getValue 로 Position 받아올 수 있음.

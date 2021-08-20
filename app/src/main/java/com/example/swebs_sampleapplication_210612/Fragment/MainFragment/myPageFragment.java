@@ -163,14 +163,18 @@ public class myPageFragment extends Fragment {
                         @Override
                         public void onPositiveClick(int position) {
                            if(position==0) {
-                               renderGenderView("male");
-                           }else{
-                               renderGenderView("female");
+                               myInfoRepository.insertMyInfo("gender", "male");
+                               //renderGenderView("male");
+                           } else {
+                               myInfoRepository.insertMyInfo("gender", "female");
+                               //renderGenderView("female");
                            }
                         }
+
                         @Override
                         public void onNegativeClick() {
                         }
+
                         @Override
                         public void onCloseClick() {
                         }
@@ -302,6 +306,7 @@ public class myPageFragment extends Fragment {
         });
         // Data observe -- END
     }
+
     private void setEmail(String email){
         String content = email;
         char s = content.charAt(0);
