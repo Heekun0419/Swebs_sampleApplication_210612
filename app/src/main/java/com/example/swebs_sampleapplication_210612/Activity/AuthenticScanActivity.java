@@ -11,6 +11,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityAuthenticScan2Binding;
@@ -21,6 +24,7 @@ public class AuthenticScanActivity extends AppCompatActivity {
     private ActivityAuthenticScan2Binding binding;
 
     private String resultUrl, resultCompany, resultCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +36,9 @@ public class AuthenticScanActivity extends AppCompatActivity {
         resultCompany = getIntent().getStringExtra("company");
         resultCode = getIntent().getStringExtra("code");
 
-        ShowMyDialog("URL : " + resultUrl + "\nCompany : " + resultCompany + "\nCode : " + resultCode);
-
         String loadUrl = "https://www.swebs.co.kr/certchk/" + resultCompany + "/swebs_result.html?q=" + resultCode;
-        binding.webView.loadUrl(loadUrl);
+        webViewInit();
+        webViewLoadUrl(loadUrl);
 
         binding.btnAuthenticScanBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +54,56 @@ public class AuthenticScanActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void webViewInit() {
+        binding.webView.setWebViewClient(new WebViewClient(){
+            int finishCount = 0;
+            @Override
+            public void onPageCommitVisible(WebView view, String url) {
+                renderWebViewComplete(++finishCount);
+                super.onPageCommitVisible(view, url);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                renderWebViewComplete(++finishCount);
+                super.onPageFinished(view, url);
+            }
+        });
+    }
+
+    private void webViewLoadUrl(String url) {
+        binding.webView.loadUrl(url);
+    }
+
+    private void renderWebViewComplete(int finishCount) {
+        if (finishCount >= 2) {
+            setLoadingVisibility(false);
+            setWebViewVisibility(true);
+            setPurchaseVisibility(true);
+        }
+    }
+
+    private void setLoadingVisibility(boolean isVisible) {
+        if (isVisible)
+            binding.animationView.setVisibility(View.VISIBLE);
+        else
+            binding.animationView.setVisibility(View.GONE);
+    }
+
+    private void setWebViewVisibility(boolean isVisible) {
+        if (isVisible)
+            binding.webView.setVisibility(View.VISIBLE);
+        else
+            binding.webView.setVisibility(View.GONE);
+    }
+
+    private void setPurchaseVisibility(boolean isVisible) {
+        if (isVisible)
+            binding.purchaseView.setVisibility(View.VISIBLE);
+        else
+            binding.purchaseView.setVisibility(View.GONE);
     }
 
     private void ShowMyDialog(String URl){
