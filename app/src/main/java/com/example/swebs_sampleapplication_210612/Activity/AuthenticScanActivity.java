@@ -32,6 +32,8 @@ public class AuthenticScanActivity extends AppCompatActivity {
         binding = ActivityAuthenticScan2Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        setLoadingVisibility(true);
+
         resultUrl = getIntent().getStringExtra("url");
         resultCompany = getIntent().getStringExtra("company");
         resultCode = getIntent().getStringExtra("code");
@@ -87,9 +89,9 @@ public class AuthenticScanActivity extends AppCompatActivity {
 
     private void setLoadingVisibility(boolean isVisible) {
         if (isVisible)
-            binding.animationView.setVisibility(View.VISIBLE);
+            binding.loadingView.getRoot().setVisibility(View.VISIBLE);
         else
-            binding.animationView.setVisibility(View.GONE);
+            binding.loadingView.getRoot().setVisibility(View.GONE);
     }
 
     private void setWebViewVisibility(boolean isVisible) {

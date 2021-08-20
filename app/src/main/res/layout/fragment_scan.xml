@@ -90,7 +90,7 @@
 
     <include
         android:id="@+id/tutorial_scan_page"
-        android:visibility="visible"
+        android:visibility="gone"
         layout="@layout/tutorial_scan_layout"
         android:animateLayoutChanges="true"/>
 

@@ -79,16 +79,30 @@
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/purchaseView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         app:layout_constraintVertical_weight="1" />
 
+    <include
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        layout="@layout/animation_loading_layout"
+        app:layout_constraintBottom_toTopOf="@+id/purchaseView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:layout_constraintVertical_weight="1"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/purchaseView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:background="@drawable/bottom_round_corner_background"
         android:elevation="7dp"
         android:padding="20dp"
@@ -118,10 +132,6 @@
             app:layout_constraintTop_toTopOf="@+id/btn_purchase_input" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <include
-        android:id="@+id/animation_view_loading"
-        layout="@layout/animation_loading_layout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

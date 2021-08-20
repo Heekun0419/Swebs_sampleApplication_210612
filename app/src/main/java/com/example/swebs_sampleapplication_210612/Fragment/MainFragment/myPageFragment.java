@@ -1,5 +1,6 @@
 package com.example.swebs_sampleapplication_210612.Fragment.MainFragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -68,23 +69,28 @@ public class myPageFragment extends Fragment {
         binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
         RenderMyPageFromUserType(sPmanager.getUserType());
         SetUserInfo();
+
         // 닫기버튼 누르면 튜토리얼 닫힘.
         binding.tutorialMyPage.textViewMyPageTutorialClose.setOnClickListener(v -> {
             binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
             binding.tutorialMyPage.getRoot().setAnimation(fadeOut);
             sPmanager.setMyTutorialExit(true);
         });
+
         binding.tutorialMyPage.imageButton5.setOnClickListener(v -> {
             binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
             binding.tutorialMyPage.getRoot().setAnimation(fadeOut);
             sPmanager.setMyTutorialExit(true);
         });
+
         // 네비게이션 드로어 열기
         binding.includedAppbarMy.imageButton.setOnClickListener(v -> {
             ((MainActivity) requireActivity()).drawer.openDrawer(GravityCompat.START);
         });
+
         // APP bar 로고 안보이기
         binding.includedAppbarMy.imageView19.setVisibility(View.INVISIBLE);
+
         // 바텀시트 열기
         binding.includedAppbarMy.imageButton2.setOnClickListener(v ->
                 ((MainActivity) requireActivity()).BottomSheetOpen()
@@ -113,7 +119,7 @@ public class myPageFragment extends Fragment {
             dialog.show();
         });
 
-        // 내리뷰 버튼 클릭시
+        // 내 리뷰 버튼 클릭시
         binding.btnMypageMyReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,11 +203,13 @@ public class myPageFragment extends Fragment {
             intent.putExtra("resultCode","point");
             startActivity(intent);
         });
+
         // Login Page 이동
         binding.mypageLogin.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), LoginActivity.class);
             startActivity(intent);
         });
+
         binding.mypageModifyMyAdress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -209,8 +217,10 @@ public class myPageFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         return binding.getRoot();
     }
+
     private void SetUserInfo(){
         //국가 설정
         if(country.equals("KR")) {
@@ -221,19 +231,13 @@ public class myPageFragment extends Fragment {
             binding.mypageCountryTextView.setText("中國");
         }
     }
+
     @Override
     public void onResume() {
         super.onResume();
         SetUserInfo();
-        if(sPmanager.getMyTutorialExit()){
-            fadeOut.setDuration(300);
-            binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
-            binding.tutorialMyPage.getRoot().setAnimation(fadeOut);
-        }else{
-            fadeIn.setDuration(500);
-            binding.tutorialMyPage.getRoot().setVisibility(View.VISIBLE);
-            binding.tutorialMyPage.getRoot().setAnimation(fadeIn);
-        }
+
+        setTutorial();
 
         // Data Observe -- START
         myInfoRepository.getValueToLiveData("userSrl").observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -297,6 +301,7 @@ public class myPageFragment extends Fragment {
                 binding.mypageBirthdayTextview.setText(viewText);
             }
         });
+
         // Gender
         myInfoRepository.getValueToLiveData("gender").observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -305,6 +310,17 @@ public class myPageFragment extends Fragment {
             }
         });
         // Data observe -- END
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void setTutorial(){
+        if (binding.tutorialMyPage.getRoot().getVisibility() == View.GONE
+                && !sPmanager.getMyTutorialExit()) {
+            fadeIn.setDuration(700);
+            binding.tutorialMyPage.getRoot().setOnTouchListener((v, event) -> true);
+            binding.tutorialMyPage.getRoot().setVisibility(View.VISIBLE);
+            binding.tutorialMyPage.getRoot().setAnimation(fadeIn);
+        }
     }
 
     private void setEmail(String email){
@@ -319,6 +335,7 @@ public class myPageFragment extends Fragment {
             buffer.append("*");
         binding.mypageTextViewID.setText(buffer);
     }
+
     private void RenderMyPageFromUserType(String userType){
         switch (userType) {
             case "guest":  // 게스트
@@ -332,6 +349,7 @@ public class myPageFragment extends Fragment {
                 break;
         }
     }
+
     private void renderGenderView(String gender) {
         if (gender == null) {
             binding.mypageImageViewGender.setVisibility(View.GONE);
@@ -346,6 +364,7 @@ public class myPageFragment extends Fragment {
             binding.mypageImageViewGender.setImageResource(R.drawable.ic_female);
         }
     }
+
     private void setVisible_of_Guest(){
         // 프로필 이미지, 기업 아이콘, 추천인코드
         binding.mypageCompanyIcon.setVisibility(View.GONE);

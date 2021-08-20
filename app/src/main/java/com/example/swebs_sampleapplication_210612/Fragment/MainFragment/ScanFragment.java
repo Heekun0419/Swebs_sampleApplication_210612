@@ -113,6 +113,7 @@ public class ScanFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentScanBinding.inflate(getLayoutInflater());
         sPmanager = new SPmanager(requireContext());
+
         binding.tutorialScanPage.getRoot().setVisibility(View.GONE);
 
         String content = binding.textVIewScanExplain.getText().toString();
@@ -196,6 +197,7 @@ public class ScanFragment extends Fragment {
         return binding.getRoot();
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
@@ -213,12 +215,15 @@ public class ScanFragment extends Fragment {
             }
         }, ContextCompat.getMainExecutor(requireContext()));
 
-        if(sPmanager.getScanTutorialExit()){
-            fadeOut.setDuration(500);
-            binding.tutorialScanPage.getRoot().setVisibility(View.GONE);
-            binding.tutorialScanPage.getRoot().setAnimation(fadeOut);
-        }else {
+        renderTutorial();
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void renderTutorial() {
+        if(binding.tutorialScanPage.getRoot().getVisibility() == View.GONE
+                && !sPmanager.getScanTutorialExit()){
             fadeIn.setDuration(700);
+            binding.tutorialScanPage.getRoot().setOnTouchListener((v, event) -> true);
             binding.tutorialScanPage.getRoot().setVisibility(View.VISIBLE);
             binding.tutorialScanPage.getRoot().setAnimation(fadeIn);
         }
