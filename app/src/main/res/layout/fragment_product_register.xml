@@ -10,53 +10,54 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F3F3F3"
-        tools:context=".Fragment.CloneReportFragment">
+        android:background="#F3F3F3">
 
-        <ImageButton
-            android:id="@+id/imageButton10"
+        <ImageView
+            android:id="@+id/imageView_add_product_photo"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginStart="25dp"
+            android:layout_height="230dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="25dp"
-            android:background="@drawable/radious_rectangle_red"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/radius_login_edittext"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView26"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="라벨이 의심되면 신고해주세요"
-            android:textColor="@color/white"
-            android:textSize="13dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton10"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton10"
-            app:layout_constraintStart_toStartOf="@+id/imageButton10"
-            app:layout_constraintTop_toTopOf="@+id/imageButton10" />
-
         <ImageView
-            android:id="@+id/imageView16"
-            android:layout_width="match_parent"
-            android:layout_height="230dp"
-            android:background="@drawable/radius_login_edittext"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton10" />
-
-        <ImageView
+            android:id="@+id/imageView24"
             android:layout_width="60dp"
             android:layout_height="50dp"
             android:background="@drawable/ic_camera"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView16"
-            app:layout_constraintEnd_toEndOf="@+id/imageView16"
-            app:layout_constraintStart_toStartOf="@+id/imageView16"
-            app:layout_constraintTop_toTopOf="@+id/imageView16" />
+            app:layout_constraintBottom_toBottomOf="@+id/imageView_add_product_photo"
+            app:layout_constraintEnd_toEndOf="@+id/imageView_add_product_photo"
+            app:layout_constraintStart_toStartOf="@+id/imageView_add_product_photo"
+            app:layout_constraintTop_toTopOf="@+id/imageView_add_product_photo"
+            app:layout_constraintVertical_bias="0.44" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/product_reg_text_1"
+            android:textColor="@color/lower_gray"
+            app:layout_constraintEnd_toEndOf="@+id/imageView24"
+            app:layout_constraintStart_toStartOf="@+id/imageView24"
+            app:layout_constraintTop_toBottomOf="@+id/imageView24" />
+
+        <TextView
+            android:id="@+id/textView72"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="25dp"
+            android:text="@string/product_reg_text_2"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView_add_product_photo" />
 
 
         <LinearLayout
@@ -69,7 +70,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView16">
+            app:layout_constraintTop_toBottomOf="@+id/textView72">
 
             <TextView
                 android:layout_width="match_parent"

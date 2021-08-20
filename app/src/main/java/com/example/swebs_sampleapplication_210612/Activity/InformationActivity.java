@@ -51,8 +51,10 @@ public class InformationActivity extends AppCompatActivity {
             moveFragment(new AppInformationFragment(),"어플정보");
         } else if(requestCode.equals("point")){
             moveFragment(new PointFragment(),"스웹스 포인트");
-        }else if(requestCode.equals("AS")){
+        } else if(requestCode.equals("AS")){
             moveFragment(new ServiceNotReadyFragment(),"");
+        } else if(requestCode.equals("product")){
+
         }
 
     }
