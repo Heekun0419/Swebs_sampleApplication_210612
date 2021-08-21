@@ -1,6 +1,7 @@
 package com.example.swebs_sampleapplication_210612.Data.Retrofit.SwebsCorp;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.GuestSignUpModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.SwebsCorp.Model.CodeCertifyModel;
 
 import java.util.Map;
 
@@ -12,8 +13,8 @@ import retrofit2.http.PartMap;
 
 public interface SwebsCorpAPI {
     @Multipart
-    @POST("login/guest_sign_up.php")
-    Call<GuestSignUpModel> guestSignUp(
+    @POST("rmgcall/am_certify_info.php")
+    Call<CodeCertifyModel> getCodeInfo(
             @PartMap Map<String, RequestBody> prams
     );
 }

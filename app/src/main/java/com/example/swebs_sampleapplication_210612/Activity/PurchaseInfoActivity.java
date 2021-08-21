@@ -30,8 +30,11 @@ public class PurchaseInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = ActivityPurchaseInfoBinding.inflate(getLayoutInflater());
-
         setContentView(binding.getRoot());
+
+        ImageUrI = getIntent().getStringExtra("prodImageUrl");
+        binding.textView12.setText(getIntent().getStringExtra("corpName"));
+
         // 이미지 뷰 Glide
         ImageView view = binding.ImageViewPurchaseImage;
         GlideImage(view);

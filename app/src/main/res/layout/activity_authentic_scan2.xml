@@ -120,9 +120,9 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/purchaseTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="구매등록"
             android:textColor="@color/white"
             android:textSize="15dp"
             android:textStyle="bold"
