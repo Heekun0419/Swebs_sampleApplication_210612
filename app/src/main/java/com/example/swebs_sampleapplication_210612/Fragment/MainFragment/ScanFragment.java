@@ -41,13 +41,13 @@ import com.example.swebs_sampleapplication_210612.Activity.AuthenticScanActivity
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.QRLinkActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ScanSettingActivity;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroClient;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.Dialog.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.ScanHistoryAllDataModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroAPI;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanHistoryAllDataModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentScanBinding;
 import com.example.swebs_sampleapplication_210612.util.GpsTracker;
 import com.google.android.gms.tasks.Task;
@@ -93,7 +93,7 @@ public class ScanFragment extends Fragment {
     private final int barcodeTypeUrl = 1;
     private final int barcodeTypeText = 2;
 
-    private RetroAPI retroAPI;
+    private SwebsAPI retroAPI;
     private SPmanager sPmanager;
     private Animation fadeOut = new AlphaAnimation(1,0);
     private Animation fadeIn = new AlphaAnimation(0,1);
@@ -104,7 +104,7 @@ public class ScanFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        retroAPI = RetroClient.getRetrofitClient().create(RetroAPI.class);
+        retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
         sPmanager = new SPmanager(getContext());
     }
 

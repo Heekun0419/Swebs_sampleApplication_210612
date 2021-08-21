@@ -1,10 +1,10 @@
-package com.example.swebs_sampleapplication_210612.Data.Retrofit;
+package com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs;
 
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.GuestSignUpModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.LoginModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.NormalSignUpModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.ScanHistoryAllDataModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.SignUpModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.GuestSignUpModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LoginModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.NormalSignUpModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanHistoryAllDataModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SignUpModel;
 
 import java.util.Map;
 
@@ -14,7 +14,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PartMap;
 
-public interface RetroAPI {
+public interface SwebsAPI {
 
     @Multipart
     @POST("login/guest_sign_up.php")

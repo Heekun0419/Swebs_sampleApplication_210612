@@ -3,6 +3,7 @@ package com.example.swebs_sampleapplication_210612.Fragment.MainFragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Activity.AdressModifyActivity;
 import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
@@ -28,13 +30,18 @@ import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoReposito
 import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.Entity.MyInfo;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog;
+import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog2;
 import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerModel;
+import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerModel2;
 import com.example.swebs_sampleapplication_210612.Dialog.RecommendCodeDialog;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMyPageBinding;
 import com.example.swebs_sampleapplication_210612.util.UserLoginController;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -60,6 +67,7 @@ public class myPageFragment extends Fragment {
         country = locale.getCountry();
         myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -133,25 +141,8 @@ public class myPageFragment extends Fragment {
         binding.mypageBirthday.setOnClickListener(v -> {
             // 게스트 일때 다이얼로그 표시
             if(userType.equals("guest")){
-                NumberPickerDialog dialog = new NumberPickerDialog(requireContext(), new NumberPickerModel(
-                        "출생년도", new String[]{""}, "확인", "취소"), new DialogClickListener() {
-                    @Override
-                    public void onPositiveClick(int position) {
-                        userBirthDay = position + " 년도";
-                        binding.mypageBirthdayTextview.setText(userBirthDay);
-                    }
-                    @Override
-                    public void onNegativeClick() {
-                    }
-                    @Override
-                    public void onCloseClick() {
-                    }
-                });
-                dialog.setCancelable(false);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                dialog.show();
-            }else{
+                dialogBirthday();
+            } else {
                 // 게스트 아닐땐 회원정보 수정 표시
                 Intent modify_userInfo_intent = new Intent(requireContext(), ModifyUserInfoActivity.class);
                 startActivity(modify_userInfo_intent);
@@ -159,37 +150,28 @@ public class myPageFragment extends Fragment {
 
         });
 
+
         // 성별 클릭시
         binding.mypageGender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(userType.equals("guest")){
-                    NumberPickerDialog dialog = new NumberPickerDialog(requireContext(), new NumberPickerModel(
-                            "성별", new String[]{"남자", "여자"}, "확인", "취소"), new DialogClickListener() {
-                        @Override
-                        public void onPositiveClick(int position) {
-                           if(position==0) {
-                               myInfoRepository.insertMyInfo("gender", "male");
-                               //renderGenderView("male");
-                           } else {
-                               myInfoRepository.insertMyInfo("gender", "female");
-                               //renderGenderView("female");
-                           }
-                        }
-
-                        @Override
-                        public void onNegativeClick() {
-                        }
-
-                        @Override
-                        public void onCloseClick() {
-                        }
-                    });
-                    dialog.setCancelable(false);
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                    dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                    dialog.show();
+                    dialogGender();
                 }else{
+                    // 게스트 아닐땐 회원정보 수정 표시
+                    Intent modify_userInfo_intent = new Intent(requireContext(), ModifyUserInfoActivity.class);
+                    startActivity(modify_userInfo_intent);
+                }
+            }
+        });
+
+        // 국가지역 클릭시
+        binding.mypageCountry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userType.equals("guest")) {
+                    dialogCountry();
+                } else {
                     // 게스트 아닐땐 회원정보 수정 표시
                     Intent modify_userInfo_intent = new Intent(requireContext(), ModifyUserInfoActivity.class);
                     startActivity(modify_userInfo_intent);
@@ -221,7 +203,7 @@ public class myPageFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void SetUserInfo(){
+    private void SetUserInfo() {
         //국가 설정
         if(country.equals("KR")) {
             binding.mypageCountryTextView.setText("대한민국");
@@ -230,6 +212,8 @@ public class myPageFragment extends Fragment {
         }else {
             binding.mypageCountryTextView.setText("中國");
         }
+
+        binding.mypageCountryTextView.setText("미등록");
     }
 
     @Override
@@ -254,9 +238,10 @@ public class myPageFragment extends Fragment {
             public void onChanged(String s) {
                 if (s != null)
                     RenderMyPageFromUserType(s);
-                userType =s;
+                userType = s;
             }
         });
+
         // Email
         myInfoRepository.getValueToLiveData("email").observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -265,6 +250,7 @@ public class myPageFragment extends Fragment {
                     setEmail(s);
             }
         });
+
         // Name
         myInfoRepository.getValueToLiveData("name").observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -294,7 +280,9 @@ public class myPageFragment extends Fragment {
             public void onChanged(String s) {
                 String viewText;
                 if (s != null) {
-                    viewText = s;
+                    viewText = s.length() > 4 ? s.substring(0, 4) : s;
+                    viewText += "년";
+                    binding.mypageBirthdayTextview.setTextColor(Color.parseColor("#3E3A39"));
                 } else {
                     viewText = "미등록";
                 }
@@ -309,7 +297,190 @@ public class myPageFragment extends Fragment {
                 renderGenderView(s);
             }
         });
+
+        // Region
+        myInfoRepository.getValueToLiveData("region").observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                String viewText;
+                if (s != null) {
+                    viewText = countryCodeToName(s);
+                    binding.mypageCountryTextView.setTextColor(Color.parseColor("#3E3A39"));
+                } else {
+                    viewText = "미등록";
+                }
+                binding.mypageCountryTextView.setText(viewText);
+            }
+        });
         // Data observe -- END
+    }
+
+    private String countryCodeToName(String countryCode) {
+        return new Locale("", countryCode).getDisplayCountry();
+    }
+
+    private String countryNameToCode(String countryName) {
+        Locale[] locales = Locale.getAvailableLocales();
+        for (Locale locale : locales) {
+            if (!locale.getCountry().equals("")
+            && locale.getDisplayCountry().equals(countryName)) {
+                return locale.getCountry();
+            }
+        }
+
+        return null;
+    }
+
+    private void dialogBirthday() {
+        Calendar cal = Calendar.getInstance();
+
+        List<String> inputData = new ArrayList<>();
+        for (int i=1900; i<=cal.get(Calendar.YEAR); i++) {
+            inputData.add(String.valueOf(i));
+        }
+
+        // 기본값
+        int defaultValue;
+        if (binding.mypageBirthdayTextview.getText().toString().equals("미등록"))
+            defaultValue = 95;
+        else
+            defaultValue = Integer.parseInt(binding.mypageBirthdayTextview.getText().toString().replaceAll("[^0-9]", "")) - 1900;
+
+        NumberPickerDialog2 dialog2 = new NumberPickerDialog2(
+                requireContext(),
+                new NumberPickerModel2(
+                        "출생년도",
+                        inputData,
+                        defaultValue,
+                        "확인",
+                        "취소"
+                ),
+                new DialogClickListener() {
+                    @Override
+                    public void onPositiveClick(int position) {
+                        myInfoRepository.insertMyInfo("birthday", inputData.get(position));
+                    }
+
+                    @Override
+                    public void onNegativeClick() {
+
+                    }
+
+                    @Override
+                    public void onCloseClick() {
+
+                    }
+                }
+        );
+        dialog2.setCancelable(false);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        dialog2.show();
+    }
+
+
+    private void dialogGender() {
+        List<String> inputData = new ArrayList<>();
+        inputData.add("남자");
+        inputData.add("여자");
+
+        int defaultValue = 0;
+        if (binding.mypageGenderTextView.getText().toString().equals("여자"))
+            defaultValue = 1;
+
+
+        NumberPickerDialog2 dialog = new NumberPickerDialog2(
+                requireContext(),
+                new NumberPickerModel2("성별",
+                        inputData,
+                        defaultValue,
+                        "확인",
+                        "취소"
+                ),
+                new DialogClickListener() {
+                    @Override
+                    public void onPositiveClick(int position) {
+                        if (position == 0)
+                            myInfoRepository.insertMyInfo("gender", "male");
+                        else
+                            myInfoRepository.insertMyInfo("gender", "female");
+                    }
+
+                    @Override
+                    public void onNegativeClick() {
+
+                    }
+
+                    @Override
+                    public void onCloseClick() {
+
+                    }
+                }
+        );
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        dialog.show();
+    }
+
+    private void dialogCountry() {
+        int defaultValue = 1;
+        List<String> inputData = new ArrayList<>();
+
+        Locale[] locales = Locale.getAvailableLocales();
+        for (Locale locale : locales) {
+            if (!locale.getCountry().equals("")) {
+                if (!inputData.contains(locale.getDisplayCountry())) {
+                    inputData.add(locale.getDisplayCountry());
+                }
+            }
+        }
+        Collections.sort(inputData);
+
+        // 기본 선택 구하기.
+        int countryCount = 0;
+        for (String data : inputData) {
+            if (binding.mypageCountryTextView.getText().toString().equals(data))
+                defaultValue = countryCount;
+            else if (binding.mypageCountryTextView.getText().toString().equals("미등록")
+                    && country.equals(data)) {
+                defaultValue = countryCount;
+            }
+
+            countryCount++;
+        }
+
+        NumberPickerDialog2 dialog = new NumberPickerDialog2(
+                requireContext(),
+                new NumberPickerModel2(
+                        "국가지역",
+                        inputData,
+                        defaultValue,
+                        "확인",
+                        "취소"
+                ),
+                new DialogClickListener() {
+                    @Override
+                    public void onPositiveClick(int position) {
+                        myInfoRepository.insertMyInfo("region", countryNameToCode(inputData.get(position)));
+                    }
+
+                    @Override
+                    public void onNegativeClick() {
+
+                    }
+
+                    @Override
+                    public void onCloseClick() {
+
+                    }
+                }
+        );
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        dialog.show();
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -352,14 +523,16 @@ public class myPageFragment extends Fragment {
 
     private void renderGenderView(String gender) {
         if (gender == null) {
-            binding.mypageImageViewGender.setVisibility(View.GONE);
+            binding.mypageGenderTextView.setVisibility(View.GONE);
             binding.mypageGenderTextView.setText("미등록");
         } else if (gender.equals("male")) {
             binding.mypageGenderTextView.setText("남자");
+            binding.mypageGenderTextView.setTextColor(Color.parseColor("#3E3A39"));
             binding.mypageImageViewGender.setVisibility(View.VISIBLE);
             binding.mypageImageViewGender.setImageResource(R.drawable.ic_male);
         } else if (gender.equals("female")) {
             binding.mypageGenderTextView.setText("여자");
+            binding.mypageGenderTextView.setTextColor(Color.parseColor("#3E3A39"));
             binding.mypageImageViewGender.setVisibility(View.VISIBLE);
             binding.mypageImageViewGender.setImageResource(R.drawable.ic_female);
         }

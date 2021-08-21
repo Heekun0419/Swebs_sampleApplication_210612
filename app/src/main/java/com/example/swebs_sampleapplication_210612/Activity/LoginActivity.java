@@ -13,9 +13,9 @@ import com.example.swebs_sampleapplication_210612.Dialog.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.FindPasswordDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.LoginModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroAPI;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroClient;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LoginModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityLoginBinding;
 
@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     
     private ActivityLoginBinding binding;
     private FindPasswordDialog dialog_findPass;
-    private RetroAPI retroAPI;
+    private SwebsAPI retroAPI;
     private SPmanager sPmanager = new SPmanager(this);
     private MyInfoRepository myInfoRepository;
 
@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         myInfoRepository = new MyInfoRepository(getApplication());
 
         //retrofit Api 설정
-        retroAPI = RetroClient.getRetrofitClient().create(RetroAPI.class);
+        retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
 
         binding.btnLogin.setOnClickListener(v -> {
             if(!binding.edtLoginId.getText().toString().equals("") && !binding.edtLoginPass.getText().toString().equals("")){
@@ -116,12 +116,12 @@ public class LoginActivity extends AppCompatActivity {
                             myInfoRepository.insertMyInfo("gender", responseData.getGender());
                             myInfoRepository.insertMyInfo("email", responseData.getUserEmail());
 
-                            sPmanager.setUserGender(responseData.getGender());
+                            sPmanager.setUserSrl(responseData.getUserSrl());
                             sPmanager.setUserType(responseData.getUserType());
                             sPmanager.setUserToken(responseData.getToken());
 
                             finish();
-                        }else {
+                        } else {
                             reason = responseData.getReason();
                             if(reason!=null){
                                 if(reason.equals("NotFoundEmail")){

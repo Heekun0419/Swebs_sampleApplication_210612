@@ -1,13 +1,12 @@
-package com.example.swebs_sampleapplication_210612.Data.Retrofit;
+package com.example.swebs_sampleapplication_210612.Data.Retrofit.SwebsCorp;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetroClient {
-
-    private static String baseUrl = "http://3.36.65.243/php/src/";
+public class SwebsCorpClient {
+    private static String baseUrl = "https://swebs.co.kr/";
     private static Retrofit retrofit;
 
     public static Retrofit getRetrofitClient() {
@@ -28,4 +27,3 @@ public class RetroClient {
         return builder.build();
     }
 }
-

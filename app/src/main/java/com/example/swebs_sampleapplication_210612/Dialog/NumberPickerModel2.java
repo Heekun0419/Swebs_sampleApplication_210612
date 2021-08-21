@@ -1,13 +1,15 @@
 package com.example.swebs_sampleapplication_210612.Dialog;
 
-public class NumberPickerModel {
+import java.util.List;
+
+public class NumberPickerModel2 {
     private String title;
-    private String[] list ;
+    private List<String> list ;
     private String positive_btn;
     private String negative_btn;
     private int defaultValue;
 
-    public NumberPickerModel(String title, String[] list, int defaultValue, String positive_btn, String negative_btn) {
+    public NumberPickerModel2(String title, List<String> list, int defaultValue, String positive_btn, String negative_btn) {
         this.title = title;
         this.list = list;
         this.defaultValue = defaultValue;
@@ -19,7 +21,7 @@ public class NumberPickerModel {
         return title;
     }
 
-    public String[] getList() {
+    public List<String> getList() {
         return list;
     }
 
@@ -29,5 +31,9 @@ public class NumberPickerModel {
 
     public String getNegative_btn() {
         return negative_btn;
+    }
+
+    public int getDefaultValue() {
+        return defaultValue;
     }
 }

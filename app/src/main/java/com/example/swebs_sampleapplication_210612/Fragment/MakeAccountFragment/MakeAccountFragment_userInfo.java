@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 
 import com.example.swebs_sampleapplication_210612.Activity.MakeAccountActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.NormalSignUpModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroAPI;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroClient;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.NormalSignUpModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMakeAccountUserInfoBinding;
 
@@ -29,7 +29,7 @@ import retrofit2.Response;
 public class MakeAccountFragment_userInfo extends Fragment {
 
     private FragmentMakeAccountUserInfoBinding binding;
-    RetroAPI retroAPI;
+    SwebsAPI retroAPI;
     private String gender;
 
     private SPmanager sPmanager;
@@ -40,7 +40,7 @@ public class MakeAccountFragment_userInfo extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        retroAPI = RetroClient.getRetrofitClient().create(RetroAPI.class);
+        retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
         sPmanager = new SPmanager(requireContext());
 
         myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
@@ -123,7 +123,7 @@ public class MakeAccountFragment_userInfo extends Fragment {
                         myInfoRepository.insertMyInfo("gender", responseData.getGender());
                         myInfoRepository.insertMyInfo("email", inputEmail);
 
-                        sPmanager.setUserGender(responseData.getGender());
+                        sPmanager.setUserSrl(responseData.getUserSrl());
                         sPmanager.setUserType(responseData.getUserType());
                         sPmanager.setUserToken(responseData.getToken());
 

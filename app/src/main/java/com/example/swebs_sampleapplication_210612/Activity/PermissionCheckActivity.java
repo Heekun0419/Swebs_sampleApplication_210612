@@ -7,14 +7,19 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.example.swebs_sampleapplication_210612.Dialog.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
+import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.PermissionDialog;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityPermissionCheck2Binding;
@@ -44,22 +49,17 @@ public class PermissionCheckActivity extends AppCompatActivity {
         dialog = new PermissionDialog(PermissionCheckActivity.this, new DialogClickListener() {
             @Override
             public void onPositiveClick(int position) {
-                /*
-                int count = PermissionCheck();
-                if(count ==4){
-                    sPmanager.setPermissionIsChecked(true);
-                    StartMainActivity();
-                }
-                */
+                progressPermission();
+            }
+
+            @Override
+            public void onNegativeClick() {
                 binding.checkBoxPermissionCamera.setChecked(true);
                 binding.checkBoxPermissionLocation.setChecked(true);
                 binding.checkBoxPermissionPhone.setChecked(true);
                 binding.checkBoxPermissionStorage.setChecked(true);
                 binding.checkBoxPermissionAll.setChecked(true);
-            }
 
-            @Override
-            public void onNegativeClick() {
                 dialog.dismiss();
             }
 
@@ -88,9 +88,9 @@ public class PermissionCheckActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(binding.checkBoxPermissionAll.isChecked() && binding.checkBoxPermissionService.isChecked() ){
                     progressPermission();
-                }else if(!binding.checkBoxPermissionService.isChecked()){
-                    Toast.makeText(getApplicationContext(), "서비스 권한 허용이 필요합니다.", Toast.LENGTH_LONG).show();
-                }else{
+                } else if(!binding.checkBoxPermissionService.isChecked()){
+                    Toast.makeText(getApplicationContext(), "서비스 권한 동의를 해주세요.", Toast.LENGTH_LONG).show();
+                } else{
                     Toast.makeText(getApplicationContext(), "필수권한 허용이 필요합니다.", Toast.LENGTH_LONG).show();
                 }
             }
@@ -136,15 +136,12 @@ public class PermissionCheckActivity extends AppCompatActivity {
     }
 
     private void progressPermission(){
-        int counter =0;
         for (String permission : permission_list){
             int check = checkCallingOrSelfPermission(permission);
 
             if(check == PackageManager.PERMISSION_DENIED){
                 requestPermissions(permission_list,0);
                 break;
-            } else if (check == PackageManager.PERMISSION_GRANTED){
-                counter++;
             }
         }
     }
@@ -152,25 +149,16 @@ public class PermissionCheckActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Log.d("permision_test", "" + requestCode + " / " + grantResults.length);
         if(requestCode == 0) {
             if (grantResults.length > 0) {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                    Log.d("permision_test", "ok 1 ");
+                int permissionIndex = 0;
+                for (int grantResult : grantResults) {
+                    if (grantResult != PackageManager.PERMISSION_GRANTED
+                        && !shouldShowRequestPermissionRationale(permissions[permissionIndex++])) {
+                        openApplicationSetting();
+                        return;
+                    }
                 }
-
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    Log.d("permision_test", "ok 2 ");
-                }
-
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    Log.d("permision_test", "ok 3 ");
-                }
-
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-                    Log.d("permision_test", "ok 4 ");
-                }
-
 
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
                         && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
@@ -184,6 +172,34 @@ public class PermissionCheckActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    private void openApplicationSetting() {
+        OneButtonBasicDialog oneButtonBasicDialog = new OneButtonBasicDialog(this,
+                new BasicDialogTextModel("권한 설정", "두번 이상 권한을 거부 하셨습니다.\n시스템 설정에서 권한 허용을 해주세요.", "확인", ""),
+                new DialogClickListener() {
+                    @Override
+                    public void onPositiveClick(int position) {
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName()));
+                        intent.addCategory(Intent.CATEGORY_DEFAULT);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                    @Override
+                    public void onNegativeClick() {
+
+                    }
+
+                    @Override
+                    public void onCloseClick() {
+
+                    }
+                });
+        oneButtonBasicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        oneButtonBasicDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        oneButtonBasicDialog.show();
     }
 
     private void StartMainActivity(){

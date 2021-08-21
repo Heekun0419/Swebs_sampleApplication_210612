@@ -2,18 +2,14 @@ package com.example.swebs_sampleapplication_210612.util;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Model.GuestSignUpModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroAPI;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.RetroClient;
-import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.Entity.MyInfo;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.GuestSignUpModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -22,13 +18,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UserLoginController {
-    private final RetroAPI retroAPI;
+    private final SwebsAPI retroAPI;
     private final Context context;
     private final MyInfoRepository myInfoRepository;
     private SPmanager sPmanager;
 
     public UserLoginController(Application application) {
-        this.retroAPI = RetroClient.getRetrofitClient().create(RetroAPI.class);
+        this.retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
         this.context = application.getApplicationContext();
         this.myInfoRepository = new MyInfoRepository(application);
         this.sPmanager = new SPmanager(application.getApplicationContext());

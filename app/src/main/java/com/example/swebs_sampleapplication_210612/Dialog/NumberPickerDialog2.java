@@ -5,21 +5,19 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 
 import com.example.swebs_sampleapplication_210612.databinding.DialogLanguageBinding;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
-public class NumberPickerDialog extends Dialog {
+public class NumberPickerDialog2 extends Dialog {
 
     private DialogLanguageBinding binding;
-    private NumberPickerModel model;
+    private NumberPickerModel2 model;
     Context context;
     DialogClickListener listener;
     NumberPicker picker;
@@ -27,7 +25,7 @@ public class NumberPickerDialog extends Dialog {
 
     private Calendar cal = Calendar.getInstance();
 
-    public NumberPickerDialog(@NonNull Context context, NumberPickerModel model, DialogClickListener listener) {
+    public NumberPickerDialog2(@NonNull Context context, NumberPickerModel2 model, DialogClickListener listener) {
         super(context);
         this.model = model;
         this.context = context;
@@ -47,19 +45,12 @@ public class NumberPickerDialog extends Dialog {
         binding.textViewPositiveBtn.setText(model.getPositive_btn());
         picker = binding.numberPicker;
 
-        if(model.getTitle().equals("출생년도")) {
-            int year = cal.get(Calendar.YEAR);
-            picker.setMinValue(1900);
-            picker.setMaxValue(year);
-            picker.setValue(1990);
-        }else{
-            String[] list = model.getList();
-            //numberPicker 세팅
-            picker.setMinValue(0);
-            picker.setMaxValue(list.length-1);
-            picker.setDisplayedValues(list);
-        }
+        String[] viewList = model.getList().toArray(new String[model.getList().size()]);
 
+        picker.setMinValue(0);
+        picker.setMaxValue(viewList.length-1);
+        picker.setDisplayedValues(viewList);
+        picker.setValue(model.getDefaultValue());
 
         binding.btnLanguageOk.setOnClickListener(v -> {
             // picker.getValue 로 Position 받아올 수 있음.

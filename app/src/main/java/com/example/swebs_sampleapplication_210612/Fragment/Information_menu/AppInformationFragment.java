@@ -47,7 +47,11 @@ public class AppInformationFragment extends Fragment {
         binding = FragmentAppInformationBinding.inflate(inflater,container,false);
         binding.btnChangeLanguage.setOnClickListener(v -> {
             dialog = new NumberPickerDialog(requireContext(),
-                    new NumberPickerModel("언어",new String[]{"한국어","ENGLISH","中文"},"확인","취소")
+                    new NumberPickerModel("언어",
+                            new String[]{"한국어","ENGLISH","中文"},
+                            1,
+                            "확인",
+                            "취소")
                     , new DialogClickListener() {
                 @Override
                 public void onPositiveClick(int position) {

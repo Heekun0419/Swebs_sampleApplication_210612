@@ -29,6 +29,7 @@ public class ScanSettingActivity extends AppCompatActivity {
                 dialog = new NumberPickerDialog(ScanSettingActivity.this
                         , new NumberPickerModel("언어선택"
                         , new String[]{"한국어", "ENGLISH", "中文"}
+                        , 1
                         , "확인", "취소")
                         , new DialogClickListener() {
                     @Override
