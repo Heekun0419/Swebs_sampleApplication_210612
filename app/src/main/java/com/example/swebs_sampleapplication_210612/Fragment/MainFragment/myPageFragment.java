@@ -51,8 +51,8 @@ public class myPageFragment extends Fragment {
     private final Context context;
     private String userType, userBirthDay;
     private SPmanager sPmanager;
-    private Animation fadeOut = new AlphaAnimation(1,0);
-    private Animation fadeIn = new AlphaAnimation(0,1);
+    private final Animation fadeOut = new AlphaAnimation(1,0);
+    private final Animation fadeIn = new AlphaAnimation(0,1);
     private MyInfoRepository myInfoRepository;
 
     public myPageFragment(Context context) {
@@ -495,15 +495,15 @@ public class myPageFragment extends Fragment {
     }
 
     private void setEmail(String email){
-        String content = email;
-        char s = content.charAt(0);
-      /*  int startIndex = content.indexOf("@");
-        String mailAddress = content.substring(startIndex);
-       */
+        char s = email.charAt(0);
+        int startIndex = email.indexOf("@");
+        String mailAddress = email.substring(startIndex);
         StringBuffer buffer = new StringBuffer();
         buffer.append(s);
-        for(int i =0; i<content.length()-1;i++)
+        for(int i = 0; i< startIndex; i++)
             buffer.append("*");
+
+        buffer.append(mailAddress);
         binding.mypageTextViewID.setText(buffer);
     }
 

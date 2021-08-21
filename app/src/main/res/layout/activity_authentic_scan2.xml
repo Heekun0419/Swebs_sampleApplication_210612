@@ -79,7 +79,6 @@
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/purchaseView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,21 +87,20 @@
 
     <include
         android:id="@+id/loadingView"
+        layout="@layout/animation_loading_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
-        layout="@layout/animation_loading_layout"
         app:layout_constraintBottom_toTopOf="@+id/purchaseView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_weight="1"/>
+        app:layout_constraintVertical_weight="1" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/purchaseView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:background="@drawable/bottom_round_corner_background"
         android:elevation="7dp"
         android:padding="20dp"
@@ -132,6 +130,5 @@
             app:layout_constraintTop_toTopOf="@+id/btn_purchase_input" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

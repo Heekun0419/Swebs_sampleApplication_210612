@@ -60,7 +60,7 @@ public class AuthenticScanActivity extends AppCompatActivity {
 
         String loadUrl = "https://www.swebs.co.kr/certchk/" + resultCompany + "/swebs_result.html?q=" + resultCode;
         webViewInit();
-        getCodeInfo(resultCompany, resultCode);
+        getCodeInfo(resultUrl, resultCompany, resultCode);
         //webViewLoadUrl(loadUrl);
 
         binding.btnAuthenticScanBack.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +81,7 @@ public class AuthenticScanActivity extends AppCompatActivity {
         });
     }
 
-    private void getCodeInfo(String company, String code) {
+    private void getCodeInfo(String loadUrl, String company, String code) {
         HashMap<String, RequestBody> body = new HashMap<>();
         body.put("comp_url", RequestBody.create(company, MediaType.parse("text/plane")));
         body.put("q_no", RequestBody.create(code, MediaType.parse("text/plane")));
@@ -97,8 +97,8 @@ public class AuthenticScanActivity extends AppCompatActivity {
                         codeModel = body;
                         if (body.getCode().equals("S")
                         || body.getCode().equals("N")) {
-                            String loadUrl;
-                            loadUrl = "https://www.swebs.co.kr/certchk/" + company + "/qr_result.html?q=" + code;
+                            //String loadUrl;
+                            //loadUrl = "https://www.swebs.co.kr/certchk/" + company + "/qr_result.html?q=" + code;
                             webViewLoadUrl(loadUrl);
                         }
                     }

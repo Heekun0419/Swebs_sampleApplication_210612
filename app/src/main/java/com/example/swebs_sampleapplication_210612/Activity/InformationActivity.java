@@ -10,6 +10,7 @@ import android.view.View;
 import com.example.swebs_sampleapplication_210612.Fragment.Information_menu.AppInformationFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.Information_menu.FAQFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.Information_menu.ManualFragment;
+import com.example.swebs_sampleapplication_210612.Fragment.Information_menu.ProductRegisterFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.Information_menu.PurchaseQuestionFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MoreCertifiedFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MoreEventFragment;
@@ -54,7 +55,7 @@ public class InformationActivity extends AppCompatActivity {
         } else if(requestCode.equals("AS")){
             moveFragment(new ServiceNotReadyFragment(),"");
         } else if(requestCode.equals("product")){
-
+            moveFragment(new ProductRegisterFragment(),"제품등록");
         }
 
     }
