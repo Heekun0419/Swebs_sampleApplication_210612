@@ -2,12 +2,14 @@ package com.example.swebs_sampleapplication_210612.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -15,12 +17,12 @@ import android.widget.Toast;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.PermissionDialog;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
-import com.example.swebs_sampleapplication_210612.databinding.ActivityPermissionCheckBinding;
+import com.example.swebs_sampleapplication_210612.databinding.ActivityPermissionCheck2Binding;
 
 public class PermissionCheckActivity extends AppCompatActivity {
 
     private PermissionDialog dialog;
-    private ActivityPermissionCheckBinding binding;
+    private ActivityPermissionCheck2Binding binding;
     private boolean isChecked;
     public SPmanager sPmanager = new SPmanager(this);
 
@@ -34,20 +36,26 @@ public class PermissionCheckActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityPermissionCheckBinding.inflate(getLayoutInflater());
+        binding = ActivityPermissionCheck2Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         isChecked = sPmanager.getPermission();
-        PermissionCheck();
 
         dialog = new PermissionDialog(PermissionCheckActivity.this, new DialogClickListener() {
             @Override
             public void onPositiveClick(int position) {
+                /*
                 int count = PermissionCheck();
                 if(count ==4){
                     sPmanager.setPermissionIsChecked(true);
                     StartMainActivity();
                 }
+                */
+                binding.checkBoxPermissionCamera.setChecked(true);
+                binding.checkBoxPermissionLocation.setChecked(true);
+                binding.checkBoxPermissionPhone.setChecked(true);
+                binding.checkBoxPermissionStorage.setChecked(true);
+                binding.checkBoxPermissionAll.setChecked(true);
             }
 
             @Override
@@ -64,17 +72,22 @@ public class PermissionCheckActivity extends AppCompatActivity {
         dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         dialog.show();
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
+            binding.permissionForCamera.setVisibility(View.GONE);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            binding.permissionForStorage.setVisibility(View.GONE);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            binding.permissionForLocation.setVisibility(View.GONE);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED)
+            binding.permissionForPhone.setVisibility(View.GONE);
+
 
         // 권한 허용 설정부분 버튼 클릭시 나옴
         binding.btnPermissionCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(binding.checkBoxPermissionAll.isChecked() && binding.checkBoxPermissionService.isChecked() ){
-                    int count = PermissionCheck();
-                    if(count ==4){
-                        sPmanager.setPermissionIsChecked(true);
-                        StartMainActivity();
-                    }
+                    progressPermission();
                 }else if(!binding.checkBoxPermissionService.isChecked()){
                     Toast.makeText(getApplicationContext(), "서비스 권한 허용이 필요합니다.", Toast.LENGTH_LONG).show();
                 }else{
@@ -82,8 +95,6 @@ public class PermissionCheckActivity extends AppCompatActivity {
                 }
             }
         });
-
-        binding.btnPermissionCheckBack.setOnClickListener(v -> onBackPressed());
 
         binding.checkBoxPermissionAll.setOnClickListener(v -> {
             if(binding.checkBoxPermissionAll.isChecked()){
@@ -114,41 +125,64 @@ public class PermissionCheckActivity extends AppCompatActivity {
     }
 
     private void termsCheck(){
-        if(binding.checkBoxPermissionAll.isChecked()) binding.checkBoxPermissionAll.setChecked(false);
-        else if(binding.checkBoxPermissionPhone.isChecked() && binding.checkBoxPermissionLocation.isChecked()
-                && binding.checkBoxPermissionCamera.isChecked() && binding.checkBoxPermissionStorage.isChecked()){
+        if (binding.checkBoxPermissionAll.isChecked()) {
+            binding.checkBoxPermissionAll.setChecked(false);
+        } else if (binding.checkBoxPermissionPhone.isChecked()
+                && binding.checkBoxPermissionLocation.isChecked()
+                && binding.checkBoxPermissionCamera.isChecked()
+                && binding.checkBoxPermissionStorage.isChecked()){
             binding.checkBoxPermissionAll.setChecked(true);
         }
     }
 
-    private int PermissionCheck(){
+    private void progressPermission(){
         int counter =0;
         for (String permission : permission_list){
             int check = checkCallingOrSelfPermission(permission);
 
             if(check == PackageManager.PERMISSION_DENIED){
                 requestPermissions(permission_list,0);
-            }else if(check == PackageManager.PERMISSION_GRANTED){
+                break;
+            } else if (check == PackageManager.PERMISSION_GRANTED){
                 counter++;
             }
         }
-        return counter;
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==0)
-        {
-            for (int grantResult : grantResults) {
-                //허용됬다면
-                if (grantResult == PackageManager.PERMISSION_GRANTED) {
+        Log.d("permision_test", "" + requestCode + " / " + grantResults.length);
+        if(requestCode == 0) {
+            if (grantResults.length > 0) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("permision_test", "ok 1 ");
+                }
 
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("permision_test", "ok 2 ");
+                }
+
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("permision_test", "ok 3 ");
+                }
+
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("permision_test", "ok 4 ");
+                }
+
+
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+                        && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                        && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                        && ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                    StartMainActivity();
                 } else {
                     Toast.makeText(getApplicationContext(), "필수 권한이 허용되지 않아 앱을 종료합니다.", Toast.LENGTH_LONG).show();
                     finish();
                 }
             }
+
         }
     }
 
