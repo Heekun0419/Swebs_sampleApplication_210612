@@ -627,6 +627,8 @@ public class myPageFragment extends Fragment {
         binding.mypageCompanyIcon.setVisibility(View.GONE);
         binding.mypageBtnRecommendCode.setVisibility(View.GONE);
         binding.mypageImageProfile.setVisibility(View.GONE);
+        //닉네임
+        binding.mypageNickname.setVisibility(View.GONE);
         // 버튼 3개
         //테스트용 수정 --> 나중에 이걸로 가져와야댐. binding.linearLayout.setVisibility(View.GONE);
         binding.linearLayout.setVisibility(View.VISIBLE);
@@ -657,9 +659,6 @@ public class myPageFragment extends Fragment {
         binding.mypageLogin.setVisibility(View.GONE);
         //기업 계정 정보
         binding.mypageCompanyAccount2.setVisibility(View.GONE);
-
-       // binding.divider5.setVisibility(View.GONE);
-
         binding.mypageBtnRecommendCode.setVisibility(View.VISIBLE);
         binding.mypageImageProfile.setVisibility(View.VISIBLE);
         // 버튼 3개
@@ -667,6 +666,8 @@ public class myPageFragment extends Fragment {
         //아이디, 실명
         binding.mypageId.setVisibility(View.VISIBLE);
         binding.mypageName.setVisibility(View.VISIBLE);
+        //닉네임
+        binding.mypageNickname.setVisibility(View.GONE);
         // 구분선 및 이벤트 주소변경 탭
         binding.mypageModifyMyAdress.setVisibility(View.VISIBLE);
         binding.divider1.setVisibility(View.VISIBLE);
@@ -690,8 +691,11 @@ public class myPageFragment extends Fragment {
         binding.mypageLogin.setVisibility(View.GONE);
         //기업 계정 정보
         binding.mypageCompanyAccount2.setVisibility(View.VISIBLE);
-
+        //닉네임
+        binding.mypageNickname.setVisibility(View.GONE);
+        //추천인 코드
         binding.mypageBtnRecommendCode.setVisibility(View.VISIBLE);
+        //프로필 이미지
         binding.mypageImageProfile.setVisibility(View.VISIBLE);
         // 버튼 3개
         binding.linearLayout.setVisibility(View.VISIBLE);

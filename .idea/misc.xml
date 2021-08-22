@@ -20,6 +20,7 @@
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/dialog_image_picker.xml" value="0.2653985507246377" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/dialog_language.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/dialog_recommend_code.xml" value="0.2753623188405797" />
+        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_bottom_sheet.xml" value="0.2821557971014493" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_buying_list.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_certified_company_info.xml" value="0.2653985507246377" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_clone_report.xml" value="0.2957427536231884" />
@@ -51,8 +52,9 @@
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/item_product_tag.xml" value="0.291213768115942" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/item_review.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/item_review_list.xml" value="0.4466666666666667" />
-        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/item_review_photo_add.xml" value="0.6666666666666666" />
+        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/item_review_photo_add.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/item_scan_history_list.xml" value="0.2708333333333333" />
+        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/item_survey.xml" value="0.2821557971014493" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/navigation_drawer_header_item.xml" value="0.6" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/tutorial_mypage_layout.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/menu/navigation_drawer_item.xml" value="0.359375" />
