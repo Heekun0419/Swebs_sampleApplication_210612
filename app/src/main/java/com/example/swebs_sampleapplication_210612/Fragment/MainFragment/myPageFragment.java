@@ -298,8 +298,8 @@ public class myPageFragment extends Fragment {
             }
         });
 
-        // Region
-        myInfoRepository.getValueToLiveData("region").observe(getViewLifecycleOwner(), new Observer<String>() {
+        // country
+        myInfoRepository.getValueToLiveData("country").observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 String viewText;
@@ -462,7 +462,7 @@ public class myPageFragment extends Fragment {
                 new DialogClickListener() {
                     @Override
                     public void onPositiveClick(int position) {
-                        myInfoRepository.insertMyInfo("region", countryNameToCode(inputData.get(position)));
+                        myInfoRepository.insertMyInfo("country", countryNameToCode(inputData.get(position)));
                     }
 
                     @Override
@@ -523,7 +523,7 @@ public class myPageFragment extends Fragment {
 
     private void renderGenderView(String gender) {
         if (gender == null) {
-            binding.mypageGenderTextView.setVisibility(View.GONE);
+            binding.mypageImageViewGender.setVisibility(View.GONE);
             binding.mypageGenderTextView.setText("미등록");
         } else if (gender.equals("male")) {
             binding.mypageGenderTextView.setText("남자");

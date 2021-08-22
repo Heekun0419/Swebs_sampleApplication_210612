@@ -1,6 +1,7 @@
 package com.example.swebs_sampleapplication_210612.Fragment.MakeAccountFragment;
 
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.example.swebs_sampleapplication_210612.Activity.MakeAccountActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
@@ -16,9 +18,13 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Norm
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
+import com.example.swebs_sampleapplication_210612.Dialog.BasicDialogTextModel;
+import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
+import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMakeAccountUserInfoBinding;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -84,23 +90,27 @@ public class MakeAccountFragment_userInfo extends Fragment {
     }
 
     private void userSingUpUpload() {
+        ((MakeAccountActivity)requireActivity()).renderLoading(true);
+
         // 서버로 전송할 데이터 만들기.
         String inputEmail = binding.editTextEmail.getText().toString().toLowerCase();
         String inputPhoneNumber = binding.editTextUserInfoPhoneNumber.getText().toString().replace("-", "");
 
         HashMap<String, RequestBody> body = new HashMap<>();
+        body.put("inputUserSrl", RequestBody.create(sPmanager.getUserSrl(), MediaType.parse("text/plane")));
         body.put("inputEmail", RequestBody.create(inputEmail, MediaType.parse("text/plane")));
         body.put("inputPassword", RequestBody.create(binding.editTextUserInfoPassword.getText().toString(), MediaType.parse("text/plane")));
         body.put("inputName", RequestBody.create(binding.editTextUserInfoUsername.getText().toString(), MediaType.parse("text/plane")));
-        body.put("inputNickName", RequestBody.create(binding.editTextUserInfoNickname.getText().toString(), MediaType.parse("text/plane")));
-        body.put("inputBday", RequestBody.create(binding.editTextUserInfoBirthday.getText().toString(), MediaType.parse("text/plane")));
+        body.put("inputBirthday", RequestBody.create(binding.editTextUserInfoBirthday.getText().toString(), MediaType.parse("text/plane")));
         body.put("inputPhoneNumber", RequestBody.create(inputPhoneNumber, MediaType.parse("text/plane")));
+        body.put("inputPhoneCountry", RequestBody.create("none", MediaType.parse("text/plane")));
         body.put("inputGender", RequestBody.create(gender, MediaType.parse("text/plane")));
-        body.put("inputSrl", RequestBody.create(sPmanager.getUserSrl(), MediaType.parse("text/plane")));
-        body.put("inputType", RequestBody.create("normal", MediaType.parse("text/plane")));
+        body.put("inputNickname", RequestBody.create(binding.editTextUserInfoNickname.getText().toString(), MediaType.parse("text/plane")));
+        body.put("inputReferralCode", RequestBody.create("WSdcR", MediaType.parse("text/plane")));
 
         // 추후 변경하기...
-        body.put("inputRegion", RequestBody.create("KR", MediaType.parse("text/plane")));
+        body.put("inputCountry", RequestBody.create("KR", MediaType.parse("text/plane")));
+        body.put("inputCountryRegion", RequestBody.create("none", MediaType.parse("text/plane")));
 
         Call<NormalSignUpModel> call = retroAPI.userSingUp(body);
         call.enqueue(new Callback<NormalSignUpModel>() {
@@ -116,7 +126,7 @@ public class MakeAccountFragment_userInfo extends Fragment {
                         myInfoRepository.insertMyInfo("token", responseData.getToken());
                         myInfoRepository.insertMyInfo("nickName", responseData.getNickname());
                         myInfoRepository.insertMyInfo("name", responseData.getName());
-                        myInfoRepository.insertMyInfo("region", responseData.getRegion());
+                        myInfoRepository.insertMyInfo("country", responseData.getCountry());
                         myInfoRepository.insertMyInfo("point", responseData.getPoint());
                         myInfoRepository.insertMyInfo("birthday", responseData.getBirthday());
                         myInfoRepository.insertMyInfo("userType", responseData.getUserType());
@@ -127,16 +137,67 @@ public class MakeAccountFragment_userInfo extends Fragment {
                         sPmanager.setUserType(responseData.getUserType());
                         sPmanager.setUserToken(responseData.getToken());
 
+                        ((MakeAccountActivity)requireActivity()).renderLoading(false);
                         ((MakeAccountActivity)requireActivity()).moveFragment(new MakeAccountFragment_success());
+                    } else {
+                        ((MakeAccountActivity)requireActivity()).renderLoading(false);
+
+                        String dialogText;
+                        switch (Objects.requireNonNull(responseData.getReason())) {
+                            case "emailForm":
+                                dialogText = "이메일 형식이 맞지 않습니다.\n이메일을 확인 해주세요.";
+                                break;
+                            case "overlapEmail":
+                                dialogText = "이미 가입된 이메일 입니다.\n이메일을 확인 해주세요.";
+                                break;
+                            case "overlapNickname":
+                                dialogText = "이미 가입된 닉네임 입니다.\n닉네임을 확인 해주세요.";
+                                break;
+                            case "alreadySignUp":
+                                dialogText = "이미 회원가입을 진행된 게스트 계정입니다.\n어플을 종료 후 다시 실행 해주세요.";
+                                break;
+                            default:
+                                dialogText = "회원가입을 실패 하였습니다.\n잠시 후 다시 시도 해주세요.";
+                                break;
+                        }
+
+                        showOneButtonDialog("회원가입 안내", dialogText);
+
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<NormalSignUpModel> call, Throwable t) {
+                ((MakeAccountActivity)requireActivity()).renderLoading(false);
+                showOneButtonDialog("회원가입 안내", "회원가입을 실패 하였습니다.\n잠시 후 다시 시도 해주세요.");
+            }
+        });
+
+    }
+
+    private void showOneButtonDialog(String title, String content) {
+        OneButtonBasicDialog oneButtonBasicDialog = new OneButtonBasicDialog(requireContext()
+                , new BasicDialogTextModel(title, content, "확인", "")
+                , new DialogClickListener() {
+            @Override
+            public void onPositiveClick(int position) {
+
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+
+            @Override
+            public void onCloseClick() {
 
             }
         });
 
+        oneButtonBasicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        oneButtonBasicDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        oneButtonBasicDialog.show();
     }
 }

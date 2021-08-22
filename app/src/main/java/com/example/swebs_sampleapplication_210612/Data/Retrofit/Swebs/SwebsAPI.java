@@ -17,20 +17,26 @@ import retrofit2.http.PartMap;
 public interface SwebsAPI {
 
     @Multipart
-    @POST("login/guest_sign_up.php")
+    @POST("signup/guest_signup.php")
     Call<GuestSignUpModel> guestSignUp(
+            @PartMap Map<String, RequestBody> prams
+    );
+
+    @Multipart
+    @POST("signup/normal_signup.php")
+    Call<NormalSignUpModel> userSingUp(
+            @PartMap Map<String, RequestBody> prams
+    );
+
+    @Multipart
+    @POST("signup/exist_referralcode.php")
+    Call<Boolean> existReferralCode(
             @PartMap Map<String, RequestBody> prams
     );
 
     @Multipart
     @POST("scan/scan_history_alldata.php")
     Call<ScanHistoryAllDataModel> pushScanHistoryAllData(
-            @PartMap Map<String, RequestBody> prams
-    );
-
-    @Multipart
-    @POST("login/sign_up.php")
-    Call<NormalSignUpModel> userSingUp(
             @PartMap Map<String, RequestBody> prams
     );
 

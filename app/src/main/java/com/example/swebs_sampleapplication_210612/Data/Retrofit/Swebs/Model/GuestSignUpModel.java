@@ -7,15 +7,17 @@ public class GuestSignUpModel {
     @Nullable
     private String userSrl;
     @Nullable
-    private String userType;
-    @Nullable
     private String token;
+    @Nullable
+    private String name;
     @Nullable
     private String nickname;
     @Nullable
     private String point;
     @Nullable
-    private String region;
+    private String country;
+    @Nullable
+    private String referralCode;
     @Nullable
     private String reason;
 
@@ -36,20 +38,17 @@ public class GuestSignUpModel {
         this.userSrl = userSrl;
     }
 
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
-
     public String getToken() {
         return token;
     }
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    @Nullable
+    public String getName() {
+        return name;
     }
 
     public String getNickname() {
@@ -61,12 +60,8 @@ public class GuestSignUpModel {
     }
 
     @Nullable
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(@Nullable String region) {
-        this.region = region;
+    public String getCountry() {
+        return country;
     }
 
     public String getReason() {
@@ -84,5 +79,10 @@ public class GuestSignUpModel {
 
     public void setPoint(@Nullable String point) {
         this.point = point;
+    }
+
+    @Nullable
+    public String getReferralCode() {
+        return referralCode;
     }
 }

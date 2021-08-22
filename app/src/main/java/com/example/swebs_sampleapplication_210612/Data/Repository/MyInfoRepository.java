@@ -37,8 +37,12 @@ public class MyInfoRepository {
 
 
     public void insertMyInfo(String key, String value) {
-        MyInfo myInfo = new MyInfo(key, value);
-        new insertAsyncTask(swebsDao).execute(myInfo);
+        if (key != null && value != null) {
+            MyInfo myInfo = new MyInfo(key, value);
+            new insertAsyncTask(swebsDao).execute(myInfo);
+        } else {
+            Log.d("Dao", key + "(key) " + value + "(value) is null");
+        }
     }
 
     public void deleteAllMyInfo() {

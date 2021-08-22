@@ -34,7 +34,7 @@ public class UserLoginController {
 
         getRegionFromSystem getRegionFromSystem = new getRegionFromSystem(context);
 
-        body.put("inputRegion", RequestBody.create(getRegionFromSystem.getCountry(), MediaType.parse("text/plane")));
+        body.put("inputCountry", RequestBody.create(getRegionFromSystem.getCountry(), MediaType.parse("text/plane")));
 
         Call<GuestSignUpModel> call = retroAPI.guestSignUp(body);
         call.enqueue(new Callback<GuestSignUpModel>() {
@@ -46,13 +46,14 @@ public class UserLoginController {
                 if (response.body() != null) {
                     GuestSignUpModel responseData = response.body();
                     if (responseData.isSuccess()) {
+                        myInfoRepository.insertMyInfo("userType", "guest");
                         myInfoRepository.insertMyInfo("userSrl", responseData.getUserSrl());
                         myInfoRepository.insertMyInfo("token", responseData.getToken());
                         myInfoRepository.insertMyInfo("nickName", responseData.getNickname());
-                        myInfoRepository.insertMyInfo("name", responseData.getNickname());
-                        myInfoRepository.insertMyInfo("region", responseData.getRegion());
+                        myInfoRepository.insertMyInfo("name", responseData.getName());
+                        myInfoRepository.insertMyInfo("country", responseData.getCountry());
                         myInfoRepository.insertMyInfo("point", responseData.getPoint());
-                        myInfoRepository.insertMyInfo("userType", "guest");
+                        myInfoRepository.insertMyInfo("referralCode", responseData.getReferralCode());
 
                         sPmanager.setUserType("guest");
                         sPmanager.setUserSrl(responseData.getUserSrl());

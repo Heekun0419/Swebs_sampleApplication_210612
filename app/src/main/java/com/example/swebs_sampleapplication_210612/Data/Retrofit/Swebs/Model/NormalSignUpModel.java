@@ -24,13 +24,16 @@ public class NormalSignUpModel {
     private String gender;
 
     @Nullable
-    private String region;
+    private String country;
 
     @Nullable
     private String point;
 
     @Nullable
     private String token;
+
+    @Nullable
+    private String reason;
 
     public boolean isSuccess() {
         return success;
@@ -100,12 +103,8 @@ public class NormalSignUpModel {
     }
 
     @Nullable
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(@Nullable String region) {
-        this.region = region;
+    public String getCountry() {
+        return country;
     }
 
     @Nullable
@@ -115,5 +114,10 @@ public class NormalSignUpModel {
 
     public void setToken(@Nullable String token) {
         this.token = token;
+    }
+
+    @Nullable
+    public String getReason() {
+        return reason;
     }
 }
