@@ -248,7 +248,6 @@ public class myPageFragment extends Fragment {
             @Override
             public void onChanged(String s) {
                 if (s != null)
-                    s ="company";
                     RenderMyPageFromUserType(s);
                 userType = s;
             }

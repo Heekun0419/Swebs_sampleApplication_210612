@@ -192,8 +192,6 @@ public class MainActivity extends FragmentActivity {
         myInfoRepository.getValueToLiveData("userType").observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                // 나중에 삭제 해야함.
-                s = "company";
                 if (s != null)
                     if(s.equals("company")){
                         binding.navView.textviewNavDrawerProductList.setVisibility(View.VISIBLE);
