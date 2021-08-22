@@ -33,6 +33,9 @@ public class NormalSignUpModel {
     private String token;
 
     @Nullable
+    private String referralCode;
+
+    @Nullable
     private String reason;
 
     public boolean isSuccess() {
@@ -119,5 +122,10 @@ public class NormalSignUpModel {
     @Nullable
     public String getReason() {
         return reason;
+    }
+
+    @Nullable
+    public String getReferralCode() {
+        return referralCode;
     }
 }

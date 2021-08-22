@@ -44,6 +44,24 @@ public class SPmanager {
                 .getString(SP_data.USER_INFO.USER_TOKEN,"notFound");
     }
 
+    //userReferralCode - START
+    public void setUserReferralCode(String userSrl){
+        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_REFERRAL_CODE, Context.MODE_PRIVATE)).edit();
+        editor.putString(SP_data.USER_INFO.USER_REFERRAL_CODE, userSrl);
+        editor.apply();
+    }
+    public void removeUserReferralCode(){
+        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_REFERRAL_CODE, Context.MODE_PRIVATE)).edit();
+        editor.remove(SP_data.USER_INFO.USER_REFERRAL_CODE);
+        editor.apply();
+    }
+
+    public String getUserReferralCode(){
+        return (context.getSharedPreferences(SP_data.USER_INFO.USER_REFERRAL_CODE, Context.MODE_PRIVATE))
+                .getString(SP_data.USER_INFO.USER_REFERRAL_CODE,"notFound");
+    }
+    // userReferralCode - END
+
     public void setUserType(String type){
         SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USERTYPE, Context.MODE_PRIVATE)).edit();
         editor.putString(SP_data.USER_INFO.USERTYPE,type);

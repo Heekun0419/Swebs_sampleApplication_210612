@@ -1,6 +1,8 @@
 package com.example.swebs_sampleapplication_210612.Fragment.MainFragment;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Activity.AdressModifyActivity;
 import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
@@ -109,11 +112,21 @@ public class myPageFragment extends Fragment {
                 @Override
                 public void onPositiveClick(int position) {
                     // 공유하기 버튼 실행
+                    Intent shareIntent = new Intent(Intent.ACTION_SENDTO);
+                    shareIntent.setType("text/plain");
+                    String shareText = "스웹스 가입하고 포인트를 받으세요.\n" +
+                            "추천인 코드 : " + sPmanager.getUserReferralCode();
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+                    startActivity(Intent.createChooser(shareIntent, "스웹스 추천인 코드 공유"));
                 }
 
                 @Override
                 public void onNegativeClick() {
                     // 추천인 코드 복사
+                    ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("스웹스 추천인 코드" , sPmanager.getUserReferralCode());
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(requireContext(), "클립보드에 복사 하였습니다.", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

@@ -29,6 +29,7 @@ public class UserLoginController {
         this.myInfoRepository = new MyInfoRepository(application);
         this.sPmanager = new SPmanager(application.getApplicationContext());
     }
+
     public void signUpForGuest() {
         HashMap<String, RequestBody> body = new HashMap<>();
 
@@ -53,7 +54,6 @@ public class UserLoginController {
                         myInfoRepository.insertMyInfo("name", responseData.getName());
                         myInfoRepository.insertMyInfo("country", responseData.getCountry());
                         myInfoRepository.insertMyInfo("point", responseData.getPoint());
-                        myInfoRepository.insertMyInfo("referralCode", responseData.getReferralCode());
 
                         sPmanager.setUserType("guest");
                         sPmanager.setUserSrl(responseData.getUserSrl());

@@ -27,6 +27,7 @@ public class SP_data {
         public static final String USER_POINT ="USER_POINT";
         public static final String USER_TOKEN ="USER_TOKEN";
         public static final String USER_SRL = "USER_SRL";
+        public static final String USER_REFERRAL_CODE = "USER_REFERRAL_CODE";
     }
 
 

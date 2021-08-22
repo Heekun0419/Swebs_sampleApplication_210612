@@ -17,8 +17,6 @@ public class GuestSignUpModel {
     @Nullable
     private String country;
     @Nullable
-    private String referralCode;
-    @Nullable
     private String reason;
 
     public boolean isSuccess() {
@@ -79,10 +77,5 @@ public class GuestSignUpModel {
 
     public void setPoint(@Nullable String point) {
         this.point = point;
-    }
-
-    @Nullable
-    public String getReferralCode() {
-        return referralCode;
     }
 }

@@ -106,6 +106,8 @@ public class MakeAccountFragment_userInfo extends Fragment {
         body.put("inputPhoneCountry", RequestBody.create("none", MediaType.parse("text/plane")));
         body.put("inputGender", RequestBody.create(gender, MediaType.parse("text/plane")));
         body.put("inputNickname", RequestBody.create(binding.editTextUserInfoNickname.getText().toString(), MediaType.parse("text/plane")));
+
+        // 추후 얻어와ㅏ서 입력 하기.
         body.put("inputReferralCode", RequestBody.create("WSdcR", MediaType.parse("text/plane")));
 
         // 추후 변경하기...
@@ -133,11 +135,13 @@ public class MakeAccountFragment_userInfo extends Fragment {
                         myInfoRepository.insertMyInfo("birthday", responseData.getBirthday());
                         myInfoRepository.insertMyInfo("userType", responseData.getUserType());
                         myInfoRepository.insertMyInfo("gender", responseData.getGender());
+                        myInfoRepository.insertMyInfo("referralCode", responseData.getReferralCode());
                         myInfoRepository.insertMyInfo("email", inputEmail);
 
                         sPmanager.setUserSrl(responseData.getUserSrl());
                         sPmanager.setUserType(responseData.getUserType());
                         sPmanager.setUserToken(responseData.getToken());
+                        sPmanager.setUserReferralCode(responseData.getReferralCode());
 
                         ((MakeAccountActivity)requireActivity()).renderLoading(false);
                         ((MakeAccountActivity)requireActivity()).moveFragment(new MakeAccountFragment_success());

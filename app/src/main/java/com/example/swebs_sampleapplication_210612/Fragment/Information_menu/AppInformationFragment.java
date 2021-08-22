@@ -83,7 +83,9 @@ public class AppInformationFragment extends Fragment {
                         Toast.makeText(requireContext(), "게스트 계정입니다", Toast.LENGTH_SHORT).show();
                     } else {
                         sPmanager.removeUserSrl();
+                        sPmanager.removeUserType();
                         sPmanager.removeUserToken();
+                        sPmanager.removeUserReferralCode();
                         myInfoRepository.deleteAllMyInfo();
 
                         new UserLoginController(requireActivity().getApplication()).signUpForGuest();
