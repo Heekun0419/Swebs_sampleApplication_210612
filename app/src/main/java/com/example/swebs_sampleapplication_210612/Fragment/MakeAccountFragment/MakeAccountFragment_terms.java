@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import android.widget.Toast;
 import com.example.swebs_sampleapplication_210612.Activity.MakeAccountActivity;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
-import com.example.swebs_sampleapplication_210612.Dialog.BasicDialogTextModel;
+import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.TwoButtonBasicDialog;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMakeAccountTermsBinding;

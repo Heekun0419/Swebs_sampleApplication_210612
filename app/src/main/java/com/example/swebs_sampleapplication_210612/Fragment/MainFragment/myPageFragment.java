@@ -11,14 +11,12 @@ import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Activity.AdressModifyActivity;
 import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
@@ -27,12 +25,9 @@ import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ModifyUserInfoActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MyTopMenuActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
-import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.Entity.MyInfo;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
-import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog2;
-import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerModel;
-import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerModel2;
+import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.NumberPickerModel2;
 import com.example.swebs_sampleapplication_210612.Dialog.RecommendCodeDialog;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
@@ -507,6 +502,7 @@ public class myPageFragment extends Fragment {
         binding.mypageTextViewID.setText(buffer);
     }
 
+
     private void RenderMyPageFromUserType(String userType){
         switch (userType) {
             case "guest":  // 게스트
@@ -518,8 +514,24 @@ public class myPageFragment extends Fragment {
             case "company":  // 기업회원
                 setVisible_of_CompanyUser();
                 break;
+            case "kakao" : // 카카오 회원
+                renderSnsView("카카오",R.drawable.ic_kakao);
+                break;
+            case "google":
+                renderSnsView("구글",R.drawable.ic_google);
+                break;
+            case "naver":
+                renderSnsView("네이버",R.drawable.ic_naver);
+                break;
         }
     }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void renderSnsView(String txt, int drawable){
+        binding.mypageSnsImageView.setBackground(requireActivity().getDrawable(drawable));
+        binding.mypageSnsTextView.setText(txt);
+    }
+
 
     private void renderGenderView(String gender) {
         if (gender == null) {
@@ -543,7 +555,6 @@ public class myPageFragment extends Fragment {
         binding.mypageCompanyIcon.setVisibility(View.GONE);
         binding.mypageBtnRecommendCode.setVisibility(View.GONE);
         binding.mypageImageProfile.setVisibility(View.GONE);
-
         // 버튼 3개
         binding.linearLayout.setVisibility(View.GONE);
         //아이디, 실명
@@ -557,6 +568,8 @@ public class myPageFragment extends Fragment {
         binding.divider4.setVisibility(View.GONE);
         //기업계정, SNS
         binding.mypageCompanyAccount.setVisibility(View.GONE);
+        binding.mypageSnsTextView.setText("미등록");
+        binding.mypageSnsImageView.setVisibility(View.GONE);
         binding.mypageCompanyAccount2.setVisibility(View.GONE);
         binding.mypageSnsAccount.setVisibility(View.GONE);
 
@@ -591,6 +604,7 @@ public class myPageFragment extends Fragment {
         //기업계정, SNS
         binding.mypageCompanyAccount.setVisibility(View.VISIBLE);
         binding.mypageCompanyAccountApprove.setText("미등록");
+        binding.mypageSnsImageView.setVisibility(View.GONE);
         binding.mypageSnsAccount.setVisibility(View.VISIBLE);
 
     }
@@ -621,6 +635,8 @@ public class myPageFragment extends Fragment {
         //기업계정, SNS
         binding.mypageCompanyAccount.setVisibility(View.VISIBLE);
         binding.mypageSnsAccount.setVisibility(View.VISIBLE);
+        binding.mypageSnsTextView.setText("미등록");
+        binding.mypageSnsImageView.setVisibility(View.GONE);
 
     }
 

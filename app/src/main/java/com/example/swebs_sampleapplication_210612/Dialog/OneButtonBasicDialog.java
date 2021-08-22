@@ -3,10 +3,8 @@ package com.example.swebs_sampleapplication_210612.Dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 
-import androidx.annotation.NonNull;
-
+import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.databinding.Dialog1btnBasicBinding;
 
 public class OneButtonBasicDialog extends Dialog {

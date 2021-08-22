@@ -9,7 +9,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
-import com.example.swebs_sampleapplication_210612.Dialog.BasicDialogTextModel;
+import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.FindPasswordDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;

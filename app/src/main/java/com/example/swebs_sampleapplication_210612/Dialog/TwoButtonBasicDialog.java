@@ -4,12 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
-
-import com.example.swebs_sampleapplication_210612.R;
+import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.databinding.Dialog2btnBasicBinding;
 
 public class TwoButtonBasicDialog extends Dialog {

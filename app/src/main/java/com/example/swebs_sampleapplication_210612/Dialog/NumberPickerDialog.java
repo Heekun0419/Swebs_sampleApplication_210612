@@ -5,14 +5,13 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 
+import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.NumberPickerModel;
 import com.example.swebs_sampleapplication_210612.databinding.DialogLanguageBinding;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 

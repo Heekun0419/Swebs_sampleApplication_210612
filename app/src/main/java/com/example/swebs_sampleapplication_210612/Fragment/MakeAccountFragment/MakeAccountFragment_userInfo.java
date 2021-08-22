@@ -18,7 +18,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Norm
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
-import com.example.swebs_sampleapplication_210612.Dialog.BasicDialogTextModel;
+import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMakeAccountUserInfoBinding;

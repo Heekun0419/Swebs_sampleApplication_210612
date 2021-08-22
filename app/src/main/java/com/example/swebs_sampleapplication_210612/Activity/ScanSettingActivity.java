@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog;
-import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerModel;
+import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.NumberPickerModel;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityScanSettingBinding;
 
 public class ScanSettingActivity extends AppCompatActivity {

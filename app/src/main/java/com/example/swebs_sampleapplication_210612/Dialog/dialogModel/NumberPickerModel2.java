@@ -1,4 +1,4 @@
-package com.example.swebs_sampleapplication_210612.Dialog;
+package com.example.swebs_sampleapplication_210612.Dialog.dialogModel;
 
 import java.util.List;
 

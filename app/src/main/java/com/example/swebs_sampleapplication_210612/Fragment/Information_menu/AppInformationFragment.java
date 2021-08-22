@@ -1,7 +1,6 @@
 package com.example.swebs_sampleapplication_210612.Fragment.Information_menu;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
@@ -14,12 +13,11 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
-import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
-import com.example.swebs_sampleapplication_210612.Dialog.BasicDialogTextModel;
+import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog;
-import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerModel;
+import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.NumberPickerModel;
 import com.example.swebs_sampleapplication_210612.Dialog.TwoButtonBasicDialog;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
