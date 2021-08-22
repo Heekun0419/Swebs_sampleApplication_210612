@@ -23,37 +23,37 @@ public class ScanSettingActivity extends AppCompatActivity {
         binding = ActivityScanSettingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.btnChangeLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog = new NumberPickerDialog(ScanSettingActivity.this
-                        , new NumberPickerModel("언어선택"
-                        , new String[]{"한국어", "ENGLISH", "中文"}
-                        , 1
-                        , "확인", "취소")
-                        , new DialogClickListener() {
-                    @Override
-                    public void onPositiveClick(int position) {
-                        String pickValue = "";
-                        if(position == 0) pickValue = "한국어";
-                        else if(position == 1) pickValue = "영어";
-                        else if(position == 2) pickValue = "중국어";
-                        else pickValue ="한국어";
+        binding.btnTopMenuBack.setOnClickListener(v ->
+                onBackPressed());
 
-                        Toast.makeText(getApplicationContext(),"선택 언어 : "+ pickValue ,Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onNegativeClick() {
-                    }
+        binding.btnChangeLanguage.setOnClickListener(v -> {
+            dialog = new NumberPickerDialog(ScanSettingActivity.this
+                    , new NumberPickerModel("언어선택"
+                    , new String[]{"한국어", "ENGLISH", "中文"}
+                    , 1
+                    , "확인", "취소")
+                    , new DialogClickListener() {
+                @Override
+                public void onPositiveClick(int position) {
+                    String pickValue = "";
+                    if(position == 0) pickValue = "한국어";
+                    else if(position == 1) pickValue = "영어";
+                    else if(position == 2) pickValue = "중국어";
+                    else pickValue ="한국어";
 
-                    @Override
-                    public void onCloseClick() {
-                    }
-                });
-                dialog.setCancelable(false);
-                dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                dialog.show();
-            }
+                    Toast.makeText(getApplicationContext(),"선택 언어 : "+ pickValue ,Toast.LENGTH_SHORT).show();
+                }
+                @Override
+                public void onNegativeClick() {
+                }
+
+                @Override
+                public void onCloseClick() {
+                }
+            });
+            dialog.setCancelable(false);
+            dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+            dialog.show();
         });
     }
 }
