@@ -5,15 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.adapter.GridMoreCretifiedAdapter;
+import com.example.swebs_sampleapplication_210612.adapter.TablayoutAdapter.GridMoreCretifiedAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMoreCertifiedCompanyBinding;
-
-import org.jetbrains.annotations.NotNull;
 
 public class MoreCertifiedFragment extends Fragment {
 

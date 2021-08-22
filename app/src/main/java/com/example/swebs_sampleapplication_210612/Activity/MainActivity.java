@@ -72,6 +72,15 @@ public class MainActivity extends FragmentActivity {
 
         GlideImage(binding.navView.imageViewProfile);
 
+        binding.navView.companyProductRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,InformationActivity.class);
+                intent.putExtra("resultCode","product");
+                startActivity(intent);
+            }
+        });
+
 
         binding.navView.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -124,7 +133,7 @@ public class MainActivity extends FragmentActivity {
 
     private static class ScreenSlidePagerAdapter extends FragmentStateAdapter {
 
-        Context context;// mypage Fragment에 유저타입 넘겨줌
+        Context context;
         public ScreenSlidePagerAdapter(FragmentActivity fa, Context context) {
             super(fa);
             this.context = context;
@@ -183,8 +192,10 @@ public class MainActivity extends FragmentActivity {
         myInfoRepository.getValueToLiveData("userType").observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
+                // 나중에 삭제 해야함.
+                s = "company";
                 if (s != null)
-                    if(s.equals("normal")){
+                    if(s.equals("company")){
                         binding.navView.textviewNavDrawerProductList.setVisibility(View.VISIBLE);
                         binding.navView.constraintLayout3.setVisibility(View.VISIBLE);
                     }else{

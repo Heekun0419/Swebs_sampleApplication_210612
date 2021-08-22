@@ -7,7 +7,9 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.swebs_sampleapplication_210612.Fragment.MyTopMenuFragment.MyEventFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MyTopMenuFragment.MyReviewFragment;
+import com.example.swebs_sampleapplication_210612.Fragment.MyTopMenuFragment.MySurveyFragment;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityMyTopMenuBinding;
 
@@ -26,9 +28,14 @@ public class MyTopMenuActivity extends AppCompatActivity {
         manager = getSupportFragmentManager();
         requestCode = getIntent().getStringExtra("resultCode");
 
-        if(requestCode.equals("review"))
-        moveFragment(new MyReviewFragment(),"내 리뷰");
-
+        if(requestCode.equals("review")) {
+            moveFragment(new MyReviewFragment(),"내 리뷰");
+        } else if(requestCode.equals("event")) {
+            moveFragment(new MyEventFragment(),getString(R.string.my_event_text_1));
+        } else if(requestCode.equals("survey")){
+            moveFragment(new MySurveyFragment(),getString(R.string.my_survey_text_1));
+        }
+        // 뒤로가기 버튼 클릭
         binding.btnMyTopActivityBack.setOnClickListener(v -> onBackPressed());
 
     }

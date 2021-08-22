@@ -16,15 +16,16 @@
         android:id="@+id/textview_nav_drawer_productList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
-        android:padding="15dp"
+        android:padding="10dp"
         android:text="제품등록 리스트"
         android:textColor="@color/black"
         android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"

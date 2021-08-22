@@ -1,4 +1,4 @@
-package com.example.swebs_sampleapplication_210612.Fragment;
+package com.example.swebs_sampleapplication_210612.Fragment.MyTopMenuFragment;
 
 import android.os.Bundle;
 
@@ -10,38 +10,35 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.adapter.EventAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.Model.EventModel;
+import com.example.swebs_sampleapplication_210612.adapter.MyReviewAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.TablayoutAdapter.EventMoreAdapter;
-import com.example.swebs_sampleapplication_210612.databinding.FragmentMoreEventBinding;
+import com.example.swebs_sampleapplication_210612.databinding.FragmentMyEventBinding;
 
-public class MoreEventFragment extends Fragment implements OnItemClickListener {
+public class MyEventFragment extends Fragment implements OnItemClickListener {
 
-    private FragmentMoreEventBinding binding;
-
-    public MoreEventFragment() {
-    }
+    private FragmentMyEventBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentMoreEventBinding.inflate(inflater,container,false);
-
+        // Inflate the layout for this fragment
+        binding = FragmentMyEventBinding.inflate(inflater,container,false);
         EventMoreAdapter adapter = new EventMoreAdapter(requireContext(),new EventModel(
                 "https://images.otwojob.com/product/l/r/P/lrP1mUhYpnR780M.jpg",
                 "함소아",
                 "오늘은 어디로 떠나볼까요?",
                 "2021.08.11 ~ 2021.09.21"),this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
-        binding.recyclerViewMoreEvent.setLayoutManager(linearLayoutManager);
-        binding.recyclerViewMoreEvent.setAdapter(adapter);
+        binding.recyclerViewMyEvent.setLayoutManager(linearLayoutManager);
+        binding.recyclerViewMyEvent.setAdapter(adapter);
+
         return binding.getRoot();
     }
 

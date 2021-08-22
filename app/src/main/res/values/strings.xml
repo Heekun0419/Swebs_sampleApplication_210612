@@ -149,6 +149,17 @@
     <string name="product_reg_text_20">파일첨부</string>
 
 
+    <!-- 내 이벤트 -->
+    <string name="my_event_text_1">내 이벤트</string>
+    <string name="my_event_text_2">신청이벤트</string>
+    <string name="my_event_text_3">당첨이벤트</string>
+    <string name="my_event_text_4">찜한이벤트</string>
+
+    <!-- 내 이벤트 -->
+    <string name="my_survey_text_1">내 서베이</string>
+    <string name="my_survey_text_2">진행중 서베이</string>
+    <string name="my_survey_text_3">마감 서베이</string>
+    <string name="my_survey_text_4">참여 서베이</string>
 
 
     <string name="show"> <u>보기</u> </string>

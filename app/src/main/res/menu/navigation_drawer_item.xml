@@ -4,6 +4,7 @@
         android:id="@+id/menuGroup1"
         android:checkableBehavior="single">
 
+
         <item
             android:id="@+id/drawer_item_notification"
             android:title="공지사항"

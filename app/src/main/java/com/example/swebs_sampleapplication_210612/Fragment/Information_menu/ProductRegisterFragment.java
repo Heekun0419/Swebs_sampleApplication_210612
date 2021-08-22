@@ -51,6 +51,7 @@ public class ProductRegisterFragment extends Fragment implements OnItemClickList
                     tagList.add(tag);
                     viewModel.setTagList(tagList);
                 }
+                binding.editTextTag.setText(null);
             }
         });
 

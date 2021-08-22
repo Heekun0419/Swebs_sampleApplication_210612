@@ -60,6 +60,7 @@ public class myPageFragment extends Fragment {
         Locale locale;
         locale = requireContext().getResources().getConfiguration().getLocales().get(0);
         country = locale.getCountry();
+        // 레포지토리 설정
         myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
     }
 
@@ -71,6 +72,8 @@ public class myPageFragment extends Fragment {
         sPmanager = new SPmanager(context);
         binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
         RenderMyPageFromUserType(sPmanager.getUserType());
+
+        // 국가 설정.
         SetUserInfo();
 
         // 닫기버튼 누르면 튜토리얼 닫힘.
@@ -80,6 +83,7 @@ public class myPageFragment extends Fragment {
             sPmanager.setMyTutorialExit(true);
         });
 
+        // 닫기버튼 누르면 튜토리얼 닫힘.
         binding.tutorialMyPage.imageButton5.setOnClickListener(v -> {
             binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
             binding.tutorialMyPage.getRoot().setAnimation(fadeOut);
@@ -104,17 +108,17 @@ public class myPageFragment extends Fragment {
             RecommendCodeDialog dialog = new RecommendCodeDialog(requireContext(), new DialogClickListener() {
                 @Override
                 public void onPositiveClick(int position) {
-
+                    // 공유하기 버튼 실행
                 }
 
                 @Override
                 public void onNegativeClick() {
-
+                    // 추천인 코드 복사
                 }
 
                 @Override
                 public void onCloseClick() {
-
+                    // 알아서 dismiss 됨
                 }
             });
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -123,14 +127,16 @@ public class myPageFragment extends Fragment {
         });
 
         // 내 리뷰 버튼 클릭시
-        binding.btnMypageMyReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(requireContext(), MyTopMenuActivity.class);
-                intent.putExtra("resultCode","review");
-                startActivity(intent);
-            }
-        });
+        binding.btnMypageMyReview.setOnClickListener(v ->
+                Intent_to_Activity("review", new Intent(requireContext(), MyTopMenuActivity.class)));
+
+        // 내 이벤트 버튼 클릭시
+        binding.btnMypageMyEvent.setOnClickListener(v ->
+                Intent_to_Activity("event", new Intent(requireContext(), MyTopMenuActivity.class)));
+
+        // 내 서베이 버튼 클릭시
+        binding.btnMypageMySurvey.setOnClickListener(v ->
+                Intent_to_Activity("survey", new Intent(requireContext(), MyTopMenuActivity.class)));
 
         //출생년도 클릭시
         binding.mypageBirthday.setOnClickListener(v -> {
@@ -139,8 +145,7 @@ public class myPageFragment extends Fragment {
                 dialogBirthday();
             } else {
                 // 게스트 아닐땐 회원정보 수정 표시
-                Intent modify_userInfo_intent = new Intent(requireContext(), ModifyUserInfoActivity.class);
-                startActivity(modify_userInfo_intent);
+                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
             }
 
         });
@@ -154,31 +159,33 @@ public class myPageFragment extends Fragment {
                     dialogGender();
                 }else{
                     // 게스트 아닐땐 회원정보 수정 표시
-                    Intent modify_userInfo_intent = new Intent(requireContext(), ModifyUserInfoActivity.class);
-                    startActivity(modify_userInfo_intent);
+                    Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
                 }
             }
         });
 
         // 국가지역 클릭시
-        binding.mypageCountry.setOnClickListener(new View.OnClickListener() {
+        binding.mypageCountry.setOnClickListener(v -> {
+            if (userType.equals("guest")) {
+                dialogCountry();
+            } else {
+                // 게스트 아닐땐 회원정보 수정 표시
+                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+            }
+        });
+
+        //상단 프로필 사진 클릭시
+        binding.mypageImageProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (userType.equals("guest")) {
-                    dialogCountry();
-                } else {
-                    // 게스트 아닐땐 회원정보 수정 표시
-                    Intent modify_userInfo_intent = new Intent(requireContext(), ModifyUserInfoActivity.class);
-                    startActivity(modify_userInfo_intent);
-                }
+                // 회원정보 수정
+                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
             }
         });
 
         // Point 정책 자세히 보기
         binding.mypagePoint.setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), InformationActivity.class);
-            intent.putExtra("resultCode","point");
-            startActivity(intent);
+            Intent_to_Activity("point", new Intent(requireContext(), InformationActivity.class));
         });
 
         // Login Page 이동
@@ -187,28 +194,37 @@ public class myPageFragment extends Fragment {
             startActivity(intent);
         });
 
-        binding.mypageModifyMyAdress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(requireContext(), AdressModifyActivity.class);
-                startActivity(intent);
-            }
+        binding.mypageModifyMyAdress.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), AdressModifyActivity.class);
+            startActivity(intent);
         });
 
         return binding.getRoot();
     }
 
+    private void Intent_to_Activity(String extra,  Intent intent){
+        intent.putExtra("resultCode",extra);
+        startActivity(intent);
+    }
+
+    @SuppressLint("SetTextI18n")
     private void SetUserInfo() {
         //국가 설정
-        if(country.equals("KR")) {
-            binding.mypageCountryTextView.setText("대한민국");
-        }else if(country.equals("US")){
-            binding.mypageCountryTextView.setText("United States");
-        }else {
-            binding.mypageCountryTextView.setText("中國");
+        switch (country) {
+            case "KR":
+                binding.mypageCountryTextView.setText("대한민국");
+                break;
+            case "US":
+                binding.mypageCountryTextView.setText("UNITED STATES");
+                break;
+            case "CN":
+                binding.mypageCountryTextView.setText("中國");
+                break;
+            default:
+                binding.mypageCountryTextView.setText("미등록");
+                break;
         }
 
-        binding.mypageCountryTextView.setText("미등록");
     }
 
     @Override
@@ -232,6 +248,7 @@ public class myPageFragment extends Fragment {
             @Override
             public void onChanged(String s) {
                 if (s != null)
+                    s ="company";
                     RenderMyPageFromUserType(s);
                 userType = s;
             }
@@ -492,13 +509,13 @@ public class myPageFragment extends Fragment {
     private void setEmail(String email){
         char s = email.charAt(0);
         int startIndex = email.indexOf("@");
-        String mailAddress = email.substring(startIndex);
+      /*  String mailAddress = email.substring(startIndex);*/
         StringBuffer buffer = new StringBuffer();
         buffer.append(s);
-        for(int i = 0; i< startIndex; i++)
+        for(int i = 0; i< email.length(); i++)
             buffer.append("*");
 
-        buffer.append(mailAddress);
+       // buffer.append(mailAddress);
         binding.mypageTextViewID.setText(buffer);
     }
 
@@ -556,7 +573,8 @@ public class myPageFragment extends Fragment {
         binding.mypageBtnRecommendCode.setVisibility(View.GONE);
         binding.mypageImageProfile.setVisibility(View.GONE);
         // 버튼 3개
-        binding.linearLayout.setVisibility(View.GONE);
+        //테스트용 수정 --> 나중에 이걸로 가져와야댐. binding.linearLayout.setVisibility(View.GONE);
+        binding.linearLayout.setVisibility(View.VISIBLE);
         //아이디, 실명
         binding.mypageId.setVisibility(View.GONE);
         binding.mypageName.setVisibility(View.GONE);

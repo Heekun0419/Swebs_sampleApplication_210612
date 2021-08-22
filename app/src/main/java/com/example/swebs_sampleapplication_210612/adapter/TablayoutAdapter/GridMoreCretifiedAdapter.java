@@ -1,4 +1,4 @@
-package com.example.swebs_sampleapplication_210612.adapter;
+package com.example.swebs_sampleapplication_210612.adapter.TablayoutAdapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
