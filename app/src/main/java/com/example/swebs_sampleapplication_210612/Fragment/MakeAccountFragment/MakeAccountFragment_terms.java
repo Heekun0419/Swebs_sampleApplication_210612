@@ -106,8 +106,10 @@ public class MakeAccountFragment_terms extends Fragment {
     }
 
     private void existReferralCode(String referralCode) {
-        if (referralCode == null)
-            progressMakeAccount();
+        if (referralCode == null || referralCode.equals("")) {
+                progressMakeAccount();
+            return;
+        }
 
         HashMap<String, RequestBody> body = new HashMap<>();
         body.put("inputReferralCode", RequestBody.create(referralCode, MediaType.parse("text/plane")));
