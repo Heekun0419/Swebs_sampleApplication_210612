@@ -77,24 +77,44 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="25dp"
                 android:paddingTop="20dp"
-                android:text="* 구매처"
+                android:text="@string/product_reg_text_3"
                 android:textColor="@color/black"
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
-
-            <EditText
-                android:id="@+id/editText_clone_buy"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="25dp"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_marginTop="10dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginEnd="25dp"
-                android:background="@drawable/radius_login_edittext"
-                android:backgroundTint="#E8EAEA"
-                android:hint="구매처를 적어주세요"
-                android:paddingStart="20dp"
-                android:textSize="13dp" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <EditText
+                    android:id="@+id/editText_srlNumber_front"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/radius_login_edittext"
+                    android:backgroundTint="#F9FAFC"
+                    android:hint="@string/product_reg_text_4"
+                    android:paddingStart="20dp"
+                    android:textSize="13dp" />
+
+                <EditText
+                    android:id="@+id/editText_srlNumber_back"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/radius_login_edittext"
+                    android:backgroundTint="#F9FAFC"
+                    android:hint="@string/product_reg_text_5"
+                    android:paddingStart="20dp"
+                    android:textSize="13dp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -114,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="25dp"
                 android:paddingTop="20dp"
-                android:text="* 제품명"
+                android:text="@string/product_reg_text_6"
                 android:textColor="@color/black"
                 android:textSize="12dp"
                 android:textStyle="bold" />
@@ -128,8 +148,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/radius_login_edittext"
-                android:backgroundTint="#E8EAEA"
-                android:hint="제품명을 입력하세요"
+                android:backgroundTint="#F9FAFC"
                 android:paddingStart="20dp"
                 android:textSize="13dp" />
 
@@ -151,22 +170,22 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="25dp"
                 android:paddingTop="20dp"
-                android:text="* 일련번호"
+                android:text="@string/product_reg_text_7"
                 android:textColor="@color/black"
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
 
             <EditText
-                android:id="@+id/editText_clone_number"
+                android:id="@+id/editText_productReg_name"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/radius_login_edittext"
-                android:backgroundTint="#E8EAEA"
-                android:hint="일련번호를 입력하세요"
+                android:backgroundTint="#F9FAFC"
+                android:hint="@string/product_reg_text_8"
                 android:paddingStart="20dp"
                 android:textSize="13dp" />
 
@@ -188,40 +207,26 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="25dp"
                 android:paddingTop="20dp"
-                android:text="* 구매일"
+                android:text="@string/product_reg_text_9"
                 android:textColor="@color/black"
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
-            <LinearLayout
+            <Spinner
+                android:id="@+id/category_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginStart="25dp"
-                android:orientation="horizontal">
+                android:layout_marginEnd="25dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/radious_button_graycolor"
+                android:backgroundTint="#F9FAFC"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="2021 - 07- 12"
-                    android:textColor="@color/swebs_main_color2"
-                    android:textSize="12dp" />
-
-                <ImageButton
-                    android:id="@+id/btn_select_date"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="20dp"
-                    android:background="@drawable/ic_calendar"
-                    android:backgroundTint="@color/lower_gray" />
-
-            </LinearLayout>
 
         </LinearLayout>
 
-
         <LinearLayout
-            android:id="@+id/linearLayout12"
+            android:id="@+id/linearLayout21"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -236,75 +241,189 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="25dp"
                 android:paddingTop="20dp"
-                android:text="* 세부사항"
+                android:text="@string/product_reg_text_11"
                 android:textColor="@color/black"
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
+            <EditText
+                android:id="@+id/editText_market"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="25dp"
+                android:background="@drawable/radius_login_edittext"
+                android:backgroundTint="#F9FAFC"
+                android:hint="@string/product_reg_text_12"
+                android:paddingStart="20dp"
+                android:textSize="13dp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout21">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="25dp"
+                android:paddingTop="20dp"
+                android:text="@string/product_reg_text_13"
+                android:textColor="@color/black"
+                android:textSize="12dp"
+                android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editText_clone_detail"
+                android:id="@+id/editText_productReg_detail"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/radius_login_edittext"
-                android:backgroundTint="#E8EAEA"
-                android:hint="내용을 입력하세요"
+                android:backgroundTint="#F9FAFC"
+                android:gravity="top"
+                android:hint="@string/product_reg_text_14"
                 android:paddingStart="20dp"
+                android:paddingTop="20dp"
                 android:textSize="13dp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp">
+
+                <ImageButton
+                    android:id="@+id/btn_file_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:background="@drawable/radius_login_edittext"
+                    android:backgroundTint="#E8EAEA"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView27"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/product_reg_text_15"
+                    android:textColor="@color/swebs_main_color2"
+                    android:textSize="13dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn_file_input"
+                    app:layout_constraintStart_toStartOf="@+id/btn_file_input"
+                    app:layout_constraintTop_toTopOf="@+id/btn_file_input" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/ic_paper_clip"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn_file_input"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_file_input"
+                    app:layout_constraintTop_toTopOf="@+id/btn_file_input" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout13"
+            android:id="@+id/linearLayout22"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:background="@color/white"
-            android:paddingStart="25dp"
-            android:paddingBottom="28dp"
-            android:paddingTop="20dp"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout12">
 
-            <CheckBox
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:text="정보 제공 약관 동의"
-                android:textColor="@color/black" />
+                android:paddingStart="25dp"
+                android:paddingTop="20dp"
+                android:text="@string/product_reg_text_16"
+                android:textColor="@color/black"
+                android:textSize="12dp"
+                android:textStyle="bold" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/show"
-                android:layout_marginEnd="25dp"
-                android:textColor="@color/swebs_main_color2" />
+                <EditText
+                    android:id="@+id/editText_tag"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="25dp"
+                    android:background="@drawable/radius_login_edittext"
+                    android:backgroundTint="#F9FAFC"
+                    android:hint="@string/product_reg_text_17"
+                    android:paddingStart="20dp"
+                    android:textSize="13dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/add_product_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:text="@string/product_reg_text_18"
+                    android:textColor="@color/swebs_main_color2"
+                    android:textSize="15dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/editText_tag"
+                    app:layout_constraintEnd_toEndOf="@+id/editText_tag"
+                    app:layout_constraintTop_toTopOf="@+id/editText_tag" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_tag"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editText_tag"
+                    tools:listitem="@layout/item_product_tag"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="120dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/bottom_round_corner_background"
             android:elevation="7dp"
             android:padding="3dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout13"
-            >
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout22">
 
             <ImageButton
                 android:id="@+id/btn_terms_agree"
@@ -314,6 +433,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/radious_rectangle_red"
+                android:backgroundTint="@color/swebs_main_color2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -321,7 +441,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="신고하기"
+                android:text="@string/product_reg_text_19"
                 android:textColor="@color/white"
                 android:textSize="15dp"
                 android:textStyle="bold"

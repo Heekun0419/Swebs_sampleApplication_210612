@@ -184,7 +184,7 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onChanged(String s) {
                 if (s != null)
-                    if(s.equals("company")){
+                    if(s.equals("normal")){
                         binding.navView.textviewNavDrawerProductList.setVisibility(View.VISIBLE);
                         binding.navView.constraintLayout3.setVisibility(View.VISIBLE);
                     }else{

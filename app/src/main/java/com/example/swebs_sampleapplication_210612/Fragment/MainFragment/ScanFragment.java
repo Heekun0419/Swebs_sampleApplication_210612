@@ -31,6 +31,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -95,8 +96,7 @@ public class ScanFragment extends Fragment {
 
     private SwebsAPI retroAPI;
     private SPmanager sPmanager;
-    private Animation fadeOut = new AlphaAnimation(1,0);
-    private Animation fadeIn = new AlphaAnimation(0,1);
+    private final Animation fadeIn = new AlphaAnimation(0,1);
     public ScanFragment() {
         // Required empty public constructor
     }
@@ -124,6 +124,7 @@ public class ScanFragment extends Fragment {
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#93E3BE")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         binding.textVIewScanExplain.setText(spannableString);
 
+
         // 카메라 컨트롤러 - Zoom Flash Focus 컨트롤 가능
         LifecycleCameraController lifecycleCameraController = new LifecycleCameraController(requireContext());
         lifecycleCameraController.bindToLifecycle(getViewLifecycleOwner());
@@ -139,6 +140,8 @@ public class ScanFragment extends Fragment {
                 flash = false;
             }
         });
+
+
 
         // 앱바에 로고 안보이게 하기
         binding.includedAppbarScan.imageView19.setVisibility(View.INVISIBLE);
@@ -227,6 +230,8 @@ public class ScanFragment extends Fragment {
             binding.tutorialScanPage.getRoot().setVisibility(View.VISIBLE);
             binding.tutorialScanPage.getRoot().setAnimation(fadeIn);
         }
+
+
     }
 
     private void bindPreView(ProcessCameraProvider processCameraProvider) {
