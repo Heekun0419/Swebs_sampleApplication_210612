@@ -112,6 +112,8 @@ public class MakeAccountFragment_userInfo extends Fragment {
         body.put("inputCountry", RequestBody.create("KR", MediaType.parse("text/plane")));
         body.put("inputCountryRegion", RequestBody.create("none", MediaType.parse("text/plane")));
 
+        body.put("inputReceiveReferralCode", RequestBody.create("WSdcR", MediaType.parse("text/plane")));
+
         Call<NormalSignUpModel> call = retroAPI.userSingUp(body);
         call.enqueue(new Callback<NormalSignUpModel>() {
             @Override

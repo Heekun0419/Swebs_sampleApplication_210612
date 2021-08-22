@@ -68,18 +68,15 @@ public class MakeAccountFragment_terms extends Fragment {
             }
         });
 
-        binding.checkBoxMakeAccountTermsAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(binding.checkBoxMakeAccountTermsAll.isChecked()){
-                    binding.checkBoxMakeAccountTerms1.setChecked(true);
-                    binding.checkBoxMakeAccountTerms2.setChecked(true);
-                    binding.checkBoxMakeAccountTerms3.setChecked(true);
-                }else{
-                    binding.checkBoxMakeAccountTerms1.setChecked(false);
-                    binding.checkBoxMakeAccountTerms2.setChecked(false);
-                    binding.checkBoxMakeAccountTerms3.setChecked(false);
-                }
+        binding.checkBoxMakeAccountTermsAll.setOnClickListener(v -> {
+            if(binding.checkBoxMakeAccountTermsAll.isChecked()){
+                binding.checkBoxMakeAccountTerms1.setChecked(true);
+                binding.checkBoxMakeAccountTerms2.setChecked(true);
+                binding.checkBoxMakeAccountTerms3.setChecked(true);
+            }else{
+                binding.checkBoxMakeAccountTerms1.setChecked(false);
+                binding.checkBoxMakeAccountTerms2.setChecked(false);
+                binding.checkBoxMakeAccountTerms3.setChecked(false);
             }
         });
 

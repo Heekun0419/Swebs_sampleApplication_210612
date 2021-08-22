@@ -17,13 +17,13 @@ import retrofit2.http.PartMap;
 public interface SwebsAPI {
 
     @Multipart
-    @POST("signup/guest_signup.php")
+    @POST("signup/signup_guest.php")
     Call<GuestSignUpModel> guestSignUp(
             @PartMap Map<String, RequestBody> prams
     );
 
     @Multipart
-    @POST("signup/normal_signup.php")
+    @POST("signup/signup_normal.php")
     Call<NormalSignUpModel> userSingUp(
             @PartMap Map<String, RequestBody> prams
     );
