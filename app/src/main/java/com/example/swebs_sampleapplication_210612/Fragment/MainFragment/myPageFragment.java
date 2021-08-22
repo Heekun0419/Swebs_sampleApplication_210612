@@ -29,7 +29,10 @@ import com.example.swebs_sampleapplication_210612.Activity.ModifyUserInfoActivit
 import com.example.swebs_sampleapplication_210612.Activity.MyTopMenuActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
+import com.example.swebs_sampleapplication_210612.Dialog.DialogClickStringListener;
+import com.example.swebs_sampleapplication_210612.Dialog.EditTextDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog2;
+import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.NumberPickerModel2;
 import com.example.swebs_sampleapplication_210612.Dialog.RecommendCodeDialog;
 import com.example.swebs_sampleapplication_210612.R;
@@ -170,6 +173,19 @@ public class myPageFragment extends Fragment {
             public void onClick(View v) {
                 if(userType.equals("guest")){
                     dialogGender();
+                }else{
+                    // 게스트 아닐땐 회원정보 수정 표시
+                    Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+                }
+            }
+        });
+
+        // 닉네임 클릭시
+        binding.mypageNickname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(userType.equals("guest")){
+                    dialogNickname();
                 }else{
                     // 게스트 아닐땐 회원정보 수정 표시
                     Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
@@ -402,6 +418,33 @@ public class myPageFragment extends Fragment {
         dialog2.show();
     }
 
+    private void dialogNickname(){
+
+        EditTextDialog dialog = new EditTextDialog(requireContext(), new BasicDialogTextModel(
+                "닉네임",
+                "닉네임을 입력해주세요",
+                "설정",
+                "취소"), new DialogClickStringListener() {
+            @Override
+            public void onPositiveClick(String string) {
+                binding.mypageTextViewNickname.setText(string);
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+
+            @Override
+            public void onCloseClick() {
+
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        dialog.show();
+    }
 
     private void dialogGender() {
         List<String> inputData = new ArrayList<>();
