@@ -9,9 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.adapter.Model.EventModel;
-import com.example.swebs_sampleapplication_210612.adapter.MyReviewAdapter;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
 import com.example.swebs_sampleapplication_210612.adapter.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.TablayoutAdapter.EventMoreAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMyEventBinding;

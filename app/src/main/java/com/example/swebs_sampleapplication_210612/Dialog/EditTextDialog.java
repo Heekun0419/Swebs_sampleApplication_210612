@@ -3,6 +3,7 @@ package com.example.swebs_sampleapplication_210612.Dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.databinding.DialogEdittextBinding;
+import com.example.swebs_sampleapplication_210612.util.EditTextFilter;
 
 public class EditTextDialog extends Dialog {
 
@@ -17,6 +19,7 @@ public class EditTextDialog extends Dialog {
     private BasicDialogTextModel model;
     private Context context;
     private DialogClickStringListener listener;
+    EditTextFilter filter;
 
     public EditTextDialog(Context context, BasicDialogTextModel model, DialogClickStringListener listener) {
         super(context);
@@ -30,6 +33,9 @@ public class EditTextDialog extends Dialog {
         super.onCreate(savedInstanceState);
         binding = DialogEdittextBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        filter = new EditTextFilter(context);
+        binding.edittextContent.setFilters(filter.SetFilter());
 
         binding.textViewTitle.setText(model.getTitle());
         binding.edittextContent.setHint(model.getContent());
