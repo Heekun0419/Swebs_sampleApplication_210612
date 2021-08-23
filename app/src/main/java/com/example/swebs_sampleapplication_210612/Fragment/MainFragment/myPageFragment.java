@@ -166,7 +166,6 @@ public class myPageFragment extends Fragment {
 
         });
 
-
         // 성별 클릭시
         binding.mypageGender.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -428,6 +427,7 @@ public class myPageFragment extends Fragment {
             @Override
             public void onPositiveClick(String string) {
                 binding.mypageTextViewNickname.setText(string);
+                binding.mypageProfileName.setText(string +"님");
             }
 
             @Override

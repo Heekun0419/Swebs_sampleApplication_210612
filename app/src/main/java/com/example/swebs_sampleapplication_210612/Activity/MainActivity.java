@@ -25,6 +25,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Fragment.bottomSheetFragment;
+import com.example.swebs_sampleapplication_210612.IntroPage.IntroActivity;
+import com.example.swebs_sampleapplication_210612.IntroPage.IntroAdapter;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Fragment.MainFragment.ScanFragment;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
@@ -62,6 +64,10 @@ public class MainActivity extends FragmentActivity {
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1);
+
+        // 인트로페이지 테스트트
+       Intent intent = new Intent(this, IntroActivity.class);
+        startActivity(intent);
 
         Toolbar toolbar = findViewById(R.id.toolBar);
 

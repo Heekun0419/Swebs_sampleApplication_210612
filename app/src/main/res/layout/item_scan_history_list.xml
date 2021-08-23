@@ -67,7 +67,7 @@
                     android:text="함소아"
                     android:textColor="@color/swebs_main_color2"
                     android:textSize="11dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 
