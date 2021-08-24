@@ -6,19 +6,28 @@ import androidx.core.content.ContextCompat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.SwebsCorp.Model.CodeCertifyModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.SwebsCorp.SwebsCorpAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.SwebsCorp.SwebsCorpClient;
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
+import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
+import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
+import com.example.swebs_sampleapplication_210612.Dialog.TwoButtonBasicDialog;
+import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityAuthenticScan2Binding;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityAuthenticScanBinding;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
 
@@ -38,6 +47,8 @@ public class AuthenticScanActivity extends AppCompatActivity {
 
     private CodeCertifyModel codeModel;
 
+    private SPmanager sPmanager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,20 +58,17 @@ public class AuthenticScanActivity extends AppCompatActivity {
 
         setLoadingVisibility(true);
 
+        sPmanager = new SPmanager(getApplicationContext());
+
         swebsCorpAPI = SwebsCorpClient.getRetrofitClient().create(SwebsCorpAPI.class);
 
         resultUrl = getIntent().getStringExtra("url");
         resultCompany = getIntent().getStringExtra("company");
         resultCode = getIntent().getStringExtra("code");
 
-        resultCompany = "skinhill";
-        resultCode = "57PE688KE7Z3W57787Y1";
-
-        //resultCode += "11";
-
         String loadUrl = "https://www.swebs.co.kr/certchk/" + resultCompany + "/swebs_result.html?q=" + resultCode;
         webViewInit();
-        getCodeInfo(resultUrl, resultCompany, resultCode);
+        getCodeInfoFromSwebs(resultUrl, resultCompany, resultCode);
         //webViewLoadUrl(loadUrl);
 
         binding.btnAuthenticScanBack.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +89,7 @@ public class AuthenticScanActivity extends AppCompatActivity {
         });
     }
 
-    private void getCodeInfo(String loadUrl, String company, String code) {
+    private void getCodeInfoFromSwebs(String loadUrl, String company, String code) {
         HashMap<String, RequestBody> body = new HashMap<>();
         body.put("comp_url", RequestBody.create(company, MediaType.parse("text/plane")));
         body.put("q_no", RequestBody.create(code, MediaType.parse("text/plane")));
@@ -97,14 +105,10 @@ public class AuthenticScanActivity extends AppCompatActivity {
                         codeModel = body;
                         if (body.getCode().equals("S")
                         || body.getCode().equals("N")) {
-                            //String loadUrl;
-                            //loadUrl = "https://www.swebs.co.kr/certchk/" + company + "/qr_result.html?q=" + code;
                             webViewLoadUrl(loadUrl);
                         }
                     }
                 }
-
-
             }
 
             @Override
@@ -144,10 +148,80 @@ public class AuthenticScanActivity extends AppCompatActivity {
                 binding.purchaseTextView.setText("구매 등록");
                 binding.btnPurchaseInput.setBackground(ContextCompat.getDrawable(this, R.drawable.radious_button_swebscolor));
                 setPurchaseVisibility(true);
+                showNoticeDialog();
             } else if (codeModel.getCode().equals("N")) {
                 binding.purchaseTextView.setText("신고 하기");
                 binding.btnPurchaseInput.setBackground(ContextCompat.getDrawable(this, R.drawable.radious_rectangle_red));
                 setPurchaseVisibility(true);
+            }
+        }
+    }
+
+    private void showNoticeDialog() {
+        Log.d("ok", "compay : " + resultCompany);
+        if (resultCompany.equals("rmgany")) {
+            View view = binding.appBarLayout;
+            Snackbar snackbar;
+            if (sPmanager.getUserType().equals("guest")) {
+                snackbar = Snackbar.make(view, "회원가입 후 정품스캔시에는 20P가 지급됩니다.\n회원가입 하시겠습니까?", Snackbar.LENGTH_LONG);
+                snackbar.setAction("회원가입", v -> {
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                });
+            } else {
+                snackbar = Snackbar.make(view, "정품스캔을 하시어\n포인트 20P 지급 됩니다.", Snackbar.LENGTH_LONG);
+                snackbar.setAction("확인", v -> {
+                    snackbar.dismiss();
+                });
+            }
+
+            snackbar.show();
+        } else {
+            if (sPmanager.getUserType().equals("guest")) {
+                TwoButtonBasicDialog twoButtonBasicDialog = new TwoButtonBasicDialog(this
+                        , new BasicDialogTextModel("정품 스캔", "정품 스캔을 하시어 포인트 5P 지급됩니다. 회원가입 후 정품 스캔시에는 20P가 지급됩니다.\n회원가입 하시겠습니까?", "회원가입", "취소")
+                        , new DialogClickListener() {
+                    @Override
+                    public void onPositiveClick(int position) {
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onNegativeClick() {
+
+                    }
+
+                    @Override
+                    public void onCloseClick() {
+
+                    }
+                });
+                twoButtonBasicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                twoButtonBasicDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+                twoButtonBasicDialog.show();
+            } else {
+                OneButtonBasicDialog oneButtonBasicDialog = new OneButtonBasicDialog(this
+                        , new BasicDialogTextModel("정품 스캔", "정품 스캔을 하시어\n포인트 20P 지급 됩니다.", "확인", "")
+                        , new DialogClickListener() {
+                    @Override
+                    public void onPositiveClick(int position) {
+
+                    }
+
+                    @Override
+                    public void onNegativeClick() {
+
+                    }
+
+                    @Override
+                    public void onCloseClick() {
+
+                    }
+                });
+                oneButtonBasicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                oneButtonBasicDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+                oneButtonBasicDialog.show();
             }
         }
     }

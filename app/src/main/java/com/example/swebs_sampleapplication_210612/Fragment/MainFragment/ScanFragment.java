@@ -343,6 +343,7 @@ public class ScanFragment extends Fragment {
         pushData.put("locationLongitude", location.get("longitude"));
         pushScanAllData(pushData);
 
+
         Intent intent;
         if (company != null && code != null) {
             intent = new Intent(requireContext(), AuthenticScanActivity.class);
@@ -355,28 +356,27 @@ public class ScanFragment extends Fragment {
                   .putExtra("barcodeType", barcodeType);
         }
         startActivity(intent);
-
     }
 
     HashMap<String, RequestBody> setPushScanAllDataBody(HashMap<String, String> data) {
         HashMap<String, RequestBody> body = new HashMap<>();
 
-        body.put("input_user_srl", RequestBody.create(sPmanager.getUserSrl(), MediaType.parse("text/plane")));
-        body.put("input_os_type", RequestBody.create("Android", MediaType.parse("text/plane")));
+        body.put("inputUserSrl", RequestBody.create(sPmanager.getUserSrl(), MediaType.parse("text/plane")));
+        body.put("inputOsType", RequestBody.create("Android", MediaType.parse("text/plane")));
         if (data.get("qrData") != null)
-            body.put("input_qr_data", RequestBody.create(Objects.requireNonNull(data.get("qrData")), MediaType.parse("text/plane")));
+            body.put("inputQrData", RequestBody.create(Objects.requireNonNull(data.get("qrData")), MediaType.parse("text/plane")));
 
         if (data.get("company") != null)
-            body.put("input_company", RequestBody.create(Objects.requireNonNull(data.get("company")), MediaType.parse("text/plane")));
+            body.put("inputCompany", RequestBody.create(Objects.requireNonNull(data.get("company")), MediaType.parse("text/plane")));
 
         if (data.get("code") != null)
-            body.put("input_code", RequestBody.create(Objects.requireNonNull(data.get("code")), MediaType.parse("text/plane")));
+            body.put("inputCode", RequestBody.create(Objects.requireNonNull(data.get("code")), MediaType.parse("text/plane")));
 
         if (data.get("locationLatitude") != null)
-            body.put("input_location_latitude", RequestBody.create(Objects.requireNonNull(data.get("locationLatitude")), MediaType.parse("text/plane")));
+            body.put("inputLocationLatitude", RequestBody.create(Objects.requireNonNull(data.get("locationLatitude")), MediaType.parse("text/plane")));
 
         if (data.get("locationLongitude") != null)
-            body.put("input_location_longitude", RequestBody.create(Objects.requireNonNull(data.get("locationLongitude")), MediaType.parse("text/plane")));
+            body.put("inputLocationLongitude", RequestBody.create(Objects.requireNonNull(data.get("locationLongitude")), MediaType.parse("text/plane")));
 
         return body;
     }
