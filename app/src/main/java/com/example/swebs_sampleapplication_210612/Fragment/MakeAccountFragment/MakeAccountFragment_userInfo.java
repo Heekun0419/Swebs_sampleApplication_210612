@@ -26,12 +26,18 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Norm
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
+import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog2;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
+import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.NumberPickerModel2;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMakeAccountUserInfoBinding;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,7 +57,7 @@ public class MakeAccountFragment_userInfo extends Fragment {
 
     private MyInfoRepository myInfoRepository;
 
-    private String selectGender = null;
+    private String selectGender = null, country = null;
     private boolean checkEmailOverlap;
     private boolean checkPasswordForm;
     private boolean checkPasswordConfirm;
@@ -68,6 +74,10 @@ public class MakeAccountFragment_userInfo extends Fragment {
         sPmanager = new SPmanager(requireContext());
 
         myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
+        //국가코드 가져오기
+        Locale locale;
+        locale = requireContext().getResources().getConfiguration().getLocales().get(0);
+        country = locale.getCountry();
 
         // value init;
         checkEmailOverlap = false;
@@ -86,6 +96,10 @@ public class MakeAccountFragment_userInfo extends Fragment {
         binding.editTextUserInfoPasswordConfirm.setFilters(new InputFilter[] {filterPassword});
         binding.editTextUserInfoNickname.setFilters(new InputFilter[] {filterNickname});
         binding.editTextUserInfoUsername.setFilters(new InputFilter[] {filtername});
+
+        //초기 지역선택 GONE
+        binding.constraintLayoutLocationSelect.setVisibility(View.GONE);
+        binding.textViewCountrySelect.setText(country);
 
         // 버튼 - 회원가입.
         binding.btnMakeAccount.setOnClickListener(v -> {
@@ -115,6 +129,12 @@ public class MakeAccountFragment_userInfo extends Fragment {
             selectGender = "male";
         });
 
+        binding.textViewCountrySelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogCountry();
+            }
+        });
 
         return binding.getRoot();
     }
@@ -177,7 +197,79 @@ public class MakeAccountFragment_userInfo extends Fragment {
         });
     }
 
-    private void renderPasswordForm() {
+    private void dialogCountry() {
+        int defaultValue = 1;
+        List<String> inputData = new ArrayList<>();
+
+        Locale[] locales = Locale.getAvailableLocales();
+        for (Locale locale : locales) {
+            if (!locale.getCountry().equals("")) {
+                if (!inputData.contains(locale.getDisplayCountry())) {
+                    inputData.add(locale.getDisplayCountry());
+                }
+            }
+        }
+        Collections.sort(inputData);
+
+        // 기본 선택 구하기.
+        int countryCount = 0;
+        for (String data : inputData) {
+            if (binding.textViewCountrySelect.getText().toString().equals(data))
+                defaultValue = countryCount;
+            else if (binding.textViewCountrySelect.getText().toString().equals("국가선택")
+                    && country.equals(data)) {
+                defaultValue = countryCount;
+            }
+
+            countryCount++;
+        }
+
+        NumberPickerDialog2 dialog = new NumberPickerDialog2(
+                requireContext(),
+                new NumberPickerModel2(
+                        "국가지역",
+                        inputData,
+                        defaultValue,
+                        "확인",
+                        "취소"
+                ),
+                new DialogClickListener() {
+                    @Override
+                    public void onPositiveClick(int position) {
+                       // myInfoRepository.insertMyInfo("country", countryNameToCode(inputData.get(position)));
+                        binding.textViewCountrySelect.setText(inputData.get(position));
+                    }
+
+                    @Override
+                    public void onNegativeClick() {
+
+                    }
+
+                    @Override
+                    public void onCloseClick() {
+
+                    }
+                }
+        );
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        dialog.show();
+    }
+
+    private String countryNameToCode(String countryName) {
+        Locale[] locales = Locale.getAvailableLocales();
+        for (Locale locale : locales) {
+            if (!locale.getCountry().equals("")
+                    && locale.getDisplayCountry().equals(countryName)) {
+                return locale.getCountry();
+            }
+        }
+        return null;
+    }
+
+
+        private void renderPasswordForm() {
         if (binding.editTextUserInfoPassword.getText().toString().length() > 0) {
             Pattern pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{6,}$");
             Matcher matcher = pattern.matcher(binding.editTextUserInfoPassword.getText().toString());
