@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/textView23"
+            android:id="@+id/textView_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
@@ -43,7 +43,7 @@
             android:maxLines="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView23" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_email" />
 
         <TextView
             android:id="@+id/email_overlap_check"
@@ -70,6 +70,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editText_email">
 
             <TextView
+                android:id="@+id/textView_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
@@ -115,6 +116,7 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
             <TextView
+                android:id="@+id/textView_password_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
@@ -167,6 +169,7 @@
             app:layout_constraintTop_toBottomOf="@+id/view6">
 
             <TextView
+                android:id="@+id/textView_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="25dp"
@@ -202,6 +205,7 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
 
             <TextView
+                android:id="@+id/textView_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="25dp"
@@ -245,6 +249,7 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
 
             <TextView
+                android:id="@+id/textView_birthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
@@ -288,11 +293,12 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout10">
 
             <TextView
+                android:id="@+id/textview_phoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="25dp"
                 android:paddingTop="20dp"
-                android:text="* 휴대폰 번호"
+                android:text="휴대폰 번호"
                 android:textColor="@color/black"
                 android:textSize="12dp"
                 android:textStyle="bold" />

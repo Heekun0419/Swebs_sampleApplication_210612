@@ -10,8 +10,12 @@ import androidx.lifecycle.Observer;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -104,6 +108,9 @@ public class MakeAccountFragment_userInfo extends Fragment {
         binding.editTextUserInfoPasswordConfirm.setFilters(new InputFilter[] {filterPassword});
         binding.editTextUserInfoNickname.setFilters(new InputFilter[] {filterNickname});
         binding.editTextUserInfoUsername.setFilters(new InputFilter[] {filtername});
+
+        //첫글자 빨간색
+        setFirstTextRed();
 
         // 버튼 - 회원가입.
         binding.btnMakeAccount.setOnClickListener(v -> {
@@ -738,4 +745,23 @@ public class MakeAccountFragment_userInfo extends Fragment {
         }
         return null;
     };
+
+    private void setFirstTextRed(){
+        binding.textViewName.setText(spannable(binding.textViewName.getText().toString()));
+        binding.textViewBirthday.setText(spannable(binding.textViewBirthday.getText().toString()));
+        binding.textViewEmail.setText(spannable(binding.textViewEmail.getText().toString()));
+        binding.textViewNickname.setText(spannable(binding.textViewNickname.getText().toString()));
+        binding.textViewGender.setText(spannable(binding.textViewGender.getText().toString()));
+        binding.textViewCountry.setText(spannable(binding.textViewCountry.getText().toString()));
+        binding.textViewPassword.setText(spannable(binding.textViewPassword.getText().toString()));
+        binding.textViewPasswordConfirm.setText(spannable(binding.textViewPasswordConfirm.getText().toString()));
+        binding.textViewPassword.setText(spannable(binding.textViewPassword.getText().toString()));
+
+    }
+    private SpannableString spannable(String string){
+        SpannableString spannableString = new SpannableString(string);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#ED6D6D")), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        return  spannableString;
+    }
 }
