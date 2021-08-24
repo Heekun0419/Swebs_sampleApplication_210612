@@ -92,10 +92,6 @@ public class MakeAccountFragment_userInfo extends Fragment {
         checkPasswordConfirm = false;
         checkBirthdayForm = false;
         referralCode = ((MakeAccountActivity)requireActivity()).getReferralCode();
-        if (referralCode != null)
-            Toast.makeText(requireContext(), "레퍼럴 코드 : " + referralCode, Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(requireContext(), "레퍼럴 없음", Toast.LENGTH_SHORT).show();
         regionList = new ArrayList<>();
     }
 
@@ -111,7 +107,7 @@ public class MakeAccountFragment_userInfo extends Fragment {
         binding.editTextUserInfoUsername.setFilters(new InputFilter[] {filtername});
 
         //첫글자 빨간색
-        setFirstTextRed();
+        renderFirstTextRed();
 
         // 버튼 - 회원가입.
         binding.btnMakeAccount.setOnClickListener(v -> {
@@ -126,19 +122,13 @@ public class MakeAccountFragment_userInfo extends Fragment {
 
         // 성별 설정 버튼 이벤트
         binding.btnGenderFemale.setOnClickListener(v -> {
-            binding.btnGenderFemale.setSelected(true);
-            binding.textViewMakeAccountGenderFemale.setTextColor(Color.parseColor("#21CCB2"));
-            binding.btnGenderMale.setSelected(false);
-            binding.textViewMakeAccountGenderMale.setTextColor(Color.parseColor("#C2C3C7"));
             selectGender = "female";
+            renderGenderButton();
         });
 
         binding.btnGenderMale.setOnClickListener(v -> {
-            binding.btnGenderMale.setSelected(true);
-            binding.textViewMakeAccountGenderMale.setTextColor(Color.parseColor("#21CCB2"));
-            binding.btnGenderFemale.setSelected(false);
-            binding.textViewMakeAccountGenderFemale.setTextColor(Color.parseColor("#C2C3C7"));
             selectGender = "male";
+            renderGenderButton();
         });
 
         binding.textViewCountrySelect.setOnClickListener(new onSingleClickListener() {
@@ -164,19 +154,37 @@ public class MakeAccountFragment_userInfo extends Fragment {
         super.onResume();
 
         // START - data Observe
-        myInfoRepository.getValueToLiveData("country").observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                String viewText;
-                if (s != null) {
-                    country = s;
-                    viewText = countryCodeToName(s);
-                } else {
-                    viewText = "국가 선택";
-                }
-                binding.textViewCountrySelect.setText(viewText);
-                renderRegionSelect(Objects.requireNonNull(s));
+        // nickname
+        myInfoRepository.getValueToLiveData("nickname").observe(getViewLifecycleOwner(), s -> {
+            if (s != null)
+                binding.editTextUserInfoNickname.setText(s);
+        });
+
+        // birthday
+        myInfoRepository.getValueToLiveData("birthday").observe(getViewLifecycleOwner(), s -> {
+            if (s != null)
+                binding.editTextUserInfoBirthday.setText(s);
+        });
+
+        // gender
+        myInfoRepository.getValueToLiveData("gender").observe(getViewLifecycleOwner(), s -> {
+            if (s != null) {
+                selectGender = s;
+                renderGenderButton();
             }
+        });
+
+
+        // Country
+        myInfoRepository.getValueToLiveData("country").observe(getViewLifecycleOwner(), s -> {
+            String viewText = "국가 선택";
+            if (s != null) {
+                country = s;
+                viewText = countryCodeToName(s);
+            }
+
+            binding.textViewCountrySelect.setText(viewText);
+            renderRegionSelect(Objects.requireNonNull(s));
         });
         // END - data Observe
 
@@ -232,6 +240,22 @@ public class MakeAccountFragment_userInfo extends Fragment {
 
             }
         });
+    }
+
+    private void renderGenderButton() {
+        if (selectGender.equals("female")) {
+            binding.btnGenderFemale.setSelected(true);
+            binding.textViewMakeAccountGenderFemale.setTextColor(Color.parseColor("#21CCB2"));
+            binding.btnGenderMale.setSelected(false);
+            binding.textViewMakeAccountGenderMale.setTextColor(Color.parseColor("#C2C3C7"));
+        }
+
+        if (selectGender.equals("male")) {
+            binding.btnGenderMale.setSelected(true);
+            binding.textViewMakeAccountGenderMale.setTextColor(Color.parseColor("#21CCB2"));
+            binding.btnGenderFemale.setSelected(false);
+            binding.textViewMakeAccountGenderFemale.setTextColor(Color.parseColor("#C2C3C7"));
+        }
     }
 
     private void dialogCountry() {
@@ -347,6 +371,24 @@ public class MakeAccountFragment_userInfo extends Fragment {
         }
 
         return null;
+    }
+
+    private void renderFirstTextRed() {
+        binding.textViewName.setText(spannable(binding.textViewName.getText().toString()));
+        binding.textViewBirthday.setText(spannable(binding.textViewBirthday.getText().toString()));
+        binding.textViewEmail.setText(spannable(binding.textViewEmail.getText().toString()));
+        binding.textViewNickname.setText(spannable(binding.textViewNickname.getText().toString()));
+        binding.textViewGender.setText(spannable(binding.textViewGender.getText().toString()));
+        binding.textViewCountry.setText(spannable(binding.textViewCountry.getText().toString()));
+        binding.textViewPassword.setText(spannable(binding.textViewPassword.getText().toString()));
+        binding.textViewPasswordConfirm.setText(spannable(binding.textViewPasswordConfirm.getText().toString()));
+        binding.textViewPassword.setText(spannable(binding.textViewPassword.getText().toString()));
+    }
+
+    private SpannableString spannable(String string) {
+        SpannableString spannableString = new SpannableString(string);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#ED6D6D")), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannableString;
     }
 
     // 여기에서 해달라고 해서 넣음. ㅅㄱㄹ~
@@ -756,23 +798,4 @@ public class MakeAccountFragment_userInfo extends Fragment {
         }
         return null;
     };
-
-    private void setFirstTextRed(){
-        binding.textViewName.setText(spannable(binding.textViewName.getText().toString()));
-        binding.textViewBirthday.setText(spannable(binding.textViewBirthday.getText().toString()));
-        binding.textViewEmail.setText(spannable(binding.textViewEmail.getText().toString()));
-        binding.textViewNickname.setText(spannable(binding.textViewNickname.getText().toString()));
-        binding.textViewGender.setText(spannable(binding.textViewGender.getText().toString()));
-        binding.textViewCountry.setText(spannable(binding.textViewCountry.getText().toString()));
-        binding.textViewPassword.setText(spannable(binding.textViewPassword.getText().toString()));
-        binding.textViewPasswordConfirm.setText(spannable(binding.textViewPasswordConfirm.getText().toString()));
-        binding.textViewPassword.setText(spannable(binding.textViewPassword.getText().toString()));
-
-    }
-    private SpannableString spannable(String string){
-        SpannableString spannableString = new SpannableString(string);
-        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#ED6D6D")), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        return  spannableString;
-    }
 }
