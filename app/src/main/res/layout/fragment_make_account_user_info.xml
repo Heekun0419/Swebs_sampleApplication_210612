@@ -39,17 +39,21 @@
             android:hint="example@swebs.com"
             android:paddingStart="20dp"
             android:textSize="13dp"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
         <TextView
+            android:id="@+id/email_overlap_check"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginEnd="20dp"
             android:text="중복확인"
             android:gravity="center_vertical"
             android:textColor="@color/swebs_main_color2"
+            android:visibility="gone"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/editText_email"
             app:layout_constraintEnd_toEndOf="@+id/editText_email"
@@ -60,6 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginStart="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText_email">
@@ -67,7 +72,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="25dp"
                 android:paddingTop="20dp"
                 android:text="* 비밀번호"
                 android:textColor="@color/black"
@@ -79,14 +83,23 @@
                 android:id="@+id/editText_userInfo_password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/radius_login_edittext"
                 android:backgroundTint="#F9FAFC"
-                android:hint="6~12 영문, 숫자 조합 입력"
+                android:hint="6자 이상 영문, 숫자, 특수문자 조합 입력"
                 android:paddingStart="20dp"
-                android:textSize="13dp" />
+                android:textSize="13dp"
+                android:inputType="textPassword"
+                android:maxLines="1"/>
+
+            <TextView
+                android:id="@+id/password_form_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="6자리 이상, 영어, 숫자, 특수문자 포함"
+                android:textColor="#ED6D6D"/>
 
 
         </LinearLayout>
@@ -96,6 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginStart="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
@@ -103,7 +117,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="25dp"
                 android:paddingTop="20dp"
                 android:text="* 비밀번호 확인"
                 android:textColor="@color/black"
@@ -115,14 +128,23 @@
                 android:id="@+id/editText_userInfo_password_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/radius_login_edittext"
                 android:backgroundTint="#F9FAFC"
                 android:hint="비밀번호 확인"
                 android:paddingStart="20dp"
-                android:textSize="13dp" />
+                android:textSize="13dp"
+                android:inputType="textPassword"
+                android:maxLines="1"/>
+
+            <TextView
+                android:id="@+id/password_confirm_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="비밀번호가 일치하지 않습니다."
+                android:textColor="#ED6D6D"/>
 
         </LinearLayout>
 
@@ -217,6 +239,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginStart="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
@@ -224,7 +247,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="25dp"
                 android:paddingTop="20dp"
                 android:text="* 생년월일"
                 android:textColor="@color/black"
@@ -236,14 +258,23 @@
                 android:id="@+id/editText_userInfo_birthday"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/radius_login_edittext"
                 android:backgroundTint="#F9FAFC"
                 android:hint="19801112"
                 android:paddingStart="20dp"
-                android:textSize="13dp" />
+                android:textSize="13dp"
+                android:inputType="date"
+                android:maxLines="1" />
+
+            <TextView
+                android:id="@+id/birthday_form_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="ex) 19801112 (1980년 11월 12일) 형식으로 적어주세요."
+                android:textColor="#ED6D6D"/>
 
         </LinearLayout>
 
@@ -353,6 +384,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
         <TextView
             android:id="@+id/textView_country"
             android:layout_width="match_parent"
@@ -380,6 +412,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView_country">
 
             <Spinner
+                android:id="@+id/select_country"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="20dp"

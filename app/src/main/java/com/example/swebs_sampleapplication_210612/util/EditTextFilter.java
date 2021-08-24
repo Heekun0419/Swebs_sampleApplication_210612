@@ -8,7 +8,6 @@ import android.widget.Toast;
 import java.util.regex.Pattern;
 
 public class EditTextFilter {
-
     private final Context context;
     public EditTextFilter(Context context){
         this.context = context;

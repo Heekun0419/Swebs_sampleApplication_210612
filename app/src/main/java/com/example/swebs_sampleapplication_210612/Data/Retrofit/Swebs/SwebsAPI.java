@@ -29,6 +29,12 @@ public interface SwebsAPI {
     );
 
     @Multipart
+    @POST("signup/overlap_email.php")
+    Call<Boolean> overlapEmail(
+            @PartMap Map<String, RequestBody> prams
+    );
+
+    @Multipart
     @POST("signup/exist_referralcode.php")
     Call<Boolean> existReferralCode(
             @PartMap Map<String, RequestBody> prams
