@@ -631,7 +631,7 @@ public class MakeAccountFragment_userInfo extends Fragment {
                         sPmanager.setUserReferralCode(responseData.getReferralCode());
 
                         ((MakeAccountActivity)requireActivity()).renderLoading(false);
-                        ((MakeAccountActivity)requireActivity()).moveFragment(new MakeAccountFragment_success());
+                        ((MakeAccountActivity)requireActivity()).moveFragment(new MakeAccountFragment_success(),"success");
                     } else {
                         ((MakeAccountActivity)requireActivity()).renderLoading(false);
 
