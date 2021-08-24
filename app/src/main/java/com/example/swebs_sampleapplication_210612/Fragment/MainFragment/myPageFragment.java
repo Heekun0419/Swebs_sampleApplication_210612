@@ -79,9 +79,6 @@ public class myPageFragment extends Fragment {
         binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
         RenderMyPageFromUserType(sPmanager.getUserType());
 
-        // 국가 설정.
-        SetUserInfo();
-
         // 닫기버튼 누르면 튜토리얼 닫힘.
         binding.tutorialMyPage.textViewMyPageTutorialClose.setOnClickListener(v -> {
             binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
@@ -180,16 +177,11 @@ public class myPageFragment extends Fragment {
         });
 
         // 닉네임 클릭시
-        binding.mypageNickname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(userType.equals("guest")){
-                    dialogNickname();
-                }else{
-                    // 게스트 아닐땐 회원정보 수정 표시
-                    Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
-                }
-            }
+        binding.mypageNickname.setOnClickListener(v -> {
+            if (userType.equals("guest"))
+                dialogNickname();
+            else
+                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
         });
 
         // 국가지역 클릭시
@@ -203,12 +195,9 @@ public class myPageFragment extends Fragment {
         });
 
         //상단 프로필 사진 클릭시
-        binding.mypageImageProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 회원정보 수정
-                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
-            }
+        binding.mypageImageProfile.setOnClickListener(v -> {
+            // 회원정보 수정
+            Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
         });
 
         // Point 정책 자세히 보기
@@ -236,120 +225,79 @@ public class myPageFragment extends Fragment {
     }
 
     @SuppressLint("SetTextI18n")
-    private void SetUserInfo() {
-        //국가 설정
-        switch (country) {
-            case "KR":
-                binding.mypageCountryTextView.setText("대한민국");
-                break;
-            case "US":
-                binding.mypageCountryTextView.setText("UNITED STATES");
-                break;
-            case "CN":
-                binding.mypageCountryTextView.setText("中國");
-                break;
-            default:
-                binding.mypageCountryTextView.setText("미등록");
-                break;
-        }
-
-    }
-
     @Override
     public void onResume() {
         super.onResume();
-        SetUserInfo();
 
         setTutorial();
 
         // Data Observe -- START
-        myInfoRepository.getValueToLiveData("userSrl").observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if (s == null)
-                    new UserLoginController(requireActivity().getApplication()).signUpForGuest();
-            }
+        myInfoRepository.getValueToLiveData("userSrl").observe(getViewLifecycleOwner(), s -> {
+            if (s == null)
+                new UserLoginController(requireActivity().getApplication()).signUpForGuest();
         });
 
         // userType
-        myInfoRepository.getValueToLiveData("userType").observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if (s != null)
-                    RenderMyPageFromUserType(s);
-                userType = s;
-            }
+        myInfoRepository.getValueToLiveData("userType").observe(getViewLifecycleOwner(), s -> {
+            if (s != null)
+                RenderMyPageFromUserType(s);
+            userType = s;
         });
 
         // Email
-        myInfoRepository.getValueToLiveData("email").observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if (s != null)
-                    setEmail(s);
-            }
+        myInfoRepository.getValueToLiveData("email").observe(getViewLifecycleOwner(), s -> {
+            if (s != null)
+                setEmail(s);
         });
 
         // Name
-        myInfoRepository.getValueToLiveData("name").observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if (s != null) {
-                    String viewText = s + " 님";
-                    binding.mypageProfileName.setText(viewText);
-                    binding.mypageTextViewName.setText(s);
-                }
+        myInfoRepository.getValueToLiveData("name").observe(getViewLifecycleOwner(), s -> {
+            if (s != null) {
+                String viewText = s + " 님";
+                binding.mypageTextViewName.setText(s);
             }
         });
 
         // Point
-        myInfoRepository.getValueToLiveData("point").observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if (s != null) {
-                    String viewText = s + " P";
-                    binding.mypagePointText.setText(viewText);
-                }
+        myInfoRepository.getValueToLiveData("point").observe(getViewLifecycleOwner(), s -> {
+            if (s != null) {
+                String viewText = s + " P";
+                binding.mypagePointText.setText(viewText);
             }
+        });
+
+        // nickname
+        myInfoRepository.getValueToLiveData("nickname").observe(getViewLifecycleOwner(), s -> {
+            String viewText = "미등록";
+            if (s != null) {
+                viewText = s;
+                binding.mypageTextViewNickname.setTextColor(Color.parseColor("#3E3A39"));
+            }
+            binding.mypageTextViewNickname.setText(viewText);
+            binding.mypageProfileName.setText(viewText + " 님");
         });
 
         // Birthday
-        myInfoRepository.getValueToLiveData("birthday").observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                String viewText;
-                if (s != null) {
-                    viewText = s.length() > 4 ? s.substring(0, 4) : s;
-                    viewText += "년";
-                    binding.mypageBirthdayTextview.setTextColor(Color.parseColor("#3E3A39"));
-                } else {
-                    viewText = "미등록";
-                }
-                binding.mypageBirthdayTextview.setText(viewText);
+        myInfoRepository.getValueToLiveData("birthday").observe(getViewLifecycleOwner(), s -> {
+            String viewText = "미등록";
+            if (s != null) {
+                viewText = s.length() > 4 ? s.substring(0, 4) : s;
+                binding.mypageBirthdayTextview.setTextColor(Color.parseColor("#3E3A39"));
             }
+            binding.mypageBirthdayTextview.setText(viewText + "년");
         });
 
         // Gender
-        myInfoRepository.getValueToLiveData("gender").observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                renderGenderView(s);
-            }
-        });
+        myInfoRepository.getValueToLiveData("gender").observe(getViewLifecycleOwner(), s -> renderGenderView(s));
 
         // country
-        myInfoRepository.getValueToLiveData("country").observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                String viewText;
-                if (s != null) {
-                    viewText = countryCodeToName(s);
-                    binding.mypageCountryTextView.setTextColor(Color.parseColor("#3E3A39"));
-                } else {
-                    viewText = "미등록";
-                }
-                binding.mypageCountryTextView.setText(viewText);
+        myInfoRepository.getValueToLiveData("country").observe(getViewLifecycleOwner(), s -> {
+            String viewText = "미등록";
+            if (s != null) {
+                viewText = countryCodeToName(s);
+                binding.mypageCountryTextView.setTextColor(Color.parseColor("#3E3A39"));
             }
+            binding.mypageCountryTextView.setText(viewText);
         });
         // Data observe -- END
     }
@@ -426,8 +374,7 @@ public class myPageFragment extends Fragment {
                 "취소"), new DialogClickStringListener() {
             @Override
             public void onPositiveClick(String string) {
-                binding.mypageTextViewNickname.setText(string);
-                binding.mypageProfileName.setText(string +"님");
+                myInfoRepository.insertMyInfo("nickname", string);
             }
 
             @Override
