@@ -19,6 +19,7 @@ public class MakeAccountActivity extends AppCompatActivity {
     private FragmentManager manager;
 
     private boolean isLoadingView;
+    private String referralCode = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,5 +68,13 @@ public class MakeAccountActivity extends AppCompatActivity {
     public void moveFragment(Fragment fragment){
         manager = getSupportFragmentManager();
         manager.beginTransaction().add(R.id.frame_make_account, fragment).addToBackStack(null).commit();
+    }
+
+    public void setReferralCode(String referralCode) {
+        this.referralCode = referralCode;
+    }
+
+    public String getReferralCode() {
+        return referralCode;
     }
 }

@@ -429,45 +429,45 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_country">
 
-           <androidx.constraintlayout.widget.ConstraintLayout
-               android:id="@+id/constraintLayout_country_select"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_marginEnd="10dp"
-               android:layout_weight="1">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout_country_select"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1">
 
-               <TextView
-                   android:id="@+id/textView_country_select"
-                   android:layout_width="match_parent"
-                   android:layout_height="50dp"
-                   android:background="@drawable/radious_button_graycolor"
-                   android:backgroundTint="#F9FAFC"
-                   android:gravity="center"
-                   android:text="국가선택"
-                   app:layout_constraintBottom_toBottomOf="parent"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/textView_country_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/radious_button_graycolor"
+                    android:backgroundTint="#F9FAFC"
+                    android:gravity="center"
+                    android:text="국가선택"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-               <ImageView
-                   android:layout_width="25dp"
-                   android:layout_height="25dp"
-                   android:layout_marginEnd="10dp"
-                   android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
-                   app:layout_constraintBottom_toBottomOf="parent"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-           </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout_location_select"
+                android:id="@+id/layout_region_select"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/textView_location_select"
+                    android:id="@+id/textView_region_select"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/radious_button_graycolor"

@@ -117,6 +117,7 @@ public class MakeAccountFragment_terms extends Fragment {
                 if (response.isSuccessful()) {
                     if (response.body() != null
                         && response.body()) {
+                        ((MakeAccountActivity)requireActivity()).setReferralCode(referralCode);
                         progressMakeAccount();
                     } else {
                         showReferralErrorDialog("추천인 코드 안내", "추천코드가 존재하지 않습니다.\n그대로 진행하히겠습니까?");

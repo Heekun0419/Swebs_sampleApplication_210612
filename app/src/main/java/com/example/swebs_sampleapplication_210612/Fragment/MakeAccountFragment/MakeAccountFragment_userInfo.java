@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
@@ -57,13 +58,18 @@ public class MakeAccountFragment_userInfo extends Fragment {
 
     private MyInfoRepository myInfoRepository;
 
-    private String selectGender = null, country = null;
+    private String selectGender = null;
+    private String country = null;
+    private String region = null;
+    private String referralCode = null;
     private boolean checkEmailOverlap;
     private boolean checkPasswordForm;
     private boolean checkPasswordConfirm;
     private boolean checkBirthdayForm;
 
     private final String DIALOG_TITLE = "회원가입 안내";
+
+    List<String> regionList;
 
 
     @Override
@@ -74,16 +80,18 @@ public class MakeAccountFragment_userInfo extends Fragment {
         sPmanager = new SPmanager(requireContext());
 
         myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
-        //국가코드 가져오기
-        Locale locale;
-        locale = requireContext().getResources().getConfiguration().getLocales().get(0);
-        country = locale.getCountry();
 
         // value init;
         checkEmailOverlap = false;
         checkPasswordForm = false;
         checkPasswordConfirm = false;
         checkBirthdayForm = false;
+        referralCode = ((MakeAccountActivity)requireActivity()).getReferralCode();
+        if (referralCode != null)
+            Toast.makeText(requireContext(), "레퍼럴 코드 : " + referralCode, Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(requireContext(), "레퍼럴 없음", Toast.LENGTH_SHORT).show();
+        regionList = new ArrayList<>();
     }
 
     @Override
@@ -96,10 +104,6 @@ public class MakeAccountFragment_userInfo extends Fragment {
         binding.editTextUserInfoPasswordConfirm.setFilters(new InputFilter[] {filterPassword});
         binding.editTextUserInfoNickname.setFilters(new InputFilter[] {filterNickname});
         binding.editTextUserInfoUsername.setFilters(new InputFilter[] {filtername});
-
-        //초기 지역선택 GONE
-        binding.constraintLayoutLocationSelect.setVisibility(View.GONE);
-        binding.textViewCountrySelect.setText(country);
 
         // 버튼 - 회원가입.
         binding.btnMakeAccount.setOnClickListener(v -> {
@@ -129,12 +133,10 @@ public class MakeAccountFragment_userInfo extends Fragment {
             selectGender = "male";
         });
 
-        binding.textViewCountrySelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogCountry();
-            }
-        });
+        binding.textViewCountrySelect.setOnClickListener(v -> dialogCountry());
+
+        binding.textViewRegionSelect.setOnClickListener(v -> dialogRegion());
+
 
         return binding.getRoot();
     }
@@ -142,6 +144,23 @@ public class MakeAccountFragment_userInfo extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        // START - data Observe
+        myInfoRepository.getValueToLiveData("country").observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                String viewText;
+                if (s != null) {
+                    country = s;
+                    viewText = countryCodeToName(s);
+                } else {
+                    viewText = "국가 선택";
+                }
+                binding.textViewCountrySelect.setText(viewText);
+                renderRegionSelect(Objects.requireNonNull(s));
+            }
+        });
+        // END - data Observe
 
         binding.editTextUserInfoPhoneNumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
@@ -227,7 +246,7 @@ public class MakeAccountFragment_userInfo extends Fragment {
         NumberPickerDialog2 dialog = new NumberPickerDialog2(
                 requireContext(),
                 new NumberPickerModel2(
-                        "국가지역",
+                        "국가 선택",
                         inputData,
                         defaultValue,
                         "확인",
@@ -236,8 +255,13 @@ public class MakeAccountFragment_userInfo extends Fragment {
                 new DialogClickListener() {
                     @Override
                     public void onPositiveClick(int position) {
-                       // myInfoRepository.insertMyInfo("country", countryNameToCode(inputData.get(position)));
                         binding.textViewCountrySelect.setText(inputData.get(position));
+                        if (!country.equals(countryNameToCode(inputData.get(position)))) {
+                            binding.textViewRegionSelect.setText("지역 선택");
+                            region = null;
+                        }
+                        country = countryNameToCode(inputData.get(position));
+                        renderRegionSelect(Objects.requireNonNull(countryNameToCode(inputData.get(position))));
                     }
 
                     @Override
@@ -257,6 +281,44 @@ public class MakeAccountFragment_userInfo extends Fragment {
         dialog.show();
     }
 
+    private void dialogRegion() {
+        NumberPickerDialog2 dialog = new NumberPickerDialog2(
+                requireContext(),
+                new NumberPickerModel2(
+                        "지역 선택"
+                        , regionList
+                        , 0
+                        , "확인"
+                        , "취소"
+                ),
+                new DialogClickListener() {
+                    @Override
+                    public void onPositiveClick(int position) {
+                        binding.textViewRegionSelect.setText(regionList.get(position));
+                        region = regionList.get(position);
+                    }
+
+                    @Override
+                    public void onNegativeClick() {
+
+                    }
+
+                    @Override
+                    public void onCloseClick() {
+
+                    }
+                }
+        );
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        dialog.show();
+    }
+
+    private String countryCodeToName(String countryCode) {
+        return new Locale("", countryCode).getDisplayCountry();
+    }
+
     private String countryNameToCode(String countryName) {
         Locale[] locales = Locale.getAvailableLocales();
         for (Locale locale : locales) {
@@ -265,11 +327,136 @@ public class MakeAccountFragment_userInfo extends Fragment {
                 return locale.getCountry();
             }
         }
+
         return null;
     }
 
+    // 여기에서 해달라고 해서 넣음. ㅅㄱㄹ~
+    private void renderRegionSelect(String country) {
+        if (country == null) return;
 
-        private void renderPasswordForm() {
+        if (country.equals("KR")
+        || country.equals("US")
+        || country.equals("CN"))
+            binding.layoutRegionSelect.setVisibility(View.VISIBLE);
+        else {
+            region = null;
+            binding.layoutRegionSelect.setVisibility(View.GONE);
+        }
+
+        // 리스트 셋업
+        regionList.clear();
+        switch (country) {
+            case "KR":
+                regionList.add("서울특별시");
+                regionList.add("부산광역시");
+                regionList.add("대구광역시");
+                regionList.add("인천광역시");
+                regionList.add("광주광역시");
+                regionList.add("대전광역시");
+                regionList.add("울산광역시");
+                regionList.add("경기도");
+                regionList.add("강원도");
+                regionList.add("충청북도");
+                regionList.add("충청남도");
+                regionList.add("전라북도");
+                regionList.add("전라남도");
+                regionList.add("경상북도");
+                regionList.add("경상남도");
+                regionList.add("제주도");
+                regionList.add("세종특별시");
+                break;
+            case "US":
+                regionList.add("Alaska");
+                regionList.add("Alabama");
+                regionList.add("Arkansas");
+                regionList.add("Arizona");
+                regionList.add("California");
+                regionList.add("Colorado");
+                regionList.add("Connecticut");
+                regionList.add("District of Columbia");
+                regionList.add("Delaware");
+                regionList.add("Florida");
+                regionList.add("Georgia");
+                regionList.add("Hawaii");
+                regionList.add("Iowa");
+                regionList.add("Idaho");
+                regionList.add("Illinois");
+                regionList.add("Indiana");
+                regionList.add("Kansas");
+                regionList.add("Kentucky");
+                regionList.add("Louisiana");
+                regionList.add("Massachusetts");
+                regionList.add("Maryland");
+                regionList.add("Maine");
+                regionList.add("Michigan");
+                regionList.add("Minnesota");
+                regionList.add("Missouri");
+                regionList.add("Mississippi");
+                regionList.add("Montana");
+                regionList.add("North Carolina");
+                regionList.add("North Dakota");
+                regionList.add("Nebraska");
+                regionList.add("New Hampshire");
+                regionList.add("New Jersey");
+                regionList.add("New Mexico");
+                regionList.add("Nevada");
+                regionList.add("New York");
+                regionList.add("Ohio");
+                regionList.add("Oklahoma");
+                regionList.add("Oregon");
+                regionList.add("Pennsylvania");
+                regionList.add("Rhode Island");
+                regionList.add("South Carolina");
+                regionList.add("South Dakota");
+                regionList.add("Tennessee");
+                regionList.add("Texas");
+                regionList.add("Utah");
+                regionList.add("Virginia");
+                regionList.add("Vermont");
+                regionList.add("Washington");
+                regionList.add("Wisconsin");
+                regionList.add("West Virginia");
+                regionList.add("Wyoming");
+                break;
+            case "CN":
+                regionList.add("Anhui");
+                regionList.add("Beijing");
+                regionList.add("Chongqing");
+                regionList.add("Fujian");
+                regionList.add("Guangdong");
+                regionList.add("Gansu");
+                regionList.add("Guangxi");
+                regionList.add("Guizhou");
+                regionList.add("Henan");
+                regionList.add("Hubei");
+                regionList.add("Hebei");
+                regionList.add("Hainan");
+                regionList.add("Heilongjiang");
+                regionList.add("Hunan");
+                regionList.add("Jilin");
+                regionList.add("Jiangsu");
+                regionList.add("Jiangxi");
+                regionList.add("Liaoning");
+                regionList.add("Inner Mongolia Autonomous Regi");
+                regionList.add("Ningxia Hui Autonomous Region");
+                regionList.add("Qinghai");
+                regionList.add("Sichuan");
+                regionList.add("Shandong");
+                regionList.add("Shanghai");
+                regionList.add("Shaanxi");
+                regionList.add("Shanxi");
+                regionList.add("Tianjin");
+                regionList.add("Xinjiang");
+                regionList.add("Tibet");
+                regionList.add("Yunnan");
+                regionList.add("Zhejiang");
+                break;
+        }
+    }
+
+
+    private void renderPasswordForm() {
         if (binding.editTextUserInfoPassword.getText().toString().length() > 0) {
             Pattern pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{6,}$");
             Matcher matcher = pattern.matcher(binding.editTextUserInfoPassword.getText().toString());
@@ -368,6 +555,10 @@ public class MakeAccountFragment_userInfo extends Fragment {
             content = "전화번호를 입력 해주세요.";
         } else if (selectGender == null) {
             content = "성별을 선택 해주세요.";
+        } else if (country == null) {
+            content = "국가를 선택 해주세요.";
+        } else if (binding.layoutRegionSelect.getVisibility() == View.VISIBLE && region == null) {
+            content = "지역을 선택 해주세요.";
         }
 
         if (content != null) {
@@ -399,14 +590,18 @@ public class MakeAccountFragment_userInfo extends Fragment {
         body.put("inputGender", RequestBody.create(selectGender, MediaType.parse("text/plane")));
         body.put("inputNickname", RequestBody.create(binding.editTextUserInfoNickname.getText().toString(), MediaType.parse("text/plane")));
 
-        // 추후 얻어와ㅏ서 입력 하기.
-        body.put("inputReferralCode", RequestBody.create("WSdcR", MediaType.parse("text/plane")));
+        // 추천인 코드 적용.
+        if (referralCode != null)
+            body.put("inputReceiveReferralCode", RequestBody.create(referralCode, MediaType.parse("text/plane")));
 
-        // 추후 변경하기...
-        body.put("inputCountry", RequestBody.create("KR", MediaType.parse("text/plane")));
-        body.put("inputCountryRegion", RequestBody.create("none", MediaType.parse("text/plane")));
-
-        body.put("inputReceiveReferralCode", RequestBody.create("WSdcR", MediaType.parse("text/plane")));
+        // 국가 넣기.
+        body.put("inputCountry", RequestBody.create(country, MediaType.parse("text/plane")));
+        
+        // 지역 넣기
+        if (region != null)
+            body.put("inputCountryRegion", RequestBody.create(region, MediaType.parse("text/plane")));
+        else
+            body.put("inputCountryRegion", RequestBody.create("none", MediaType.parse("text/plane")));
 
         Call<NormalSignUpModel> call = retroAPI.userSingUp(body);
         call.enqueue(new Callback<NormalSignUpModel>() {
