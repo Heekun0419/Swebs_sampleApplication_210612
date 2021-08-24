@@ -86,15 +86,15 @@ public class MakeAccountFragment_terms extends Fragment {
             termsCheck();
         });
         binding.textViewTerms1.setOnClickListener(v -> {
-            binding.checkBoxMakeAccountTerms1.setChecked(true);
+            binding.checkBoxMakeAccountTerms1.setChecked(!binding.checkBoxMakeAccountTerms1.isChecked());
             termsCheck();
         });
         binding.textViewTerms2.setOnClickListener(v -> {
-            binding.checkBoxMakeAccountTerms2.setChecked(true);
+            binding.checkBoxMakeAccountTerms2.setChecked(!binding.checkBoxMakeAccountTerms2.isChecked());
             termsCheck();
         });
         binding.textViewTerms3.setOnClickListener(v -> {
-            binding.checkBoxMakeAccountTerms3.setChecked(true);
+            binding.checkBoxMakeAccountTerms3.setChecked(!binding.checkBoxMakeAccountTerms3.isChecked());
             termsCheck();
         });
 

@@ -37,6 +37,7 @@ import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.NumberPickerModel2;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMakeAccountUserInfoBinding;
+import com.example.swebs_sampleapplication_210612.util.onSingleClickListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -140,9 +141,19 @@ public class MakeAccountFragment_userInfo extends Fragment {
             selectGender = "male";
         });
 
-        binding.textViewCountrySelect.setOnClickListener(v -> dialogCountry());
+        binding.textViewCountrySelect.setOnClickListener(new onSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                dialogCountry();
+            }
+        });
 
-        binding.textViewRegionSelect.setOnClickListener(v -> dialogRegion());
+        binding.textViewRegionSelect.setOnClickListener(new onSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                dialogRegion();
+            }
+        });
 
 
         return binding.getRoot();

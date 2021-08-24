@@ -39,6 +39,7 @@ import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMyPageBinding;
 import com.example.swebs_sampleapplication_210612.util.UserLoginController;
+import com.example.swebs_sampleapplication_210612.util.onSingleClickListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -110,7 +111,10 @@ public class myPageFragment extends Fragment {
         );
 
         //추천인 코드 클릭시
-        binding.mypageBtnRecommendCode.setOnClickListener(v -> {
+        binding.mypageBtnRecommendCode.setOnClickListener(new onSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+
             RecommendCodeDialog dialog = new RecommendCodeDialog(requireContext(), new DialogClickListener() {
                 @Override
                 public void onPositiveClick(int position) {
@@ -140,7 +144,8 @@ public class myPageFragment extends Fragment {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
             dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
             dialog.show();
-        });
+        }
+     });
 
         // 내 리뷰 버튼 클릭시
         binding.btnMypageMyReview.setOnClickListener(v ->
@@ -155,24 +160,26 @@ public class myPageFragment extends Fragment {
                 Intent_to_Activity("survey", new Intent(requireContext(), MyTopMenuActivity.class)));
 
         //출생년도 클릭시
-        binding.mypageBirthday.setOnClickListener(v -> {
-            // 게스트 일때 다이얼로그 표시
-            if(userType.equals("guest")){
-                dialogBirthday();
-            } else {
-                // 게스트 아닐땐 회원정보 수정 표시
-                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+        binding.mypageBirthday.setOnClickListener(new onSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                // 게스트 일때 다이얼로그 표시
+                if (userType.equals("guest")) {
+                    myPageFragment.this.dialogBirthday();
+                } else {
+                    // 게스트 아닐땐 회원정보 수정 표시
+                    myPageFragment.this.Intent_to_Activity("", new Intent(myPageFragment.this.requireContext(), ModifyUserInfoActivity.class));
+                }
             }
-
         });
 
         // 성별 클릭시
-        binding.mypageGender.setOnClickListener(new View.OnClickListener() {
+        binding.mypageGender.setOnClickListener(new onSingleClickListener() {
             @Override
-            public void onClick(View v) {
-                if(userType.equals("guest")){
+            public void onSingleClick(View v) {
+                if (userType.equals("guest")) {
                     dialogGender();
-                }else{
+                } else {
                     // 게스트 아닐땐 회원정보 수정 표시
                     Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
                 }
@@ -180,12 +187,12 @@ public class myPageFragment extends Fragment {
         });
 
         // 닉네임 클릭시
-        binding.mypageNickname.setOnClickListener(new View.OnClickListener() {
+        binding.mypageNickname.setOnClickListener(new onSingleClickListener() {
             @Override
-            public void onClick(View v) {
-                if(userType.equals("guest")){
+            public void onSingleClick(View v) {
+                if (userType.equals("guest")) {
                     dialogNickname();
-                }else{
+                } else {
                     // 게스트 아닐땐 회원정보 수정 표시
                     Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
                 }
@@ -193,14 +200,18 @@ public class myPageFragment extends Fragment {
         });
 
         // 국가지역 클릭시
-        binding.mypageCountry.setOnClickListener(v -> {
-            if (userType.equals("guest")) {
-                dialogCountry();
-            } else {
-                // 게스트 아닐땐 회원정보 수정 표시
-                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+        binding.mypageCountry.setOnClickListener(new onSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                if (userType.equals("guest")) {
+                    dialogCountry();
+                } else {
+                    // 게스트 아닐땐 회원정보 수정 표시
+                    Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+                }
             }
         });
+
 
         //상단 프로필 사진 클릭시
         binding.mypageImageProfile.setOnClickListener(new View.OnClickListener() {
