@@ -21,6 +21,9 @@ public class ReviewPhotoViewModel extends AndroidViewModel {
     }
 
     public void setLiveUrlList(ArrayList<String> liveUrlList) {
+        // 사진 등록 최대 5개
+        if(liveUrlList.size()<6){
         this.liveUrlList.postValue(liveUrlList);
+        }
     }
 }

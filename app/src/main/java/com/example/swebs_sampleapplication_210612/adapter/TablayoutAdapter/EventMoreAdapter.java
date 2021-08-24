@@ -13,14 +13,16 @@ import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
 import com.example.swebs_sampleapplication_210612.adapter.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.databinding.ItemMoreEventBinding;
 
+import java.util.ArrayList;
+
 public class EventMoreAdapter extends RecyclerView.Adapter<EventMoreAdapter.EventMoreViewHolder> {
 
     private ItemMoreEventBinding binding;
     private Context context;
-    private EventModel model;
+    private ArrayList<EventModel> model;
     private OnItemClickListener listener;
 
-    public EventMoreAdapter( Context context, EventModel model, OnItemClickListener listener) {
+    public EventMoreAdapter( Context context, ArrayList<EventModel> model, OnItemClickListener listener) {
         this.context = context;
         this.model = model;
         this.listener = listener;
@@ -36,15 +38,16 @@ public class EventMoreAdapter extends RecyclerView.Adapter<EventMoreAdapter.Even
     @Override
     public void onBindViewHolder(@NonNull EventMoreViewHolder holder, int position) {
        ImageView profile = holder.binding.imageViewProductEventProfile;
-       GlideImage(profile,model.getImageUrl());
-       holder.binding.textViewCompanyName.setText(model.getCompanyName());
-       holder.binding.textViewEventDate.setText(model.getDateOfEvent());
-       holder.binding.textViewEventTitle.setText(model.getTitle());
+       EventModel eventModel = model.get(position);
+       GlideImage(profile,eventModel.getImageUrl());
+       holder.binding.textViewCompanyName.setText(eventModel.getCompanyName());
+       holder.binding.textViewEventDate.setText(eventModel.getDateOfEvent());
+       holder.binding.textViewEventTitle.setText(eventModel.getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return model.size();
     }
 
     public static class EventMoreViewHolder extends RecyclerView.ViewHolder {

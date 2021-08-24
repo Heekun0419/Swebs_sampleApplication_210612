@@ -3,24 +3,29 @@ package com.example.swebs_sampleapplication_210612.Fragment.MyTopMenuFragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.swebs_sampleapplication_210612.ViewModel.EventViewModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
 import com.example.swebs_sampleapplication_210612.adapter.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.TablayoutAdapter.EventMoreAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMyEventBinding;
 
+import java.util.ArrayList;
+
 public class MyEventFragment extends Fragment implements OnItemClickListener {
 
     private FragmentMyEventBinding binding;
-
+    private EventViewModel viewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new EventViewModel(requireActivity().getApplication());
     }
 
     @Override
@@ -28,14 +33,14 @@ public class MyEventFragment extends Fragment implements OnItemClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentMyEventBinding.inflate(inflater,container,false);
-        EventMoreAdapter adapter = new EventMoreAdapter(requireContext(),new EventModel(
-                "https://images.otwojob.com/product/l/r/P/lrP1mUhYpnR780M.jpg",
-                "함소아",
-                "오늘은 어디로 떠나볼까요?",
-                "2021.08.11 ~ 2021.09.21"),this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
-        binding.recyclerViewMyEvent.setLayoutManager(linearLayoutManager);
-        binding.recyclerViewMyEvent.setAdapter(adapter);
+
+        viewModel.getLiveEventList().observe(getViewLifecycleOwner(), new Observer<ArrayList<EventModel>>() {
+            @Override
+            public void onChanged(ArrayList<EventModel> list) {
+                initEventRecycler(list);
+            }
+        });
+
 
         return binding.getRoot();
     }
@@ -43,5 +48,12 @@ public class MyEventFragment extends Fragment implements OnItemClickListener {
     @Override
     public void onItemSelected(View view, int position, String code) {
 
+    }
+
+    private void initEventRecycler(ArrayList<EventModel> list){
+        EventMoreAdapter adapter = new EventMoreAdapter(requireContext(),list,this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
+        binding.recyclerViewMyEvent.setLayoutManager(linearLayoutManager);
+        binding.recyclerViewMyEvent.setAdapter(adapter);
     }
 }

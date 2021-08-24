@@ -1,11 +1,13 @@
 package com.example.swebs_sampleapplication_210612.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +17,8 @@ import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.databinding.ItemReviewPhotoAddBinding;
 
 import java.util.ArrayList;
+
+import retrofit2.http.Url;
 
 public class WriteReviewPhotoAdapter extends RecyclerView.Adapter<WriteReviewPhotoAdapter.WriteReviewViewHolder> {
 
@@ -36,11 +40,17 @@ public class WriteReviewPhotoAdapter extends RecyclerView.Adapter<WriteReviewPho
         return new WriteReviewViewHolder(binding,listener);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull WriteReviewViewHolder holder, int position) {
         if (position == 0){
             holder.binding.btnClose.setVisibility(View.GONE);
-            holder.binding.textViewPictureCount.setText("("+(UrlList.size()-1)+"/5)");
+            if(UrlList.size()<7)
+                holder.binding.textViewPictureCount.setText("("+(UrlList.size()-1)+"/5)");
+            else{
+                holder.binding.textViewPictureCount.setText("(5/5)");
+                Toast.makeText(context, "5개까지 등록 가능합니다.", Toast.LENGTH_SHORT).show();
+            }
 
             holder.binding.imageViewReviewProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -67,7 +77,7 @@ public class WriteReviewPhotoAdapter extends RecyclerView.Adapter<WriteReviewPho
 
     @Override
     public int getItemCount() {
-        return UrlList.size();
+        return Math.min(UrlList.size(), 6);
     }
 
     public static class WriteReviewViewHolder extends RecyclerView.ViewHolder {
