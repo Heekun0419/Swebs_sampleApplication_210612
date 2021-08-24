@@ -45,7 +45,7 @@ public class PermissionCheckActivity extends AppCompatActivity {
 
         isChecked = sPmanager.getPermission();
 
-        dialog = new PermissionDialog(PermissionCheckActivity.this, new DialogClickListener() {
+        dialog = new PermissionDialog(this, new DialogClickListener() {
             @Override
             public void onPositiveClick(int position) {
                 progressPermission();
@@ -58,8 +58,6 @@ public class PermissionCheckActivity extends AppCompatActivity {
                 binding.checkBoxPermissionPhone.setChecked(true);
                 binding.checkBoxPermissionStorage.setChecked(true);
                 binding.checkBoxPermissionAll.setChecked(true);
-
-                dialog.dismiss();
             }
 
             @Override

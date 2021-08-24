@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.example.swebs_sampleapplication_210612.Fragment.MakeAccountFragment.FindPassFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MakeAccountFragment.MakeAccountFragment_terms;
@@ -25,15 +26,15 @@ public class MakeAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMakeAccountBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         String requestCode = getIntent().getStringExtra("resultCode");
+        manager = getSupportFragmentManager();
 
         if(requestCode.equals("findPass")){
             binding.textViewTopMenuName.setText("비밀번호 찾기");
-            moveFragment(new FindPassFragment());
+            moveFragment(new FindPassFragment(),"");
         }else if(requestCode.equals("makeAccount")){
             // 회원가입 Fragment
-            moveFragment(new MakeAccountFragment_terms());
+            moveFragment(new MakeAccountFragment_terms(),"");
         }
 
         //뒤로가기
@@ -64,8 +65,18 @@ public class MakeAccountActivity extends AppCompatActivity {
         }
     }
 
-    public void moveFragment(Fragment fragment){
-        manager = getSupportFragmentManager();
-        manager.beginTransaction().add(R.id.frame_make_account, fragment).addToBackStack(null).commit();
+    public void moveFragment(Fragment fragment, String code){
+        // 키보드 숨기기 에러 발생... 수정요망
+      //  InputMethodManager keyboardManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+      //  keyboardManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+        // success 프라그먼트 이동시 애니매이션 추가
+        if(code.equals("success")) {
+            manager.beginTransaction().setCustomAnimations(R.anim.slide_up,R.anim.slide_out_up)
+                    .replace(R.id.frame_make_account,fragment).addToBackStack(null).commit();
+        } else {
+            manager.beginTransaction().replace(R.id.frame_make_account, fragment).addToBackStack(null).commit();
+        }
+
     }
 }

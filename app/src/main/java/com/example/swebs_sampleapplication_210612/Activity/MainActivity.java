@@ -55,10 +55,10 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        manager = getSupportFragmentManager();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        manager = getSupportFragmentManager();
         myInfoRepository = new MyInfoRepository(getApplication());
         ViewPager2 viewPager =  binding.viewpager2Main;
         adapter = new ScreenSlidePagerAdapter(this,this);

@@ -47,13 +47,13 @@ public class MakeAccountFragment_terms extends Fragment {
 
 
         binding.servicePrivateTerms.setOnClickListener(v ->
-                ((MakeAccountActivity)requireActivity()).moveFragment(TermsFragment.newInstance("http://3.36.65.243/ToS/ToS_S.html"))
+                ((MakeAccountActivity)requireActivity()).moveFragment(TermsFragment.newInstance("http://3.36.65.243/ToS/ToS_S.html"),"")
         );
         binding.locationTerms.setOnClickListener(v ->
-                ((MakeAccountActivity)requireActivity()).moveFragment(TermsFragment.newInstance("http://3.36.65.243/ToS/ToS_L.html"))
+                ((MakeAccountActivity)requireActivity()).moveFragment(TermsFragment.newInstance("http://3.36.65.243/ToS/ToS_L.html"),"")
         );
         binding.marketingTerms.setOnClickListener(v ->
-                ((MakeAccountActivity)requireActivity()).moveFragment(TermsFragment.newInstance("http://3.36.65.243/ToS/ToS_M.html"))
+                ((MakeAccountActivity)requireActivity()).moveFragment(TermsFragment.newInstance("http://3.36.65.243/ToS/ToS_M.html"),"")
         );
 
 
@@ -69,15 +69,11 @@ public class MakeAccountFragment_terms extends Fragment {
         });
 
         binding.checkBoxMakeAccountTermsAll.setOnClickListener(v -> {
-            if(binding.checkBoxMakeAccountTermsAll.isChecked()){
-                binding.checkBoxMakeAccountTerms1.setChecked(true);
-                binding.checkBoxMakeAccountTerms2.setChecked(true);
-                binding.checkBoxMakeAccountTerms3.setChecked(true);
-            }else{
-                binding.checkBoxMakeAccountTerms1.setChecked(false);
-                binding.checkBoxMakeAccountTerms2.setChecked(false);
-                binding.checkBoxMakeAccountTerms3.setChecked(false);
-            }
+           allTermsCheck();
+        });
+        binding.textViewTermsAll.setOnClickListener(v -> {
+            binding.checkBoxMakeAccountTermsAll.setChecked(!binding.checkBoxMakeAccountTermsAll.isChecked());
+            allTermsCheck();
         });
 
        binding.checkBoxMakeAccountTerms1.setOnClickListener(v -> {
@@ -89,16 +85,43 @@ public class MakeAccountFragment_terms extends Fragment {
         binding.checkBoxMakeAccountTerms3.setOnClickListener(v -> {
             termsCheck();
         });
+        binding.textViewTerms1.setOnClickListener(v -> {
+            binding.checkBoxMakeAccountTerms1.setChecked(true);
+            termsCheck();
+        });
+        binding.textViewTerms2.setOnClickListener(v -> {
+            binding.checkBoxMakeAccountTerms2.setChecked(true);
+            termsCheck();
+        });
+        binding.textViewTerms3.setOnClickListener(v -> {
+            binding.checkBoxMakeAccountTerms3.setChecked(true);
+            termsCheck();
+        });
 
 
         return binding.getRoot();
     }
 
     private void termsCheck(){
-        if(binding.checkBoxMakeAccountTermsAll.isChecked()) binding.checkBoxMakeAccountTermsAll.setChecked(false);
+        // 전체선택 되어있으면 해제
+        if(binding.checkBoxMakeAccountTermsAll.isChecked()) {
+            binding.checkBoxMakeAccountTermsAll.setChecked(false);
+        }
+        // 아닐시에는 전체 동의
         else if(binding.checkBoxMakeAccountTerms1.isChecked() && binding.checkBoxMakeAccountTerms2.isChecked()
                 && binding.checkBoxMakeAccountTerms3.isChecked()){
             binding.checkBoxMakeAccountTermsAll.setChecked(true);
+        }
+    }
+    private void allTermsCheck(){
+        if(binding.checkBoxMakeAccountTermsAll.isChecked()){
+            binding.checkBoxMakeAccountTerms1.setChecked(true);
+            binding.checkBoxMakeAccountTerms2.setChecked(true);
+            binding.checkBoxMakeAccountTerms3.setChecked(true);
+        }else{
+            binding.checkBoxMakeAccountTerms1.setChecked(false);
+            binding.checkBoxMakeAccountTerms2.setChecked(false);
+            binding.checkBoxMakeAccountTerms3.setChecked(false);
         }
     }
 
@@ -134,7 +157,7 @@ public class MakeAccountFragment_terms extends Fragment {
     }
 
     private void progressMakeAccount() {
-        ((MakeAccountActivity)requireActivity()).moveFragment(new MakeAccountFragment_userInfo());
+        ((MakeAccountActivity)requireActivity()).moveFragment(new MakeAccountFragment_userInfo(),"");
     }
 
     private void showReferralErrorDialog(String title, String content) {
