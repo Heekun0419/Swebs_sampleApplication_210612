@@ -2,6 +2,7 @@ package com.example.swebs_sampleapplication_210612.Activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import android.content.DialogInterface;
@@ -10,10 +11,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.SwebsCorp.Model.CodeCertifyModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.SwebsCorp.SwebsCorpAPI;
@@ -122,6 +126,15 @@ public class AuthenticScanActivity extends AppCompatActivity {
     private void webViewInit() {
         binding.webView.setWebViewClient(new WebViewClient(){
             int finishCount = 0;
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (finishCount < 2) {
+                    return super.shouldOverrideUrlLoading(view, request);
+                }
+                return true; //super.shouldOverrideUrlLoading(view, request);
+            }
+
             @Override
             public void onPageCommitVisible(WebView view, String url) {
                 renderWebViewComplete(++finishCount);
@@ -160,21 +173,26 @@ public class AuthenticScanActivity extends AppCompatActivity {
     private void showNoticeDialog() {
         Log.d("ok", "compay : " + resultCompany);
         if (resultCompany.equals("rmgany")) {
-            View view = binding.appBarLayout;
+            View view = binding.testset;
             Snackbar snackbar;
             if (sPmanager.getUserType().equals("guest")) {
-                snackbar = Snackbar.make(view, "회원가입 후 정품스캔시에는 20P가 지급됩니다.\n회원가입 하시겠습니까?", Snackbar.LENGTH_LONG);
+                snackbar = Snackbar.make(view, "회원가입 후 정품스캔시에는 20P가 지급됩니다.\n회원가입 하시겠습니까?", 5000);
                 snackbar.setAction("회원가입", v -> {
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                 });
             } else {
-                snackbar = Snackbar.make(view, "정품스캔을 하시어\n포인트 20P 지급 됩니다.", Snackbar.LENGTH_LONG);
+                snackbar = Snackbar.make(view, "정품스캔을 하시어\n포인트 20P 지급 됩니다.", 5000);
                 snackbar.setAction("확인", v -> {
                     snackbar.dismiss();
                 });
             }
 
+            View snackView = snackbar.getView();
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) snackView.getLayoutParams();
+            params.gravity = Gravity.TOP;
+            params.topMargin = binding.appBarLayout.getHeight() + 10;
+            snackView.setLayoutParams(params);
             snackbar.show();
         } else {
             if (sPmanager.getUserType().equals("guest")) {

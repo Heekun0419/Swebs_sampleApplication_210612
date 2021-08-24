@@ -58,16 +58,18 @@ public class MainActivity extends FragmentActivity {
         manager = getSupportFragmentManager();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         myInfoRepository = new MyInfoRepository(getApplication());
         ViewPager2 viewPager =  binding.viewpager2Main;
         adapter = new ScreenSlidePagerAdapter(this,this);
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(1);
+        viewPager.setCurrentItem(1, false);
 
+        /*
         // 인트로페이지 테스트트
        Intent intent = new Intent(this, IntroActivity.class);
-        startActivity(intent);
+        startActivity(intent);*/
 
         Toolbar toolbar = findViewById(R.id.toolBar);
 

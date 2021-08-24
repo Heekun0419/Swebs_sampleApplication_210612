@@ -81,6 +81,11 @@ public class PurchaseInfoActivity extends AppCompatActivity {
         }
 
     }
+
+    private boolean testFunc() {
+        return true;
+    }
+
     private void DatePicker(){
         datePicker = MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Select Date")
