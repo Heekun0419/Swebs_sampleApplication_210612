@@ -121,10 +121,9 @@ public class myPageFragment extends Fragment {
                 @Override
                 public void onPositiveClick(int position) {
                     // 공유하기 버튼 실행
-                    Intent shareIntent = new Intent(Intent.ACTION_SENDTO);
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     shareIntent.setType("text/plain");
-                    String shareText = "스웹스 가입하고 포인트를 받으세요.\n" +
-                            "추천인 코드 : " + sPmanager.getUserReferralCode();
+                    String shareText = getString(R.string.recommend_code_title_1) + sPmanager.getUserReferralCode()+ getString(R.string.recommend_code_title_2);
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
                     startActivity(Intent.createChooser(shareIntent, "스웹스 추천인 코드 공유"));
                 }
@@ -255,7 +254,7 @@ public class myPageFragment extends Fragment {
         // Email
         myInfoRepository.getValueToLiveData("email").observe(getViewLifecycleOwner(), s -> {
             if (s != null)
-                setEmail(s);
+                binding.mypageTextViewID.setText(s);
         });
 
         // Name
@@ -534,20 +533,6 @@ public class myPageFragment extends Fragment {
         }
     }
 
-    private void setEmail(String email){
-        char s = email.charAt(0);
-        int startIndex = email.indexOf("@");
-      /*  String mailAddress = email.substring(startIndex);*/
-        StringBuffer buffer = new StringBuffer();
-        buffer.append(s);
-        for(int i = 0; i< email.length(); i++)
-            buffer.append("*");
-
-       // buffer.append(mailAddress);
-        binding.mypageTextViewID.setText(buffer);
-    }
-
-
     private void RenderMyPageFromUserType(String userType){
         switch (userType) {
             case "guest":  // 게스트
@@ -570,6 +555,20 @@ public class myPageFragment extends Fragment {
                 break;
         }
     }
+    /*
+   // 현재 사용 X
+   private void setEmail(String email){
+       char s = email.charAt(0);
+       int startIndex = email.indexOf("@");
+       String mailAddress = email.substring(startIndex);
+       StringBuffer buffer = new StringBuffer();
+       buffer.append(s);
+       for(int i = 0; i< email.length(); i++)
+           buffer.append("*");
+
+       buffer.append(mailAddress);
+       binding.mypageTextViewID.setText(buffer);
+    }*/
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private void renderSnsView(String txt, int drawable){

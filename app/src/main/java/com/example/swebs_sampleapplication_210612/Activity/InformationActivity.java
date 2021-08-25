@@ -12,6 +12,7 @@ import com.example.swebs_sampleapplication_210612.Fragment.Information_menu.FAQF
 import com.example.swebs_sampleapplication_210612.Fragment.Information_menu.ManualFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.Information_menu.ProductRegisterFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.Information_menu.PurchaseQuestionFragment;
+import com.example.swebs_sampleapplication_210612.Fragment.MakeAccountFragment.TermsFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MoreCertifiedFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MoreEventFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MoreReviewFragment;
@@ -42,20 +43,31 @@ public class InformationActivity extends AppCompatActivity {
         requestCode = getIntent().getStringExtra("resultCode");
 
         manager = getSupportFragmentManager();
-        if(requestCode.equals("manual")) {
-            moveFragment(new ManualFragment(),"사용법안내");
-        }else if(requestCode.equals("FAQ")){
-            moveFragment(new FAQFragment(),"FAQ");
-        } else if(requestCode.equals("purchase_question")){
-            moveFragment(new PurchaseQuestionFragment(),"구매문의");
-        } else if(requestCode.equals("app_info")){
-            moveFragment(new AppInformationFragment(),"어플정보");
-        } else if(requestCode.equals("point")){
-            moveFragment(new PointFragment(),"스웹스 포인트");
-        } else if(requestCode.equals("AS")){
-            moveFragment(new ServiceNotReadyFragment(),"");
-        } else if(requestCode.equals("product")){
-            moveFragment(new ProductRegisterFragment(),"제품등록");
+        switch (requestCode) {
+            case "manual":
+                moveFragment(new ManualFragment(), "사용법안내");
+                break;
+            case "FAQ":
+                moveFragment(new FAQFragment(), "FAQ");
+                break;
+            case "purchase_question":
+                moveFragment(new PurchaseQuestionFragment(), "구매문의");
+                break;
+            case "app_info":
+                moveFragment(new AppInformationFragment(), "어플정보");
+                break;
+            case "point":
+                moveFragment(new PointFragment(), "스웹스 포인트");
+                break;
+            case "AS":
+                moveFragment(new ServiceNotReadyFragment(), "");
+                break;
+            case "product":
+                moveFragment(new ProductRegisterFragment(), "제품등록");
+                break;
+            case "notice":
+                moveFragment(TermsFragment.newInstance(""), "공지사항");
+                break;
         }
 
     }

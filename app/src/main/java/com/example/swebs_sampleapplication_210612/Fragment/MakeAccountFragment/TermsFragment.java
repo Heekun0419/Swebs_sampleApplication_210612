@@ -38,7 +38,6 @@ public class TermsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = FragmentTermsBinding.inflate(inflater,container,false);
-
         binding.webView.loadUrl(html);
 
         return binding.getRoot();

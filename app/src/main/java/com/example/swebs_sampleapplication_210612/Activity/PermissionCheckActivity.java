@@ -25,9 +25,9 @@ import com.example.swebs_sampleapplication_210612.databinding.ActivityPermission
 
 public class PermissionCheckActivity extends AppCompatActivity {
 
-    private PermissionDialog dialog;
     private ActivityPermissionCheck2Binding binding;
     private boolean isChecked;
+    OneButtonBasicDialog oneButtonBasicDialog;
     public SPmanager sPmanager = new SPmanager(this);
 
     String[] permission_list = {
@@ -45,7 +45,7 @@ public class PermissionCheckActivity extends AppCompatActivity {
 
         isChecked = sPmanager.getPermission();
 
-        dialog = new PermissionDialog(this, new DialogClickListener() {
+        PermissionDialog dialog = new PermissionDialog(this, new DialogClickListener() {
             @Override
             public void onPositiveClick(int position) {
                 progressPermission();
@@ -172,11 +172,12 @@ public class PermissionCheckActivity extends AppCompatActivity {
     }
 
     private void openApplicationSetting() {
-        OneButtonBasicDialog oneButtonBasicDialog = new OneButtonBasicDialog(this,
+         oneButtonBasicDialog = new OneButtonBasicDialog(this,
                 new BasicDialogTextModel("권한 설정", "두번 이상 권한을 거부 하셨습니다.\n시스템 설정에서 권한 허용을 해주세요.", "확인", ""),
                 new DialogClickListener() {
                     @Override
                     public void onPositiveClick(int position) {
+                        oneButtonBasicDialog.dismiss();
                         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName()));
                         intent.addCategory(Intent.CATEGORY_DEFAULT);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -208,8 +209,5 @@ public class PermissionCheckActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(sPmanager.getPermission()){
-            StartMainActivity();
-        }
     }
 }
