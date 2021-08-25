@@ -20,6 +20,8 @@ public class LoginModel {
     @Nullable
     private String gender;
     @Nullable
+    private String phoneNumber;
+    @Nullable
     private String country;
     @Nullable
     private String region;
@@ -68,6 +70,11 @@ public class LoginModel {
     @Nullable
     public String getGender() {
         return gender;
+    }
+
+    @Nullable
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     @Nullable

@@ -11,9 +11,11 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -68,8 +70,9 @@ public class splashActivity extends AppCompatActivity {
     private void loginCheck() {
         if (!sPmanager.getUserToken().equals("notFound") && !sPmanager.getUserSrl().equals("notFound")) {
             Log.d("login", "이미 로그인 되어있다. : " + sPmanager.getUserSrl() + " / " + sPmanager.getUserToken());
+            new UserLoginController(getApplication()).verifyToken();
         } else {
-            Log.d("login", "로그인 되어있지 않다.");
+            Log.d("login", "이미 로그인 되어있지 않다. : " + sPmanager.getUserSrl() + " / " + sPmanager.getUserToken());
             new UserLoginController(getApplication()).signUpForGuest();
         }
     }

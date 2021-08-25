@@ -119,6 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                     myInfoRepository.insertMyInfo("name", responseData.getName());
                     myInfoRepository.insertMyInfo("birthday", responseData.getBirthday());
                     myInfoRepository.insertMyInfo("gender", responseData.getGender());
+                    myInfoRepository.insertMyInfo("phoneNumber", responseData.getPhoneNumber());
                     myInfoRepository.insertMyInfo("country", responseData.getCountry());
                     myInfoRepository.insertMyInfo("region", responseData.getRegion());
                     myInfoRepository.insertMyInfo("referralCode", responseData.getReferralCode());

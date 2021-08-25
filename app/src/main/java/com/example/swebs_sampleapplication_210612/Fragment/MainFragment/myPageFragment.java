@@ -13,7 +13,9 @@ import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
+import android.os.SystemClock;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -40,6 +42,7 @@ import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanage
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMyPageBinding;
 import com.example.swebs_sampleapplication_210612.util.UserLoginController;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -56,9 +59,12 @@ public class myPageFragment extends Fragment {
     private final Animation fadeIn = new AlphaAnimation(0,1);
     private MyInfoRepository myInfoRepository;
 
+    private long mLastClickTime;
+
     public myPageFragment(Context context) {
         this.context = context;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +74,9 @@ public class myPageFragment extends Fragment {
         country = locale.getCountry();
         // 레포지토리 설정
         myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
+
+        // 클릭 마지막.
+        mLastClickTime = SystemClock.elapsedRealtime();
     }
 
     @Override
@@ -151,57 +160,50 @@ public class myPageFragment extends Fragment {
         binding.btnMypageMySurvey.setOnClickListener(v ->
                 Intent_to_Activity("survey", new Intent(requireContext(), MyTopMenuActivity.class)));
 
-        //출생년도 클릭시
-        binding.mypageBirthday.setOnClickListener(new onSingleClickListener() {
-            @Override
-            public void onSingleClick(View v) {
-                // 게스트 일때 다이얼로그 표시
-                if(userType.equals("guest")){
-                    dialogBirthday();
-                } else {
-                    // 게스트 아닐땐 회원정보 수정 표시
-                    Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
-                }
-            }
 
+        //출생년도 클릭시
+        binding.mypageBirthday.setOnClickListener(v -> {
+            // 게스트 일때 다이얼로그 표시
+            if(userType.equals("guest")){
+                if (clickEnableFromLastClick(500))
+                    dialogBirthday();
+
+            } else {
+                // 게스트 아닐땐 회원정보 수정 표시
+                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+            }
         });
 
         // 성별 클릭시
-        binding.mypageGender.setOnClickListener(new onSingleClickListener() {
-            @Override
-            public void onSingleClick(View v) {
-                if(userType.equals("guest")){
+        binding.mypageGender.setOnClickListener(v -> {
+            if(userType.equals("guest")) {
+                if (clickEnableFromLastClick(500))
                     dialogGender();
-                }else{
-                    // 게스트 아닐땐 회원정보 수정 표시
-                    Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
-                }
+            }else{
+                // 게스트 아닐땐 회원정보 수정 표시
+                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
             }
         });
 
         // 닉네임 클릭시
-        binding.mypageNickname.setOnClickListener(new onSingleClickListener() {
-            @Override
-            public void onSingleClick(View v) {
-                if(userType.equals("guest")){
+        binding.mypageNickname.setOnClickListener(v -> {
+            if(userType.equals("guest")){
+                if (clickEnableFromLastClick(500))
                     dialogNickname();
-                }else{
-                    // 게스트 아닐땐 회원정보 수정 표시
-                    Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
-                }
+            }else{
+                // 게스트 아닐땐 회원정보 수정 표시
+                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
             }
         });
 
         // 국가지역 클릭시
-        binding.mypageCountry.setOnClickListener(new onSingleClickListener() {
-            @Override
-            public void onSingleClick(View v) {
-                if (userType.equals("guest")) {
+        binding.mypageCountry.setOnClickListener(v -> {
+            if (userType.equals("guest")) {
+                if (clickEnableFromLastClick(500))
                     dialogCountry();
-                } else {
-                    // 게스트 아닐땐 회원정보 수정 표시
-                    Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
-                }
+            } else {
+                // 게스트 아닐땐 회원정보 수정 표시
+                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
             }
         });
 
@@ -228,11 +230,6 @@ public class myPageFragment extends Fragment {
         });
 
         return binding.getRoot();
-    }
-
-    private void Intent_to_Activity(String extra,  Intent intent){
-        intent.putExtra("resultCode",extra);
-        startActivity(intent);
     }
 
     @SuppressLint("SetTextI18n")
@@ -278,12 +275,13 @@ public class myPageFragment extends Fragment {
         });
 
         // nickname
-        myInfoRepository.getValueToLiveData("nickname").observe(getViewLifecycleOwner(), s -> {
+        myInfoRepository.getValueToLiveData("nickName").observe(getViewLifecycleOwner(), s -> {
             String viewText = "미등록";
             if (s != null) {
                 viewText = s;
                 binding.mypageTextViewNickname.setTextColor(Color.parseColor("#3E3A39"));
             }
+
             binding.mypageTextViewNickname.setText(viewText);
             binding.mypageProfileName.setText(viewText + " 님");
         });
@@ -295,7 +293,9 @@ public class myPageFragment extends Fragment {
                 viewText = s.length() > 4 ? s.substring(0, 4) : s;
                 binding.mypageBirthdayTextview.setTextColor(Color.parseColor("#3E3A39"));
             }
-            binding.mypageBirthdayTextview.setText(viewText + "년");
+
+            viewText = (viewText.contains("미등록")) ? viewText : viewText + "년";
+            binding.mypageBirthdayTextview.setText(viewText);
         });
 
         // Gender
@@ -311,6 +311,19 @@ public class myPageFragment extends Fragment {
             binding.mypageCountryTextView.setText(viewText);
         });
         // Data observe -- END
+    }
+
+    private void Intent_to_Activity(String extra,  Intent intent){
+        intent.putExtra("resultCode",extra);
+        startActivity(intent);
+    }
+
+    private boolean clickEnableFromLastClick(int limitTime) {
+        if (SystemClock.elapsedRealtime() - mLastClickTime > limitTime) {
+            mLastClickTime = SystemClock.elapsedRealtime();
+            return true;
+        }
+        return false;
     }
 
     private String countryCodeToName(String countryCode) {
@@ -341,8 +354,11 @@ public class myPageFragment extends Fragment {
         int defaultValue;
         if (binding.mypageBirthdayTextview.getText().toString().equals("미등록"))
             defaultValue = 95;
-        else
-            defaultValue = Integer.parseInt(binding.mypageBirthdayTextview.getText().toString().replaceAll("[^0-9]", "")) - 1900;
+        else {
+            String yearValue = binding.mypageBirthdayTextview.getText().toString();
+            yearValue = yearValue.length() > 4 ? yearValue.substring(0, 4) : yearValue;
+            defaultValue = Integer.parseInt(yearValue.replaceAll("[^0-9]", "")) - 1900;
+        }
 
         NumberPickerDialog2 dialog2 = new NumberPickerDialog2(
                 requireContext(),
@@ -376,8 +392,7 @@ public class myPageFragment extends Fragment {
         dialog2.show();
     }
 
-    private void dialogNickname(){
-
+    private void dialogNickname() {
         EditTextDialog dialog = new EditTextDialog(requireContext(), new BasicDialogTextModel(
                 "닉네임",
                 "닉네임을 입력해주세요",
@@ -385,7 +400,7 @@ public class myPageFragment extends Fragment {
                 "취소"), new DialogClickStringListener() {
             @Override
             public void onPositiveClick(String string) {
-                myInfoRepository.insertMyInfo("nickname", string);
+                myInfoRepository.insertMyInfo("nickName", string);
             }
 
             @Override

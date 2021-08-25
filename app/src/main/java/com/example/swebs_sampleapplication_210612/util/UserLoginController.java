@@ -2,9 +2,12 @@ package com.example.swebs_sampleapplication_210612.util;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.GuestSignUpModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LoginModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
@@ -28,6 +31,64 @@ public class UserLoginController {
         this.context = application.getApplicationContext();
         this.myInfoRepository = new MyInfoRepository(application);
         this.sPmanager = new SPmanager(application.getApplicationContext());
+    }
+
+    public void userLogout() {
+        Log.d("login", "꺄하하 로그아웃 시작.");
+        // 데이터 삭제하기.
+        sPmanager.removeUserSrl();
+        sPmanager.removeUserType();
+        sPmanager.removeUserToken();
+        sPmanager.removeUserReferralCode();
+        myInfoRepository.deleteAllMyInfo();
+    }
+
+    public void verifyToken() {
+        HashMap<String, RequestBody> formData = new HashMap<>();
+        formData.put("inputUserSrl", RequestBody.create(sPmanager.getUserSrl(), MediaType.parse("text/plane")));
+        formData.put("inputToken", RequestBody.create(sPmanager.getUserToken(), MediaType.parse("text/plane")));
+
+        Call<LoginModel> call = retroAPI.verifyToken(formData);
+        call.enqueue(new Callback<LoginModel>() {
+            @Override
+            public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+                if (response.isSuccessful()
+                        && response.body() != null
+                        && response.body().isSuccess()) {
+                    LoginModel responseData = response.body();
+                    myInfoRepository.insertMyInfo("userSrl", responseData.getUserSrl());
+                    myInfoRepository.insertMyInfo("userType", responseData.getUserType());
+                    myInfoRepository.insertMyInfo("nickName", responseData.getNickName());
+                    myInfoRepository.insertMyInfo("name", responseData.getName());
+                    myInfoRepository.insertMyInfo("birthday", responseData.getBirthday());
+                    myInfoRepository.insertMyInfo("gender", responseData.getGender());
+                    myInfoRepository.insertMyInfo("phoneNumber", responseData.getPhoneNumber());
+                    myInfoRepository.insertMyInfo("country", responseData.getCountry());
+                    myInfoRepository.insertMyInfo("region", responseData.getRegion());
+                    myInfoRepository.insertMyInfo("referralCode", responseData.getReferralCode());
+                    myInfoRepository.insertMyInfo("email", responseData.getEmail());
+                    myInfoRepository.insertMyInfo("point", responseData.getPoint());
+
+                    if (responseData.getUserSrl() != null)
+                        sPmanager.setUserSrl(responseData.getUserSrl());
+                    if (responseData.getUserType() != null)
+                        sPmanager.setUserType(responseData.getUserType());
+                    if (responseData.getToken() != null)
+                        sPmanager.setUserToken(responseData.getToken());
+                    if (responseData.getReferralCode() != null)
+                        sPmanager.setUserReferralCode(responseData.getReferralCode());
+                } else {
+                    // 실패
+                    userLogout();
+                    Toast.makeText(context, "로그인 정보가 유효하지 않습니다.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginModel> call, Throwable t) {
+            }
+        });
+
     }
 
     public void signUpForGuest() {

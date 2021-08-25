@@ -47,6 +47,12 @@ public interface SwebsAPI {
     );
 
     @Multipart
+    @POST("login/verify_token.php")
+    Call<LoginModel> verifyToken(
+            @PartMap Map<String, RequestBody> prams
+    );
+
+    @Multipart
     @POST("login/login_normal.php")
     Call<LoginModel> loginNormalUser(
             @PartMap Map<String, RequestBody> prams
@@ -57,4 +63,6 @@ public interface SwebsAPI {
     Call<SignUpModel> guest_signUp(
             @PartMap Map<String, RequestBody> prams
     );
+
+
 }

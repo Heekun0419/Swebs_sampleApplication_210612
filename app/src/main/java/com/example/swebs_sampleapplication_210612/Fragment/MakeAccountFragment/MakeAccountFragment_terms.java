@@ -68,36 +68,29 @@ public class MakeAccountFragment_terms extends Fragment {
             }
         });
 
-        binding.checkBoxMakeAccountTermsAll.setOnClickListener(v -> {
-           allTermsCheck();
-        });
-        binding.textViewTermsAll.setOnClickListener(v -> {
+        binding.checkBoxMakeAccountTermsAll.setOnClickListener(v -> allTermsCheck());
+        binding.layoutTermsAll.setOnClickListener(v -> {
             binding.checkBoxMakeAccountTermsAll.setChecked(!binding.checkBoxMakeAccountTermsAll.isChecked());
             allTermsCheck();
         });
 
-       binding.checkBoxMakeAccountTerms1.setOnClickListener(v -> {
-          termsCheck();
-       });
-        binding.checkBoxMakeAccountTerms2.setOnClickListener(v -> {
-            termsCheck();
-        });
-        binding.checkBoxMakeAccountTerms3.setOnClickListener(v -> {
-            termsCheck();
-        });
-        binding.textViewTerms1.setOnClickListener(v -> {
-            binding.checkBoxMakeAccountTerms1.setChecked(true);
-            termsCheck();
-        });
-        binding.textViewTerms2.setOnClickListener(v -> {
-            binding.checkBoxMakeAccountTerms2.setChecked(true);
-            termsCheck();
-        });
-        binding.textViewTerms3.setOnClickListener(v -> {
-            binding.checkBoxMakeAccountTerms3.setChecked(true);
+        binding.checkBoxMakeAccountTerms1.setOnClickListener(v -> termsCheck());
+        binding.layoutTerms1.setOnClickListener(v ->{
+            binding.checkBoxMakeAccountTerms1.setChecked(!binding.checkBoxMakeAccountTerms1.isChecked());
             termsCheck();
         });
 
+        binding.checkBoxMakeAccountTerms2.setOnClickListener(v -> termsCheck());
+        binding.layoutTerms2.setOnClickListener(v ->{
+            binding.checkBoxMakeAccountTerms2.setChecked(!binding.checkBoxMakeAccountTerms2.isChecked());
+            termsCheck();
+        });
+
+        binding.checkBoxMakeAccountTerms3.setOnClickListener(v -> termsCheck());
+        binding.layoutTerms3.setOnClickListener(v ->{
+            binding.checkBoxMakeAccountTerms3.setChecked(!binding.checkBoxMakeAccountTerms3.isChecked());
+            termsCheck();
+        });
 
         return binding.getRoot();
     }
