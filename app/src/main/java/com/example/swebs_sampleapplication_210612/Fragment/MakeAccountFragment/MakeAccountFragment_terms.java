@@ -68,30 +68,35 @@ public class MakeAccountFragment_terms extends Fragment {
             }
         });
 
-        binding.checkBoxMakeAccountTermsAll.setOnClickListener(v -> allTermsCheck());
-        binding.layoutTermsAll.setOnClickListener(v -> {
+        binding.checkBoxMakeAccountTermsAll.setOnClickListener(v -> {
+           allTermsCheck();
+        });
+        binding.textViewTermsAll.setOnClickListener(v -> {
             binding.checkBoxMakeAccountTermsAll.setChecked(!binding.checkBoxMakeAccountTermsAll.isChecked());
             allTermsCheck();
         });
 
-        binding.checkBoxMakeAccountTerms1.setOnClickListener(v -> termsCheck());
-        binding.layoutTerms1.setOnClickListener(v ->{
-            binding.checkBoxMakeAccountTerms1.setChecked(!binding.checkBoxMakeAccountTerms1.isChecked());
+       binding.checkBoxMakeAccountTerms1.setOnClickListener(v -> {
+          termsCheck();
+       });
+        binding.checkBoxMakeAccountTerms2.setOnClickListener(v -> {
             termsCheck();
         });
-
-        binding.checkBoxMakeAccountTerms2.setOnClickListener(v -> termsCheck());
-        binding.layoutTerms2.setOnClickListener(v ->{
-            binding.checkBoxMakeAccountTerms2.setChecked(!binding.checkBoxMakeAccountTerms2.isChecked());
+        binding.checkBoxMakeAccountTerms3.setOnClickListener(v -> {
             termsCheck();
         });
-
-        binding.checkBoxMakeAccountTerms3.setOnClickListener(v -> termsCheck());
-        binding.layoutTerms3.setOnClickListener(v ->{
-            binding.checkBoxMakeAccountTerms3.setChecked(!binding.checkBoxMakeAccountTerms3.isChecked());
+        binding.textViewTerms1.setOnClickListener(v -> {
+            binding.checkBoxMakeAccountTerms1.setChecked(true);
             termsCheck();
         });
-
+        binding.textViewTerms2.setOnClickListener(v -> {
+            binding.checkBoxMakeAccountTerms2.setChecked(true);
+            termsCheck();
+        });
+        binding.textViewTerms3.setOnClickListener(v -> {
+            binding.checkBoxMakeAccountTerms3.setChecked(true);
+            termsCheck();
+        });
 
 
         return binding.getRoot();
@@ -102,7 +107,6 @@ public class MakeAccountFragment_terms extends Fragment {
         if(binding.checkBoxMakeAccountTermsAll.isChecked()) {
             binding.checkBoxMakeAccountTermsAll.setChecked(false);
         }
-
         // 아닐시에는 전체 동의
         else if(binding.checkBoxMakeAccountTerms1.isChecked() && binding.checkBoxMakeAccountTerms2.isChecked()
                 && binding.checkBoxMakeAccountTerms3.isChecked()){

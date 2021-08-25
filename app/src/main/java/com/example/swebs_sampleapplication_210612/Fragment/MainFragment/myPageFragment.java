@@ -152,21 +152,24 @@ public class myPageFragment extends Fragment {
                 Intent_to_Activity("survey", new Intent(requireContext(), MyTopMenuActivity.class)));
 
         //출생년도 클릭시
-        binding.mypageBirthday.setOnClickListener(v -> {
-            // 게스트 일때 다이얼로그 표시
-            if(userType.equals("guest")){
-                dialogBirthday();
-            } else {
-                // 게스트 아닐땐 회원정보 수정 표시
-                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+        binding.mypageBirthday.setOnClickListener(new onSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                // 게스트 일때 다이얼로그 표시
+                if(userType.equals("guest")){
+                    dialogBirthday();
+                } else {
+                    // 게스트 아닐땐 회원정보 수정 표시
+                    Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+                }
             }
 
         });
 
         // 성별 클릭시
-        binding.mypageGender.setOnClickListener(new View.OnClickListener() {
+        binding.mypageGender.setOnClickListener(new onSingleClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onSingleClick(View v) {
                 if(userType.equals("guest")){
                     dialogGender();
                 }else{
@@ -177,20 +180,28 @@ public class myPageFragment extends Fragment {
         });
 
         // 닉네임 클릭시
-        binding.mypageNickname.setOnClickListener(v -> {
-            if (userType.equals("guest"))
-                dialogNickname();
-            else
-                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+        binding.mypageNickname.setOnClickListener(new onSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                if(userType.equals("guest")){
+                    dialogNickname();
+                }else{
+                    // 게스트 아닐땐 회원정보 수정 표시
+                    Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+                }
+            }
         });
 
         // 국가지역 클릭시
-        binding.mypageCountry.setOnClickListener(v -> {
-            if (userType.equals("guest")) {
-                dialogCountry();
-            } else {
-                // 게스트 아닐땐 회원정보 수정 표시
-                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+        binding.mypageCountry.setOnClickListener(new onSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                if (userType.equals("guest")) {
+                    dialogCountry();
+                } else {
+                    // 게스트 아닐땐 회원정보 수정 표시
+                    Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+                }
             }
         });
 
@@ -252,8 +263,10 @@ public class myPageFragment extends Fragment {
 
         // Name
         myInfoRepository.getValueToLiveData("name").observe(getViewLifecycleOwner(), s -> {
-            if (s != null)
+            if (s != null) {
+                String viewText = s + " 님";
                 binding.mypageTextViewName.setText(s);
+            }
         });
 
         // Point
@@ -265,7 +278,7 @@ public class myPageFragment extends Fragment {
         });
 
         // nickname
-        myInfoRepository.getValueToLiveData("nickName").observe(getViewLifecycleOwner(), s -> {
+        myInfoRepository.getValueToLiveData("nickname").observe(getViewLifecycleOwner(), s -> {
             String viewText = "미등록";
             if (s != null) {
                 viewText = s;
@@ -286,7 +299,7 @@ public class myPageFragment extends Fragment {
         });
 
         // Gender
-        myInfoRepository.getValueToLiveData("gender").observe(getViewLifecycleOwner(), this::renderGenderView);
+        myInfoRepository.getValueToLiveData("gender").observe(getViewLifecycleOwner(), s -> renderGenderView(s));
 
         // country
         myInfoRepository.getValueToLiveData("country").observe(getViewLifecycleOwner(), s -> {

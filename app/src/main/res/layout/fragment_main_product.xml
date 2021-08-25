@@ -13,17 +13,16 @@
         android:layout_height="match_parent">
 
         <include
+            android:layout_marginTop="20dp"
             android:id="@+id/included_appbar_product"
             layout="@layout/appbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp">
-
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchView"
@@ -40,7 +39,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:queryBackground="@color/transparent"
                 app:queryHint="검색어를 입력하세요" />
-
 
             <LinearLayout
                 android:id="@+id/linearLayout"
