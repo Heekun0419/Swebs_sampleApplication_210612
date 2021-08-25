@@ -49,8 +49,6 @@ public class MakeAccountActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (manager.getBackStackEntryCount() <= 1)
             finish();
-        else
-            super.onBackPressed();
 
         if (!isLoadingView)
             super.onBackPressed();

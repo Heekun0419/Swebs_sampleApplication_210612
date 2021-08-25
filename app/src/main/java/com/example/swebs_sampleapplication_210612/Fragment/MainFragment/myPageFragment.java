@@ -604,7 +604,7 @@ public class myPageFragment extends Fragment {
         binding.mypageNickname.setVisibility(View.VISIBLE);
         // 버튼 3개
         //테스트용 수정 --> 나중에 이걸로 가져와야댐. binding.linearLayout.setVisibility(View.GONE);
-        binding.linearLayout.setVisibility(View.VISIBLE);
+        binding.linearLayout.setVisibility(View.GONE);
         //아이디, 실명
         binding.mypageId.setVisibility(View.GONE);
         binding.mypageName.setVisibility(View.GONE);
