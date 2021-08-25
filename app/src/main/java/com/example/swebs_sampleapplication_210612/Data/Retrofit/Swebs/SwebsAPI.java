@@ -47,8 +47,8 @@ public interface SwebsAPI {
     );
 
     @Multipart
-    @POST("login/login_email.php")
-    Call<LoginModel> userLogin(
+    @POST("login/login_normal.php")
+    Call<LoginModel> loginNormalUser(
             @PartMap Map<String, RequestBody> prams
     );
 

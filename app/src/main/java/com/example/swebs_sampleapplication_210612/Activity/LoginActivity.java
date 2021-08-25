@@ -2,9 +2,11 @@ package com.example.swebs_sampleapplication_210612.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -35,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
     private SPmanager sPmanager = new SPmanager(this);
     private MyInfoRepository myInfoRepository;
 
+    private final String DIALOG_TITLE = "로그인 안내";
+
     private boolean isLogin = false;
     private String reason;
     @Override
@@ -50,15 +54,8 @@ public class LoginActivity extends AppCompatActivity {
         retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
 
         binding.btnLogin.setOnClickListener(v -> {
-            if(!binding.edtLoginId.getText().toString().equals("") && !binding.edtLoginPass.getText().toString().equals("")){
-                // 서버와 로그인 체크
-                loginCheck();
-
-            }else if(binding.edtLoginId.getText().toString().equals("")){
-               Toast("아이디를 입력해주세요.");
-            }else if(binding.edtLoginPass.getText().toString().equals(""))
-                Toast("비밀번호를 입력해주세요.");
-
+            // 이메일, 비밀번호 로그인 시작.
+            loginNormalUser();
         });
 
         binding.textViewMakeAccount.setOnClickListener(v -> {
@@ -93,75 +90,99 @@ public class LoginActivity extends AppCompatActivity {
         
     }
 
-    private void loginCheck(){
-        HashMap<String, RequestBody> map = new HashMap<>();
-        map.put("inputEmail", RequestBody.create(MediaType.parse("text/plane"), binding.edtLoginId.getText().toString()));
-        map.put("inputPassword", RequestBody.create(MediaType.parse("text/plane"), binding.edtLoginPass.getText().toString()));
 
-        Call<LoginModel> call = retroAPI.userLogin(map);
+    private void loginNormalUser() {
+        if (binding.edtLoginId.getText().toString().equals("")) {
+            showOneButtonDialog(DIALOG_TITLE, "이메일을 입력 해주세요.");
+            return;
+        } else if(binding.edtLoginPass.getText().toString().equals("")) {
+            showOneButtonDialog(DIALOG_TITLE, "비밀번호를 입력 해주세요.");
+            return;
+        }
+        renderLoading(true);
+
+        HashMap<String, RequestBody> formData = new HashMap<>();
+        formData.put("inputEmail", RequestBody.create(binding.edtLoginId.getText().toString(), MediaType.parse("text/plane")));
+        formData.put("inputPassword", RequestBody.create(binding.edtLoginPass.getText().toString(), MediaType.parse("text/plane")));
+
+        Call<LoginModel> call = retroAPI.loginNormalUser(formData);
         call.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()
+                && response.body() != null
+                && response.body().isSuccess()) {
                     LoginModel responseData = response.body();
-                    if (responseData != null) {
-                        if (responseData.isSuccess()) {
-                            myInfoRepository.insertMyInfo("userSrl", responseData.getUserSrl());
-                            myInfoRepository.insertMyInfo("token", responseData.getToken());
-                            myInfoRepository.insertMyInfo("nickName", responseData.getNickname());
-                            myInfoRepository.insertMyInfo("name", responseData.getName());
-                            myInfoRepository.insertMyInfo("region", responseData.getRegion());
-                            myInfoRepository.insertMyInfo("point", responseData.getPoint());
-                            myInfoRepository.insertMyInfo("userType", responseData.getUserType());
-                            myInfoRepository.insertMyInfo("gender", responseData.getGender());
-                            myInfoRepository.insertMyInfo("email", responseData.getUserEmail());
+                    myInfoRepository.insertMyInfo("userSrl", responseData.getUserSrl());
+                    myInfoRepository.insertMyInfo("userType", responseData.getUserType());
+                    myInfoRepository.insertMyInfo("nickName", responseData.getNickName());
+                    myInfoRepository.insertMyInfo("name", responseData.getName());
+                    myInfoRepository.insertMyInfo("birthday", responseData.getBirthday());
+                    myInfoRepository.insertMyInfo("gender", responseData.getGender());
+                    myInfoRepository.insertMyInfo("country", responseData.getCountry());
+                    myInfoRepository.insertMyInfo("region", responseData.getRegion());
+                    myInfoRepository.insertMyInfo("referralCode", responseData.getReferralCode());
+                    myInfoRepository.insertMyInfo("email", responseData.getEmail());
+                    myInfoRepository.insertMyInfo("point", responseData.getPoint());
 
-                            sPmanager.setUserSrl(responseData.getUserSrl());
-                            sPmanager.setUserType(responseData.getUserType());
-                            sPmanager.setUserToken(responseData.getToken());
+                    sPmanager.setUserSrl(responseData.getUserSrl());
+                    sPmanager.setUserType(responseData.getUserType());
+                    sPmanager.setUserToken(responseData.getToken());
+                    sPmanager.setUserReferralCode(responseData.getReferralCode());
 
-                            finish();
-                        } else {
-                            reason = responseData.getReason();
-                            if(reason!=null){
-                                if(reason.equals("NotFoundEmail")){
-                                    OneButtonBasicDialog dialog = new OneButtonBasicDialog(LoginActivity.this, new BasicDialogTextModel(
-                                            "오류", "아이디 혹은 비밀번호가 일치하지 않습니다.", "확인", ""), new DialogClickListener() {
-                                        @Override
-                                        public void onPositiveClick(int position) {
-
-                                        }
-
-                                        @Override
-                                        public void onNegativeClick() {
-
-                                        }
-
-                                        @Override
-                                        public void onCloseClick() {
-
-                                        }
-                                    });
-                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                                    dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                                    dialog.show();
-                                }else{
-                                    Toast("이메일 형식에 맞지 않습니다.");
-                                }
-                            }
-
-                        }
-                    }
+                    renderLoading(false);
+                    finish();
+                } else {
+                    // 실패
+                    renderLoading(false);
+                    showOneButtonDialog(DIALOG_TITLE, "아이디 혹은 비밀번호를 확인 해주세요.");
                 }
             }
+
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "로그인에 실패 하였습니다.", Toast.LENGTH_LONG).show();
+                renderLoading(false);
+                showOneButtonDialog(DIALOG_TITLE, "서버 연결이 원활하지 않습니다.\n잠시 후 다시 시도 해주세요.");
             }
         });
     }
 
+    private void showOneButtonDialog(String title, String content) {
+        OneButtonBasicDialog oneButtonBasicDialog = new OneButtonBasicDialog(this
+                , new BasicDialogTextModel(title, content, "확인", "")
+                , new DialogClickListener() {
+            @Override
+            public void onPositiveClick(int position) {
+
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+
+            @Override
+            public void onCloseClick() {
+
+            }
+        });
+
+        oneButtonBasicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        oneButtonBasicDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        oneButtonBasicDialog.show();
+    }
+
     private void Toast(String msg){
         Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void renderLoading(boolean isView) {
+        if (isView) {
+            binding.loadingView.getRoot().setOnTouchListener((v, event) -> true);
+            binding.loadingView.getRoot().setVisibility(View.VISIBLE);
+        } else {
+            binding.loadingView.getRoot().setVisibility(View.GONE);
+        }
     }
 }

@@ -144,7 +144,7 @@ public class MakeAccountFragment_userInfo extends Fragment {
 
         // START - data Observe
         // nickname
-        myInfoRepository.getValueToLiveData("nickname").observe(getViewLifecycleOwner(), s -> {
+        myInfoRepository.getValueToLiveData("nickName").observe(getViewLifecycleOwner(), s -> {
             if (s != null)
                 binding.editTextUserInfoNickname.setText(s);
         });

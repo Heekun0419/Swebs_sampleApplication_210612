@@ -252,10 +252,8 @@ public class myPageFragment extends Fragment {
 
         // Name
         myInfoRepository.getValueToLiveData("name").observe(getViewLifecycleOwner(), s -> {
-            if (s != null) {
-                String viewText = s + " 님";
+            if (s != null)
                 binding.mypageTextViewName.setText(s);
-            }
         });
 
         // Point
@@ -267,7 +265,7 @@ public class myPageFragment extends Fragment {
         });
 
         // nickname
-        myInfoRepository.getValueToLiveData("nickname").observe(getViewLifecycleOwner(), s -> {
+        myInfoRepository.getValueToLiveData("nickName").observe(getViewLifecycleOwner(), s -> {
             String viewText = "미등록";
             if (s != null) {
                 viewText = s;
@@ -288,7 +286,7 @@ public class myPageFragment extends Fragment {
         });
 
         // Gender
-        myInfoRepository.getValueToLiveData("gender").observe(getViewLifecycleOwner(), s -> renderGenderView(s));
+        myInfoRepository.getValueToLiveData("gender").observe(getViewLifecycleOwner(), this::renderGenderView);
 
         // country
         myInfoRepository.getValueToLiveData("country").observe(getViewLifecycleOwner(), s -> {
