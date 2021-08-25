@@ -63,7 +63,7 @@ public class splashActivity extends AppCompatActivity {
         dbInstanceCreate dbInstanceCreate = new dbInstanceCreate(getApplicationContext());
         dbInstanceCreate.execute();
 
-        animateText("정품 인증 No 1");
+        animateText("정품 인증 No.1 플랫폼");
         loginCheck();
     }
 

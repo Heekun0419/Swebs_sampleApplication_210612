@@ -221,45 +221,45 @@
             style="@style/Divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp" />
 
         <LinearLayout
+            android:id="@+id/layout_PermissionAll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp">
 
             <CheckBox
                 android:id="@+id/checkBox_permission_all"
                 android:background="@drawable/checkbox_custom"
                 android:button="@color/transparent"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="20dp"/>
+                android:layout_height="30dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:text="모두허용"
+                android:text="모두 허용"
                 android:textColor="@color/black"
                 android:textSize="13dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_marginStart="10dp"/>
         </LinearLayout>
 
         <View
             style="@style/Divider"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="15dp"/>
+            android:layout_height="1dp"/>
 
         <TextView
             android:id="@+id/textView33"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:text="서비스 계약"
             android:textColor="@color/black"
             android:textSize="17dp"/>
