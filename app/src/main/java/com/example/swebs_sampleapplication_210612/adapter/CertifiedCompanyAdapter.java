@@ -32,9 +32,7 @@ public class CertifiedCompanyAdapter extends RecyclerView.Adapter<CertifiedCompa
     @NotNull
     @Override
     public Certified_itemViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-
         binding = ItemProductCertifiedCompanyBinding.inflate(LayoutInflater.from(context),parent,false);
-
         return new Certified_itemViewHolder(binding.getRoot(),listener);
     }
 

@@ -14,9 +14,11 @@ import com.example.swebs_sampleapplication_210612.databinding.FragmentMoreCertif
 public class MoreCertifiedFragment extends Fragment {
 
     private FragmentMoreCertifiedCompanyBinding binding;
+    private int position;
 
-    public MoreCertifiedFragment(){
-
+    // viewPager 및 TabLayout position 받아옴.
+    public MoreCertifiedFragment(int position){
+        this.position = position;
     }
 
     @Override

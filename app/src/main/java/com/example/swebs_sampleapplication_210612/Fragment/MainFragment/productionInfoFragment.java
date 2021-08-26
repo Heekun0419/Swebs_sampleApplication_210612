@@ -7,12 +7,14 @@ import android.os.Bundle;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 
 import com.example.swebs_sampleapplication_210612.Activity.ItemClickViewActivty;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
@@ -50,10 +52,11 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         CertifiedCompanyAdapter certifiedCompanyAdapter = new CertifiedCompanyAdapter(requireContext(),this);
         binding.recyclerViewCertifiedCompany.setLayoutManager(linearLayoutManager);
         binding.recyclerViewCertifiedCompany.setAdapter(certifiedCompanyAdapter);
+        /*
         binding.recyclerViewCertifiedCompany.setOnTouchListener((v, event) -> {
             ((MainActivity)requireActivity()).setViewPagerTouchStatus(event.getAction() == MotionEvent.ACTION_UP);
             return false;
-        });
+        });*/
 
         EventAdapter eventAdapter = new EventAdapter(requireContext(),this);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);

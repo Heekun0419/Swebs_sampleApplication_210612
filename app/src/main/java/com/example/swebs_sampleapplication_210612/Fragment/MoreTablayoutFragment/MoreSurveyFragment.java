@@ -15,7 +15,10 @@ import com.example.swebs_sampleapplication_210612.databinding.FragmentMoreSurvey
 public class MoreSurveyFragment extends Fragment {
 
     private FragmentMoreSurveyBinding binding;
-
+    private int position;
+    public MoreSurveyFragment(int position){
+        this.position = position;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -29,6 +29,44 @@
 
     <string name="as_not_ready">본제품은 AS관련하여 \n서비스 준비중입니다</string>
 
+    <string-array name="tabLayout_list_certified_company">
+        <item>전체</item>
+        <item>뷰티</item>
+        <item>식품</item>
+        <item>전자</item>
+        <item>의학</item>
+        <item>생활</item>
+        <item>주방</item>
+        <item>인테리어</item>
+        <item>건강</item>
+        <item>사무</item>
+        <item>섬유</item>
+        <item>기타</item>
+    </string-array>
+
+    <string-array name="tabLayout_list_event">
+        <item>전체</item>
+        <item>SWEBS</item>
+        <item>체험단</item>
+        <item>쇼핑몰</item>
+        <item>제휴</item>
+    </string-array>
+
+    <string-array name="tabLayout_list_review">
+        <item>전체</item>
+        <item>리뷰순</item>
+        <item>인기도순</item>
+        <item>스캔순</item>
+        <item>제품별</item>
+    </string-array>
+
+    <string-array name="tabLayout_list_survey">
+        <item>전체</item>
+        <item>진행중 서베이</item>
+        <item>마감 서베이</item>
+        <item>참여 서베이</item>
+    </string-array>
+
     <!-- 추천인 코드 -->
     <string name="recommend_code_title_1">안녕하세요! \n스웹스를 이용해주셔서 감사합니다.\n추천인 코드를 발송합니다. \n\n추천인코드 : </string>
     <string name="recommend_code_title_2">\n\n회원가입시 추천인 코드를 입력하시면 추천받은 분과 추천하시는 분 모두에게 100P를 드립니다. \n\n-(주)알엠지-</string>

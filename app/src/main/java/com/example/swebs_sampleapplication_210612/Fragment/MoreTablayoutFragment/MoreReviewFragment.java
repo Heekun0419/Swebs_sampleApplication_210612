@@ -18,10 +18,12 @@ import com.example.swebs_sampleapplication_210612.databinding.FragmentMoreReview
 public class MoreReviewFragment extends Fragment {
 
     private FragmentMoreReviewBinding binding;
+    private int position;
 
-
-    public MoreReviewFragment() {
+    // viewPager 및 TabLayout position 받아옴.
+    public MoreReviewFragment(int position) {
         // Required empty public constructor
+        this.position = position;
     }
 
 
