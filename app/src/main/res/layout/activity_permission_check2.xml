@@ -7,7 +7,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/btn_close_activity"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="25dp"
+            android:background="@drawable/ic_baseline_close_24"
+            android:backgroundTint="#606060" />
 
         <TextView
             android:layout_width="match_parent"
@@ -181,7 +192,8 @@
 
             <CheckBox
                 android:id="@+id/checkBox_permission_storage"
-                android:layout_gravity="center"
+                android:layout_gravity="top"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/checkbox_custom"
                 android:button="@color/transparent"
                 android:layout_width="30dp"
@@ -212,10 +224,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="11dp"
+                    android:layout_marginTop="5dp"
                     android:text="- 제보하기 위해 사진찍고 불러오기 \n- 문의하기에서 위챗이나 QR코드 \n- 이미지 저장시 사용"/>
             </LinearLayout>
         </LinearLayout>
-
 
         <View
             style="@style/Divider"
@@ -229,6 +241,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp">
 
@@ -250,9 +263,9 @@
         </LinearLayout>
 
         <View
-            style="@style/Divider"
             android:layout_width="match_parent"
-            android:layout_height="1dp"/>
+            android:layout_height="15dp"
+            android:background="#F9FAFC"/>
 
         <TextView
             android:id="@+id/textView33"
@@ -261,6 +274,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="15dp"
             android:text="서비스 계약"
+            android:layout_marginEnd="25dp"
             android:textColor="@color/black"
             android:textSize="17dp"/>
 
@@ -313,6 +327,7 @@
             android:layout_marginTop="15dp"/>
 
         <TextView
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -324,7 +339,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/bottom_round_corner_background"
             android:elevation="7dp"
             android:padding="3dp"
@@ -342,7 +357,9 @@
                 android:background="@drawable/radious_button_swebscolor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.44" />
 
             <TextView
                 android:layout_width="wrap_content"

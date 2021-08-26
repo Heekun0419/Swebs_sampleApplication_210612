@@ -44,6 +44,13 @@ public class AppInformationFragment extends Fragment {
         Context context = container.getContext();
         sPmanager = new SPmanager(context);
         binding = FragmentAppInformationBinding.inflate(inflater,container,false);
+
+        binding.btnChangeLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         binding.btnChangeLanguage.setOnClickListener(v -> {
             dialog = new NumberPickerDialog(requireContext(),
                     new NumberPickerModel("언어",

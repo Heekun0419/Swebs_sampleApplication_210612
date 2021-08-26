@@ -13,9 +13,6 @@ import com.example.swebs_sampleapplication_210612.Fragment.Information_menu.Manu
 import com.example.swebs_sampleapplication_210612.Fragment.Information_menu.ProductRegisterFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.Information_menu.PurchaseQuestionFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MakeAccountFragment.TermsFragment;
-import com.example.swebs_sampleapplication_210612.Fragment.MoreCertifiedFragment;
-import com.example.swebs_sampleapplication_210612.Fragment.MoreEventFragment;
-import com.example.swebs_sampleapplication_210612.Fragment.MoreReviewFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.PointFragment.PointFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.ServiceNotReadyFragment;
 import com.example.swebs_sampleapplication_210612.R;

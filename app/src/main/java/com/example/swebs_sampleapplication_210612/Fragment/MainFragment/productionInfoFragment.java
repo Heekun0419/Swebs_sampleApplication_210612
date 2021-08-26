@@ -26,18 +26,6 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
 
     private FragmentMainProductBinding binding;
 
-
-    public productionInfoFragment() {
-        // Required empty public constructor
-    }
-
-    public static productionInfoFragment newInstance(String param1, String param2) {
-        productionInfoFragment fragment = new productionInfoFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

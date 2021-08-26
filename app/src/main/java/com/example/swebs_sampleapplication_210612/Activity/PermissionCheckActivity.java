@@ -36,13 +36,6 @@ public class PermissionCheckActivity extends AppCompatActivity {
 
     private final String DIALOG_TITLE = "권한 허용 안내";
 
-    String[] permission_list = {
-            Manifest.permission.CAMERA,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.CALL_PHONE
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

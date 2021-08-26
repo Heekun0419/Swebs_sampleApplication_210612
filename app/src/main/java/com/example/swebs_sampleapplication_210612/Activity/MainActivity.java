@@ -66,10 +66,9 @@ public class MainActivity extends FragmentActivity {
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1, false);
 
-        /*
-        // 인트로페이지 테스트트
+        // 인트로페이지 테스트
        Intent intent = new Intent(this, IntroActivity.class);
-        startActivity(intent);*/
+        startActivity(intent);
 
         Toolbar toolbar = findViewById(R.id.toolBar);
 

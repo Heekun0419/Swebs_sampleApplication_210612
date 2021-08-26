@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
+        android:lineSpacingExtra="8dp"
         android:text="@string/delete_id_info"
         android:textColor="@color/lower_gray"
         android:textSize="12dp"

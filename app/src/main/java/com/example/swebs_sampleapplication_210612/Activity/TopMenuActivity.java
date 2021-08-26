@@ -6,10 +6,10 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.swebs_sampleapplication_210612.Fragment.MoreCertifiedFragment;
-import com.example.swebs_sampleapplication_210612.Fragment.MoreEventFragment;
-import com.example.swebs_sampleapplication_210612.Fragment.MoreReviewFragment;
-import com.example.swebs_sampleapplication_210612.Fragment.MoreSurveyFragment;
+import com.example.swebs_sampleapplication_210612.Fragment.MoreTablayoutFragment.MoreCertifiedFragment;
+import com.example.swebs_sampleapplication_210612.Fragment.MoreTablayoutFragment.MoreEventFragment;
+import com.example.swebs_sampleapplication_210612.Fragment.MoreTablayoutFragment.MoreReviewFragment;
+import com.example.swebs_sampleapplication_210612.Fragment.MoreTablayoutFragment.MoreSurveyFragment;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityTopMenuBinding;
 
