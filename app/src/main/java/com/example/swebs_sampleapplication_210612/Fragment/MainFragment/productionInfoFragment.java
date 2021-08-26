@@ -1,5 +1,6 @@
 package com.example.swebs_sampleapplication_210612.Fragment.MainFragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -7,7 +8,9 @@ import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -43,6 +46,7 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,6 +62,10 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         CertifiedCompanyAdapter certifiedCompanyAdapter = new CertifiedCompanyAdapter(requireContext(),this);
         binding.recyclerViewCertifiedCompany.setLayoutManager(linearLayoutManager);
         binding.recyclerViewCertifiedCompany.setAdapter(certifiedCompanyAdapter);
+        binding.recyclerViewCertifiedCompany.setOnTouchListener((v, event) -> {
+            ((MainActivity)requireActivity()).viewPagerTouchStatus(event.getAction() == MotionEvent.ACTION_UP);
+            return false;
+        });
 
         EventAdapter eventAdapter = new EventAdapter(requireContext(),this);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
