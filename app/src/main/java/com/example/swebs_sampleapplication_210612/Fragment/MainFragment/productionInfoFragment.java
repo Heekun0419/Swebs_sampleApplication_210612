@@ -51,7 +51,7 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         binding.recyclerViewCertifiedCompany.setLayoutManager(linearLayoutManager);
         binding.recyclerViewCertifiedCompany.setAdapter(certifiedCompanyAdapter);
         binding.recyclerViewCertifiedCompany.setOnTouchListener((v, event) -> {
-            ((MainActivity)requireActivity()).viewPagerTouchStatus(event.getAction() == MotionEvent.ACTION_UP);
+            ((MainActivity)requireActivity()).setViewPagerTouchStatus(event.getAction() == MotionEvent.ACTION_UP);
             return false;
         });
 

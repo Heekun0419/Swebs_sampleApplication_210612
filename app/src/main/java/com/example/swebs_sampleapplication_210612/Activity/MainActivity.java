@@ -123,6 +123,10 @@ public class MainActivity extends FragmentActivity {
 
     }
 
+    public void setViewPagerTouchStatus(boolean status) {
+        binding.viewpager2Main.setUserInputEnabled(status);
+    }
+
     private static class ScreenSlidePagerAdapter extends FragmentStateAdapter {
 
         Context context;
