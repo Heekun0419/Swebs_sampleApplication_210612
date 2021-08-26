@@ -327,6 +327,305 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/layout_purchase_added_all"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="추가항목"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:paddingTop="20dp"
+                    android:textColor="@color/black"
+                    android:paddingStart="25dp"/>
+
+                <LinearLayout
+                    android:id="@+id/layout_purchase_added_01"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp">
+
+                    <TextView
+                        android:id="@+id/textView_purchase_added_title_01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_marginEnd="20dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/editText_purchase_added_01"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/radius_login_edittext"
+                        android:backgroundTint="#F9FAFC"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_purchase_added_02"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp">
+
+                    <TextView
+                        android:id="@+id/textView_purchase_added_title_02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_marginEnd="20dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/editText_purchase_added_02"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/radius_login_edittext"
+                        android:backgroundTint="#F9FAFC"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_purchase_added_03"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp">
+
+                    <TextView
+                        android:id="@+id/textView_purchase_added_title_03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_marginEnd="20dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/editText_purchase_added_03"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/radius_login_edittext"
+                        android:backgroundTint="#F9FAFC"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_purchase_added_04"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp">
+
+                    <TextView
+                        android:id="@+id/textView_purchase_added_title_04"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_marginEnd="20dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/editText_purchase_added_04"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/radius_login_edittext"
+                        android:backgroundTint="#F9FAFC"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_purchase_added_05"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp">
+
+                    <TextView
+                        android:id="@+id/textView_purchase_added_title_05"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_marginEnd="20dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/editText_purchase_added_05"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/radius_login_edittext"
+                        android:backgroundTint="#F9FAFC"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_purchase_added_06"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp">
+
+                    <TextView
+                        android:id="@+id/textView_purchase_added_title_06"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_marginEnd="20dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/editText_purchase_added_06"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/radius_login_edittext"
+                        android:backgroundTint="#F9FAFC"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_purchase_added_07"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp">
+
+                    <TextView
+                        android:id="@+id/textView_purchase_added_title_07"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_marginEnd="20dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/editText_purchase_added_07"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/radius_login_edittext"
+                        android:backgroundTint="#F9FAFC"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_purchase_added_08"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp">
+
+                    <TextView
+                        android:id="@+id/textView_purchase_added_title_08"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_marginEnd="20dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/editText_purchase_added_08"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/radius_login_edittext"
+                        android:backgroundTint="#F9FAFC"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_purchase_added_09"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp">
+
+                    <TextView
+                        android:id="@+id/textView_purchase_added_title_09"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_marginEnd="20dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/editText_purchase_added_09"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/radius_login_edittext"
+                        android:backgroundTint="#F9FAFC"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_purchase_added_10"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp">
+
+                    <TextView
+                        android:id="@+id/textView_purchase_added_title_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_marginEnd="20dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/editText_purchase_added_10"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/radius_login_edittext"
+                        android:backgroundTint="#F9FAFC"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

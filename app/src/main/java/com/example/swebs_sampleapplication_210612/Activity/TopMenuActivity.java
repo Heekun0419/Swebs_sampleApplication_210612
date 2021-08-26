@@ -1,6 +1,7 @@
 package com.example.swebs_sampleapplication_210612.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
@@ -25,30 +26,36 @@ public class TopMenuActivity extends AppCompatActivity {
         binding = ActivityTopMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.btnTopMenuBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        // 뒤로가기
+        binding.btnTopMenuBack.setOnClickListener(v -> onBackPressed());
+
         // intent 넘길때 result code 받아와야함.
         String requestCode = getIntent().getStringExtra("resultCode");
 
         manager = getSupportFragmentManager();
-        if(requestCode.equals("event")) {
-            binding.textViewTopMenuName.setText("이벤트");
-            manager.beginTransaction().replace(R.id.frameLayout_more_top, new MoreEventFragment()).commit();
-        }else if(requestCode.equals("certified")){
-            binding.textViewTopMenuName.setText("인증업체");
-            manager.beginTransaction().replace(R.id.frameLayout_more_top, new MoreCertifiedFragment()).commit();
-        } else if(requestCode.equals("review")){
-            binding.textViewTopMenuName.setText("리뷰");
-            manager.beginTransaction().replace(R.id.frameLayout_more_top, new MoreReviewFragment()).commit();
-        } else if(requestCode.equals("survey")){
-            binding.textViewTopMenuName.setText("서베이");
-            manager.beginTransaction().replace(R.id.frameLayout_more_top, new MoreSurveyFragment()).commit();
+        // 코드따라서 프라그먼트 불러옴.
+        switch (requestCode) {
+            case "event":
+                binding.textViewTopMenuName.setText("이벤트");
+                moveFragment(new MoreEventFragment());
+                break;
+            case "certified":
+                binding.textViewTopMenuName.setText("인증업체");
+                moveFragment(new MoreCertifiedFragment());
+                break;
+            case "review":
+                binding.textViewTopMenuName.setText("리뷰");
+                moveFragment(new MoreReviewFragment());
+                break;
+            case "survey":
+                binding.textViewTopMenuName.setText("서베이");
+                moveFragment(new MoreSurveyFragment());
+                break;
         }
 
+    }
+    public void moveFragment(Fragment fragment){
+        manager.beginTransaction().replace(R.id.frameLayout_more_top, fragment).commit();
     }
 
 }

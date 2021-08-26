@@ -20,7 +20,7 @@
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_modify_user_info.xml" value="0.2653985507246377" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_my_top_menu.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_permission_check2.xml" value="0.4466666666666667" />
-        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_purchase_info.xml" value="0.2653985507246377" />
+        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_purchase_info.xml" value="0.22" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_purchase_regist_success.xml" value="0.1" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_review.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/animation_loading_layout.xml" value="0.2957427536231884" />
@@ -78,7 +78,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.4466666666666667" />
+        <option name="scale" value="0.2653985507246377" />
       </ProjectState>
     </option>
   </component>
