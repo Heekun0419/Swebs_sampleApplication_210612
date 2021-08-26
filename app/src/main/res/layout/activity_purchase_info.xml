@@ -353,22 +353,15 @@
                     android:layout_marginEnd="25dp"
                     android:layout_marginStart="25dp">
 
-                    <TextView
-                        android:id="@+id/textView_purchase_added_title_01"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:layout_marginEnd="20dp"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"/>
-
                     <EditText
                         android:id="@+id/editText_purchase_added_01"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
                         android:background="@drawable/radius_login_edittext"
-                        android:backgroundTint="#F9FAFC"/>
+                        android:backgroundTint="#F9FAFC"
+                        android:textColorHint="@color/swebs_main_color2"
+                        android:inputType="text" />
 
                 </LinearLayout>
 
@@ -381,21 +374,13 @@
                     android:layout_marginEnd="25dp"
                     android:layout_marginStart="25dp">
 
-                    <TextView
-                        android:id="@+id/textView_purchase_added_title_02"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:layout_marginEnd="20dp"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"/>
-
                     <EditText
                         android:id="@+id/editText_purchase_added_02"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
                         android:background="@drawable/radius_login_edittext"
+                        android:textColorHint="@color/swebs_main_color2"
                         android:backgroundTint="#F9FAFC"/>
 
                 </LinearLayout>
@@ -409,20 +394,13 @@
                     android:layout_marginEnd="25dp"
                     android:layout_marginStart="25dp">
 
-                    <TextView
-                        android:id="@+id/textView_purchase_added_title_03"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:layout_marginEnd="20dp"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"/>
 
                     <EditText
                         android:id="@+id/editText_purchase_added_03"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
+                        android:textColorHint="@color/swebs_main_color2"
                         android:background="@drawable/radius_login_edittext"
                         android:backgroundTint="#F9FAFC"/>
 
@@ -437,20 +415,12 @@
                     android:layout_marginEnd="25dp"
                     android:layout_marginStart="25dp">
 
-                    <TextView
-                        android:id="@+id/textView_purchase_added_title_04"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:layout_marginEnd="20dp"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"/>
-
                     <EditText
                         android:id="@+id/editText_purchase_added_04"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
+                        android:textColorHint="@color/swebs_main_color2"
                         android:background="@drawable/radius_login_edittext"
                         android:backgroundTint="#F9FAFC"/>
 
@@ -465,20 +435,12 @@
                     android:layout_marginEnd="25dp"
                     android:layout_marginStart="25dp">
 
-                    <TextView
-                        android:id="@+id/textView_purchase_added_title_05"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:layout_marginEnd="20dp"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"/>
-
                     <EditText
                         android:id="@+id/editText_purchase_added_05"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
+                        android:textColorHint="@color/swebs_main_color2"
                         android:background="@drawable/radius_login_edittext"
                         android:backgroundTint="#F9FAFC"/>
 
@@ -493,20 +455,12 @@
                     android:layout_marginEnd="25dp"
                     android:layout_marginStart="25dp">
 
-                    <TextView
-                        android:id="@+id/textView_purchase_added_title_06"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:layout_marginEnd="20dp"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"/>
-
                     <EditText
                         android:id="@+id/editText_purchase_added_06"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
+                        android:textColorHint="@color/swebs_main_color2"
                         android:background="@drawable/radius_login_edittext"
                         android:backgroundTint="#F9FAFC"/>
 
@@ -521,20 +475,13 @@
                     android:layout_marginEnd="25dp"
                     android:layout_marginStart="25dp">
 
-                    <TextView
-                        android:id="@+id/textView_purchase_added_title_07"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:layout_marginEnd="20dp"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"/>
 
                     <EditText
                         android:id="@+id/editText_purchase_added_07"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
+                        android:textColorHint="@color/swebs_main_color2"
                         android:background="@drawable/radius_login_edittext"
                         android:backgroundTint="#F9FAFC"/>
 
@@ -549,20 +496,12 @@
                     android:layout_marginEnd="25dp"
                     android:layout_marginStart="25dp">
 
-                    <TextView
-                        android:id="@+id/textView_purchase_added_title_08"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:layout_marginEnd="20dp"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"/>
-
                     <EditText
                         android:id="@+id/editText_purchase_added_08"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
+                        android:textColorHint="@color/swebs_main_color2"
                         android:background="@drawable/radius_login_edittext"
                         android:backgroundTint="#F9FAFC"/>
 
@@ -577,20 +516,12 @@
                     android:layout_marginEnd="25dp"
                     android:layout_marginStart="25dp">
 
-                    <TextView
-                        android:id="@+id/textView_purchase_added_title_09"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:layout_marginEnd="20dp"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"/>
-
                     <EditText
                         android:id="@+id/editText_purchase_added_09"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
+                        android:textColorHint="@color/swebs_main_color2"
                         android:background="@drawable/radius_login_edittext"
                         android:backgroundTint="#F9FAFC"/>
 
@@ -605,20 +536,12 @@
                     android:layout_marginEnd="25dp"
                     android:layout_marginStart="25dp">
 
-                    <TextView
-                        android:id="@+id/textView_purchase_added_title_10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:layout_marginEnd="20dp"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"/>
-
                     <EditText
                         android:id="@+id/editText_purchase_added_10"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
+                        android:textColorHint="@color/swebs_main_color2"
                         android:background="@drawable/radius_login_edittext"
                         android:backgroundTint="#F9FAFC"/>
 
