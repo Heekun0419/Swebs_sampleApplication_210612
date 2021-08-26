@@ -12,6 +12,7 @@ import android.os.Bundle;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.SystemClock;
 import android.view.LayoutInflater;
@@ -29,7 +30,7 @@ import com.example.swebs_sampleapplication_210612.Activity.LoginActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ModifyUserInfoActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MyTopMenuActivity;
-import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Listener.NetworkListener;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickStringListener;
 import com.example.swebs_sampleapplication_210612.Dialog.EditTextDialog;
@@ -39,6 +40,7 @@ import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.NumberPicke
 import com.example.swebs_sampleapplication_210612.Dialog.RecommendCodeDialog;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
+import com.example.swebs_sampleapplication_210612.ViewModel.UserInfoViewModel;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMyPageBinding;
 import com.example.swebs_sampleapplication_210612.util.UserLoginController;
 
@@ -57,7 +59,8 @@ public class myPageFragment extends Fragment {
     private SPmanager sPmanager;
     private final Animation fadeOut = new AlphaAnimation(1,0);
     private final Animation fadeIn = new AlphaAnimation(0,1);
-    private MyInfoRepository myInfoRepository;
+
+    private UserInfoViewModel viewModel;
 
     private long mLastClickTime;
 
@@ -72,8 +75,6 @@ public class myPageFragment extends Fragment {
         Locale locale;
         locale = requireContext().getResources().getConfiguration().getLocales().get(0);
         country = locale.getCountry();
-        // 레포지토리 설정
-        myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
 
         // 클릭 마지막.
         mLastClickTime = SystemClock.elapsedRealtime();
@@ -82,7 +83,13 @@ public class myPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         binding = FragmentMyPageBinding.inflate(inflater,container,false);
+
+        // 뷰모델 설정
+        viewModel = new ViewModelProvider(this).get(UserInfoViewModel.class);
+
         // user type 검사해서 View 변환
         sPmanager = new SPmanager(context);
         binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
@@ -239,26 +246,41 @@ public class myPageFragment extends Fragment {
         setTutorial();
 
         // Data Observe -- START
-        myInfoRepository.getValueToLiveData("userSrl").observe(getViewLifecycleOwner(), s -> {
+        viewModel.getUserInfoFromKey("userSrl").observe(this, s -> {
             if (s == null)
-                new UserLoginController(requireActivity().getApplication()).signUpForGuest();
+                new UserLoginController(requireActivity().getApplication(), new NetworkListener() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onFailed() {
+
+                    }
+
+                    @Override
+                    public void onServerError() {
+
+                    }
+                }).signUpForGuest();
         });
 
         // userType
-        myInfoRepository.getValueToLiveData("userType").observe(getViewLifecycleOwner(), s -> {
+        viewModel.getUserInfoFromKey("userType").observe(this, s -> {
             if (s != null)
                 RenderMyPageFromUserType(s);
             userType = s;
         });
 
         // Email
-        myInfoRepository.getValueToLiveData("email").observe(getViewLifecycleOwner(), s -> {
+        viewModel.getUserInfoFromKey("email").observe(this, s -> {
             if (s != null)
                 binding.mypageTextViewID.setText(s);
         });
 
         // Name
-        myInfoRepository.getValueToLiveData("name").observe(getViewLifecycleOwner(), s -> {
+        viewModel.getUserInfoFromKey("name").observe(this, s -> {
             if (s != null) {
                 String viewText = s + " 님";
                 binding.mypageTextViewName.setText(s);
@@ -266,15 +288,15 @@ public class myPageFragment extends Fragment {
         });
 
         // Point
-        myInfoRepository.getValueToLiveData("point").observe(getViewLifecycleOwner(), s -> {
+        viewModel.getUserInfoFromKey("point").observe(this, s -> {
             if (s != null) {
                 String viewText = s + " P";
                 binding.mypagePointText.setText(viewText);
             }
         });
 
-        // nickname
-        myInfoRepository.getValueToLiveData("nickName").observe(getViewLifecycleOwner(), s -> {
+        // nickName
+        viewModel.getUserInfoFromKey("nickName").observe(this, s -> {
             String viewText = "미등록";
             if (s != null) {
                 viewText = s;
@@ -286,7 +308,7 @@ public class myPageFragment extends Fragment {
         });
 
         // Birthday
-        myInfoRepository.getValueToLiveData("birthday").observe(getViewLifecycleOwner(), s -> {
+        viewModel.getUserInfoFromKey("birthday").observe(this, s -> {
             String viewText = "미등록";
             if (s != null) {
                 viewText = s.length() > 4 ? s.substring(0, 4) : s;
@@ -298,10 +320,10 @@ public class myPageFragment extends Fragment {
         });
 
         // Gender
-        myInfoRepository.getValueToLiveData("gender").observe(getViewLifecycleOwner(), s -> renderGenderView(s));
+        viewModel.getUserInfoFromKey("gender").observe(this, this::renderGenderView);
 
         // country
-        myInfoRepository.getValueToLiveData("country").observe(getViewLifecycleOwner(), s -> {
+        viewModel.getUserInfoFromKey("country").observe(this, s -> {
             String viewText = "미등록";
             if (s != null) {
                 viewText = countryCodeToName(s);
@@ -371,7 +393,7 @@ public class myPageFragment extends Fragment {
                 new DialogClickListener() {
                     @Override
                     public void onPositiveClick(int position) {
-                        myInfoRepository.insertMyInfo("birthday", inputData.get(position));
+                        viewModel.insertUserInfo("birthday", inputData.get(position));
                     }
 
                     @Override
@@ -399,7 +421,7 @@ public class myPageFragment extends Fragment {
                 "취소"), new DialogClickStringListener() {
             @Override
             public void onPositiveClick(String string) {
-                myInfoRepository.insertMyInfo("nickName", string);
+                viewModel.insertUserInfo("nickName", string);
             }
 
             @Override
@@ -440,9 +462,9 @@ public class myPageFragment extends Fragment {
                     @Override
                     public void onPositiveClick(int position) {
                         if (position == 0)
-                            myInfoRepository.insertMyInfo("gender", "male");
+                            viewModel.insertUserInfo("gender", "male");
                         else
-                            myInfoRepository.insertMyInfo("gender", "female");
+                            viewModel.insertUserInfo("gender", "female");
                     }
 
                     @Override
@@ -501,7 +523,7 @@ public class myPageFragment extends Fragment {
                 new DialogClickListener() {
                     @Override
                     public void onPositiveClick(int position) {
-                        myInfoRepository.insertMyInfo("country", countryNameToCode(inputData.get(position)));
+                        viewModel.insertUserInfo("country", countryNameToCode(inputData.get(position)));
                     }
 
                     @Override

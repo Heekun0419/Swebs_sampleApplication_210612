@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Listener.NetworkListener;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog;
@@ -82,7 +83,25 @@ public class AppInformationFragment extends Fragment {
                     if (sPmanager.getUserType().equals("guest")) {
                         Toast.makeText(requireContext(), "게스트 계정입니다", Toast.LENGTH_SHORT).show();
                     } else {
-                        UserLoginController userLoginController = new UserLoginController(requireActivity().getApplication());
+                        UserLoginController userLoginController = new UserLoginController(
+                                requireActivity().getApplication(),
+                                new NetworkListener() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onFailed() {
+
+                                    }
+
+                                    @Override
+                                    public void onServerError() {
+
+                                    }
+                                }
+                        );
                         userLoginController.userLogout();
                         userLoginController.signUpForGuest();
                         Toast.makeText(requireContext(), "로그아웃 완료", Toast.LENGTH_SHORT).show();

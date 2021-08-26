@@ -35,6 +35,7 @@ public class OneButtonBasicDialog extends Dialog {
             listener.onPositiveClick(0);
             dismiss();
         });
+
         binding.closeDialog.setOnClickListener(v -> {
             listener.onNegativeClick();
             dismiss();

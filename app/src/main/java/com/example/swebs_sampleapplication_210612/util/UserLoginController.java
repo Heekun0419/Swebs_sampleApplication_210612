@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Listener.NetworkListener;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.GuestSignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LoginModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
@@ -24,13 +25,15 @@ public class UserLoginController {
     private final SwebsAPI retroAPI;
     private final Context context;
     private final MyInfoRepository myInfoRepository;
-    private SPmanager sPmanager;
+    private final SPmanager sPmanager;
+    private final NetworkListener listener;
 
-    public UserLoginController(Application application) {
+    public UserLoginController(Application application, NetworkListener listener) {
         this.retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
         this.context = application.getApplicationContext();
         this.myInfoRepository = new MyInfoRepository(application);
         this.sPmanager = new SPmanager(application.getApplicationContext());
+        this.listener = listener;
     }
 
     public void userLogout() {
@@ -77,15 +80,18 @@ public class UserLoginController {
                         sPmanager.setUserToken(responseData.getToken());
                     if (responseData.getReferralCode() != null)
                         sPmanager.setUserReferralCode(responseData.getReferralCode());
+
+                    listener.onSuccess();
                 } else {
                     // 실패
                     userLogout();
-                    Toast.makeText(context, "로그인 정보가 유효하지 않습니다.", Toast.LENGTH_SHORT).show();
+                    listener.onFailed();
                 }
             }
 
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
+                listener.onServerError();
             }
         });
 
@@ -119,15 +125,18 @@ public class UserLoginController {
                         sPmanager.setUserType("guest");
                         sPmanager.setUserSrl(responseData.getUserSrl());
                         sPmanager.setUserToken(responseData.getToken());
+
+                        listener.onSuccess();
+                    } else {
+                        listener.onFailed();
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<GuestSignUpModel> call, Throwable t) {
+                listener.onServerError();
             }
         });
     }
-
-
 }
