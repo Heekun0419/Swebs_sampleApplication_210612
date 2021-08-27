@@ -20,6 +20,7 @@ import com.example.swebs_sampleapplication_210612.Activity.ItemClickViewActivty;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.PurchaseInfoActivity;
 import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity;
+import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.adapter.CertifiedCompanyAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.EventAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.OnItemClickListener;
@@ -56,6 +57,35 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         binding.recyclerViewCertifiedCompany.setOnTouchListener((v, event) -> {
             ((MainActivity)requireActivity()).setViewPagerTouchStatus(event.getAction() == MotionEvent.ACTION_UP);
             return false;
+        });
+
+        binding.recyclerViewCertifiedCompany.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                boolean ret = false;
+                if(v.getId() == R.id.recyclerView_certified_company){
+                    // 터치가 되고 있는 위치 // move나 up등을 계산하려면 이 값을 계속 유지하여 계산해야 됨
+                    float x = event.getX();
+                    float y = event.getY();
+                    switch (event.getActionMasked()){
+                        case MotionEvent.ACTION_DOWN:
+                            Log.d( "testtest", "onTouch Down ACTION_Down: (" + x +", " + y + ")" );
+                            ((MainActivity)requireActivity()).setViewPagerTouchStatus(false);
+                            ret = false;
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            ((MainActivity)requireActivity()).setViewPagerTouchStatus(true);
+                            ret = true;
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            Log.d( "testtest", "onTouch Down ACTION_MOVE: (" + x +", " + y + ")" );
+                            ret = false;
+                            ((MainActivity)requireActivity()).setViewPagerTouchStatus(false);
+                            break;
+                    }
+                }
+                return ret;
+            }
         });*/
 
         EventAdapter eventAdapter = new EventAdapter(requireContext(),this);

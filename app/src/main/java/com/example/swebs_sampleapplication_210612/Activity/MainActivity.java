@@ -8,7 +8,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.Observer;
+import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -37,11 +40,14 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class MainActivity extends FragmentActivity {
 
     public static final int NUM_PAGES = 3;
 
-    private FragmentStateAdapter adapter;
+    private FragmentStatePagerAdapter adapter;
     private ActivityMainBinding binding;
     private FragmentManager manager;
     private MyInfoRepository myInfoRepository;
@@ -60,9 +66,9 @@ public class MainActivity extends FragmentActivity {
 
         manager = getSupportFragmentManager();
         myInfoRepository = new MyInfoRepository(getApplication());
-        ViewPager2 viewPager =  binding.viewpager2Main;
-        adapter = new ScreenSlidePagerAdapter(this,this);
-        viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
+        ViewPager viewPager =  binding.viewpager2Main;
+        adapter = new ScreenSlidePagerAdapter(manager,this);
+        //viewPager.set(ViewPager2.ORIENTATION_HORIZONTAL);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1, false);
 
@@ -85,6 +91,13 @@ public class MainActivity extends FragmentActivity {
                 Intent intent = new Intent(MainActivity.this,InformationActivity.class);
                 intent.putExtra("resultCode","product");
                 startActivity(intent);
+            }
+        });
+
+        manager.setFragmentResultListener("Y", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+
             }
         });
 
@@ -124,34 +137,31 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void setViewPagerTouchStatus(boolean status) {
-        binding.viewpager2Main.setUserInputEnabled(status);
+     //   binding.viewpager2Main.setUserInputEnabled(status);
     }
 
-    private static class ScreenSlidePagerAdapter extends FragmentStateAdapter {
-
+    private static class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        FragmentManager manager;
         Context context;
-        public ScreenSlidePagerAdapter(FragmentActivity fa, Context context) {
-            super(fa);
+        ArrayList<Fragment> fragments = new ArrayList<>();
+
+        public ScreenSlidePagerAdapter(@NonNull FragmentManager fm, Context context) {
+            super(fm);
+            this.manager = fm;
             this.context = context;
+            fragments.add(new productionInfoFragment());
+            fragments.add(new ScanFragment());
+            fragments.add(new myPageFragment(context));
         }
 
-        @NotNull
+        @NonNull
         @Override
-        public Fragment createFragment(int position) {
-
-            if (position == 0)
-                return new productionInfoFragment();
-            else if (position == 1)
-                return new ScanFragment();
-            else if (position == 2)
-                return new myPageFragment(context);
-            else
-                return new ScanFragment();
-
+        public Fragment getItem(int position) {
+           return fragments.get(position);
         }
 
         @Override
-        public int getItemCount() {
+        public int getCount() {
             return NUM_PAGES;
         }
     }

@@ -10,13 +10,19 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewpager2_main"
+    <FrameLayout
+        android:id="@+id/FrameLayout_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </androidx.viewpager2.widget.ViewPager2>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager2_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.viewpager.widget.ViewPager>
+
+    </FrameLayout>
 
     <include
         android:id="@+id/nav_view"
