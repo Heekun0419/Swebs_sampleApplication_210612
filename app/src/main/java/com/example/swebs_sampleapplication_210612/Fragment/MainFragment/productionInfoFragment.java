@@ -46,7 +46,7 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
 
         // 네비게이션 드로어 열기
         binding.includedAppbarProduct.imageButton.setOnClickListener(v ->
-                ((MainActivity)requireActivity()).drawer.openDrawer(GravityCompat.START));
+                ((MainActivity)requireActivity()).openDrawer());
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);

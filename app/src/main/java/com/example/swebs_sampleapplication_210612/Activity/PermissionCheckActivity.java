@@ -31,7 +31,6 @@ import java.util.List;
 public class PermissionCheckActivity extends AppCompatActivity {
 
     private ActivityPermissionCheck2Binding binding;
-    private boolean isChecked;
     public SPmanager sPmanager = new SPmanager(this);
 
     private final String DIALOG_TITLE = "권한 허용 안내";
@@ -41,8 +40,6 @@ public class PermissionCheckActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityPermissionCheck2Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        isChecked = sPmanager.getPermission();
 
         PermissionDialog dialog = new PermissionDialog(this, new DialogClickListener() {
             @Override

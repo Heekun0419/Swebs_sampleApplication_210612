@@ -111,7 +111,7 @@ public class myPageFragment extends Fragment {
 
         // 네비게이션 드로어 열기
         binding.includedAppbarMy.imageButton.setOnClickListener(v -> {
-            ((MainActivity) requireActivity()).drawer.openDrawer(GravityCompat.START);
+            ((MainActivity) requireActivity()).openDrawer();
         });
 
         // APP bar 로고 안보이기
