@@ -147,8 +147,7 @@ public class ScanFragment extends Fragment {
         binding.includedAppbarScan.imageButton2.setBackgroundColor(Color.TRANSPARENT);
 
         // 네비게이션 드로어 열기
-        binding.includedAppbarScan.imageButton.setOnClickListener(v ->
-                ((MainActivity)requireActivity()).drawer.openDrawer(GravityCompat.START));
+        binding.includedAppbarScan.imageButton.setOnClickListener(v -> ((MainActivity)requireActivity()).openDrawer());
 
         // 튜토리얼 페이지 닫기
         binding.tutorialScanPage.textViewScanTutorialClose.setOnClickListener(v -> {
@@ -181,18 +180,15 @@ public class ScanFragment extends Fragment {
         cameraExecutor = Executors.newSingleThreadExecutor();
         cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext());
 
-        cameraProviderFuture.addListener(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if(ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-                        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
-                    }
-                    ProcessCameraProvider processCameraProvider = (ProcessCameraProvider) cameraProviderFuture.get();
-                    bindPreView(processCameraProvider);
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
+        cameraProviderFuture.addListener(() -> {
+            try {
+                if(ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
                 }
+                ProcessCameraProvider processCameraProvider = (ProcessCameraProvider) cameraProviderFuture.get();
+                bindPreView(processCameraProvider);
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
             }
         }, ContextCompat.getMainExecutor(requireContext()));
 
@@ -244,13 +240,12 @@ public class ScanFragment extends Fragment {
                 .setTargetResolution(new Size(1280,720))
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_BLOCK_PRODUCER)
                 .build();
-        imageAnalysis.setAnalyzer(cameraExecutor,imageAnalyser);
+        imageAnalysis.setAnalyzer(cameraExecutor, imageAnalyser);
         processCameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture, imageAnalysis);
 
     }
 
     class MyImageAnalyser implements ImageAnalysis.Analyzer {
-
         MyImageAnalyser() {
         }
 

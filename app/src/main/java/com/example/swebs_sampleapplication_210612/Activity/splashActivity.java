@@ -33,7 +33,7 @@ import com.example.swebs_sampleapplication_210612.databinding.ActivitySplashBind
 import com.example.swebs_sampleapplication_210612.util.UserLoginController;
 
 public class splashActivity extends AppCompatActivity {
-    long SPLASH_MIN_TIME = 2400;
+    long SPLASH_MIN_TIME = 0;
 
     private ActivitySplashBinding binding;
     CharSequence charSequence;
@@ -77,7 +77,7 @@ public class splashActivity extends AppCompatActivity {
     private void loginCheck() {
         long NetworkTime = SystemClock.elapsedRealtime();
         if (!sPmanager.getUserToken().equals("notFound") && !sPmanager.getUserSrl().equals("notFound")) {
-            //Log.d("login", "이미 로그인 되어있다. : " + sPmanager.getUserSrl() + " / " + sPmanager.getUserToken());
+            // Exist Login Data - verify Token Check
             new UserLoginController(
                     getApplication(),
                     new NetworkListener() {
@@ -99,7 +99,7 @@ public class splashActivity extends AppCompatActivity {
                     }
             ).verifyToken();
         } else {
-            //Log.d("login", "이미 로그인 되어있지 않다. : " + sPmanager.getUserSrl() + " / " + sPmanager.getUserToken());
+            // None Exist Login Data - Guest Login
             new UserLoginController(
                     getApplication(),
                     new NetworkListener() {

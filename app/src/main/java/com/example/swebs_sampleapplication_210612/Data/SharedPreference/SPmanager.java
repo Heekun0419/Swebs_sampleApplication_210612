@@ -10,7 +10,7 @@ public class SPmanager {
     public SPmanager(Context context){this.context = context;}
 
 
-    //userSrl - START
+    // START - UserSrl
     public void setUserSrl(String userSrl){
         SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_SRL, Context.MODE_PRIVATE)).edit();
         editor.putString(SP_data.USER_INFO.USER_SRL, userSrl);
@@ -26,8 +26,10 @@ public class SPmanager {
         return (context.getSharedPreferences(SP_data.USER_INFO.USER_SRL, Context.MODE_PRIVATE))
                 .getString(SP_data.USER_INFO.USER_SRL,"notFound");
     }
-    // userSrl - END
+    // END - UserSrl
 
+
+    // START - Token
     public void setUserToken(String token){
         SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_TOKEN, Context.MODE_PRIVATE)).edit();
         editor.putString(SP_data.USER_INFO.USER_TOKEN,token);
@@ -43,8 +45,10 @@ public class SPmanager {
         return (context.getSharedPreferences(SP_data.USER_INFO.USER_TOKEN, Context.MODE_PRIVATE))
                 .getString(SP_data.USER_INFO.USER_TOKEN,"notFound");
     }
+    // END - Token
 
-    //userReferralCode - START
+
+    // START - User ReferralCode
     public void setUserReferralCode(String userSrl){
         SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_REFERRAL_CODE, Context.MODE_PRIVATE)).edit();
         editor.putString(SP_data.USER_INFO.USER_REFERRAL_CODE, userSrl);
@@ -60,8 +64,9 @@ public class SPmanager {
         return (context.getSharedPreferences(SP_data.USER_INFO.USER_REFERRAL_CODE, Context.MODE_PRIVATE))
                 .getString(SP_data.USER_INFO.USER_REFERRAL_CODE,"notFound");
     }
-    // userReferralCode - END
+    // END - User ReferralCode
 
+    // START - User Type
     public void setUserType(String type){
         SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USERTYPE, Context.MODE_PRIVATE)).edit();
         editor.putString(SP_data.USER_INFO.USERTYPE,type);
@@ -73,104 +78,14 @@ public class SPmanager {
         editor.remove(SP_data.USER_INFO.USERTYPE);
         editor.apply();
     }
+
     public String getUserType(){
         return (context.getSharedPreferences(SP_data.USER_INFO.USERTYPE, Context.MODE_PRIVATE))
                 .getString(SP_data.USER_INFO.USERTYPE,"notFound");
     }
+    // END - User Type
 
-    public void setPermissionIsChecked(boolean checked){
-        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.PERMISSION, Context.MODE_PRIVATE)).edit();
-        editor.putBoolean(SP_data.PERMISSION,checked);
-        editor.apply();
-    }
-    public boolean getPermission(){
-        return (context.getSharedPreferences(SP_data.PERMISSION, Context.MODE_PRIVATE))
-                .getBoolean(SP_data.PERMISSION,false);
-    }
-    public void setUserName(String userName){
-        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_NAME, Context.MODE_PRIVATE)).edit();
-        editor.putString(SP_data.USER_INFO.USER_NAME,userName);
-        editor.apply();
-    }
-    public void removeUserName(){
-        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_NAME, Context.MODE_PRIVATE)).edit();
-        editor.remove(SP_data.USER_INFO.USER_NAME);
-        editor.apply();
-    }
-    public String getUserName(){
-        return (context.getSharedPreferences(SP_data.USER_INFO.USER_NAME, Context.MODE_PRIVATE))
-                .getString(SP_data.USER_INFO.USER_NAME,"notFound");
-    }
 
-    public void setUserBirth(String birth){
-        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_BIRTHDAY, Context.MODE_PRIVATE)).edit();
-        editor.putString(SP_data.USER_INFO.USER_BIRTHDAY,birth);
-        editor.apply();
-    }
-    public void removeUserBirth(){
-        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_BIRTHDAY, Context.MODE_PRIVATE)).edit();
-        editor.remove(SP_data.USER_INFO.USER_BIRTHDAY);
-        editor.apply();
-    }
-    public String getUserBirth(){
-        return (context.getSharedPreferences(SP_data.USER_INFO.USER_BIRTHDAY, Context.MODE_PRIVATE))
-                .getString(SP_data.USER_INFO.USER_BIRTHDAY,"notFound");
-    }
-
-    public void setUserGender(String gender){
-        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_GENDER, Context.MODE_PRIVATE)).edit();
-        editor.putString(SP_data.USER_INFO.USER_GENDER,gender);
-        editor.apply();
-    }
-    public void removeUserGender(){
-        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_GENDER, Context.MODE_PRIVATE)).edit();
-        editor.remove(SP_data.USER_INFO.USER_GENDER);
-        editor.apply();
-    }
-    public String getUserGender(){
-        return (context.getSharedPreferences(SP_data.USER_INFO.USER_GENDER, Context.MODE_PRIVATE))
-                .getString(SP_data.USER_INFO.USER_GENDER,"notFound");
-    }
-
-    public void setUserRegion(String Region){
-        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_REGION, Context.MODE_PRIVATE)).edit();
-        editor.putString(SP_data.USER_INFO.USER_REGION,Region);
-        editor.apply();
-    }
-    public String getUserRegion(){
-        return (context.getSharedPreferences(SP_data.USER_INFO.USER_REGION, Context.MODE_PRIVATE))
-                .getString(SP_data.USER_INFO.USER_REGION,"notFound");
-    }
-
-    public void setUserEmail(String email){
-        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_EMAIL, Context.MODE_PRIVATE)).edit();
-        editor.putString(SP_data.USER_INFO.USER_EMAIL,email);
-        editor.apply();
-    }
-    public void removeUserInfo(){
-        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_EMAIL, Context.MODE_PRIVATE)).edit();
-        editor.remove(SP_data.USER_INFO.USER_EMAIL);
-        editor.apply();
-    }
-    public String getUserEmail(){
-        return (context.getSharedPreferences(SP_data.USER_INFO.USER_EMAIL, Context.MODE_PRIVATE))
-                .getString(SP_data.USER_INFO.USER_EMAIL,"notFound");
-    }
-
-    public void setUserPoint(String email){
-        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_POINT, Context.MODE_PRIVATE)).edit();
-        editor.putString(SP_data.USER_INFO.USER_POINT,email);
-        editor.apply();
-    }
-    public void removeUserPoint(){
-        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.USER_INFO.USER_POINT, Context.MODE_PRIVATE)).edit();
-        editor.remove(SP_data.USER_INFO.USER_POINT);
-        editor.apply();
-    }
-    public String getUserPoint(){
-        return (context.getSharedPreferences(SP_data.USER_INFO.USER_POINT, Context.MODE_PRIVATE))
-                .getString(SP_data.USER_INFO.USER_POINT,"notFound");
-    }
     public void setScanTutorialExit(boolean exit){
         SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.SCAN_TUTORIAL, Context.MODE_PRIVATE)).edit();
         editor.putBoolean(SP_data.SCAN_TUTORIAL,exit);
@@ -182,10 +97,12 @@ public class SPmanager {
         editor.remove(SP_data.SCAN_TUTORIAL);
         editor.apply();
     }
+
     public boolean getScanTutorialExit(){
         return (context.getSharedPreferences(SP_data.SCAN_TUTORIAL, Context.MODE_PRIVATE))
                 .getBoolean(SP_data.SCAN_TUTORIAL,false);
     }
+
 
     public void setMyTutorialExit(boolean exit){
         SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.MY_TUTORIAL, Context.MODE_PRIVATE)).edit();
@@ -198,9 +115,28 @@ public class SPmanager {
         editor.remove(SP_data.MY_TUTORIAL);
         editor.apply();
     }
+
     public boolean getMyTutorialExit(){
         return (context.getSharedPreferences(SP_data.MY_TUTORIAL, Context.MODE_PRIVATE))
                 .getBoolean(SP_data.MY_TUTORIAL,false);
     }
+
+    public void setIntroPage(boolean exit){
+        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.INTRO_PAGE, Context.MODE_PRIVATE)).edit();
+        editor.putBoolean(SP_data.INTRO_PAGE,exit);
+        editor.apply();
+    }
+
+    public void removeIntroPage(){
+        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.INTRO_PAGE, Context.MODE_PRIVATE)).edit();
+        editor.remove(SP_data.INTRO_PAGE);
+        editor.apply();
+    }
+
+    public boolean getIntroPage(){
+        return (context.getSharedPreferences(SP_data.INTRO_PAGE, Context.MODE_PRIVATE))
+                .getBoolean(SP_data.INTRO_PAGE,false);
+    }
+
 
 }

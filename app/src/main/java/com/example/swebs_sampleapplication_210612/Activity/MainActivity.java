@@ -53,7 +53,6 @@ public class MainActivity extends FragmentActivity {
     private MyInfoRepository myInfoRepository;
 
     private final SPmanager sPmanager = new SPmanager(this);
-    public DrawerLayout drawer;
     private long backBtnTime = 0;
 
     @SuppressLint("SetTextI18n")
@@ -66,39 +65,32 @@ public class MainActivity extends FragmentActivity {
 
         manager = getSupportFragmentManager();
         myInfoRepository = new MyInfoRepository(getApplication());
-        ViewPager viewPager =  binding.viewpager2Main;
-        adapter = new ScreenSlidePagerAdapter(manager,this);
-        //viewPager.set(ViewPager2.ORIENTATION_HORIZONTAL);
-        viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(1, false);
+        binding.viewpager2Main.setAdapter(new ScreenSlidePagerAdapter(manager,this));
+        binding.viewpager2Main.setCurrentItem(1, false);
 
-        // 인트로페이지 테스트
-       Intent intent = new Intent(this, IntroActivity.class);
-        startActivity(intent);
+        // Intro Page...
+        if (!sPmanager.getIntroPage()) {
+            sPmanager.setIntroPage(true);
+            Intent intent = new Intent(this, IntroActivity.class);
+            startActivity(intent);
+        }
 
         Toolbar toolbar = findViewById(R.id.toolBar);
-
-        drawer = binding.drawerLayout;
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.open, R.string.closed);
-        drawer.addDrawerListener(toggle);
+                this, binding.drawerLayout, toolbar, R.string.open, R.string.closed
+        );
+        binding.drawerLayout.addDrawerListener(toggle);
 
         GlideImage(binding.navView.imageViewProfile);
 
-        binding.navView.companyProductRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,InformationActivity.class);
-                intent.putExtra("resultCode","product");
-                startActivity(intent);
-            }
+        binding.navView.companyProductRegister.setOnClickListener(v -> {
+            Intent intent1 = new Intent(MainActivity.this,InformationActivity.class);
+            intent1.putExtra("resultCode","product");
+            startActivity(intent1);
         });
 
-        manager.setFragmentResultListener("Y", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+        manager.setFragmentResultListener("Y", this, (requestKey, result) -> {
 
-            }
         });
 
 
@@ -134,60 +126,6 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
-    }
-
-    public void setViewPagerTouchStatus(boolean status) {
-     //   binding.viewpager2Main.setUserInputEnabled(status);
-    }
-
-    private static class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        FragmentManager manager;
-        Context context;
-        ArrayList<Fragment> fragments = new ArrayList<>();
-
-        public ScreenSlidePagerAdapter(@NonNull FragmentManager fm, Context context) {
-            super(fm);
-            this.manager = fm;
-            this.context = context;
-            fragments.add(new productionInfoFragment());
-            fragments.add(new ScanFragment());
-            fragments.add(new myPageFragment(context));
-        }
-
-        @NonNull
-        @Override
-        public Fragment getItem(int position) {
-           return fragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_PAGES;
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        if(drawer.isDrawerOpen(GravityCompat.START)){
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            long curTime = System.currentTimeMillis();
-            long gapTime = curTime - backBtnTime;
-
-            if(0 <= gapTime && 2000 >= gapTime) {
-                super.onBackPressed();
-            }
-            else {
-                backBtnTime = curTime;
-                Toast.makeText(this, "한번 더 누르면 종료됩니다.",Toast.LENGTH_SHORT).show();
-            }
-        }
-
-    }
-
-    public void BottomSheetOpen(){
-        manager.beginTransaction().add(new bottomSheetFragment(),"dialog").commit();
     }
 
     @Override
@@ -230,6 +168,60 @@ public class MainActivity extends FragmentActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(binding.drawerLayout.isDrawerOpen(GravityCompat.START)){
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            long curTime = System.currentTimeMillis();
+            long gapTime = curTime - backBtnTime;
+
+            if(0 <= gapTime && 2000 >= gapTime) {
+                super.onBackPressed();
+            }
+            else {
+                backBtnTime = curTime;
+                Toast.makeText(this, "한번 더 누르면 종료됩니다.",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public void openDrawer() {
+        binding.drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    private static class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        FragmentManager manager;
+        Context context;
+        ArrayList<Fragment> fragments = new ArrayList<>();
+
+        public ScreenSlidePagerAdapter(@NonNull FragmentManager fm, Context context) {
+            super(fm);
+            this.manager = fm;
+            this.context = context;
+            fragments.add(new productionInfoFragment());
+            fragments.add(new ScanFragment());
+            fragments.add(new myPageFragment(context));
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+           return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_PAGES;
+        }
+    }
+
+
+
+    public void BottomSheetOpen(){
+        manager.beginTransaction().add(new bottomSheetFragment(),"dialog").commit();
     }
 
     private void GlideImage(ImageView view){
