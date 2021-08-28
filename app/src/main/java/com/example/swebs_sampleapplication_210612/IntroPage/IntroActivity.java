@@ -30,7 +30,7 @@ public class IntroActivity extends AppCompatActivity {
         DotsIndicator indicator = binding.indicatorIntro;
         indicator.setViewPager2(viewPager);
 
-        binding.btnClose.setOnClickListener(new View.OnClickListener() {
+        binding.buttonClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
