@@ -29,11 +29,12 @@ import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
 import com.example.swebs_sampleapplication_210612.Activity.LoginActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ModifyUserInfoActivity;
-import com.example.swebs_sampleapplication_210612.Activity.MyTopMenuActivity;
+import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Listener.NetworkListener;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickStringListener;
 import com.example.swebs_sampleapplication_210612.Dialog.EditTextDialog;
+import com.example.swebs_sampleapplication_210612.Dialog.InputPasswordDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog2;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.NumberPickerModel2;
@@ -41,6 +42,7 @@ import com.example.swebs_sampleapplication_210612.Dialog.RecommendCodeDialog;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.ViewModel.UserInfoViewModel;
+import com.example.swebs_sampleapplication_210612.databinding.DialogInputPasswordBinding;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMyPageBinding;
 import com.example.swebs_sampleapplication_210612.util.UserLoginController;
 
@@ -156,15 +158,15 @@ public class myPageFragment extends Fragment {
 
         // 내 리뷰 버튼 클릭시
         binding.btnMypageMyReview.setOnClickListener(v ->
-                Intent_to_Activity("review", new Intent(requireContext(), MyTopMenuActivity.class)));
+                Intent_to_Activity("my_review", new Intent(requireContext(), TopMenuActivity.class)));
 
         // 내 이벤트 버튼 클릭시
         binding.btnMypageMyEvent.setOnClickListener(v ->
-                Intent_to_Activity("event", new Intent(requireContext(), MyTopMenuActivity.class)));
+                Intent_to_Activity("my_event", new Intent(requireContext(), TopMenuActivity.class)));
 
         // 내 서베이 버튼 클릭시
         binding.btnMypageMySurvey.setOnClickListener(v ->
-                Intent_to_Activity("survey", new Intent(requireContext(), MyTopMenuActivity.class)));
+                Intent_to_Activity("my_survey", new Intent(requireContext(), TopMenuActivity.class)));
 
 
         //출생년도 클릭시
@@ -176,7 +178,7 @@ public class myPageFragment extends Fragment {
 
             } else {
                 // 게스트 아닐땐 회원정보 수정 표시
-                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+                dialog_input_pass();
             }
         });
 
@@ -187,7 +189,7 @@ public class myPageFragment extends Fragment {
                     dialogGender();
             }else{
                 // 게스트 아닐땐 회원정보 수정 표시
-                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+                dialog_input_pass();
             }
         });
 
@@ -198,7 +200,7 @@ public class myPageFragment extends Fragment {
                     dialogNickname();
             }else{
                 // 게스트 아닐땐 회원정보 수정 표시
-                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+                dialog_input_pass();
             }
         });
 
@@ -209,14 +211,14 @@ public class myPageFragment extends Fragment {
                     dialogCountry();
             } else {
                 // 게스트 아닐땐 회원정보 수정 표시
-                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+                dialog_input_pass();
             }
         });
 
         //상단 프로필 사진 클릭시
         binding.mypageImageProfile.setOnClickListener(v -> {
             // 회원정보 수정
-            Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+            dialog_input_pass();
         });
 
         // Point 정책 자세히 보기
@@ -542,6 +544,34 @@ public class myPageFragment extends Fragment {
         dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         dialog.show();
 
+    }
+
+    private void dialog_input_pass(){
+
+        InputPasswordDialog dialog = new InputPasswordDialog(requireContext(), new DialogClickStringListener() {
+            @Override
+            public void onPositiveClick(String string) {
+               if(string.equals("success")){
+                   Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+               }else {
+                   Toast.makeText(requireContext(), "회원정보 수정 오류", Toast.LENGTH_SHORT).show();
+               }
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+
+            @Override
+            public void onCloseClick() {
+
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        dialog.show();
     }
 
     @SuppressLint("ClickableViewAccessibility")

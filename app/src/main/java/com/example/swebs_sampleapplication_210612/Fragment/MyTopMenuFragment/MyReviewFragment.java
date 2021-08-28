@@ -9,13 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.adapter.EventAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.MyReviewAdapter;
-import com.example.swebs_sampleapplication_210612.databinding.FragmentMyReviewFragemntBinding;
+import com.example.swebs_sampleapplication_210612.databinding.FragmentMyReviewBinding;
 
 public class MyReviewFragment extends Fragment {
-    private FragmentMyReviewFragemntBinding binding;
+    private FragmentMyReviewBinding binding;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +22,7 @@ public class MyReviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentMyReviewFragemntBinding.inflate(inflater,container,false);
+        binding = FragmentMyReviewBinding.inflate(inflater,container,false);
 
         MyReviewAdapter adapter = new MyReviewAdapter(requireContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);

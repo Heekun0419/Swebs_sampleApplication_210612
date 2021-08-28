@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class IntroActivity extends AppCompatActivity {
     private ActivityIntroBinding binding;
     private ArrayList<Integer> drawableList = new ArrayList<>();
+    ViewPager2 viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,12 +24,24 @@ public class IntroActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         addList();
         IntroAdapter adapter = new IntroAdapter(this,drawableList);
-        ViewPager2 viewPager = binding.viewPager2IntroLayout;
+        viewPager = binding.viewPager2IntroLayout;
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         viewPager.setAdapter(adapter);
 
         DotsIndicator indicator = binding.indicatorIntro;
         indicator.setViewPager2(viewPager);
+
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if(position == drawableList.size()-1) {
+                    binding.buttonNext.setText("시작하기");
+                } else {
+                    binding.buttonNext.setText("NEXT");
+                }
+            }
+        });
 
         binding.btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +58,11 @@ public class IntroActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 
     private void addList(){
         drawableList.add(R.drawable.intro_step00);
