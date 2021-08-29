@@ -45,7 +45,16 @@ public class MoreEventFragment extends Fragment implements OnItemClickListener {
         viewModel = new EventViewModel(requireActivity().getApplication());
 
         //ViewModel 에서 리스트로 받아오기
-        viewModel.getLiveEventList().observe(getViewLifecycleOwner(), this::initEventRecycler);
+        viewModel.getLiveEventList().observe(getViewLifecycleOwner(), eventModels -> {
+            if (eventModels.size() > 0) {
+                binding.noticeTextView.setVisibility(View.GONE);
+                binding.recyclerViewMoreEvent.setVisibility(View.VISIBLE);
+                initEventRecycler(eventModels);
+            } else {
+                binding.noticeTextView.setVisibility(View.VISIBLE);
+                binding.recyclerViewMoreEvent.setVisibility(View.GONE);
+            }
+        });
 
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), aBoolean -> {
             if (aBoolean != null)

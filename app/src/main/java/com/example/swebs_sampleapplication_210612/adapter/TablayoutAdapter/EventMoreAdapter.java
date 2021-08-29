@@ -45,8 +45,14 @@ public class EventMoreAdapter extends RecyclerView.Adapter<EventMoreAdapter.Even
        holder.binding.textViewEventDate.setText(eventModel.getDateOfEvent());
        holder.binding.textViewEventTitle.setText(eventModel.getTitle());
 
-       holder.binding.imageViewEventState.setBackgroundResource(R.drawable.event_state_icon_proceeding);
-       holder.binding.textviewEventState.setText("체험단");
+       if (eventModel.getStatus() == 1)
+           holder.binding.imageViewEventState.setBackgroundResource(R.drawable.event_state_icon_proceeding);
+       else if (eventModel.getStatus() == 2)
+           holder.binding.imageViewEventState.setBackgroundResource(R.drawable.event_state_icon_not_progress);
+       else
+           holder.binding.imageViewEventState.setBackgroundResource(R.drawable.event_state_icon_finish);
+
+        holder.binding.textviewEventState.setText(eventModel.getStatusText());
     }
 
     @Override

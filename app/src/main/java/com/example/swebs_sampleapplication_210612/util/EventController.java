@@ -32,7 +32,7 @@ public class EventController {
 
     public void getEventList() {
         HashMap<String, RequestBody> formData = new HashMap<>();
-        formData.put("inputFirstIndex", RequestBody.create("1", MediaType.parse("text/plane")));
+        formData.put("inputFirstIndex", RequestBody.create("0", MediaType.parse("text/plane")));
         formData.put("inputLastIndex", RequestBody.create("9999", MediaType.parse("text/plane")));
 
         Call<EventListModel> call = retroAPI.getEventList(formData);

@@ -52,6 +52,16 @@
         android:paddingBottom="20dp"
         android:scrollbars="vertical" />
 
+    <TextView
+        android:id="@+id/noticeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="등록된 이벤트가 없습니다."
+        android:textSize="15dp"
+        android:textStyle="bold"/>
+
     <include
         android:id="@+id/loadingView"
         android:layout_width="match_parent"

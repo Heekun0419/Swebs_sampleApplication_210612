@@ -51,7 +51,7 @@ public class MyEventFragment extends Fragment implements OnItemClickListener {
     }
 
     private void initEventRecycler(ArrayList<EventModel> list){
-        EventMoreAdapter adapter = new EventMoreAdapter(requireContext(),list,this);
+        EventMoreAdapter adapter = new EventMoreAdapter(requireContext(), list,this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
         binding.recyclerViewMyEvent.setLayoutManager(linearLayoutManager);
         binding.recyclerViewMyEvent.setAdapter(adapter);
