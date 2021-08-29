@@ -192,6 +192,14 @@
 
     <!-- 내 이벤트 -->
     <string name="my_review_text_1">내 리뷰</string>
+    <string name="my_review_text_2">정렬</string>
+
+    <string-array name="spinner_list">
+        <item>진행중</item>
+        <item>마감</item>
+    </string-array>
+
+
     <string-array name="my_review_tab_list">
         <item>내 리뷰</item>
         <item>찜한 리뷰</item>
