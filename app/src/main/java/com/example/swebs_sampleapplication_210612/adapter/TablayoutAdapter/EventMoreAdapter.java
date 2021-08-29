@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
 import com.example.swebs_sampleapplication_210612.adapter.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.databinding.ItemMoreEventBinding;
@@ -43,6 +44,9 @@ public class EventMoreAdapter extends RecyclerView.Adapter<EventMoreAdapter.Even
        holder.binding.textViewCompanyName.setText(eventModel.getCompanyName());
        holder.binding.textViewEventDate.setText(eventModel.getDateOfEvent());
        holder.binding.textViewEventTitle.setText(eventModel.getTitle());
+
+       holder.binding.imageViewEventState.setBackgroundResource(R.drawable.event_state_icon_proceeding);
+       holder.binding.textviewEventState.setText("체험단");
     }
 
     @Override

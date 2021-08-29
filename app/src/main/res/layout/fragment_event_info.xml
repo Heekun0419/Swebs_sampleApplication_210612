@@ -65,7 +65,7 @@
         android:layout_width="70dp"
         android:layout_height="26dp"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/product_event_stroke_radius"
+        android:background="@drawable/event_state_icon_not_progress"
         android:text="+10P"
         android:textStyle="bold"
         android:textSize="8dp"

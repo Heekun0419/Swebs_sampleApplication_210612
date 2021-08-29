@@ -19,7 +19,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,7 +29,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imageView_product_event_profile"
@@ -51,13 +51,23 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/imageView_event_state"
                 android:layout_width="70dp"
-                android:layout_height="20dp"
+                android:layout_height="25dp"
                 android:layout_marginEnd="5dp"
-                android:background="@drawable/product_event_stroke_radius"
                 app:layout_constraintEnd_toEndOf="@+id/view"
                 app:layout_constraintTop_toTopOf="@+id/view" />
+
+            <TextView
+                android:id="@+id/textview_event_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="10dp"
+                app:layout_constraintTop_toTopOf="@+id/imageView_event_state"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView_event_state"
+                app:layout_constraintStart_toStartOf="@+id/imageView_event_state"
+                app:layout_constraintEnd_toEndOf="@+id/imageView_event_state"/>
 
             <TextView
                 android:id="@+id/textView_productName"
@@ -92,8 +102,10 @@
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp"
                 android:text="이벤트기간 : "
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView_productName"
                 app:layout_constraintTop_toBottomOf="@+id/textView_productName" />
 
