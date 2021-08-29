@@ -90,4 +90,11 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/qrscan" />
 
+
+    <include
+        android:id="@+id/tutorial_scan_page"
+        android:visibility="gone"
+        layout="@layout/tutorial_scan_layout"
+        android:animateLayoutChanges="true"/>
+
 </FrameLayout>

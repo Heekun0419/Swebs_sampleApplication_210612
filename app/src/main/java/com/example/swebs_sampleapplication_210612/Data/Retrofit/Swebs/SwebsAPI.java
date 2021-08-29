@@ -1,5 +1,6 @@
 package com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs;
 
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CategoryModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.GuestSignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LoginModel;
@@ -11,6 +12,8 @@ import java.util.Map;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PartMap;
@@ -72,5 +75,6 @@ public interface SwebsAPI {
             @PartMap Map<String, RequestBody> prams
     );
 
-
+    @GET("src1/event/get_category.php")
+    Call<CategoryModel> getCategory();
 }

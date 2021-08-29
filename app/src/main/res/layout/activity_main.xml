@@ -7,22 +7,8 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:fitsSystemWindows="false"
     tools:openDrawer="start">
-
-    <FrameLayout
-        android:id="@+id/FrameLayout_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewpager2_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.viewpager.widget.ViewPager>
-
-    </FrameLayout>
 
     <include
         android:id="@+id/nav_view"
@@ -31,5 +17,15 @@
         android:layout_width="360dp"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager2_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.viewpager.widget.ViewPager>
+
+
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

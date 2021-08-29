@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -14,6 +15,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CategoryDetailModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CategoryModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.Fragment.MainFragment.ScanFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MainFragment.myPageFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MainFragment.productionInfoFragment;
@@ -25,6 +30,7 @@ import com.example.swebs_sampleapplication_210612.Fragment.MyTopMenuFragment.MyE
 import com.example.swebs_sampleapplication_210612.Fragment.MyTopMenuFragment.MyReviewFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MyTopMenuFragment.MySurveyFragment;
 import com.example.swebs_sampleapplication_210612.R;
+import com.example.swebs_sampleapplication_210612.ViewModel.CategoryViewModel;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityTopMenuBinding;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -34,17 +40,28 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class TopMenuActivity extends FragmentActivity {
 
     private ActivityTopMenuBinding binding;
     private FragmentManager manager;
+    private SwebsAPI retroAPI;
     TabLayout tabLayout;
     public static int NUM_PAGES;
     private String[] List ={};
+    ViewPager2 viewPager;
+    private CategoryViewModel viewModel;
+    ArrayList<CategoryDetailModel> list = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        // retrofit Api 불러오기
+        retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
+        viewModel =new CategoryViewModel(getApplication());
         binding = ActivityTopMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -60,7 +77,7 @@ public class TopMenuActivity extends FragmentActivity {
         // 코드따라서 프라그먼트 불러옴.
         switch (requestCode) {
             case "event":
-                setTabLayout(getResources().getStringArray(R.array.tabLayout_list_event));
+                getCategoryFromServer();
                 binding.textViewTopMenuName.setText("이벤트");
                 break;
             case "certified":
@@ -89,19 +106,12 @@ public class TopMenuActivity extends FragmentActivity {
                 break;
         }
 
-
-        ViewPager2 viewPager =  binding.viewPager2TabLayoutActivity;
-        ViewPagerAdapter adapter = new ViewPagerAdapter(this,this, NUM_PAGES, requestCode);
-        viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(3);
-
-        new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
+        viewModel.getCategoryDetailModelLiveData().observe(this, new Observer<ArrayList<CategoryDetailModel>>() {
             @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                tab.setText(List[position]);
+            public void onChanged(ArrayList<CategoryDetailModel> list) {
+                initViewPager(requestCode,list);
             }
-        }).attach();
+        });
 
 
     }
@@ -112,25 +122,29 @@ public class TopMenuActivity extends FragmentActivity {
     }
 
     private static class ViewPagerAdapter extends FragmentStateAdapter {
+
         Context context;
         int numPage;
         String title;
+        ArrayList<CategoryDetailModel> list = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentActivity fa, Context context, int numPage, String title) {
+        public ViewPagerAdapter(FragmentActivity fa, Context context, int numPage, String title, ArrayList<CategoryDetailModel> list) {
             super(fa);
             this.context = context;
             this.numPage = numPage;
             this.title = title;
+            this.list = list;
         }
 
         @NotNull
         @Override
         public Fragment createFragment(int position) {
+            CategoryDetailModel detailModel = list.get(position);
             switch (title) {
                 case "certified":
                     return new MoreCertifiedFragment(position);
                 case "event":
-                    return new MoreEventFragment(position);
+                    return new MoreEventFragment(detailModel.getCategory_srl());
                 case "review":
                     return new MoreReviewFragment(position);
                 case "my_review":
@@ -146,7 +160,52 @@ public class TopMenuActivity extends FragmentActivity {
 
         @Override
         public int getItemCount() {
-            return numPage;
+            return list.size();
         }
+    }
+
+    private void getCategoryFromServer(){
+        Call<CategoryModel> call = retroAPI.getCategory();
+        call.enqueue(new Callback<CategoryModel>() {
+            @Override
+            public void onResponse(Call<CategoryModel> call, Response<CategoryModel> response) {
+               if(response.isSuccessful() && response.body()!=null) {
+
+                   CategoryModel categoryModel = response.body();
+
+                   for(CategoryDetailModel detailModel : categoryModel.getCategory()) {
+                       list.add(detailModel);
+                   }
+                   viewModel.setCategoryDetailModelLiveData(list);
+
+               }
+            }
+
+            @Override
+            public void onFailure(Call<CategoryModel> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void initViewPager(String title, ArrayList<CategoryDetailModel> list){
+        viewPager =  binding.viewPager2TabLayoutActivity;
+        ViewPagerAdapter adapter = new ViewPagerAdapter(this,this, NUM_PAGES, title, list);
+        viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
+        viewPager.setAdapter(adapter);
+        //viewPager.setOffscreenPageLimit(3);
+
+        new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                if(title.equals("event")) {
+                    // 타이틀 탭레이아웃에 set
+                    tab.setText(list.get(position).getCategory_title());
+                } else {
+                    tab.setText(List[position]);
+                }
+
+            }
+        }).attach();
     }
 }

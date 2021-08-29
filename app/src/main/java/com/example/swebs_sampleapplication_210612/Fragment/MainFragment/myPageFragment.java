@@ -152,15 +152,15 @@ public class myPageFragment extends Fragment {
 
         // 내 리뷰 버튼 클릭시
         binding.btnMypageMyReview.setOnClickListener(v ->
-                Intent_to_Activity("review", new Intent(requireContext(), TopMenuActivity.class)));
+                Intent_to_Activity("my_review", new Intent(requireContext(), TopMenuActivity.class)));
 
         // 내 이벤트 버튼 클릭시
         binding.btnMypageMyEvent.setOnClickListener(v ->
-                Intent_to_Activity("event", new Intent(requireContext(), TopMenuActivity.class)));
+                Intent_to_Activity("my_event", new Intent(requireContext(), TopMenuActivity.class)));
 
         // 내 서베이 버튼 클릭시
         binding.btnMypageMySurvey.setOnClickListener(v ->
-                Intent_to_Activity("survey", new Intent(requireContext(), TopMenuActivity.class)));
+                Intent_to_Activity("my_survey", new Intent(requireContext(), TopMenuActivity.class)));
 
 
         //출생년도 클릭시
