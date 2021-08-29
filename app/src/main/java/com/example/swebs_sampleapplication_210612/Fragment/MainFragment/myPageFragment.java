@@ -29,7 +29,7 @@ import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
 import com.example.swebs_sampleapplication_210612.Activity.LoginActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ModifyUserInfoActivity;
-import com.example.swebs_sampleapplication_210612.Activity.MyTopMenuActivity;
+import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Listener.netSignupListener;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickStringListener;
@@ -152,15 +152,15 @@ public class myPageFragment extends Fragment {
 
         // 내 리뷰 버튼 클릭시
         binding.btnMypageMyReview.setOnClickListener(v ->
-                Intent_to_Activity("review", new Intent(requireContext(), MyTopMenuActivity.class)));
+                Intent_to_Activity("review", new Intent(requireContext(), TopMenuActivity.class)));
 
         // 내 이벤트 버튼 클릭시
         binding.btnMypageMyEvent.setOnClickListener(v ->
-                Intent_to_Activity("event", new Intent(requireContext(), MyTopMenuActivity.class)));
+                Intent_to_Activity("event", new Intent(requireContext(), TopMenuActivity.class)));
 
         // 내 서베이 버튼 클릭시
         binding.btnMypageMySurvey.setOnClickListener(v ->
-                Intent_to_Activity("survey", new Intent(requireContext(), MyTopMenuActivity.class)));
+                Intent_to_Activity("survey", new Intent(requireContext(), TopMenuActivity.class)));
 
 
         //출생년도 클릭시
@@ -326,12 +326,6 @@ public class myPageFragment extends Fragment {
         });
 
         // Data observe -- END
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        setTutorial();
     }
 
     private void Intent_to_Activity(String extra,  Intent intent){
