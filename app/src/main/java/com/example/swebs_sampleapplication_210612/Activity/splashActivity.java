@@ -12,18 +12,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Listener.NetworkListener;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Listener.netSignupListener;
 import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.SwebsDatabase;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
@@ -80,7 +76,7 @@ public class splashActivity extends AppCompatActivity {
             // Exist Login Data - verify Token Check
             new UserLoginController(
                     getApplication(),
-                    new NetworkListener() {
+                    new netSignupListener() {
                         @Override
                         public void onSuccess() {
                             setStartIntent(SystemClock.elapsedRealtime() - NetworkTime);
@@ -102,7 +98,7 @@ public class splashActivity extends AppCompatActivity {
             // None Exist Login Data - Guest Login
             new UserLoginController(
                     getApplication(),
-                    new NetworkListener() {
+                    new netSignupListener() {
                         @Override
                         public void onSuccess() {
                             setStartIntent(SystemClock.elapsedRealtime() - NetworkTime);

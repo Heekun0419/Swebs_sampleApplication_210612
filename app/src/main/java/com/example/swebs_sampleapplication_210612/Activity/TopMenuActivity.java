@@ -78,6 +78,7 @@ public class TopMenuActivity extends FragmentActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(this,this, NUM_PAGES, requestCode);
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
 
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
@@ -98,6 +99,7 @@ public class TopMenuActivity extends FragmentActivity {
         Context context;
         int numPage;
         String title;
+
         public ViewPagerAdapter(FragmentActivity fa, Context context, int numPage, String title) {
             super(fa);
             this.context = context;

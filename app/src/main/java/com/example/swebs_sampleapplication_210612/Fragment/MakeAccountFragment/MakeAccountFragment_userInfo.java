@@ -5,24 +5,19 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Activity.MakeAccountActivity;
@@ -37,7 +32,7 @@ import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.NumberPickerModel2;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMakeAccountUserInfoBinding;
-import com.example.swebs_sampleapplication_210612.util.onSingleClickListener;
+import com.example.swebs_sampleapplication_210612.util.Listener.onSingleClickListener;
 
 import java.util.ArrayList;
 import java.util.Collections;

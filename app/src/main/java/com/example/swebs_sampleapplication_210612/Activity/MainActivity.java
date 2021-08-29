@@ -1,6 +1,7 @@
 package com.example.swebs_sampleapplication_210612.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -8,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.Observer;
@@ -22,11 +24,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
+import com.example.swebs_sampleapplication_210612.Fragment.MainFragment.ScanZxingFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.bottomSheetFragment;
 import com.example.swebs_sampleapplication_210612.IntroPage.IntroActivity;
 import com.example.swebs_sampleapplication_210612.IntroPage.IntroAdapter;
@@ -45,9 +49,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity {
 
-    public static final int NUM_PAGES = 3;
-
-    private FragmentStatePagerAdapter adapter;
+    public static final int NUM_PAGES = 4;
     private ActivityMainBinding binding;
     private FragmentManager manager;
     private MyInfoRepository myInfoRepository;
@@ -65,8 +67,11 @@ public class MainActivity extends FragmentActivity {
 
         manager = getSupportFragmentManager();
         myInfoRepository = new MyInfoRepository(getApplication());
-        binding.viewpager2Main.setAdapter(new ScreenSlidePagerAdapter(manager,this));
+
+        ScreenSlidePagerAdapter viewPagerAdapter = new ScreenSlidePagerAdapter(manager);
+        binding.viewpager2Main.setAdapter(viewPagerAdapter);
         binding.viewpager2Main.setCurrentItem(1, false);
+        binding.viewpager2Main.setOffscreenPageLimit(2);
 
         // Intro Page...
         if (!sPmanager.getIntroPage()) {
@@ -126,6 +131,13 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d("zxing", "call - Main");
     }
 
     @Override
@@ -192,18 +204,17 @@ public class MainActivity extends FragmentActivity {
         binding.drawerLayout.openDrawer(GravityCompat.START);
     }
 
-    private static class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+    private static class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
         FragmentManager manager;
-        Context context;
         ArrayList<Fragment> fragments = new ArrayList<>();
 
-        public ScreenSlidePagerAdapter(@NonNull FragmentManager fm, Context context) {
-            super(fm);
+        public ScreenSlidePagerAdapter(@NonNull FragmentManager fm) {
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
             this.manager = fm;
-            this.context = context;
             fragments.add(new productionInfoFragment());
-            fragments.add(new ScanFragment());
-            fragments.add(new myPageFragment(context));
+            //fragments.add(new ScanFragment());
+            fragments.add(new ScanZxingFragment());
+            fragments.add(new myPageFragment());
         }
 
         @NonNull
@@ -214,10 +225,14 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public int getCount() {
-            return NUM_PAGES;
+            return 3;
+        }
+
+        @Override
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+            super.destroyItem(container, position, object);
         }
     }
-
 
 
     public void BottomSheetOpen(){

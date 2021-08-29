@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Listener.NetworkListener;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Listener.netSignupListener;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog;
@@ -92,7 +92,7 @@ public class AppInformationFragment extends Fragment {
                     } else {
                         UserLoginController userLoginController = new UserLoginController(
                                 requireActivity().getApplication(),
-                                new NetworkListener() {
+                                new netSignupListener() {
                                     @Override
                                     public void onSuccess() {
 

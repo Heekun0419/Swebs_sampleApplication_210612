@@ -9,14 +9,11 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
-import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.SystemClock;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -30,7 +27,7 @@ import com.example.swebs_sampleapplication_210612.Activity.LoginActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ModifyUserInfoActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MyTopMenuActivity;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Listener.NetworkListener;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Listener.netSignupListener;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickStringListener;
 import com.example.swebs_sampleapplication_210612.Dialog.EditTextDialog;
@@ -44,7 +41,6 @@ import com.example.swebs_sampleapplication_210612.ViewModel.UserInfoViewModel;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMyPageBinding;
 import com.example.swebs_sampleapplication_210612.util.UserLoginController;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -54,8 +50,7 @@ import java.util.Locale;
 public class myPageFragment extends Fragment {
     private FragmentMyPageBinding binding;
     private String country;
-    private final Context context;
-    private String userType, userBirthDay;
+    private String userType;
     private SPmanager sPmanager;
     private final Animation fadeOut = new AlphaAnimation(1,0);
     private final Animation fadeIn = new AlphaAnimation(0,1);
@@ -64,8 +59,7 @@ public class myPageFragment extends Fragment {
 
     private long mLastClickTime;
 
-    public myPageFragment(Context context) {
-        this.context = context;
+    public myPageFragment() {
     }
 
     @Override
@@ -83,15 +77,13 @@ public class myPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         binding = FragmentMyPageBinding.inflate(inflater,container,false);
 
         // 뷰모델 설정
         viewModel = new ViewModelProvider(this).get(UserInfoViewModel.class);
 
         // user type 검사해서 View 변환
-        sPmanager = new SPmanager(context);
+        sPmanager = new SPmanager(requireContext());
         binding.tutorialMyPage.getRoot().setVisibility(View.GONE);
         RenderMyPageFromUserType(sPmanager.getUserType());
 
@@ -235,20 +227,17 @@ public class myPageFragment extends Fragment {
             startActivity(intent);
         });
 
+        observerStart();
+
         return binding.getRoot();
     }
 
     @SuppressLint("SetTextI18n")
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        setTutorial();
-
+    private void observerStart() {
         // Data Observe -- START
-        viewModel.getUserInfoFromKey("userSrl").observe(this, s -> {
+        viewModel.getUserInfoFromKey("userSrl").observe(getViewLifecycleOwner(), s -> {
             if (s == null)
-                new UserLoginController(requireActivity().getApplication(), new NetworkListener() {
+                new UserLoginController(requireActivity().getApplication(), new netSignupListener() {
                     @Override
                     public void onSuccess() {
 
@@ -267,20 +256,20 @@ public class myPageFragment extends Fragment {
         });
 
         // userType
-        viewModel.getUserInfoFromKey("userType").observe(this, s -> {
+        viewModel.getUserInfoFromKey("userType").observe(getViewLifecycleOwner(), s -> {
             if (s != null)
                 RenderMyPageFromUserType(s);
             userType = s;
         });
 
         // Email
-        viewModel.getUserInfoFromKey("email").observe(this, s -> {
+        viewModel.getUserInfoFromKey("email").observe(getViewLifecycleOwner(), s -> {
             if (s != null)
                 binding.mypageTextViewID.setText(s);
         });
 
         // Name
-        viewModel.getUserInfoFromKey("name").observe(this, s -> {
+        viewModel.getUserInfoFromKey("name").observe(getViewLifecycleOwner(), s -> {
             if (s != null) {
                 String viewText = s + " 님";
                 binding.mypageTextViewName.setText(s);
@@ -288,7 +277,7 @@ public class myPageFragment extends Fragment {
         });
 
         // Point
-        viewModel.getUserInfoFromKey("point").observe(this, s -> {
+        viewModel.getUserInfoFromKey("point").observe(getViewLifecycleOwner(), s -> {
             if (s != null) {
                 String viewText = s + " P";
                 binding.mypagePointText.setText(viewText);
@@ -296,7 +285,7 @@ public class myPageFragment extends Fragment {
         });
 
         // nickName
-        viewModel.getUserInfoFromKey("nickName").observe(this, s -> {
+        viewModel.getUserInfoFromKey("nickName").observe(getViewLifecycleOwner(), s -> {
             String viewText = "미등록";
             if (s != null) {
                 viewText = s;
@@ -308,7 +297,7 @@ public class myPageFragment extends Fragment {
         });
 
         // Birthday
-        viewModel.getUserInfoFromKey("birthday").observe(this, s -> {
+        viewModel.getUserInfoFromKey("birthday").observe(getViewLifecycleOwner(), s -> {
             String viewText = "미등록";
             if (s != null) {
                 viewText = s.length() > 4 ? s.substring(0, 4) : s;
@@ -320,10 +309,10 @@ public class myPageFragment extends Fragment {
         });
 
         // Gender
-        viewModel.getUserInfoFromKey("gender").observe(this, this::renderGenderView);
+        viewModel.getUserInfoFromKey("gender").observe(getViewLifecycleOwner(), this::renderGenderView);
 
         // country
-        viewModel.getUserInfoFromKey("country").observe(this, s -> {
+        viewModel.getUserInfoFromKey("country").observe(getViewLifecycleOwner(), s -> {
             String viewText = "미등록";
             if (s != null) {
                 viewText = countryCodeToName(s);
@@ -331,7 +320,14 @@ public class myPageFragment extends Fragment {
             }
             binding.mypageCountryTextView.setText(viewText);
         });
+
         // Data observe -- END
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setTutorial();
     }
 
     private void Intent_to_Activity(String extra,  Intent intent){

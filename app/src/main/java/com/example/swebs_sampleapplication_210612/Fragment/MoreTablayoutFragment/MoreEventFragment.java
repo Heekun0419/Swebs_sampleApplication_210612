@@ -33,21 +33,23 @@ public class MoreEventFragment extends Fragment implements OnItemClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new EventViewModel(requireActivity().getApplication());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMoreEventBinding.inflate(inflater,container,false);
+        viewModel = new EventViewModel(requireActivity().getApplication());
 
         //ViewModel 에서 리스트로 받아오기
-        viewModel.getLiveEventList().observe(getViewLifecycleOwner(), new Observer<ArrayList<EventModel>>() {
-            @Override
-            public void onChanged(ArrayList<EventModel> list) {
-                initEventRecycler(list);
-            }
+        viewModel.getLiveEventList().observe(getViewLifecycleOwner(), this::initEventRecycler);
+
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean != null)
+                binding.loadingView.getRoot().setVisibility(aBoolean ? View.VISIBLE : View.GONE);
         });
+
+        viewModel.getEventListFromServer();
 
         return binding.getRoot();
     }
