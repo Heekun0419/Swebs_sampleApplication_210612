@@ -304,6 +304,7 @@ public class ScanFragment extends Fragment {
 
                     if (scanData != null) {
                         openScanResult(scanData, barcode.getValueType());
+
                     } else {
                         showQrException("지원하지 않는 형식의 QR CODE");
                     }

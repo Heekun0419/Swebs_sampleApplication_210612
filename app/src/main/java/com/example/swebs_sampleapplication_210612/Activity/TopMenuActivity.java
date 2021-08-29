@@ -21,6 +21,9 @@ import com.example.swebs_sampleapplication_210612.Fragment.MoreTablayoutFragment
 import com.example.swebs_sampleapplication_210612.Fragment.MoreTablayoutFragment.MoreEventFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MoreTablayoutFragment.MoreReviewFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MoreTablayoutFragment.MoreSurveyFragment;
+import com.example.swebs_sampleapplication_210612.Fragment.MyTopMenuFragment.MyEventFragment;
+import com.example.swebs_sampleapplication_210612.Fragment.MyTopMenuFragment.MyReviewFragment;
+import com.example.swebs_sampleapplication_210612.Fragment.MyTopMenuFragment.MySurveyFragment;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityTopMenuBinding;
 import com.google.android.material.tabs.TabLayout;
@@ -72,7 +75,20 @@ public class TopMenuActivity extends FragmentActivity {
                 setTabLayout(getResources().getStringArray(R.array.tabLayout_list_survey));
                 binding.textViewTopMenuName.setText("서베이");
                 break;
+            case "my_review" :
+                setTabLayout(getResources().getStringArray(R.array.my_review_tab_list));
+                binding.textViewTopMenuName.setText(getString(R.string.my_review_text_1));
+                break;
+            case "my_event" :
+                setTabLayout(getResources().getStringArray(R.array.my_event_tab_list));
+                binding.textViewTopMenuName.setText(getString(R.string.my_event_text_1));
+                break;
+            case "my_survey":
+                setTabLayout(getResources().getStringArray(R.array.my_survey_tab_list));
+                binding.textViewTopMenuName.setText(getString(R.string.my_survey_text_1));
+                break;
         }
+
 
         ViewPager2 viewPager =  binding.viewPager2TabLayoutActivity;
         ViewPagerAdapter adapter = new ViewPagerAdapter(this,this, NUM_PAGES, requestCode);
@@ -87,11 +103,11 @@ public class TopMenuActivity extends FragmentActivity {
             }
         }).attach();
 
+
     }
 
     private void setTabLayout(String[] list){
         NUM_PAGES = list.length;
-        // tabLayout.addTab(tabLayout.newTab().setText(string));
         List = list;
     }
 
@@ -110,14 +126,21 @@ public class TopMenuActivity extends FragmentActivity {
         @NotNull
         @Override
         public Fragment createFragment(int position) {
-            if(title.equals("certified")) {
-                return new MoreCertifiedFragment(position);
-            } else if(title.equals("event")) {
-                return new MoreEventFragment(position);
-            } else if(title.equals("review")) {
-                return new MoreReviewFragment(position);
-            } else{
-                return new MoreSurveyFragment(position);
+            switch (title) {
+                case "certified":
+                    return new MoreCertifiedFragment(position);
+                case "event":
+                    return new MoreEventFragment(position);
+                case "review":
+                    return new MoreReviewFragment(position);
+                case "my_review":
+                    return new MyReviewFragment();
+                case "my_event":
+                    return new MyEventFragment();
+                case "my_survey":
+                    return new MySurveyFragment();
+                default:
+                    return new MoreSurveyFragment(position);
             }
         }
 

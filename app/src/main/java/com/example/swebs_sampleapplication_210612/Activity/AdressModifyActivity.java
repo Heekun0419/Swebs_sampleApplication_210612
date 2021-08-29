@@ -3,6 +3,7 @@ package com.example.swebs_sampleapplication_210612.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.swebs_sampleapplication_210612.databinding.ActivityAdressModifyBinding;
 
@@ -15,5 +16,7 @@ public class AdressModifyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAdressModifyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        binding.btnInformationActivityBack.setOnClickListener(v -> onBackPressed());
     }
 }

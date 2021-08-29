@@ -207,11 +207,9 @@
 
         <ImageButton
             android:id="@+id/imageButton13"
-            android:layout_width="match_parent"
+            android:layout_width="360dp"
             android:layout_height="60dp"
-            android:layout_marginStart="25dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="25dp"
             android:background="@drawable/stroke_radius_button_maincolor"
             android:text="@string/event_info_sample"
             app:layout_constraintEnd_toEndOf="parent"

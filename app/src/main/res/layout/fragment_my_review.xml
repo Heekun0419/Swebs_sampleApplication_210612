@@ -3,28 +3,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Fragment.MyTopMenuFragment.MyEventFragment"
-    android:background="@drawable/login_background"
+    tools:context=".Fragment.MyTopMenuFragment.MyReviewFragment"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="410dp"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal" >
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_my_event"
+            android:id="@+id/recyclerView_my_review"
             android:layout_width="410dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:paddingBottom="70dp"
+            android:paddingBottom="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_weight="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

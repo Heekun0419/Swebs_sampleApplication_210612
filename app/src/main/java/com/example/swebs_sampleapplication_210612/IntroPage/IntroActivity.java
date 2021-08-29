@@ -1,11 +1,9 @@
 package com.example.swebs_sampleapplication_210612.IntroPage;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.example.swebs_sampleapplication_210612.R;
@@ -16,45 +14,39 @@ import java.util.ArrayList;
 
 public class IntroActivity extends AppCompatActivity {
     private ActivityIntroBinding binding;
-    private final ArrayList<Integer> drawableList = new ArrayList<>();
-
+    private ArrayList<Integer> drawableList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityIntroBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
-        addIntroPage();
-
+        addList();
         IntroAdapter adapter = new IntroAdapter(this,drawableList);
-        binding.viewPager2IntroLayout.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
-        binding.viewPager2IntroLayout.setAdapter(adapter);
+        ViewPager2 viewPager = binding.viewPager2IntroLayout;
+        viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
+        viewPager.setAdapter(adapter);
 
         DotsIndicator indicator = binding.indicatorIntro;
-        indicator.setViewPager2(binding.viewPager2IntroLayout);
+        indicator.setViewPager2(viewPager);
 
-        binding.layoutClose.setOnClickListener(v -> onBackPressed());
-        binding.buttonClose.setOnClickListener(v -> onBackPressed());
-
-        binding.viewPager2IntroLayout.setPageTransformer((page, position) -> {
-            if (binding.viewPager2IntroLayout.getCurrentItem() >= drawableList.size()-1)
-                binding.buttonNext.setText("지금 시작하기!");
-            else
-                binding.buttonNext.setText("Next");
+        binding.buttonClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
         });
 
-        binding.buttonNext.setOnClickListener(v -> {
-            if (binding.viewPager2IntroLayout.getCurrentItem() >= drawableList.size()-1)
-                finish();
-            else
-                binding.viewPager2IntroLayout.setCurrentItem(binding.viewPager2IntroLayout.getCurrentItem()+1);
+        binding.buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
+            }
         });
-
-
-
     }
 
-    private void addIntroPage(){
+
+    private void addList(){
         drawableList.add(R.drawable.intro_step00);
         drawableList.add(R.drawable.intro_step01);
         drawableList.add(R.drawable.intro_step02);

@@ -38,6 +38,7 @@ public class IntroAdapter extends RecyclerView.Adapter<IntroAdapter.IntroViewHol
     public void onBindViewHolder(@NonNull IntroViewHolder holder, int position) {
         int drawableId =  drawable.get(position);
         holder.view.setBackgroundResource(drawableId);
+
     }
 
     @Override
