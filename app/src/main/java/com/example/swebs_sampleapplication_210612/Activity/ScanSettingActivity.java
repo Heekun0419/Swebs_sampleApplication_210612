@@ -1,5 +1,6 @@
 package com.example.swebs_sampleapplication_210612.Activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -54,6 +55,12 @@ public class ScanSettingActivity extends AppCompatActivity {
             dialog.setCancelable(false);
             dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
             dialog.show();
+            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    Toast.makeText(getApplicationContext(), "취소됨", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 }

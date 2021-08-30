@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -15,6 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -150,6 +152,12 @@ public class myPageFragment extends Fragment {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
             dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
             dialog.show();
+            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    Toast.makeText(requireContext(), "취소됨", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
         // 내 리뷰 버튼 클릭시
@@ -381,6 +389,12 @@ public class myPageFragment extends Fragment {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         dialog.show();
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                Toast.makeText(requireContext(), "취소됨", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void dialogBirthday() {
@@ -434,7 +448,7 @@ public class myPageFragment extends Fragment {
     }
 
     private void dialogNickname() {
-        EditTextDialog dialog = new EditTextDialog(requireContext(), new BasicDialogTextModel(
+        EditTextDialog EditDialog = new EditTextDialog(requireContext(), new BasicDialogTextModel(
                 "닉네임",
                 "닉네임을 입력해주세요",
                 "설정",
@@ -442,6 +456,7 @@ public class myPageFragment extends Fragment {
             @Override
             public void onPositiveClick(String string) {
                 viewModel.insertUserInfo("nickName", string);
+
             }
 
             @Override
@@ -454,10 +469,12 @@ public class myPageFragment extends Fragment {
 
             }
         });
-        dialog.setCancelable(false);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        dialog.show();
+        EditDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        EditDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        EditDialog.show();
+        EditDialog.setOnCancelListener(dialog ->
+                Toast.makeText(requireContext(), "취소됨", Toast.LENGTH_SHORT).show());
+
     }
 
     private void dialogGender() {
@@ -502,6 +519,12 @@ public class myPageFragment extends Fragment {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         dialog.show();
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                Toast.makeText(requireContext(), "취소됨", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void dialogCountry() {
@@ -561,6 +584,12 @@ public class myPageFragment extends Fragment {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         dialog.show();
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                Toast.makeText(requireContext(), "취소됨", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

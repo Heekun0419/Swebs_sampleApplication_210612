@@ -2,12 +2,14 @@ package com.example.swebs_sampleapplication_210612.Dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.databinding.DialogEdittextBinding;
@@ -60,4 +62,6 @@ public class EditTextDialog extends Dialog {
             dismiss();
         });
     }
+
 }
+

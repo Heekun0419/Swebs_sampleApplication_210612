@@ -1,6 +1,7 @@
 package com.example.swebs_sampleapplication_210612.Fragment.Information_menu;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
@@ -80,6 +81,12 @@ public class AppInformationFragment extends Fragment {
             dialog.setCancelable(false);
             dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
             dialog.show();
+            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    Toast.makeText(requireContext(), "취소됨", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
         binding.textViewLogOut.setOnClickListener(v -> {
