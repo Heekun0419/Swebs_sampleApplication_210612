@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -97,6 +98,8 @@ public class MainActivity extends FragmentActivity {
         manager.setFragmentResultListener("Y", this, (requestKey, result) -> {
 
         });
+
+        Log.d("testtest", "sdfsdf\ndkssud");
 
 
         binding.navView.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

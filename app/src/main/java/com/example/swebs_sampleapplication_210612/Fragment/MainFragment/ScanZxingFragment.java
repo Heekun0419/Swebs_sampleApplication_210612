@@ -2,24 +2,28 @@ package com.example.swebs_sampleapplication_210612.Fragment.MainFragment;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
+import com.example.swebs_sampleapplication_210612.Activity.AuthenticScanActivity;
+import com.example.swebs_sampleapplication_210612.Activity.QRLinkActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ScanSettingActivity;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanDataPushModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentScanZxingBinding;
+import com.example.swebs_sampleapplication_210612.util.GpsTracker;
+import com.example.swebs_sampleapplication_210612.util.Listener.onScanListener;
+import com.example.swebs_sampleapplication_210612.util.ScanController;
+import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
@@ -28,18 +32,31 @@ import com.journeyapps.barcodescanner.ViewfinderView;
 import com.journeyapps.barcodescanner.camera.CameraSettings;
 
 import java.lang.reflect.Field;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ScanZxingFragment extends Fragment {
     private FragmentScanZxingBinding binding;
+
+    private SwebsAPI retroAPI;
+    private SPmanager sPmanager;
 
     private CaptureManager captureManager;
     private CameraSettings cameraSettings;
     private boolean firstResume = false;
     private boolean isFlashOn;
     private boolean isScanning;
-
-    private SPmanager sPmanager;
 
     public ScanZxingFragment() {
         // Required empty public constructor
@@ -48,7 +65,8 @@ public class ScanZxingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sPmanager = new SPmanager(requireContext());
+        retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
+        sPmanager = new SPmanager(getContext());
     }
 
     @Override
@@ -57,35 +75,6 @@ public class ScanZxingFragment extends Fragment {
 
         binding = FragmentScanZxingBinding.inflate(getLayoutInflater());
 
-        String content = binding.textVIewScanExplain.getText().toString();
-        SpannableString spannableString = new SpannableString(content);
-        String word = "QR코드를";
-        int start = content.indexOf(word);
-        int end = start + word.length();
-        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#93E3BE")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        binding.textVIewScanExplain.setText(spannableString);
-
-        // 앱바에 로고 안보이게 하기
-        binding.includedAppbarScan.imageView19.setVisibility(View.INVISIBLE);
-        binding.includedAppbarScan.imageButton2.setBackgroundColor(Color.TRANSPARENT);
-
-        // 네비게이션 드로어 열기
-        binding.includedAppbarScan.imageButton.setOnClickListener(v -> ((MainActivity)requireActivity()).openDrawer());
-
-        // 튜토리얼 페이지 닫기
-        binding.tutorialScanPage.textViewScanTutorialClose.setOnClickListener(v -> {
-            binding.tutorialScanPage.getRoot().setVisibility(View.GONE);
-            sPmanager.setScanTutorialExit(true);
-        });
-
-        binding.tutorialScanPage.imageButton5.setOnClickListener(v -> {
-            binding.tutorialScanPage.getRoot().setVisibility(View.GONE);
-            sPmanager.setScanTutorialExit(true);
-        });
-
-        // Bottom Sheet 열기
-        binding.includedAppbarScan.imageButton2.setOnClickListener(v ->
-                ((MainActivity)requireActivity()).BottomSheetOpen());
 
         ViewfinderView viewfinderView = binding.zxingBarcodeScanner.getViewFinder();
         try {
@@ -99,9 +88,10 @@ public class ScanZxingFragment extends Fragment {
         binding.zxingBarcodeScanner.decodeContinuous(new BarcodeCallback() {
             @Override
             public void barcodeResult(BarcodeResult result) {
-                if (isScanning)
-
-                Log.d("zxing", "result 2: " + result.getText());
+                if (isScanning) {
+                    isScanning = false;
+                    progressScanData(result);
+                }
             }
 
             @Override
@@ -128,7 +118,7 @@ public class ScanZxingFragment extends Fragment {
             }
         });
 
-        binding.zxingBarcodeScanner.getBarcodeView().getCameraSettings().setAutoFocusEnabled(false);
+        //binding.zxingBarcodeScanner.getBarcodeView().getCameraSettings().setAutoFocusEnabled(false);
         captureManager = new CaptureManager(requireActivity(), binding.zxingBarcodeScanner);
         captureManager.initializeFromIntent(getActivity().getIntent(), savedInstanceState);
         //captureManager.decode();
@@ -169,4 +159,44 @@ public class ScanZxingFragment extends Fragment {
         return requireActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
+    private void progressScanData(BarcodeResult result) {
+        String scanData = result.getText();
+        BarcodeFormat scanFormat = result.getBarcodeFormat();
+        ScanController.scanDataBuilder(requireActivity().getApplication())
+                .setScanData(scanData)
+                .setListener(new onScanListener() {
+                    @Override
+                    public void onSwebs(boolean isSwebsUrl, String scanSrl, String company, String code) {
+                        Intent intent = new Intent(requireContext(), AuthenticScanActivity.class);
+                        intent.putExtra("url", scanData)
+                              .putExtra("scanSrl", scanSrl)
+                              .putExtra("company", company)
+                              .putExtra("code", code);
+
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onOther() {
+                        Intent intent = new Intent(requireContext(), QRLinkActivity.class);
+                        intent.putExtra("url", scanData);
+
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailed() {
+                        isScanning = true;
+                    }
+                })
+                .progressScanAnalysis();
+    }
+
+
+    boolean certifySwebsForm(String url) {
+        if (url.contains("certchk"))
+            if (url.contains("q="))
+                return true;
+        return false;
+    }
 }

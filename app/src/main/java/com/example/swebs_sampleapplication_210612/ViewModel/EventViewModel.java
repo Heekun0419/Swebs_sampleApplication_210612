@@ -15,6 +15,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Listener.netEven
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class EventViewModel extends AndroidViewModel {
@@ -53,7 +54,6 @@ public class EventViewModel extends AndroidViewModel {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                     if (startDate != null && endDate != null && nowDate != null) {
                         if (nowDate.compareTo(startDate) >= 0
                         && nowDate.compareTo(endDate) <= 0) {
@@ -65,7 +65,7 @@ public class EventViewModel extends AndroidViewModel {
                                             ,"https://images.otwojob.com/product/l/r/P/lrP1mUhYpnR780M.jpg"
                                             , "함소야"
                                             , detailModel.getEvent_title()
-                                            , simpleDateFormat.format(startDate) + " ~ " + simpleDateFormat.format(endDate)
+                                            , (endDate.getTime() - nowDate.getTime())/86400000 + "일 남음"
                                     )
                             );
                         } else {
@@ -91,8 +91,6 @@ public class EventViewModel extends AndroidViewModel {
                         }
                     }
                 }
-
-
 
                 liveEventList.setValue(tempModel);
                 isLoading.setValue(false);

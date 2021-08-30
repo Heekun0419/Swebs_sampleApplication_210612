@@ -13,6 +13,8 @@ import android.view.View;
 
 import com.example.swebs_sampleapplication_210612.databinding.ActivityQrlinkBinding;
 
+import java.net.URL;
+
 public class QRLinkActivity extends AppCompatActivity {
 
     private ActivityQrlinkBinding binding;
@@ -27,10 +29,9 @@ public class QRLinkActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         resultUrl = getIntent().getStringExtra("url");
-        resultBarcodeType = getIntent().getIntExtra("barcodeType", 7);
 
         binding.textViewUrlLink.setText(resultUrl);
-        if (resultBarcodeType != 8) {
+        if (!isURLType(resultUrl)) {
             binding.btnQrLink.setVisibility(View.GONE);
         }
 
@@ -47,12 +48,19 @@ public class QRLinkActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        binding.btnQrLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(resultUrl));
-                startActivity(browserIntent);
-            }
+        binding.btnQrLink.setOnClickListener(v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(resultUrl));
+            startActivity(browserIntent);
         });
+    }
+
+    private boolean isURLType(String data) {
+        try {
+            new URL(data);
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
     }
 }

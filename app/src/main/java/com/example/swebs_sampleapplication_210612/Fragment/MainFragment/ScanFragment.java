@@ -22,7 +22,6 @@ import androidx.camera.view.LifecycleCameraController;
 import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.Spannable;
@@ -46,7 +45,7 @@ import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanage
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanHistoryAllDataModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanDataPushModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentScanBinding;
 import com.example.swebs_sampleapplication_210612.util.GpsTracker;
@@ -394,14 +393,14 @@ public class ScanFragment extends Fragment {
         body = setPushScanAllDataBody(data);
 
         try {
-            Call<ScanHistoryAllDataModel> call = retroAPI.pushScanHistoryAllData(body);
-            call.enqueue(new Callback<ScanHistoryAllDataModel>() {
+            Call<ScanDataPushModel> call = retroAPI.pushScanHistoryAllData(body);
+            call.enqueue(new Callback<ScanDataPushModel>() {
                 @Override
-                public void onResponse(Call<ScanHistoryAllDataModel> call, Response<ScanHistoryAllDataModel> response) {
+                public void onResponse(Call<ScanDataPushModel> call, Response<ScanDataPushModel> response) {
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
-                            ScanHistoryAllDataModel responseData = response.body();
-                            if (responseData.getSuccess()) {
+                            ScanDataPushModel responseData = response.body();
+                            if (responseData.isSuccess()) {
                                 Log.d("scanLog", "서버 전송 성공");
                             } else {
                                 Log.d("scanLog", "서버 전송 실패");
@@ -411,7 +410,7 @@ public class ScanFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<ScanHistoryAllDataModel> call, Throwable t) {
+                public void onFailure(Call<ScanDataPushModel> call, Throwable t) {
 
                 }
             });

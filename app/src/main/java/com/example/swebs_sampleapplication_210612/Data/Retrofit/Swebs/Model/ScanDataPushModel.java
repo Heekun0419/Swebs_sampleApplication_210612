@@ -3,9 +3,9 @@ package com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class ScanHistoryAllDataModel {
+public class ScanDataPushModel {
     @NonNull
-    private Boolean success;
+    private boolean success;
 
     @Nullable
     private String scanSrl;
@@ -13,13 +13,8 @@ public class ScanHistoryAllDataModel {
     @Nullable
     private String reason;
 
-    @NonNull
-    public Boolean getSuccess() {
+    public boolean isSuccess() {
         return success;
-    }
-
-    public void setSuccess(@NonNull Boolean success) {
-        this.success = success;
     }
 
     @Nullable

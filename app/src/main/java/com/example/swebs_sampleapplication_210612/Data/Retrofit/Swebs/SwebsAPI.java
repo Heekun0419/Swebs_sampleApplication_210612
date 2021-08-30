@@ -5,14 +5,13 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Even
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.GuestSignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LoginModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.NormalSignUpModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanHistoryAllDataModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanDataPushModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SignUpModel;
 
 import java.util.Map;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -45,8 +44,8 @@ public interface SwebsAPI {
     );
 
     @Multipart
-    @POST("src1/scan/scan_history_alldata.php")
-    Call<ScanHistoryAllDataModel> pushScanHistoryAllData(
+    @POST("src1/scan/scan_data_push.php")
+    Call<ScanDataPushModel> pushScanHistoryAllData(
             @PartMap Map<String, RequestBody> prams
     );
 

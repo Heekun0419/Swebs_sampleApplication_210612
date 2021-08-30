@@ -30,9 +30,10 @@ public class MoreEventFragment extends Fragment implements OnItemClickListener {
     private int position;
 
     // viewPager 및 TabLayout position 받아옴.
-    public MoreEventFragment(int position){
+    public MoreEventFragment(int position) {
         this.position = position;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
