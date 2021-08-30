@@ -104,6 +104,7 @@ public class ScanController {
             if (this.gpsLongitude != null)
                 formData.put("inputLocationLongitude", RequestBody.create(this.gpsLongitude, MediaType.parse("text/plane")));
             if (this.locationForGps.size() > 0) {
+                formData.put("inputLangCode", RequestBody.create(new getRegionFromSystem(application.getApplicationContext()).getCountry(), MediaType.parse("text/plane")));
                 if (this.locationForGps.get(0).getAddressLine(0) != null)
                     formData.put("inputAddressFullName", RequestBody.create(this.locationForGps.get(0).getAddressLine(0), MediaType.parse("text/plane")));
                 if (this.locationForGps.get(0).getAdminArea() != null)
