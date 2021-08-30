@@ -34,13 +34,18 @@ public class MyEventFragment extends Fragment implements OnItemClickListener {
         // Inflate the layout for this fragment
         binding = FragmentMyEventBinding.inflate(inflater,container,false);
 
-        viewModel.getLiveEventList().observe(getViewLifecycleOwner(), new Observer<ArrayList<EventModel>>() {
-            @Override
-            public void onChanged(ArrayList<EventModel> list) {
-                initEventRecycler(list);
+        viewModel.getLiveEventList().observe(getViewLifecycleOwner(), eventModels -> {
+            if (eventModels.size() > 0) {
+                binding.noticeTextView.setVisibility(View.GONE);
+                binding.recyclerViewMyEvent.setVisibility(View.VISIBLE);
+                initEventRecycler(eventModels);
+            } else {
+                binding.noticeTextView.setVisibility(View.VISIBLE);
+                binding.recyclerViewMyEvent.setVisibility(View.GONE);
             }
         });
 
+        viewModel.getEventListFromServer();
 
         return binding.getRoot();
     }
