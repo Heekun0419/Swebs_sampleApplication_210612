@@ -1,6 +1,8 @@
 package com.example.swebs_sampleapplication_210612.util;
 
 import android.app.Application;
+import android.location.Address;
+import android.location.Geocoder;
 import android.util.Log;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanDataPushModel;
@@ -9,8 +11,11 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClien
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.util.Listener.onScanListener;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,6 +58,7 @@ public class ScanController {
         };
         private boolean isSwebsUrl;
         private String gpsLatitude, gpsLongitude;
+        private List<Address> locationForGps;
 
         public ScanDataBuilder(Application application) {
             this.retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
@@ -64,6 +70,7 @@ public class ScanController {
             this.isSwebsUrl = false;
             this.gpsLatitude = null;
             this.gpsLongitude = null;
+            this.locationForGps = new ArrayList<>();
         }
 
         public ScanDataBuilder setScanData(String data) {
@@ -87,15 +94,31 @@ public class ScanController {
             formData.put("inputUserSrl", RequestBody.create(sPmanager.getUserSrl(), MediaType.parse("text/plane")));
             formData.put("inputOsType", RequestBody.create("Android", MediaType.parse("text/plane")));
             if (this.scanData != null && this.company == null && this.code == null)
-                formData.put("inputQrData", RequestBody.create(Objects.requireNonNull(this.scanData), MediaType.parse("text/plane")));
+                formData.put("inputQrData", RequestBody.create(this.scanData, MediaType.parse("text/plane")));
             if (this.company != null)
-                formData.put("inputCompany", RequestBody.create(Objects.requireNonNull(this.company), MediaType.parse("text/plane")));
+                formData.put("inputCompany", RequestBody.create(this.company, MediaType.parse("text/plane")));
             if (this.code != null)
-                formData.put("inputCode", RequestBody.create(Objects.requireNonNull(this.code), MediaType.parse("text/plane")));
+                formData.put("inputCode", RequestBody.create(this.code, MediaType.parse("text/plane")));
             if (this.gpsLatitude != null)
-                formData.put("inputLocationLatitude", RequestBody.create(Objects.requireNonNull(this.gpsLatitude), MediaType.parse("text/plane")));
+                formData.put("inputLocationLatitude", RequestBody.create(this.gpsLatitude, MediaType.parse("text/plane")));
             if (this.gpsLongitude != null)
-                formData.put("inputLocationLongitude", RequestBody.create(Objects.requireNonNull(this.gpsLongitude), MediaType.parse("text/plane")));
+                formData.put("inputLocationLongitude", RequestBody.create(this.gpsLongitude, MediaType.parse("text/plane")));
+            if (this.locationForGps.size() > 0) {
+                if (this.locationForGps.get(0).getAddressLine(0) != null)
+                    formData.put("inputAddressFullName", RequestBody.create(this.locationForGps.get(0).getAddressLine(0), MediaType.parse("text/plane")));
+                if (this.locationForGps.get(0).getAdminArea() != null)
+                    formData.put("inputAddressAdminArea", RequestBody.create(this.locationForGps.get(0).getAdminArea(), MediaType.parse("text/plane")));
+                if (this.locationForGps.get(0).getLocality() != null)
+                    formData.put("inputAddressLocality", RequestBody.create(this.locationForGps.get(0).getLocality(), MediaType.parse("text/plane")));
+                if (this.locationForGps.get(0).getSubLocality() != null)
+                    formData.put("inputAddressSubLocality", RequestBody.create(this.locationForGps.get(0).getSubLocality(), MediaType.parse("text/plane")));
+                if (this.locationForGps.get(0).getThoroughfare() != null)
+                    formData.put("inputAddressThoroughfare", RequestBody.create(this.locationForGps.get(0).getThoroughfare(), MediaType.parse("text/plane")));
+                if (this.locationForGps.get(0).getFeatureName() != null)
+                    formData.put("inputAddressFeatureName", RequestBody.create(this.locationForGps.get(0).getFeatureName(), MediaType.parse("text/plane")));
+            }
+
+
             Call<ScanDataPushModel> call = retroAPI.pushScanHistoryAllData(formData);
             call.enqueue(new Callback<ScanDataPushModel>() {
                 @Override
@@ -123,6 +146,13 @@ public class ScanController {
             GpsTracker gpsTracker = new GpsTracker(application.getApplicationContext());
             this.gpsLatitude = Double.toString(gpsTracker.getLatitude());
             this.gpsLongitude = Double.toString(gpsTracker.getLongitude());
+
+            Geocoder geocoder = new Geocoder(application.getApplicationContext());
+            try {
+                this.locationForGps = geocoder.getFromLocation(gpsTracker.getLatitude(), gpsTracker.getLongitude(), 10);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         private boolean isUrlForm() {
