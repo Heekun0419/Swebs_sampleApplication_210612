@@ -68,6 +68,7 @@ public class MyTopMenuActivity extends AppCompatActivity {
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         viewPager.setAdapter(adapter);
 
+
         new TabLayoutMediator(tabLayout, viewPager, (tab, position)
                 -> tab.setText(List[position])).attach();
 
