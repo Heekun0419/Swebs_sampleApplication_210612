@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +27,8 @@ import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.ImagePickerDialog;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityModifyUserInfoBinding;
+import com.example.swebs_sampleapplication_210612.util.FilePathFinder;
+import com.example.swebs_sampleapplication_210612.util.Listener.onSingleClickListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,6 +42,9 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
     private File photoFile;
     private String realPath= null, photoPath =null;
     private Uri imageUri = null;
+    FilePathFinder filePathFinder;
+
+    private String selectGender;
 
     private ImageView profileImage;
     public static final int TAKE_PHOTO_REQUEST = 11;
@@ -52,11 +58,23 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         // 퍼미션 허용 한번 더 검사
         requestStoragePermission();
 
+        filePathFinder = new FilePathFinder(getApplicationContext());
         //뒤로가기 버튼
         binding.btnInformationActivityBack.setOnClickListener(v -> onBackPressed());
         profileImage = binding.imageViewProfileModify;
         //디폴트 프로필 이미지 생성
         GlideImage("default",profileImage);
+
+        // 성별 설정 버튼 이벤트
+        binding.btnGenderFemale.setOnClickListener(v -> {
+            selectGender = "female";
+            renderGenderButton();
+        });
+
+        binding.btnGenderMale.setOnClickListener(v -> {
+            selectGender = "male";
+            renderGenderButton();
+        });
 
         binding.imageViewProfileModify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +84,8 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
                     public void onPositiveClick(int position) {
                         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         try {
-                            photoFile = createMakefile();
+                            photoFile = filePathFinder.createMakefile();
+                            photoPath = photoFile.getAbsolutePath();
                             Uri uri = FileProvider.getUriForFile(ModifyUserInfoActivity.this,
                                     "com.example.swebs_sampleapplication_210612.provider",
                                     photoFile);
@@ -110,16 +129,6 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         }
     }
 
-    private File createMakefile() throws IOException {
-        String imageFileName = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File storageDir = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File file = File.createTempFile(
-                imageFileName,".jpg",storageDir
-        );
-        photoPath = file.getAbsolutePath();
-        return file;
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -133,9 +142,11 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
 
             case PICK_IMAGE_REQUEST:
                 if (resultCode == Activity.RESULT_OK) {
+                    assert data != null;
                     imageUri = data.getData();
                     // You can update this bitmap to your server
-                    realPath = getPath(imageUri);
+
+                    realPath = filePathFinder.getPath(imageUri);
                     //  Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), imageUri);
                     Log.d("photo", realPath);
                     GlideImage(realPath,profileImage);
@@ -144,19 +155,6 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         }
     }
 
-    private String getPath(Uri uri) {
-        String result;
-        Cursor cursor = getContentResolver().query(uri,null, null, null, null);
-        if(cursor == null){
-            result = uri.getPath();
-        }else{
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            result = cursor.getString(columnIndex);
-            cursor.close();
-        }
-        return result;
-    }
 
     private void GlideImage(String uri, ImageView view) {
         Glide.with(getApplicationContext()).load(uri)
@@ -165,4 +163,22 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
                 .circleCrop()
                 .into(view);
     }
+
+
+    private void renderGenderButton() {
+        if (selectGender.equals("female")) {
+            binding.btnGenderFemale.setSelected(true);
+            binding.textViewMakeAccountGenderFemale.setTextColor(Color.parseColor("#21CCB2"));
+            binding.btnGenderMale.setSelected(false);
+            binding.textViewMakeAccountGenderMale.setTextColor(Color.parseColor("#C2C3C7"));
+        }
+
+        if (selectGender.equals("male")) {
+            binding.btnGenderMale.setSelected(true);
+            binding.textViewMakeAccountGenderMale.setTextColor(Color.parseColor("#21CCB2"));
+            binding.btnGenderFemale.setSelected(false);
+            binding.textViewMakeAccountGenderFemale.setTextColor(Color.parseColor("#C2C3C7"));
+        }
+    }
+
 }

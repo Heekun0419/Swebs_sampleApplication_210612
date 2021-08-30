@@ -35,6 +35,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Listener.netSign
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickStringListener;
 import com.example.swebs_sampleapplication_210612.Dialog.EditTextDialog;
+import com.example.swebs_sampleapplication_210612.Dialog.InputPasswordDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog2;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.NumberPickerModel2;
@@ -173,7 +174,7 @@ public class myPageFragment extends Fragment {
 
             } else {
                 // 게스트 아닐땐 회원정보 수정 표시
-                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+                dialogInputPass();
             }
         });
 
@@ -184,7 +185,7 @@ public class myPageFragment extends Fragment {
                     dialogGender();
             }else{
                 // 게스트 아닐땐 회원정보 수정 표시
-                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+                dialogInputPass();
             }
         });
 
@@ -195,7 +196,7 @@ public class myPageFragment extends Fragment {
                     dialogNickname();
             }else{
                 // 게스트 아닐땐 회원정보 수정 표시
-                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+                dialogInputPass();
             }
         });
 
@@ -206,14 +207,14 @@ public class myPageFragment extends Fragment {
                     dialogCountry();
             } else {
                 // 게스트 아닐땐 회원정보 수정 표시
-                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+                dialogInputPass();
             }
         });
 
         //상단 프로필 사진 클릭시
         binding.mypageImageProfile.setOnClickListener(v -> {
             // 회원정보 수정
-            Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+            dialogInputPass();
         });
 
         // Point 정책 자세히 보기
@@ -356,6 +357,30 @@ public class myPageFragment extends Fragment {
         }
 
         return null;
+    }
+
+    private void dialogInputPass(){
+
+        InputPasswordDialog dialog = new InputPasswordDialog(requireContext(), new DialogClickStringListener() {
+            @Override
+            public void onPositiveClick(String string) {
+                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+
+            @Override
+            public void onCloseClick() {
+
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        dialog.show();
     }
 
     private void dialogBirthday() {

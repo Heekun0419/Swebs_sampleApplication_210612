@@ -386,7 +386,7 @@ public class MakeAccountFragment_userInfo extends Fragment {
         return spannableString;
     }
 
-    // 여기에서 해달라고 해서 넣음. ㅅㄱㄹ~
+    // 지역 리스트...
     private void renderRegionSelect(String country) {
         if (country == null) return;
 

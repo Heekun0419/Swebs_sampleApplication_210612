@@ -121,6 +121,7 @@ public class SPmanager {
                 .getBoolean(SP_data.MY_TUTORIAL,false);
     }
 
+    // Start - IntroPage
     public void setIntroPage(boolean exit){
         SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.INTRO_PAGE, Context.MODE_PRIVATE)).edit();
         editor.putBoolean(SP_data.INTRO_PAGE,exit);
@@ -137,6 +138,6 @@ public class SPmanager {
         return (context.getSharedPreferences(SP_data.INTRO_PAGE, Context.MODE_PRIVATE))
                 .getBoolean(SP_data.INTRO_PAGE,false);
     }
-
+    // End - IntroPage
 
 }

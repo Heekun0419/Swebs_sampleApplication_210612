@@ -39,27 +39,12 @@ public class PurchaseInfoActivity extends AppCompatActivity {
         ImageView view = binding.ImageViewPurchaseImage;
         GlideImage(view);
 
-        binding.btnPurchaseInfoBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        binding.btnPurchaseInfoBack.setOnClickListener(v -> onBackPressed());
 
-        binding.btnPurchaseRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IntentSuccessActivity();
-            }
-        });
+        binding.btnPurchaseRegister.setOnClickListener(v -> IntentSuccessActivity());
 
-        binding.btnPurchaseDatePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePicker();
-            }
-        });
-
+        // 달력보기
+        binding.btnPurchaseDatePicker.setOnClickListener(v -> DatePicker());
 
     }
 
@@ -82,21 +67,14 @@ public class PurchaseInfoActivity extends AppCompatActivity {
 
     }
 
-    private boolean testFunc() {
-        return true;
-    }
-
     private void DatePicker(){
         datePicker = MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Select Date")
                 .build();
 
-        datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
-            @Override
-            public void onPositiveButtonClick(Object selection) {
-                Date =  datePicker.getHeaderText();
-                binding.dateOfPurchase.setText(Date);
-            }
+        datePicker.addOnPositiveButtonClickListener(selection -> {
+            Date =  datePicker.getHeaderText();
+            binding.dateOfPurchase.setText(Date);
         });
         datePicker.show(getSupportFragmentManager(),"datePicker");
 

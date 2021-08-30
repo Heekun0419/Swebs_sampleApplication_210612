@@ -70,14 +70,14 @@ public class InputPasswordDialog extends Dialog {
             Pattern pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{6,}$");
             Matcher matcher = pattern.matcher(binding.editTextInputPass.getText().toString());
             if (matcher.find()) {
-                binding.textViewDialogEditExplain.setVisibility(View.VISIBLE);
+                binding.textViewDialogEditExplain.setVisibility(View.GONE);
                 checkPasswordForm = true;
             } else {
                 binding.textViewDialogEditExplain.setVisibility(View.GONE);
                 checkPasswordForm = false;
             }
         } else {
-            binding.textViewDialogEditExplain.setVisibility(View.VISIBLE);
+            binding.textViewDialogEditExplain.setVisibility(View.GONE);
             checkPasswordForm = false;
         }
     }
