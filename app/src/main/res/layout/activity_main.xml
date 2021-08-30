@@ -7,16 +7,8 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false"
+    android:fitsSystemWindows="true"
     tools:openDrawer="start">
-
-    <include
-        android:id="@+id/nav_view"
-        layout="@layout/navigation_drawer_header_item"
-        android:layout_height="match_parent"
-        android:layout_width="360dp"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"/>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager2_main"
@@ -25,7 +17,12 @@
 
     </androidx.viewpager.widget.ViewPager>
 
-
-
+    <include
+        android:id="@+id/nav_view"
+        layout="@layout/navigation_drawer_header_item"
+        android:layout_height="match_parent"
+        android:layout_width="360dp"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -23,10 +23,10 @@
         android:theme="@style/Theme.Swebs_sampleApplication_210612"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".IntroPage.IntroActivity"
+            android:name=".Activity.MyTopMenuActivity"
             android:exported="true" />
         <activity
-            android:name=".Activity.MyTopMenuActivity"
+            android:name=".IntroPage.IntroActivity"
             android:exported="true" />
         <activity
             android:name=".Activity.ReviewActivity"
