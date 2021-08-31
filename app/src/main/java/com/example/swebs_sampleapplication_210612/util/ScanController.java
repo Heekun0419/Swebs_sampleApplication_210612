@@ -98,7 +98,7 @@ public class ScanController {
             if (this.company != null)
                 formData.put("inputCompany", RequestBody.create(this.company, MediaType.parse("text/plane")));
             if (this.code != null)
-                formData.put("inputCode", RequestBody.create(this.code, MediaType.parse("text/plane")));
+                formData.put("inputCode", RequestBody.create(this.code.substring(0, 14), MediaType.parse("text/plane")));
             if (this.gpsLatitude != null)
                 formData.put("inputLocationLatitude", RequestBody.create(this.gpsLatitude, MediaType.parse("text/plane")));
             if (this.gpsLongitude != null)
@@ -185,7 +185,7 @@ public class ScanController {
             pattern = Pattern.compile("\\?q=((([^/])?)*)");
             matcher = pattern.matcher(this.scanData);
             if (matcher.find()) {
-                this.code = matcher.group(1).substring(0, 14);
+                this.code = matcher.group(1);
             }
         }
     }

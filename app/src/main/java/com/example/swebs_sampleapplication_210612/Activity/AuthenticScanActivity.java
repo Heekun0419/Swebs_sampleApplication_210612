@@ -44,19 +44,15 @@ import retrofit2.Response;
 public class AuthenticScanActivity extends AppCompatActivity {
 
     private ActivityAuthenticScan2Binding binding;
+    private SwebsCorpAPI swebsCorpAPI;
+    private SPmanager sPmanager;
 
     private String resultUrl, resultCompany, resultCode;
-
-    private SwebsCorpAPI swebsCorpAPI;
-
     private CodeCertifyModel codeModel;
-
-    private SPmanager sPmanager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //binding = ActivityAuthenticScanBinding.inflate(getLayoutInflater());
         binding = ActivityAuthenticScan2Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -73,21 +69,18 @@ public class AuthenticScanActivity extends AppCompatActivity {
         String loadUrl = "https://www.swebs.co.kr/certchk/" + resultCompany + "/swebs_result.html?q=" + resultCode;
         webViewInit();
         getCodeInfoFromSwebs(resultUrl, resultCompany, resultCode);
-        //webViewLoadUrl(loadUrl);
 
-        binding.btnAuthenticScanBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        binding.btnAuthenticScanBack.setOnClickListener(v -> onBackPressed());
 
-        binding.btnPurchaseInput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),PurchaseInfoActivity.class);
+        binding.btnPurchaseInput.setOnClickListener(v -> {
+            if (codeModel.getCode().equals("S")) {
+                Intent intent = new Intent(getApplicationContext(), PurchaseInfoActivity.class);
                 intent.putExtra("prodImageUrl", codeModel.getComp_logo_img());
                 intent.putExtra("corpName", codeModel.getComp_nm());
+                startActivity(intent);
+            } else if (codeModel.getCode().equals("N")) {
+                Intent intent = new Intent(getApplicationContext(),ScanHistoryActivity.class);
+                intent.putExtra("resultCode","copy");
                 startActivity(intent);
             }
         });
@@ -124,6 +117,9 @@ public class AuthenticScanActivity extends AppCompatActivity {
     }
 
     private void webViewInit() {
+        binding.webView.getSettings().setJavaScriptEnabled(true);
+        binding.webView.getSettings().setLoadWithOverviewMode(true);
+        binding.webView.getSettings().setDomStorageEnabled(true);
         binding.webView.setWebViewClient(new WebViewClient(){
             int finishCount = 0;
 

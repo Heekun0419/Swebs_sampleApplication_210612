@@ -465,7 +465,7 @@ public class ScanFragment extends Fragment {
 
     void showQrException(String content) {
         OneButtonBasicDialog oneButtonBasicDialog = new OneButtonBasicDialog(requireContext()
-                , new BasicDialogTextModel("QR 오류", content, "확인", "")
+                , new BasicDialogTextModel("스캔 안내", content, "확인", "")
                 , new DialogClickListener() {
             @Override
             public void onPositiveClick(int position) {

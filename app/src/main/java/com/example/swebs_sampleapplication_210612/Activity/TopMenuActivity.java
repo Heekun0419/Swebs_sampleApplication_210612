@@ -54,6 +54,7 @@ public class TopMenuActivity extends FragmentActivity {
         setContentView(binding.getRoot());
         // 뷰페이저 설정
         viewPager =  binding.viewPager2TabLayoutActivity;
+
         // 뒤로가기
         binding.btnTopMenuBack.setOnClickListener(v -> onBackPressed());
 

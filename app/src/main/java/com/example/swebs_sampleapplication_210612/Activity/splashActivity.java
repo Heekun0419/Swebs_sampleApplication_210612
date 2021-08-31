@@ -13,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -29,7 +30,7 @@ import com.example.swebs_sampleapplication_210612.databinding.ActivitySplashBind
 import com.example.swebs_sampleapplication_210612.util.UserLoginController;
 
 public class splashActivity extends AppCompatActivity {
-    long SPLASH_MIN_TIME = 0;
+    long SPLASH_MIN_TIME = 2400;
 
     private ActivitySplashBinding binding;
     CharSequence charSequence;
@@ -72,6 +73,9 @@ public class splashActivity extends AppCompatActivity {
 
     private void loginCheck() {
         long NetworkTime = SystemClock.elapsedRealtime();
+        Log.d("login", "getUserToken : " + sPmanager.getUserToken());
+        Log.d("login", "getUserSrl : " + sPmanager.getUserSrl());
+
         if (!sPmanager.getUserToken().equals("notFound") && !sPmanager.getUserSrl().equals("notFound")) {
             // Exist Login Data - verify Token Check
             new UserLoginController(
