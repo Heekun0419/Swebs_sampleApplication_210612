@@ -73,7 +73,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         app:tabIndicatorColor="@color/swebs_main_color2"
-        app:tabMode="scrollable"
+        app:tabMode="auto"
         app:tabSelectedTextColor="@color/swebs_main_color2"
         app:tabTextColor="#504F4F">
 

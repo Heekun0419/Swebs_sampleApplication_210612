@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -130,6 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                     sPmanager.setUserType(responseData.getUserType());
                     sPmanager.setUserToken(responseData.getToken());
                     sPmanager.setUserReferralCode(responseData.getReferralCode());
+                    Log.d("login", "token : " + responseData.getToken());
 
                     renderLoading(false);
                     finish();

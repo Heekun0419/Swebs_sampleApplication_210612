@@ -2,6 +2,7 @@ package com.example.swebs_sampleapplication_210612.Fragment.MainFragment;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.example.swebs_sampleapplication_210612.Activity.AuthenticScanActivity;
 import com.example.swebs_sampleapplication_210612.Activity.QRLinkActivity;
@@ -19,6 +21,9 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Scan
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
+import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
+import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
+import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentScanZxingBinding;
 import com.example.swebs_sampleapplication_210612.util.GpsTracker;
 import com.example.swebs_sampleapplication_210612.util.Listener.onScanListener;
@@ -186,7 +191,7 @@ public class ScanZxingFragment extends Fragment {
 
                     @Override
                     public void onFailed() {
-                        isScanning = true;
+                        showQrException("문제가 발생 하였습니다.\n\n잠시 후 다시 시도 해주세요.");
                     }
                 })
                 .progressScanAnalysis();
@@ -198,5 +203,30 @@ public class ScanZxingFragment extends Fragment {
             if (url.contains("q="))
                 return true;
         return false;
+    }
+
+    void showQrException(String content) {
+        OneButtonBasicDialog oneButtonBasicDialog = new OneButtonBasicDialog(requireContext()
+                , new BasicDialogTextModel("스캔 안내", content, "확인", "")
+                , new DialogClickListener() {
+            @Override
+            public void onPositiveClick(int position) {
+                isScanning = true;
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+
+            @Override
+            public void onCloseClick() {
+                isScanning = true;
+            }
+        });
+        oneButtonBasicDialog.setCancelable(false);
+        oneButtonBasicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        oneButtonBasicDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        oneButtonBasicDialog.show();
     }
 }
