@@ -78,4 +78,6 @@ public class EventMoreAdapter extends RecyclerView.Adapter<EventMoreAdapter.Even
     private void GlideImage(ImageView view, String url){
         Glide.with(context).load(url).into(view);
     }
+
+
 }

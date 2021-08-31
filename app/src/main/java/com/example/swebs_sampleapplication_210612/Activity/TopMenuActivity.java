@@ -69,6 +69,13 @@ public class TopMenuActivity extends FragmentActivity {
         // 서버에서 카테고리 불러오기
         getCategoryFromServer();
 
+        // 탭레이아웃 개수에 따라 모드 변경
+        if(list.size()<=4){
+            binding.tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        }else{
+            binding.tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        }
+
         viewModel.getCategoryDetailModelLiveData().observe(this, new Observer<ArrayList<CategoryDetailModel>>() {
             @Override
             public void onChanged(ArrayList<CategoryDetailModel> list) {
