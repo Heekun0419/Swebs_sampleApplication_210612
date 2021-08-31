@@ -12,14 +12,15 @@ import android.widget.TextView;
 import com.example.swebs_sampleapplication_210612.Fragment.Review.WriteReviewFragment;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityReviewBinding;
+import com.example.swebs_sampleapplication_210612.databinding.ActivityReviewWriteBinding;
 
-public class ReviewActivity extends AppCompatActivity {
-    private ActivityReviewBinding binding;
+public class ReviewWriteActivity extends AppCompatActivity {
+    private ActivityReviewWriteBinding binding;
     private FragmentManager manager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityReviewBinding.inflate(getLayoutInflater());
+        binding = ActivityReviewWriteBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.btnCloseReviewWrite.setVisibility(View.GONE);
 

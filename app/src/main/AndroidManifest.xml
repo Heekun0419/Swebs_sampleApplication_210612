@@ -23,13 +23,31 @@
         android:theme="@style/Theme.Swebs_sampleApplication_210612"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.EventRegisterSuccessActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.ApplyEventActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.ItemClickActivity.ReviewActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.ItemClickActivity.SurveyActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.ItemClickActivity.EventActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.ItemClickActivity.CertifiedCompanyActivity"
+            android:exported="true" />
+        <activity
             android:name=".Activity.MyTopMenuActivity"
             android:exported="true" />
         <activity
             android:name=".IntroPage.IntroActivity"
             android:exported="true" />
         <activity
-            android:name=".Activity.ReviewActivity"
+            android:name=".Activity.ReviewWriteActivity"
             android:exported="true" />
         <activity
             android:name=".Activity.PurchaseRegistSuccessActivity"

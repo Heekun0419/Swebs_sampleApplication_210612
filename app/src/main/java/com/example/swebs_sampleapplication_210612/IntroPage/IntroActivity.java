@@ -30,21 +30,27 @@ public class IntroActivity extends AppCompatActivity {
         DotsIndicator indicator = binding.indicatorIntro;
         indicator.setViewPager2(viewPager);
 
-        binding.buttonClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        binding.buttonClose.setOnClickListener(v -> onBackPressed());
 
-        binding.buttonNext.setOnClickListener(new View.OnClickListener() {
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
-            public void onClick(View v) {
-               viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if(position == drawableList.size()-1) {
+                    binding.buttonNext.setText("시작하기");
+                    binding.buttonNext.setWidth(700);
+                    binding.buttonNext.setOnClickListener(v -> finish());
+                } else {
+                    binding.buttonNext.setText("NEXT");
+                    binding.buttonNext.setWidth(300);
+                    binding.buttonNext.setOnClickListener(v -> {
+                        // 현재 아이템 보다 한칸 앞으로
+                        viewPager.setCurrentItem(position+1);
+                    });
+                }
             }
         });
     }
-
 
     private void addList(){
         drawableList.add(R.drawable.intro_step00);

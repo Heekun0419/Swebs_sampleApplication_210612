@@ -12,11 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.swebs_sampleapplication_210612.Activity.ReviewActivity;
+import com.example.swebs_sampleapplication_210612.Activity.ReviewWriteActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ScanHistoryActivity;
-import com.example.swebs_sampleapplication_210612.Fragment.Information_menu.ServiceTermsFragment;
-import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.adapter.EventAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.HistoryListClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.ScanHistoryAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentScanHistorySwebsBinding;
@@ -49,7 +46,7 @@ public class ScanHistory_SwebsFragment extends Fragment implements HistoryListCl
 
     @Override
     public void negativeButtonClicked(ImageButton button, int position, @Nullable @org.jetbrains.annotations.Nullable String code) {
-        Intent intent = new Intent(requireActivity(), ReviewActivity.class);
+        Intent intent = new Intent(requireActivity(), ReviewWriteActivity.class);
         startActivity(intent);
     }
 

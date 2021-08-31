@@ -23,18 +23,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.swebs_sampleapplication_210612.Activity.ModifyUserInfoActivity;
-import com.example.swebs_sampleapplication_210612.Activity.ReviewActivity;
+import com.example.swebs_sampleapplication_210612.Activity.ReviewWriteActivity;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.ImagePickerDialog;
-import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.ReviewPhotoViewModel;
-import com.example.swebs_sampleapplication_210612.adapter.CertifiedCompanyAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.HistoryListClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.WriteReviewPhotoAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentWriteReviewBinding;
@@ -86,7 +81,7 @@ public class WriteReviewFragment extends Fragment implements HistoryListClickLis
         binding.constraintLayout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((ReviewActivity)requireActivity()).moveFragment(new ReviewManualFragment(),"");
+                ((ReviewWriteActivity)requireActivity()).moveFragment(new ReviewManualFragment(),"");
             }
         });
 

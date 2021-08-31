@@ -18,7 +18,7 @@ import com.example.swebs_sampleapplication_210612.databinding.FragmentCertifiedC
 
 public class CertifiedCompanyInfoFragment extends Fragment {
 
-    String ImageUrl = "https://i.pinimg.com/originals/a2/4f/e6/a24fe6cabab71872039e30af52e7dd9e.png";
+
     private FragmentCertifiedCompanyInfoBinding binding;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class CertifiedCompanyInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
        binding =FragmentCertifiedCompanyInfoBinding.inflate(inflater,container,false);
         // Inflate the layout for this fragment
-        GlideImage(binding.imageViewCertifiedInfoProfile);
+
 
         binding.btnProductInfoMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,19 +41,9 @@ public class CertifiedCompanyInfoFragment extends Fragment {
             }
         });
 
-        binding.btnAS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(requireContext(), InformationActivity.class);
-                intent.putExtra("resultCode", "AS");
-                startActivity(intent);
-            }
-        });
 
         return binding.getRoot();
     }
 
-    private void GlideImage(ImageView view){
-        Glide.with(requireContext()).load(ImageUrl).into(view);
-    }
+
 }

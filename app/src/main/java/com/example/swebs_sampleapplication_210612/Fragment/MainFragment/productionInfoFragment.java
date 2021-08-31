@@ -16,6 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 
+import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.CertifiedCompanyActivity;
+import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.EventActivity;
+import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.SurveyActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ItemClickViewActivty;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.PurchaseInfoActivity;
@@ -96,19 +99,23 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
 
     @Override
     public void onItemSelected(View view, int position, String code) {
-       if(code.equals("event")){
-           Intent intent = new Intent(requireContext(), ItemClickViewActivty.class);
-           intent.putExtra("resultCode", "event");
-           startActivity(intent);
-       }else if(code.equals("survey")){
-           Intent intent = new Intent(requireContext(), ItemClickViewActivty.class);
-           intent.putExtra("resultCode", "survey");
-           startActivity(intent);
-       }else if(code.equals("certified")){
-           Intent intent = new Intent(requireContext(), ItemClickViewActivty.class);
-           intent.putExtra("resultCode", "certified");
-           startActivity(intent);
-       }
+        switch (code) {
+            case "event": {
+                Intent intent = new Intent(requireContext(), EventActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case "survey": {
+                Intent intent = new Intent(requireContext(), SurveyActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case "certified": {
+                Intent intent = new Intent(requireContext(), CertifiedCompanyActivity.class);
+                startActivity(intent);
+                break;
+            }
+        }
     }
 
     private void moveActivity(String code){

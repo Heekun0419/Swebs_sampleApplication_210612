@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -74,6 +75,7 @@ public class MainActivity extends FragmentActivity {
         binding.viewpager2Main.setCurrentItem(1, false);
         binding.viewpager2Main.setOffscreenPageLimit(2);
 
+
         // Intro Page...
         if (!sPmanager.getIntroPage()) {
             sPmanager.setIntroPage(true);
@@ -82,10 +84,11 @@ public class MainActivity extends FragmentActivity {
         }
 
         Toolbar toolbar = findViewById(R.id.toolBar);
+        DrawerLayout drawerLayout = binding.drawerLayout;
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, binding.drawerLayout, toolbar, R.string.open, R.string.closed
+                this, drawerLayout, toolbar, R.string.open, R.string.closed
         );
-        binding.drawerLayout.addDrawerListener(toggle);
+        drawerLayout.addDrawerListener(toggle);
 
         GlideImage(binding.navView.imageViewProfile);
 
@@ -98,9 +101,6 @@ public class MainActivity extends FragmentActivity {
         manager.setFragmentResultListener("Y", this, (requestKey, result) -> {
 
         });
-
-        Log.d("testtest", "sdfsdf\ndkssud");
-
 
         binding.navView.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
