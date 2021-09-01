@@ -1,11 +1,9 @@
-package com.example.swebs_sampleapplication_210612.Activity;
+package com.example.swebs_sampleapplication_210612.Activity.PurchaseApply;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -13,11 +11,6 @@ import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityPurchaseInfoBinding;
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 public class PurchaseInfoActivity extends AppCompatActivity {
 

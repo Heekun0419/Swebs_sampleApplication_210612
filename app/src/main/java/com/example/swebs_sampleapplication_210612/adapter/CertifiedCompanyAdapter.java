@@ -79,4 +79,5 @@ public class CertifiedCompanyAdapter extends RecyclerView.Adapter<CertifiedCompa
     private void GlideImage(ImageView view){
         Glide.with(context).load(ImageUrl).into(view);
     }
+
 }

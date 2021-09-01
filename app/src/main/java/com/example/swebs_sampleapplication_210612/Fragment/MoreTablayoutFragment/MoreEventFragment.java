@@ -29,6 +29,8 @@ public class MoreEventFragment extends Fragment implements OnItemClickListener {
     private EventViewModel viewModel;
     private int position;
 
+    EventMoreAdapter eventMoreAdapter;
+
     // viewPager 및 TabLayout position 받아옴.
     public MoreEventFragment(int position) {
         this.position = position;
@@ -72,17 +74,31 @@ public class MoreEventFragment extends Fragment implements OnItemClickListener {
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
+
         return binding.getRoot();
     }
 
     @Override
     public void onItemSelected(View view, int position, String code) {
+
+        for(int i=0; i<5; i++) {
+            eventMoreAdapter.addItem(new EventModel(
+                    1
+                    , "추가"
+                    , "https://images.otwojob.com/product/l/r/P/lrP1mUhYpnR780M.jpg"
+                    , "함소야"
+                    , "title ["+ i +"]"
+                    , "date of event "
+            ), eventMoreAdapter.getItemCount());
+        }
+
     }
 
     private void initEventRecycler(ArrayList<EventModel> list){
-        EventMoreAdapter adapter = new EventMoreAdapter(requireContext(),list,this);
+        eventMoreAdapter = new EventMoreAdapter(requireContext(),list,this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
         binding.recyclerViewMoreEvent.setLayoutManager(linearLayoutManager);
-        binding.recyclerViewMoreEvent.setAdapter(adapter);
+        binding.recyclerViewMoreEvent.setAdapter(eventMoreAdapter);
     }
+
 }

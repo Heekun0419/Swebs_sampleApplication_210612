@@ -1,4 +1,4 @@
-package com.example.swebs_sampleapplication_210612.Activity;
+package com.example.swebs_sampleapplication_210612.Activity.EventApply;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +15,5 @@ public class EventRegisterSuccessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityEventRegisterSuccessBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
     }
 }

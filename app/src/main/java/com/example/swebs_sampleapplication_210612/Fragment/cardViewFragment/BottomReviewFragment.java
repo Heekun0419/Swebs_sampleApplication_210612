@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
+import com.example.swebs_sampleapplication_210612.Activity.ServiceNotReadyActivity;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ChattingItem;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewModel;
@@ -39,8 +40,7 @@ public class BottomReviewFragment extends Fragment {
         binding = FragmentBottomReviewBinding.inflate(inflater,container,false);
 
         binding.btnAS.setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), InformationActivity.class);
-            intent.putExtra("resultCode", "AS");
+            Intent intent = new Intent(requireContext(), ServiceNotReadyActivity.class);
             startActivity(intent);
         });
 

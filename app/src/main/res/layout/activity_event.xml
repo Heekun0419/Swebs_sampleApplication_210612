@@ -146,6 +146,7 @@
                 android:background="@drawable/ic_heart_not_filled" />
 
             <Button
+                android:id="@+id/btn_event_apply"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"

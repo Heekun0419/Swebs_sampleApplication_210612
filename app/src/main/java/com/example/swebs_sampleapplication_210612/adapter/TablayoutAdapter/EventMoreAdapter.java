@@ -20,12 +20,12 @@ public class EventMoreAdapter extends RecyclerView.Adapter<EventMoreAdapter.Even
 
     private ItemMoreEventBinding binding;
     private Context context;
-    private ArrayList<EventModel> model;
+    private ArrayList<EventModel> EventList;
     private OnItemClickListener listener;
 
-    public EventMoreAdapter( Context context, ArrayList<EventModel> model, OnItemClickListener listener) {
+    public EventMoreAdapter( Context context, ArrayList<EventModel> EventList, OnItemClickListener listener) {
         this.context = context;
-        this.model = model;
+        this.EventList = EventList;
         this.listener = listener;
     }
 
@@ -39,7 +39,7 @@ public class EventMoreAdapter extends RecyclerView.Adapter<EventMoreAdapter.Even
     @Override
     public void onBindViewHolder(@NonNull EventMoreViewHolder holder, int position) {
        ImageView profile = holder.binding.imageViewProductEventProfile;
-       EventModel eventModel = model.get(position);
+       EventModel eventModel = EventList.get(position);
        GlideImage(profile,eventModel.getImageUrl());
        holder.binding.textViewCompanyName.setText(eventModel.getCompanyName());
        holder.binding.textViewEventDate.setText(eventModel.getDateOfEvent());
@@ -57,7 +57,7 @@ public class EventMoreAdapter extends RecyclerView.Adapter<EventMoreAdapter.Even
 
     @Override
     public int getItemCount() {
-        return model.size();
+        return EventList.size();
     }
 
     public static class EventMoreViewHolder extends RecyclerView.ViewHolder {
@@ -77,6 +77,17 @@ public class EventMoreAdapter extends RecyclerView.Adapter<EventMoreAdapter.Even
     }
     private void GlideImage(ImageView view, String url){
         Glide.with(context).load(url).into(view);
+    }
+
+    public void addItem(EventModel model, int position){
+        EventList.add(position,model);
+        notifyItemInserted(position);
+    }
+
+    public void removeItem(int position){
+        EventList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position,EventList.size());
     }
 
 

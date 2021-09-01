@@ -4,26 +4,18 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.viewpager2.widget.ViewPager2;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
 
 import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.CertifiedCompanyActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.EventActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.SurveyActivity;
-import com.example.swebs_sampleapplication_210612.Activity.ItemClickViewActivty;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
-import com.example.swebs_sampleapplication_210612.Activity.PurchaseInfoActivity;
-import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity;
-import com.example.swebs_sampleapplication_210612.R;
+import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity.TopMenuActivity;
 import com.example.swebs_sampleapplication_210612.adapter.CertifiedCompanyAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.EventAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.OnItemClickListener;

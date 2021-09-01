@@ -56,9 +56,6 @@ public class InformationActivity extends AppCompatActivity {
             case "point":
                 moveFragment(new PointFragment(), "스웹스 포인트");
                 break;
-            case "AS":
-                moveFragment(new ServiceNotReadyFragment(), "");
-                break;
             case "product":
                 moveFragment(new ProductRegisterFragment(), "제품등록");
                 break;

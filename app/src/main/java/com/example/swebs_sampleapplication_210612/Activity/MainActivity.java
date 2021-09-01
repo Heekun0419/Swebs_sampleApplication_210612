@@ -10,34 +10,25 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentResultListener;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.Observer;
-import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity.TopMenuActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Fragment.MainFragment.ScanZxingFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.bottomSheetFragment;
 import com.example.swebs_sampleapplication_210612.IntroPage.IntroActivity;
-import com.example.swebs_sampleapplication_210612.IntroPage.IntroAdapter;
 import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.Fragment.MainFragment.ScanFragment;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityMainBinding;
 import com.example.swebs_sampleapplication_210612.Fragment.MainFragment.myPageFragment;
@@ -46,7 +37,6 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity {
@@ -125,7 +115,7 @@ public class MainActivity extends FragmentActivity {
                     intent = new Intent(getApplicationContext(),InformationActivity.class);
                     intent.putExtra("resultCode","purchase_question");
                 } else if (item.getItemId() == R.id.drawer_item_company_info) {
-                    intent = new Intent(getApplicationContext(),TopMenuActivity.class);
+                    intent = new Intent(getApplicationContext(), TopMenuActivity.class);
                     intent.putExtra("resultCode", "certified");
                 }
 

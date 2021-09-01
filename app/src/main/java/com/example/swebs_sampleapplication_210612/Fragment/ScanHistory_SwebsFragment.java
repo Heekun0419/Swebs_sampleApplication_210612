@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.swebs_sampleapplication_210612.Activity.ReviewWriteActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ScanHistoryActivity;
+import com.example.swebs_sampleapplication_210612.Activity.ServiceNotReadyActivity;
 import com.example.swebs_sampleapplication_210612.adapter.HistoryListClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.ScanHistoryAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentScanHistorySwebsBinding;
@@ -40,8 +41,8 @@ public class ScanHistory_SwebsFragment extends Fragment implements HistoryListCl
 
     @Override
     public void positiveButtonClicked(ImageButton button, int position, @Nullable @org.jetbrains.annotations.Nullable String code) {
-        ((ScanHistoryActivity)requireActivity()).ViewGone();
-        ((ScanHistoryActivity)requireActivity()).moveFragment(new ServiceNotReadyFragment(),"");
+         Intent intent = new Intent(requireActivity(), ServiceNotReadyActivity.class);
+         startActivity(intent);
     }
 
     @Override

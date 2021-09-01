@@ -1,4 +1,4 @@
-package com.example.swebs_sampleapplication_210612.Activity;
+package com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
