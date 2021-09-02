@@ -17,6 +17,7 @@ public class CertifiedCompanyActivity extends AppCompatActivity {
 
     private ActivityCertifiedCompanyBinding binding;
     private FragmentManager manager;
+    String ImageUrl2 ="http://lafi.live/php/src/files/image_viewer.php?inputFileSrl=1571";
     String ImageUrl = "https://i.pinimg.com/originals/a2/4f/e6/a24fe6cabab71872039e30af52e7dd9e.png";
 
     @Override
@@ -32,15 +33,22 @@ public class CertifiedCompanyActivity extends AppCompatActivity {
 
         //제품 설명 더보기
         binding.btnProductInfoMore.setOnClickListener(v -> {
-            binding.gradientWhite.setVisibility(View.GONE);
+            // 더보기 버튼 사라짐.
             binding.constraintLayoutBtnLayout.setVisibility(View.GONE);
+            //최대 글자수 늘리기
             binding.textViewProductInfo.setMaxLines(300);
+
+            //첨부 이미지 최대 5개 보여지기.
+            binding.imageViewDetailInfo.setVisibility(View.VISIBLE);
         });
 
-        GlideImage(binding.imageViewCertifiedInfoProfile);
+        // 최상단 대표이미지 등록
+        GlideImage(binding.imageViewCertifiedInfoProfile, ImageUrl);
+        // 상세페이지 이미지 등록
+        GlideImage(binding.imageViewDetailInfo,ImageUrl2);
     }
 
-    private void GlideImage(ImageView view){
-        Glide.with(this).load(ImageUrl).into(view);
+    private void GlideImage(ImageView view, String url){
+        Glide.with(this).load(url).into(view);
     }
 }

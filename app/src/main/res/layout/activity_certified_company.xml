@@ -188,88 +188,95 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView54" />
 
-        <TextView
-            android:id="@+id/textView55"
+
+        <LinearLayout
+            android:id="@+id/layout_detail_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="20dp"
-            android:text="상세정보"
-            android:textColor="@color/black"
-            android:textSize="18dp"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view9" />
-
-        <TextView
-            android:id="@+id/textView_productInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:ellipsize="end"
-            android:maxLines="10"
-            android:text="@string/event_info_sample"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView55" />
-
-        <ImageView
-            android:id="@+id/gradient_white"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@drawable/white_gradient"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout_btnLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout_btnLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_productInfo">
-
-            <ImageButton
-                android:id="@+id/btn_product_info_more"
-                android:layout_width="370dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
-                android:background="@drawable/stroke_radius_button_maincolor2"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/view9">
 
             <TextView
-                android:id="@+id/textView57"
+                android:id="@+id/textView55"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="20dp"
+                android:text="상세정보"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/textView_productInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:ellipsize="end"
+                android:maxLines="10"
+                android:text="@string/event_info_sample"
+                android:textColor="@color/black" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout_btnLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="제품 설명 상세보기"
-                android:textColor="@color/swebs_main_color2"
-                app:layout_constraintBottom_toBottomOf="@+id/btn_product_info_more"
-                app:layout_constraintEnd_toEndOf="@+id/btn_product_info_more"
-                app:layout_constraintHorizontal_bias="0.45"
-                app:layout_constraintStart_toStartOf="@+id/btn_product_info_more"
-                app:layout_constraintTop_toTopOf="@+id/btn_product_info_more" />
+                android:layout_gravity="center"
+                android:background="@drawable/white_gradient"
+                android:paddingTop="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_productInfo">
+
+                <ImageButton
+                    android:id="@+id/btn_product_info_more"
+                    android:layout_width="370dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:background="@drawable/stroke_radius_button_maincolor2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView57"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="제품 설명 상세보기"
+                    android:textColor="@color/swebs_main_color2"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn_product_info_more"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_product_info_more"
+                    app:layout_constraintHorizontal_bias="0.45"
+                    app:layout_constraintStart_toStartOf="@+id/btn_product_info_more"
+                    app:layout_constraintTop_toTopOf="@+id/btn_product_info_more" />
+
+                <ImageView
+                    android:id="@+id/imageView21"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:backgroundTint="@color/swebs_main_color2"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView57"
+                    app:layout_constraintStart_toEndOf="@+id/textView57"
+                    app:layout_constraintTop_toTopOf="@+id/textView57" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
-                android:id="@+id/imageView21"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
-                android:backgroundTint="@color/swebs_main_color2"
-                app:layout_constraintBottom_toBottomOf="@+id/textView57"
-                app:layout_constraintStart_toEndOf="@+id/textView57"
-                app:layout_constraintTop_toTopOf="@+id/textView57" />
+                android:id="@+id/imageView_detailInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
         <View
             android:id="@+id/view10"
@@ -280,7 +287,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout_btnLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_detail_info" />
 
         <FrameLayout
             android:id="@+id/frameLayout_certified_activity"
