@@ -18,6 +18,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
+import com.example.swebs_sampleapplication_210612.Activity.Login_Signup.LoginActivity;
 import com.example.swebs_sampleapplication_210612.Activity.PurchaseApply.PurchaseInfoActivity;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.SwebsCorp.Model.CodeCertifyModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.SwebsCorp.SwebsCorpAPI;

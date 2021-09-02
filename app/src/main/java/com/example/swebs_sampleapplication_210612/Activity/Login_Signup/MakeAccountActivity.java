@@ -1,4 +1,4 @@
-package com.example.swebs_sampleapplication_210612.Activity;
+package com.example.swebs_sampleapplication_210612.Activity.Login_Signup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -27,16 +27,10 @@ public class MakeAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMakeAccountBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        String requestCode = getIntent().getStringExtra("resultCode");
         manager = getSupportFragmentManager();
 
-        if(requestCode.equals("findPass")){
-            binding.textViewTopMenuName.setText("비밀번호 찾기");
-            moveFragment(new FindPassFragment(),"");
-        }else if(requestCode.equals("makeAccount")){
-            // 회원가입 Fragment
-            moveFragment(new MakeAccountFragment_terms(),"");
-        }
+        // 회원가입 Fragment
+        moveFragment(new MakeAccountFragment_terms(),"");
 
         //뒤로가기
         binding.btnTopMenuBack.setOnClickListener(v -> onBackPressed());
@@ -67,10 +61,6 @@ public class MakeAccountActivity extends AppCompatActivity {
     }
 
     public void moveFragment(Fragment fragment, String code){
-        // 키보드 숨기기 에러 발생... 수정요망
-      //  InputMethodManager keyboardManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-      //  keyboardManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-
         // success 프라그먼트 이동시 애니매이션 추가
         if(code.equals("success")) {
             manager.beginTransaction().setCustomAnimations(R.anim.slide_up,R.anim.slide_out_up)
@@ -78,7 +68,6 @@ public class MakeAccountActivity extends AppCompatActivity {
         } else {
             manager.beginTransaction().replace(R.id.frame_make_account, fragment).addToBackStack(null).commit();
         }
-
     }
 
     public void setReferralCode(String referralCode) {

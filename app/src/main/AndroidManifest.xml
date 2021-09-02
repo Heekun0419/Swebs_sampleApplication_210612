@@ -23,6 +23,12 @@
         android:theme="@style/Theme.Swebs_sampleApplication_210612"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.TermsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.Login_Signup.MakeSNSAccountActivity"
+            android:exported="true" />
+        <activity
             android:name=".Activity.ServiceNotReadyActivity"
             android:exported="true" />
         <activity
@@ -86,7 +92,7 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activity.MakeAccountActivity"
+            android:name=".Activity.Login_Signup.MakeAccountActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
@@ -106,7 +112,7 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activity.LoginActivity"
+            android:name=".Activity.Login_Signup.LoginActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity

@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.example.swebs_sampleapplication_210612.Activity.MakeAccountActivity;
+import com.example.swebs_sampleapplication_210612.Activity.Login_Signup.MakeAccountActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.NormalSignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;

@@ -1,5 +1,6 @@
 package com.example.swebs_sampleapplication_210612.Fragment.MakeAccountFragment;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
@@ -11,7 +12,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.example.swebs_sampleapplication_210612.Activity.MakeAccountActivity;
+import com.example.swebs_sampleapplication_210612.Activity.Login_Signup.MakeAccountActivity;
+import com.example.swebs_sampleapplication_210612.Activity.TermsActivity;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
@@ -32,6 +34,7 @@ public class MakeAccountFragment_terms extends Fragment {
     private FragmentMakeAccountTermsBinding binding;
     private Fragment fragment;
     private SwebsAPI swebsAPI;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         swebsAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
@@ -46,15 +49,17 @@ public class MakeAccountFragment_terms extends Fragment {
         binding = FragmentMakeAccountTermsBinding.inflate( inflater,container, false);
 
 
-        binding.servicePrivateTerms.setOnClickListener(v ->
-                ((MakeAccountActivity)requireActivity()).moveFragment(TermsFragment.newInstance("http://3.36.65.243/ToS/ToS_S.html"),"")
-        );
-        binding.locationTerms.setOnClickListener(v ->
-                ((MakeAccountActivity)requireActivity()).moveFragment(TermsFragment.newInstance("http://3.36.65.243/ToS/ToS_L.html"),"")
-        );
-        binding.marketingTerms.setOnClickListener(v ->
-                ((MakeAccountActivity)requireActivity()).moveFragment(TermsFragment.newInstance("http://3.36.65.243/ToS/ToS_M.html"),"")
-        );
+        binding.servicePrivateTerms.setOnClickListener(v ->{
+            IntentTermsActivity("http://3.36.65.243/ToS/ToS_S.html");
+        });
+
+        binding.locationTerms.setOnClickListener(v ->{
+            IntentTermsActivity("http://3.36.65.243/ToS/ToS_L.html");
+        });
+
+        binding.marketingTerms.setOnClickListener(v ->{
+            IntentTermsActivity("http://3.36.65.243/ToS/ToS_M.html");
+        });
 
 
         binding.btnTermsAgree.setOnClickListener(v -> {
@@ -93,6 +98,12 @@ public class MakeAccountFragment_terms extends Fragment {
         });
 
         return binding.getRoot();
+    }
+
+    private void IntentTermsActivity(String Url){
+        Intent intent = new Intent(requireActivity().getApplicationContext(), TermsActivity.class);
+        intent.putExtra("url",Url);
+        startActivity(intent);
     }
 
     private void termsCheck(){

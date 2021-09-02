@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Activity.AdressModifyActivity;
 import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
-import com.example.swebs_sampleapplication_210612.Activity.LoginActivity;
+import com.example.swebs_sampleapplication_210612.Activity.Login_Signup.LoginActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ModifyUserInfoActivity;
 import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity.MyTopMenuActivity;

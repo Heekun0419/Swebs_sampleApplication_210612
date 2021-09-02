@@ -1,4 +1,4 @@
-package com.example.swebs_sampleapplication_210612.Activity;
+package com.example.swebs_sampleapplication_210612.Activity.Login_Signup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -59,32 +59,37 @@ public class LoginActivity extends AppCompatActivity {
             loginNormalUser();
         });
 
+        // 일반회원 가입 클릭시
         binding.textViewMakeAccount.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(),MakeAccountActivity.class);
-            intent.putExtra("resultCode","makeAccount");
             startActivity(intent);
             finish();
         });
 
+        // 카카오 로그인 버튼 클릭시
+        binding.btnKakaoLogin.setOnClickListener(v -> IntentSnsLogin("kakao"));
+        // 구글 로그인 버튼 클릭시
+        binding.btnGoogleLogin.setOnClickListener(v -> IntentSnsLogin("google"));
+        // 네이버 로그인 버튼 클릭시
+        binding.btnNaverLogin.setOnClickListener(v -> IntentSnsLogin("naver"));
+
+        // 비밀번호 찾기 클릭
         binding.textViewFindPass.setOnClickListener(v -> {
+            // 이메일 확인 다이얼로그 표시
             dialog_findPass = new FindPasswordDialog(LoginActivity.this, new DialogClickListener() {
                 @Override
                 public void onPositiveClick(int position) {
-                    Intent intent = new Intent(LoginActivity.this, MakeAccountActivity.class);
-                    intent.putExtra("resultCode","findPass");
+                    Intent intent = new Intent(LoginActivity.this, FindPasswordActivity.class);
                     startActivity(intent);
                 }
                 @Override
                 public void onNegativeClick() {
-                    dialog_findPass.dismiss();
                 }
 
                 @Override
                 public void onCloseClick() {
-                    dialog_findPass.dismiss();
                 }
             });
-            dialog_findPass.setCancelable(false);
             dialog_findPass.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
             dialog_findPass.show();
         });
@@ -148,6 +153,12 @@ public class LoginActivity extends AppCompatActivity {
                 showOneButtonDialog(DIALOG_TITLE, "서버 연결이 원활하지 않습니다.\n잠시 후 다시 시도 해주세요.");
             }
         });
+    }
+
+    private void IntentSnsLogin(String code){
+        Intent intent = new Intent(getApplicationContext(),MakeSNSAccountActivity.class);
+        intent.putExtra("resultCode", code);
+        startActivity(intent);
     }
 
     private void showOneButtonDialog(String title, String content) {

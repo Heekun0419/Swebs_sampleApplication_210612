@@ -439,7 +439,7 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
 
             <ImageButton
-                android:id="@+id/btn_makeAccount_ok"
+                android:id="@+id/btn_event_apply_ok"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/radious_button_swebscolor"
@@ -454,10 +454,10 @@
                 android:textColor="@color/white"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/btn_makeAccount_ok"
-                app:layout_constraintEnd_toEndOf="@+id/btn_makeAccount_ok"
-                app:layout_constraintStart_toStartOf="@+id/btn_makeAccount_ok"
-                app:layout_constraintTop_toTopOf="@+id/btn_makeAccount_ok" />
+                app:layout_constraintBottom_toBottomOf="@+id/btn_event_apply_ok"
+                app:layout_constraintEnd_toEndOf="@+id/btn_event_apply_ok"
+                app:layout_constraintStart_toStartOf="@+id/btn_event_apply_ok"
+                app:layout_constraintTop_toTopOf="@+id/btn_event_apply_ok" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
