@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.example.swebs_sampleapplication_210612.Fragment.cardViewFragment.BottomReviewFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.cardViewFragment.CertifiedCompanyInfoFragment;
 import com.example.swebs_sampleapplication_210612.R;
@@ -45,7 +46,13 @@ public class CertifiedCompanyActivity extends AppCompatActivity {
         // 최상단 대표이미지 등록
         GlideImage(binding.imageViewCertifiedInfoProfile, ImageUrl);
         // 상세페이지 이미지 등록
-        GlideImage(binding.imageViewDetailInfo,ImageUrl2);
+        //GlideImage(binding.imageViewDetailInfo,ImageUrl2);
+        Glide.with(this)
+                .load(ImageUrl2)
+                .fitCenter()
+                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                .into(binding.imageViewDetailInfo);
+
     }
 
     private void GlideImage(ImageView view, String url){

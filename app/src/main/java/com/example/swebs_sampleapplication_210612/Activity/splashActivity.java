@@ -27,10 +27,11 @@ import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.databinding.ActivitySplashBinding;
+import com.example.swebs_sampleapplication_210612.util.SimpleLoginController;
 import com.example.swebs_sampleapplication_210612.util.UserLoginController;
 
 public class splashActivity extends AppCompatActivity {
-    long SPLASH_MIN_TIME = 2400;
+    long SPLASH_MIN_TIME = 0;
 
     private ActivitySplashBinding binding;
     CharSequence charSequence;
@@ -75,6 +76,9 @@ public class splashActivity extends AppCompatActivity {
         long NetworkTime = SystemClock.elapsedRealtime();
         Log.d("login", "getUserToken : " + sPmanager.getUserToken());
         Log.d("login", "getUserSrl : " + sPmanager.getUserSrl());
+
+        new SimpleLoginController(splashActivity.this).isKakaoSession();
+        new SimpleLoginController(splashActivity.this).isGoogleSession();
 
         if (!sPmanager.getUserToken().equals("notFound") && !sPmanager.getUserSrl().equals("notFound")) {
             // Exist Login Data - verify Token Check

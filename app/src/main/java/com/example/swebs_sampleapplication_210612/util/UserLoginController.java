@@ -35,8 +35,8 @@ public class UserLoginController {
         this.listener = listener;
     }
 
+
     public void userLogout() {
-        Log.d("login", "꺄하하 로그아웃 시작.");
         // 데이터 삭제하기.
         sPmanager.removeUserSrl();
         sPmanager.removeUserType();
@@ -93,7 +93,6 @@ public class UserLoginController {
                 listener.onServerError();
             }
         });
-
     }
 
     public void signUpForGuest() {

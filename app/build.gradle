@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.swebs_sampleapplication_210612"
-        minSdkVersion 29
+        minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -101,4 +101,19 @@ dependencies {
     // RxJava
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.0.7'
+
+    // Kakao Login
+    implementation "com.kakao.sdk:v2-user:2.6.0"
+
+    // google login
+    implementation platform('com.google.firebase:firebase-bom:27.1.0')
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
+
+    // naver login
+    implementation 'com.naver.nid:naveridlogin-android-sdk:4.2.6'
+
+
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
 }

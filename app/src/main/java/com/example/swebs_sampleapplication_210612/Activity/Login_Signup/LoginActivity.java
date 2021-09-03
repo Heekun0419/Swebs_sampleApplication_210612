@@ -1,14 +1,20 @@
 package com.example.swebs_sampleapplication_210612.Activity.Login_Signup;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
@@ -21,6 +27,20 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityLoginBinding;
+import com.example.swebs_sampleapplication_210612.util.SimpleLoginController;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.nhn.android.naverlogin.OAuthLogin;
+import com.nhn.android.naverlogin.OAuthLoginHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -42,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isLogin = false;
     private String reason;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,11 +88,18 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // 카카오 로그인 버튼 클릭시
-        binding.btnKakaoLogin.setOnClickListener(v -> IntentSnsLogin("kakao"));
+        binding.btnKakaoLogin.setOnClickListener(v -> {
+            loginForKakao();
+        });
         // 구글 로그인 버튼 클릭시
-        binding.btnGoogleLogin.setOnClickListener(v -> IntentSnsLogin("google"));
+        binding.btnGoogleLogin.setOnClickListener(v -> {
+            loginForGoogle();
+        });
         // 네이버 로그인 버튼 클릭시
-        binding.btnNaverLogin.setOnClickListener(v -> IntentSnsLogin("naver"));
+        binding.btnNaverLogin.setOnClickListener(v -> {
+            loginForNaver();
+            //IntentSnsLogin("naver")
+        });
 
         // 비밀번호 찾기 클릭
         binding.textViewFindPass.setOnClickListener(v -> {
@@ -93,9 +121,44 @@ public class LoginActivity extends AppCompatActivity {
             dialog_findPass.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
             dialog_findPass.show();
         });
-        
+
     }
 
+    private void loginForNaver() {
+        new SimpleLoginController(LoginActivity.this, LoginActivity.this)
+            .loginForNaver();
+    }
+
+
+    private void loginForKakao() {
+        new SimpleLoginController(LoginActivity.this)
+            .loginForKakao();
+    }
+
+    private void loginForGoogle() {
+        new SimpleLoginController(LoginActivity.this, mGoogleSignup)
+            .loginForGoogle();
+    }
+
+    private final ActivityResultLauncher<Intent> mGoogleSignup = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (result.getResultCode() == Activity.RESULT_OK) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                Log.d("snsLogin", "google uid : " + account.getId());
+                Log.d("snsLogin", "google email : " + account.getEmail());
+                Log.d("snsLogin", "google displayname : " + account.getDisplayName());
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+                Log.w("snsLogin", "Google sign in failed", e);
+            }
+
+            new SimpleLoginController(LoginActivity.this)
+                .logoutForGoogle();
+
+        }
+    });
 
     private void loginNormalUser() {
         if (binding.edtLoginId.getText().toString().equals("")) {
