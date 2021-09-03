@@ -140,4 +140,56 @@ public class SPmanager {
     }
     // End - IntroPage
 
+
+    // START - Setting Scan Animation
+    public void setScanAnimation(String type){
+        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.SETTING_INFO.SCAN_ANIMATION, Context.MODE_PRIVATE)).edit();
+        editor.putString(SP_data.SETTING_INFO.SCAN_ANIMATION,type);
+        editor.apply();
+    }
+
+    public String getScanAnimation(){
+        return (context.getSharedPreferences(SP_data.SETTING_INFO.SCAN_ANIMATION, Context.MODE_PRIVATE))
+                .getString(SP_data.SETTING_INFO.SCAN_ANIMATION,"");
+    }
+    // END - Setting Scan Animation
+
+    // START - Setting Scan sound
+    public void setScanSound(String type){
+        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.SETTING_INFO.SCAN_SOUND, Context.MODE_PRIVATE)).edit();
+        editor.putString(SP_data.SETTING_INFO.SCAN_SOUND,type);
+        editor.apply();
+    }
+
+    public String getScanSound(){
+        return (context.getSharedPreferences(SP_data.SETTING_INFO.SCAN_SOUND, Context.MODE_PRIVATE))
+                .getString(SP_data.SETTING_INFO.SCAN_SOUND,"");
+    }
+    // END - Setting Scan sound
+
+    // START - Setting Scan auto focus
+    public void setScanAutoFocus(String type){
+        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.SETTING_INFO.AUTOFOCUS, Context.MODE_PRIVATE)).edit();
+        editor.putString(SP_data.SETTING_INFO.AUTOFOCUS,type);
+        editor.apply();
+    }
+
+    public String getScanAutoFocus(){
+        return (context.getSharedPreferences(SP_data.SETTING_INFO.AUTOFOCUS, Context.MODE_PRIVATE))
+                .getString(SP_data.SETTING_INFO.AUTOFOCUS,"");
+    }
+    // END - Setting Scan auto focus
+
+    // START - Setting Scan history
+    public void setScanHistoryOnOff(String type){
+        SharedPreferences.Editor editor = (context.getSharedPreferences(SP_data.SETTING_INFO.SCAN_HISTORY, Context.MODE_PRIVATE)).edit();
+        editor.putString(SP_data.SETTING_INFO.SCAN_HISTORY,type);
+        editor.apply();
+    }
+
+    public String getScanHistoryOnOff(){
+        return (context.getSharedPreferences(SP_data.SETTING_INFO.SCAN_HISTORY, Context.MODE_PRIVATE))
+                .getString(SP_data.SETTING_INFO.SCAN_HISTORY,"");
+    }
+    // END - Setting Scan history
 }
