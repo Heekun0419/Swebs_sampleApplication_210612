@@ -79,6 +79,10 @@ public interface SwebsAPI {
     @GET("src1/event/get_category.php")
     Call<CategoryModel> getCategory();
 
-    @GET("KKW_TEST/product/product_categorylist.php")
-    Call<ArrayList<CertifiedCompanyDetailModel>> getCorpList();
+    // 인증업체 API
+    @Multipart
+    @POST("KKW_TEST/product/product_categorylist.php")
+    Call<ArrayList<CertifiedCompanyDetailModel>> getCorpList(
+            @PartMap Map<String,RequestBody> params
+    );
 }
