@@ -93,6 +93,20 @@ dependencies {
 
     implementation 'com.google.mlkit:barcode-scanning:17.0.0'
 
+    // Kakao Login
+    implementation "com.kakao.sdk:v2-user:2.6.0"
+
+    // google login
+    implementation platform('com.google.firebase:firebase-bom:27.1.0')
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
+
+    // naver login
+    implementation 'com.naver.nid:naveridlogin-android-sdk:4.2.6'
+
+
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
     // json 애니메이션 라이브러리
     implementation 'com.airbnb.android:lottie:3.7.2'
 

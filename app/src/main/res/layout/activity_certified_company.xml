@@ -268,7 +268,6 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             <com.github.chrisbanes.photoview.PhotoView
                 android:id="@+id/imageView_detailInfo"
                 android:layout_width="match_parent"

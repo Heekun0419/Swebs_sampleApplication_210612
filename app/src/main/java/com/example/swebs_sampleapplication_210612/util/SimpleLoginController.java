@@ -204,8 +204,9 @@ public class SimpleLoginController {
     private void kakaoFromApplication() {
         UserApiClient.getInstance().loginWithKakaoTalk(context, (oAuthToken, error) -> {
             if (error != null) {
+                Log.d("snsLogin", "kakao app error : " + error);
                 if (error.getMessage() != null
-                && error.getMessage().contains("installed"))
+                        && error.getMessage().contains("installed"))
                     kakaoFromBrowser();
             } else if (oAuthToken != null) {
                 kakaoLoginSuccess();
@@ -216,6 +217,9 @@ public class SimpleLoginController {
 
     private void kakaoFromBrowser() {
         UserApiClient.getInstance().loginWithKakaoAccount(context, (oAuthToken, error) -> {
+            if (error != null) {
+                Log.d("snsLogin", "kakao brow error : " + error);
+            }
             if (oAuthToken != null) {
                 kakaoLoginSuccess();
             }
@@ -224,9 +228,10 @@ public class SimpleLoginController {
     }
 
     private void kakaoLoginSuccess() {
+        Log.d("snsLogin","kakao success");
         UserApiClient.getInstance().me((user, error) -> {
             if (error != null) {
-
+                Log.d("snsLogin",error.getMessage());
             } else {
                 Log.d("snsLogin", "카카오 id : " + user.getId());
                 Log.d("snsLogin", "카카오 Email : " + user.getKakaoAccount().getEmail());

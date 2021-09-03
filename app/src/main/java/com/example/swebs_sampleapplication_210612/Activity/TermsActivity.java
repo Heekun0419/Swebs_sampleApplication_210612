@@ -17,7 +17,7 @@ public class TermsActivity extends AppCompatActivity {
         binding = ActivityTermsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-       Url =  getIntent().getStringExtra("url");
+        Url =  getIntent().getStringExtra("url");
 
         binding.btnClose.setOnClickListener(v -> onBackPressed());
 

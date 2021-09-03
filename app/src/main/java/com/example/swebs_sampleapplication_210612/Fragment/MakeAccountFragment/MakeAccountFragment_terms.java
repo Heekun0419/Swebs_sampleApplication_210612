@@ -50,15 +50,15 @@ public class MakeAccountFragment_terms extends Fragment {
 
 
         binding.servicePrivateTerms.setOnClickListener(v ->{
-            IntentTermsActivity("http://3.36.65.243/ToS/ToS_S.html");
+            IntentTermsActivity("http://3.35.249.81/ToS/ToS_S.html");
         });
 
         binding.locationTerms.setOnClickListener(v ->{
-            IntentTermsActivity("http://3.36.65.243/ToS/ToS_L.html");
+            IntentTermsActivity("http://3.35.249.81/ToS/ToS_L.html");
         });
 
         binding.marketingTerms.setOnClickListener(v ->{
-            IntentTermsActivity("http://3.36.65.243/ToS/ToS_M.html");
+            IntentTermsActivity("http://3.35.249.81/ToS/ToS_M.html");
         });
 
 

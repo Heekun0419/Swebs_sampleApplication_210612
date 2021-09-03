@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 
 import com.example.swebs_sampleapplication_210612.Fragment.MakeAccountFragment.MakeAccountFragment_terms;
+import com.example.swebs_sampleapplication_210612.Fragment.MakeAccountFragment.MakeSnsAccountFragment_terms;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityMakeSnsaccountBinding;
 
@@ -22,7 +23,7 @@ public class MakeSNSAccountActivity extends AppCompatActivity {
         manager = getSupportFragmentManager();
 
         // 회원가입 Fragment
-        moveFragment(new MakeAccountFragment_terms());
+        moveFragment(new MakeSnsAccountFragment_terms());
 
         //뒤로가기
         binding.btnTopMenuBack.setOnClickListener(v -> onBackPressed());
