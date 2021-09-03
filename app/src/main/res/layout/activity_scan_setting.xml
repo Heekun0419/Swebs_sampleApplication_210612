@@ -80,7 +80,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="20dp"
-        android:text="한국어"
         android:textSize="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -184,6 +183,7 @@
 
 
     <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_animation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"
@@ -193,6 +193,7 @@
 
 
     <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_sound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"
@@ -202,6 +203,7 @@
 
 
     <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_autoFocus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"
@@ -211,6 +213,7 @@
 
 
     <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_scanHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"
@@ -243,6 +246,8 @@
         app:layout_constraintTop_toBottomOf="@+id/view3">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_instagram_follow"
+            android:background="?attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -296,6 +301,8 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_facebook_follow"
+            android:background="?attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -366,6 +373,7 @@
             android:layout_weight="1"/>
 
         <TextView
+            android:id="@+id/textview_appVersion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1.20.1"

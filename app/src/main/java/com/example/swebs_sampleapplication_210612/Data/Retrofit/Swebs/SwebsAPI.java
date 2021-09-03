@@ -1,6 +1,7 @@
 package com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CategoryModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CertifiedCompanyDetailModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.GuestSignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LoginModel;
@@ -8,6 +9,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Norm
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanDataPushModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SignUpModel;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -76,4 +78,7 @@ public interface SwebsAPI {
 
     @GET("src1/event/get_category.php")
     Call<CategoryModel> getCategory();
+
+    @GET("KKW_TEST/product/product_categorylist.php")
+    Call<ArrayList<CertifiedCompanyDetailModel>> getCorpList();
 }
