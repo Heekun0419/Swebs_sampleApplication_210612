@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -265,6 +266,7 @@ public class myPageFragment extends Fragment {
 
         // userType
         viewModel.getUserInfoFromKey("userType").observe(getViewLifecycleOwner(), s -> {
+            Log.d("login", "change : " + s);
             if (s != null)
                 RenderMyPageFromUserType(s);
             userType = s;
@@ -599,44 +601,22 @@ public class myPageFragment extends Fragment {
     }
 
     private void RenderMyPageFromUserType(String userType){
-        switch (userType) {
-            case "guest":  // 게스트
-                setVisible_of_Guest();
-                break;
-            case "normal":  // 일반유저
-                setVisible_of_NormalUser();
-                break;
-            case "company":  // 기업회원
-                setVisible_of_CompanyUser();
-                break;
-            case "kakao" : // 카카오 회원
+        if (userType.equals("guest")) {
+            setVisible_of_Guest();
+        } else {
+            setVisible_of_NormalUser();
+            if (userType.equals("kakao"))
                 renderSnsView("카카오",R.drawable.ic_kakao);
-                break;
-            case "google":
+            if (userType.equals("google"))
                 renderSnsView("구글",R.drawable.ic_google);
-                break;
-            case "naver":
+            if (userType.equals("naver"))
                 renderSnsView("네이버",R.drawable.ic_naver);
-                break;
         }
     }
-    /*
-   // 현재 사용 X
-   private void setEmail(String email){
-       char s = email.charAt(0);
-       int startIndex = email.indexOf("@");
-       String mailAddress = email.substring(startIndex);
-       StringBuffer buffer = new StringBuffer();
-       buffer.append(s);
-       for(int i = 0; i< email.length(); i++)
-           buffer.append("*");
-
-       buffer.append(mailAddress);
-       binding.mypageTextViewID.setText(buffer);
-    }*/
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private void renderSnsView(String txt, int drawable){
+    private void renderSnsView(String txt, int drawable) {
+        binding.mypageSnsImageView.setVisibility(View.VISIBLE);
         binding.mypageSnsImageView.setBackground(requireActivity().getDrawable(drawable));
         binding.mypageSnsTextView.setText(txt);
     }
