@@ -678,6 +678,7 @@ public class MakeAccountFragment_userInfo extends Fragment {
                         myInfoRepository.insertMyInfo("userType", responseData.getUserType());
                         myInfoRepository.insertMyInfo("gender", responseData.getGender());
                         myInfoRepository.insertMyInfo("referralCode", responseData.getReferralCode());
+                        myInfoRepository.insertMyInfo("phone", responseData.getPhone_number());
                         myInfoRepository.insertMyInfo("email", inputEmail);
 
                         sPmanager.setUserSrl(responseData.getUserSrl());

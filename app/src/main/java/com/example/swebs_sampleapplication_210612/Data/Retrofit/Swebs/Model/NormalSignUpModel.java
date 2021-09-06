@@ -38,6 +38,14 @@ public class NormalSignUpModel {
     @Nullable
     private String reason;
 
+    @Nullable
+    private String phone_number;
+
+    @Nullable
+    public String getPhone_number() {
+        return phone_number;
+    }
+
     public boolean isSuccess() {
         return success;
     }

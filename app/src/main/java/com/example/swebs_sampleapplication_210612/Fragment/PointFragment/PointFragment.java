@@ -31,10 +31,6 @@ public class PointFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentPointBinding.inflate(inflater,container,false);
-        SPmanager sPmanager = new SPmanager(container.getContext());
-
-
-
 
         binding.pointUseCaution.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +59,7 @@ public class PointFragment extends Fragment {
         });
 
         // Name
-        myInfoRepository.getValueToLiveData("name").observe(getViewLifecycleOwner(), new Observer<String>() {
+        myInfoRepository.getValueToLiveData("nickName").observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 if (s != null) {

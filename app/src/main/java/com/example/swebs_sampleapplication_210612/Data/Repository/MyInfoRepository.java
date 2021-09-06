@@ -90,7 +90,7 @@ public class MyInfoRepository {
                 Log.d("Dao", "insert");
                 mDao.myInfo_insert(myInfos[0]);
             } else {
-                Log.d("Dao", "Update");
+                Log.d("Dao", "update");
                 mDao.myInfo_update(myInfos[0]);
             }
             return null;

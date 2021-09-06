@@ -241,6 +241,13 @@ public class myPageFragment extends Fragment {
         return binding.getRoot();
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setTutorial();
+    }
+
     @SuppressLint("SetTextI18n")
     private void observerStart() {
         // Data Observe -- START
@@ -296,14 +303,9 @@ public class myPageFragment extends Fragment {
 
         // nickName
         viewModel.getUserInfoFromKey("nickName").observe(getViewLifecycleOwner(), s -> {
-            String viewText = "미등록";
-            if (s != null) {
-                viewText = s;
-                binding.mypageTextViewNickname.setTextColor(Color.parseColor("#3E3A39"));
-            }
-
-            binding.mypageTextViewNickname.setText(viewText);
-            binding.mypageProfileName.setText(viewText + " 님");
+            binding.mypageTextViewNickname.setTextColor(Color.parseColor("#3E3A39"));
+            binding.mypageTextViewNickname.setText(s);
+            binding.mypageProfileName.setText(s + " 님");
         });
 
         // Birthday

@@ -45,8 +45,12 @@ public class MoreCertifiedFragment extends Fragment {
         viewModel.getLiveCompanyModelList().observe(getViewLifecycleOwner(), new Observer<ArrayList<CertifiedCompanyDetailModel>>() {
             @Override
             public void onChanged(ArrayList<CertifiedCompanyDetailModel> certifiedCompanyModels) {
-                GridMoreCretifiedAdapter adapter = new GridMoreCretifiedAdapter(requireContext(),certifiedCompanyModels);
-                binding.gridViewMoreCertified.setAdapter(adapter);
+                if (LastIndex.equals("0")) {
+                    GridMoreCretifiedAdapter adapter = new GridMoreCretifiedAdapter(requireContext(),certifiedCompanyModels);
+                    binding.gridViewMoreCertified.setAdapter(adapter);
+                } else{
+                LastIndex = certifiedCompanyModels.get(certifiedCompanyModels.size()-1).getProd_srl();
+                adapter.changeItem(certifiedCompanyModels);}
             }
         });
 
@@ -59,6 +63,9 @@ public class MoreCertifiedFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        String categorySrl = Integer.toString(this.categorySrl);
+        Log.d("catergo",categorySrl);
 
     }
+
 }

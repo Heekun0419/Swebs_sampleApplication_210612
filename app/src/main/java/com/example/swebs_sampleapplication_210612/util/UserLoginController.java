@@ -65,10 +65,13 @@ public class UserLoginController {
             myInfoRepository.insertMyInfo("referralCode", model.getReferralCode());
             sPmanager.setUserReferralCode(model.getReferralCode());
         }
+        if(model.getToken() != null)
+            sPmanager.setUserToken(model.getToken());
+        if(model.getUserSrl() != null)
+            sPmanager.setUserSrl(model.getUserSrl());
+        if(model.getUserType() != null)
+            sPmanager.setUserType(model.getUserType());
 
-        sPmanager.setUserSrl(model.getUserSrl());
-        sPmanager.setUserType(model.getUserType());
-        sPmanager.setUserToken(model.getToken());
     }
 
 
@@ -137,6 +140,9 @@ public class UserLoginController {
                         sPmanager.setUserType("guest");
                         sPmanager.setUserSrl(responseData.getUserSrl());
                         sPmanager.setUserToken(responseData.getToken());
+
+                        Log.d("guest", "nick : "+ responseData.getNickname());
+                        Log.d("guest", responseData.getName());
 
                         listener.onSuccess();
                     } else {

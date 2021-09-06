@@ -112,8 +112,6 @@ public class ScanFragment extends Fragment {
         binding = FragmentScanBinding.inflate(getLayoutInflater());
         sPmanager = new SPmanager(requireContext());
 
-        binding.tutorialScanPage.getRoot().setVisibility(View.GONE);
-
         String content = binding.textVIewScanExplain.getText().toString();
         SpannableString spannableString = new SpannableString(content);
         String word = "QR코드를";
@@ -217,8 +215,11 @@ public class ScanFragment extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     private void renderTutorial() {
+        Log.d("render", "tutorial is gone");
         if(binding.tutorialScanPage.getRoot().getVisibility() == View.GONE
                 && !sPmanager.getScanTutorialExit()){
+
+            Log.d("render", "tutorial start  SP date : " + sPmanager.getScanTutorialExit());
             fadeIn.setDuration(700);
             binding.tutorialScanPage.getRoot().setOnTouchListener((v, event) -> true);
             binding.tutorialScanPage.getRoot().setVisibility(View.VISIBLE);

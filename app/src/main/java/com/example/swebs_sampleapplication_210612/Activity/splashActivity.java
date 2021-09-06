@@ -50,10 +50,11 @@ public class splashActivity extends AppCompatActivity {
 
         sPmanager = new SPmanager(this);
 
+        /*
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );
+        );*/
 
         ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(
                 binding.imageView5,
