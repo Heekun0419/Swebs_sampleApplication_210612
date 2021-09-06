@@ -17,6 +17,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EventViewModel extends AndroidViewModel {
     private final MutableLiveData<ArrayList<EventModel>> liveEventList = new MutableLiveData<>();

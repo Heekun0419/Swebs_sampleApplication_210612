@@ -9,6 +9,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LoginModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.Entity.MyInfo;
 import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.SwebsDao;
 import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.SwebsDatabase;
@@ -16,15 +19,39 @@ import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.SwebsDatabase;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+
 public class MyInfoRepository {
     public SwebsDao swebsDao;
+    private SwebsAPI retroAPI;
     LiveData<List<MyInfo>> mMyInfoAll;
 
     public MyInfoRepository(Application application) {
         SwebsDatabase swebsDatabase = SwebsDatabase.getDatabase(application);
         this.swebsDao = swebsDatabase.swebsDao();
+        this.retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
 
         mMyInfoAll = this.swebsDao.getAllLiveDataForMyInfo();
+    }
+
+    // 일반 회원 로그인
+    public Call<LoginModel> getLoginForNormal(String email, String password) {
+        HashMap<String, RequestBody> formData = new HashMap<>();
+        formData.put("inputEmail", RequestBody.create(email, MediaType.parse("text/plane")));
+        formData.put("inputPassword", RequestBody.create(password, MediaType.parse("text/plane")));
+
+        return retroAPI.loginNormalUser(formData);
+    }
+
+    // 소셜 회원 로그인
+    public Call<LoginModel> getLoginForSocial(String userType, String uid) {
+        HashMap<String, RequestBody> formData = new HashMap<>();
+        formData.put("inputUserType", RequestBody.create(userType, MediaType.parse("text/plane")));
+        formData.put("inputUid", RequestBody.create(uid, MediaType.parse("text/plane")));
+
+        return retroAPI.loginSocialUser(formData);
     }
 
     public LiveData<List<MyInfo>> getAllToLiveData() {
@@ -34,7 +61,6 @@ public class MyInfoRepository {
     public LiveData<String> getValueToLiveData(String key) {
         return swebsDao.getValueLiveDataForMyInfo(key);
     }
-
 
     public void insertMyInfo(String key, String value) {
         if (key != null && value != null) {

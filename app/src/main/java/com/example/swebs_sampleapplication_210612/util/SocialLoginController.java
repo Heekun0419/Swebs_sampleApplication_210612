@@ -24,6 +24,7 @@ import com.kakao.sdk.common.KakaoSdk;
 import com.kakao.sdk.user.UserApiClient;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
+import com.nhn.android.naverlogin.data.OAuthLoginState;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,7 +36,7 @@ import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import kotlin.jvm.functions.Function2;
 
-public class SimpleLoginController {
+public class SocialLoginController {
     private Activity activity;
     private Context context;
 
@@ -45,14 +46,14 @@ public class SimpleLoginController {
     private OAuthLogin mNaverLoginInstance;
 
     // Kakao Co
-    public SimpleLoginController(Context context) {
+    public SocialLoginController(Context context) {
         this.context = context;
         // Kakao Init
         KakaoSdk.init(this.context, "9e9aaead2ab6303029c565df975aec9d");
     }
 
     // Naver Co
-    public SimpleLoginController(Activity activity, Context context) {
+    public SocialLoginController(Activity activity, Context context) {
         this.activity = activity;
         this.context = context;
 
@@ -67,7 +68,7 @@ public class SimpleLoginController {
     }
 
     // Google Co
-    public SimpleLoginController(Context context, ActivityResultLauncher<Intent> mGoogleSignup) {
+    public SocialLoginController(Context context, ActivityResultLauncher<Intent> mGoogleSignup) {
         this.context = context;
         this.mGoogleSignup = mGoogleSignup;
     }
@@ -75,6 +76,18 @@ public class SimpleLoginController {
 
     public void loginForNaver() {
         mNaverLoginInstance.startOauthLoginActivity(activity, new NaverLoginHandler(mNaverLoginInstance, context));
+    }
+
+    public void isNaverSession() {
+        Log.d("snsLogin", "Naver State : " + mNaverLoginInstance.getState(context));
+        Log.d("snsLogin", "Naver State1 : " + OAuthLoginState.NEED_LOGIN);
+        Log.d("snsLogin", "Naver State2 : " + OAuthLoginState.NEED_INIT);
+        if (OAuthLoginState.NEED_LOGIN.equals(mNaverLoginInstance.getState(context))
+            || OAuthLoginState.NEED_INIT.equals(mNaverLoginInstance.getState(context))) {
+            Log.d("snsLogin", "Naver 로그인 X");
+        } else {
+            Log.d("snsLogin", "Naver 로그인 O");
+        }
     }
 
     private static class NaverLoginHandler extends OAuthLoginHandler {
@@ -89,17 +102,6 @@ public class SimpleLoginController {
         @Override
         public void run(boolean success) {
             if (success) {
-                /*
-                String accessToken = mNaverLoginInstance.getAccessToken(mContext);
-                String refreshToken = mNaverLoginInstance.getRefreshToken(mContext);
-                long expiresAt = mNaverLoginInstance.getExpiresAt(mContext);
-                String tokenType = mNaverLoginInstance.getTokenType(mContext);
-
-                Log.d("snsLogin", "access3333Token : " + accessToken);
-                Log.d("snsLogin", "refreshToken : " + refreshToken);
-                Log.d("snsLogin", "tokenType : " + tokenType);
-                Log.d("snsLogin", "expiresAt : " + expiresAt);
-                */
                 new NaverLoginHandler.RequestApiTask(mContext, mNaverLoginInstance).execute();
             } else {
                 String errorCode = mNaverLoginInstance.getLastErrorCode(mContext).getCode();

@@ -27,7 +27,7 @@ import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.databinding.ActivitySplashBinding;
-import com.example.swebs_sampleapplication_210612.util.SimpleLoginController;
+import com.example.swebs_sampleapplication_210612.util.SocialLoginController;
 import com.example.swebs_sampleapplication_210612.util.UserLoginController;
 
 public class splashActivity extends AppCompatActivity {
@@ -77,8 +77,9 @@ public class splashActivity extends AppCompatActivity {
         Log.d("login", "getUserToken : " + sPmanager.getUserToken());
         Log.d("login", "getUserSrl : " + sPmanager.getUserSrl());
 
-        new SimpleLoginController(splashActivity.this).isKakaoSession();
-        new SimpleLoginController(splashActivity.this).isGoogleSession();
+        new SocialLoginController(splashActivity.this).isKakaoSession();
+        new SocialLoginController(splashActivity.this).isGoogleSession();
+        new SocialLoginController(splashActivity.this, splashActivity.this).isNaverSession();
 
         if (!sPmanager.getUserToken().equals("notFound") && !sPmanager.getUserSrl().equals("notFound")) {
             // Exist Login Data - verify Token Check

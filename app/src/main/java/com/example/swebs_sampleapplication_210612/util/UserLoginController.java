@@ -25,7 +25,14 @@ public class UserLoginController {
     private final Context context;
     private final MyInfoRepository myInfoRepository;
     private final SPmanager sPmanager;
-    private final netSignupListener listener;
+    private netSignupListener listener;
+
+    public UserLoginController(Application application) {
+        this.retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
+        this.context = application.getApplicationContext();
+        this.myInfoRepository = new MyInfoRepository(application);
+        this.sPmanager = new SPmanager(application.getApplicationContext());
+    }
 
     public UserLoginController(Application application, netSignupListener listener) {
         this.retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
@@ -33,6 +40,35 @@ public class UserLoginController {
         this.myInfoRepository = new MyInfoRepository(application);
         this.sPmanager = new SPmanager(application.getApplicationContext());
         this.listener = listener;
+    }
+
+    public void userDataSaveWhenLogin(LoginModel model) {
+        myInfoRepository.insertMyInfo("userSrl", model.getUserSrl());
+        myInfoRepository.insertMyInfo("userType", model.getUserType());
+        myInfoRepository.insertMyInfo("nickName", model.getNickName());
+        myInfoRepository.insertMyInfo("name", model.getName());
+        if (model.getBirthday() != null)
+            myInfoRepository.insertMyInfo("birthday", model.getBirthday());
+        if (model.getGender() != null)
+            myInfoRepository.insertMyInfo("gender", model.getGender());
+        if (model.getPhoneNumber() != null)
+            myInfoRepository.insertMyInfo("phoneNumber", model.getPhoneNumber());
+        if (model.getCountry() != null)
+            myInfoRepository.insertMyInfo("country", model.getCountry());
+        if (model.getRegion() != null)
+            myInfoRepository.insertMyInfo("region", model.getRegion());
+        if (model.getEmail() != null)
+            myInfoRepository.insertMyInfo("email", model.getEmail());
+        if (model.getPoint() != null)
+            myInfoRepository.insertMyInfo("point", model.getPoint());
+        if (model.getReferralCode() != null) {
+            myInfoRepository.insertMyInfo("referralCode", model.getReferralCode());
+            sPmanager.setUserReferralCode(model.getReferralCode());
+        }
+
+        sPmanager.setUserSrl(model.getUserSrl());
+        sPmanager.setUserType(model.getUserType());
+        sPmanager.setUserToken(model.getToken());
     }
 
 
@@ -55,31 +91,9 @@ public class UserLoginController {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                 if (response.isSuccessful()
-                        && response.body() != null
-                        && response.body().isSuccess()) {
-                    LoginModel responseData = response.body();
-                    myInfoRepository.insertMyInfo("userSrl", responseData.getUserSrl());
-                    myInfoRepository.insertMyInfo("userType", responseData.getUserType());
-                    myInfoRepository.insertMyInfo("nickName", responseData.getNickName());
-                    myInfoRepository.insertMyInfo("name", responseData.getName());
-                    myInfoRepository.insertMyInfo("birthday", responseData.getBirthday());
-                    myInfoRepository.insertMyInfo("gender", responseData.getGender());
-                    myInfoRepository.insertMyInfo("phoneNumber", responseData.getPhoneNumber());
-                    myInfoRepository.insertMyInfo("country", responseData.getCountry());
-                    myInfoRepository.insertMyInfo("region", responseData.getRegion());
-                    myInfoRepository.insertMyInfo("referralCode", responseData.getReferralCode());
-                    myInfoRepository.insertMyInfo("email", responseData.getEmail());
-                    myInfoRepository.insertMyInfo("point", responseData.getPoint());
-
-                    if (responseData.getUserSrl() != null)
-                        sPmanager.setUserSrl(responseData.getUserSrl());
-                    if (responseData.getUserType() != null)
-                        sPmanager.setUserType(responseData.getUserType());
-                    if (responseData.getToken() != null)
-                        sPmanager.setUserToken(responseData.getToken());
-                    if (responseData.getReferralCode() != null)
-                        sPmanager.setUserReferralCode(responseData.getReferralCode());
-
+                && response.body() != null
+                && response.body().isSuccess()) {
+                    userDataSaveWhenLogin(response.body());
                     listener.onSuccess();
                 } else {
                     // 실패
