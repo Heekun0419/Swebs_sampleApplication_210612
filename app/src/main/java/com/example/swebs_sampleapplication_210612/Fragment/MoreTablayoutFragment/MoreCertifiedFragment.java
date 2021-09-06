@@ -1,6 +1,7 @@
 package com.example.swebs_sampleapplication_210612.Fragment.MoreTablayoutFragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,10 @@ import java.util.ArrayList;
 public class MoreCertifiedFragment extends Fragment {
 
     private FragmentMoreCertifiedCompanyBinding binding;
-    private int categorySrl;
+    private final int categorySrl;
     private CertifiedCompanyViewModel viewModel;
-
+    private String LastIndex ="0";
+    GridMoreCretifiedAdapter adapter;
     // viewPager 및 TabLayout position 받아옴.
     public MoreCertifiedFragment(int categorySrl){
         this.categorySrl = categorySrl;
@@ -31,7 +33,8 @@ public class MoreCertifiedFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new CertifiedCompanyViewModel(requireActivity().getApplication());
-        viewModel.getListFromServer();
+        String categorySrl = Integer.toString(this.categorySrl);
+        viewModel.getListFromServer(categorySrl,LastIndex);
     }
 
     @Override
@@ -47,7 +50,15 @@ public class MoreCertifiedFragment extends Fragment {
             }
         });
 
+       // Log.d("scroll", String.valueOf(binding.gridViewMoreCertified.getScrollY()));
+
         return binding.getRoot();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
     }
 }

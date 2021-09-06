@@ -74,6 +74,7 @@
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_review.xml" value="0.22" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_review2.xml" value="0.2776268115942029" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_scan_history.xml" value="0.2726449275362319" />
+        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_scan_setting.xml" value="0.24682971014492755" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_service_not_ready.xml" value="0.2726449275362319" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_survey.xml" value="0.2776268115942029" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_terms.xml" value="0.26268115942028986" />
@@ -96,7 +97,7 @@
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_make_account_terms.xml" value="0.17477203647416414" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_make_account_user_info.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_make_sns_account_terms.xml" value="0.24682971014492755" />
-        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_more_certified_company.xml" value="0.291213768115942" />
+        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_more_certified_company.xml" value="0.22" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_more_event.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_more_review.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_more_survey.xml" value="0.291213768115942" />
@@ -116,6 +117,7 @@
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_write_review.xml" value="0.22" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/item_comment.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/item_manual_list.xml" value="0.2957427536231884" />
+        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/item_more_certified_company.xml" value="0.24682971014492755" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/item_more_event.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/item_my_review.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/item_product_certified_company.xml" value="0.2957427536231884" />
