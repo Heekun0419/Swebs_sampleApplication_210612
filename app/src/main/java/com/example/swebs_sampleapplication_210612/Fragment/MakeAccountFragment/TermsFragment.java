@@ -36,10 +36,8 @@ public class TermsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         binding = FragmentTermsBinding.inflate(inflater,container,false);
-
-
+        binding.webView.loadUrl(html);
         return binding.getRoot();
     }
 }

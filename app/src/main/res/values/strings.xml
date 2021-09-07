@@ -67,6 +67,22 @@
         <item>참여 서베이</item>
     </string-array>
 
+
+    <!-- 구매등록 -->
+    <string name="purchase_register00">구매등록</string>
+    <string name="purchase_register01">* 구매처</string>
+    <string name="purchase_register02">* 제품명</string>
+    <string name="purchase_register03">* 일렬번호</string>
+    <string name="purchase_register04">* 구매일자</string>
+    <string name="purchase_register05">이름</string>
+    <string name="purchase_register06">연락처</string>
+    <string name="purchase_register07">이메일(ID)</string>
+    <string name="purchase_register08">구매처를 적어주세요</string>
+    <string name="purchase_register09">제품명을 입력하세요</string>
+    <string name="purchase_register10">일렬번호를 입력하세요</string>
+    <string name="purchase_register11">추가항목</string>
+
+
     <!-- 추천인 코드 -->
     <string name="recommend_code_title_1">안녕하세요! \n스웹스를 이용해주셔서 감사합니다.\n추천인 코드를 발송합니다. \n\n추천인코드 : </string>
     <string name="recommend_code_title_2">\n\n회원가입시 추천인 코드를 입력하시면 추천받은 분과 추천하시는 분 모두에게 100P를 드립니다. \n\n-(주)알엠지-</string>

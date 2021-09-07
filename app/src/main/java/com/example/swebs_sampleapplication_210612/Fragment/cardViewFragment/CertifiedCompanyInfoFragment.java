@@ -31,7 +31,6 @@ public class CertifiedCompanyInfoFragment extends Fragment {
        binding =FragmentCertifiedCompanyInfoBinding.inflate(inflater,container,false);
         // Inflate the layout for this fragment
 
-
         binding.btnProductInfoMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

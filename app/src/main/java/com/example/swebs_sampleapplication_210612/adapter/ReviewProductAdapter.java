@@ -43,12 +43,12 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
         GlideImage(binding.imageViewMyReviewUserProfile);
         ReviewModel model = reviewList.get(position);
 
-        holder.binding.ratingBarReview.setRating(model.getRatingNum());
+        holder.binding.ratingBarReview.setRating(Float.parseFloat(model.getRatingNum()));
         holder.binding.textViewCommentContent.setText(model.getContent());
         holder.binding.textViewMyReviewDate.setText(model.getDate());
-        holder.binding.textViewRatingNumMyReview.setText(""+model.getRatingNum());
+        holder.binding.textViewRatingNumMyReview.setText(model.getRatingNum());
         holder.binding.textViewMyReviewUserName.setText(model.getUserName());
-        holder.binding.likeNum.setText(""+model.getLikeNum());
+        holder.binding.likeNum.setText(model.getLikeNum());
     }
 
     @Override

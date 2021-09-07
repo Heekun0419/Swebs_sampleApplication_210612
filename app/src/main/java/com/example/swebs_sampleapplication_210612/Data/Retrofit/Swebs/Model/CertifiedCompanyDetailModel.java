@@ -1,7 +1,5 @@
 package com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model;
 
-
-
 public class CertifiedCompanyDetailModel {
 
     private String prod_srl;

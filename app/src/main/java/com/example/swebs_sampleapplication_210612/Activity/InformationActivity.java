@@ -60,7 +60,7 @@ public class InformationActivity extends AppCompatActivity {
                 moveFragment(new ProductRegisterFragment(), "제품등록");
                 break;
             case "notice":
-                moveFragment(TermsFragment.newInstance(""), "공지사항");
+                moveFragment(TermsFragment.newInstance("https://www.swebs.co.kr/apps/swebs_notice.html"), "공지사항");
                 break;
         }
 

@@ -11,12 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ServiceNotReadyActivity;
-import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.ChattingItem;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewModel;
-import com.example.swebs_sampleapplication_210612.adapter.Comment_EventInfoAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.ReviewProductAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentBottomReviewBinding;
 
@@ -61,16 +57,16 @@ public class BottomReviewFragment extends Fragment {
        String date = new SimpleDateFormat("yyyy.MM.dd").format(new Date());
 
         reviewList.add(new ReviewModel("박규빈",
-                date,0,"바느질도 좋고 마감처리도 좋네요.",
-                4.5f,
+                date,"바느질도 좋고 마감처리도 좋네요.",
+                "4.5",
                 "인생에 선배로써 편안함과 안정감을 주시네요 너무 친절하고 감사합니다.",
-                20));
+                "20"));
 
         reviewList.add(new ReviewModel("홍길동",
-                date,1,"매우 만족합니다.",
-                4.5f,
+                date,"매우 만족합니다.",
+                "4.2",
                 "인생에 선배로써 편안함과 안정감을 주시네요 너무 친절하고 감사합니다.",
-                20));
+                "20"));
 
     }
 }

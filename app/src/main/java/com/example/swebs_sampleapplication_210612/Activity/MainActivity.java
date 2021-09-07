@@ -136,6 +136,9 @@ public class MainActivity extends FragmentActivity {
                 } else if (item.getItemId() == R.id.drawer_item_company_info) {
                     intent = new Intent(getApplicationContext(), TopMenuActivity.class);
                     intent.putExtra("resultCode", "certified");
+                } else {
+                    intent = new Intent(getApplicationContext(), InformationActivity.class);
+                    intent.putExtra("resultCode", "notice");
                 }
 
                     startActivity(intent);

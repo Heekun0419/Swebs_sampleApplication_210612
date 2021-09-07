@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.Activity.ItemClickViewActivty;
 import com.example.swebs_sampleapplication_210612.ViewModel.ChatViewModel;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.ChattingItem;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 import com.example.swebs_sampleapplication_210612.adapter.Comment_EventInfoAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentEventInfoBinding;
 
@@ -27,7 +27,7 @@ import java.util.Date;
 public class EventInfoFragment extends Fragment {
 
     private FragmentEventInfoBinding binding;
-    private ArrayList<ChattingItem> chattingItems = new ArrayList<>();
+    private ArrayList<CommentModel> commentModels = new ArrayList<>();
     private ChatViewModel chatViewModel;
 
     String url = "https://image.shutterstock.com/image-photo/beauty-concept-head-shoulders-girl-260nw-740874595.jpg";
@@ -46,19 +46,19 @@ public class EventInfoFragment extends Fragment {
         ImageView view = binding.imageViewEventInfoProfile;
         GlideImage(view);
 
-        chatViewModel.getChattingLiveData().observe(getViewLifecycleOwner(), new Observer<ArrayList<ChattingItem>>() {
+        chatViewModel.getChattingLiveData().observe(getViewLifecycleOwner(), new Observer<ArrayList<CommentModel>>() {
             @Override
-            public void onChanged(ArrayList<ChattingItem> chattingItems) {
-                initRecyclerView(chattingItems);
+            public void onChanged(ArrayList<CommentModel> commentModels) {
+                initRecyclerView(commentModels);
             }
         });
 
         binding.buttonSendComment.setOnClickListener(v -> {
             String message = binding.editTextEventInfoComment.getText().toString();
-            chattingItems.add(new ChattingItem(null, message,
+            commentModels.add(new CommentModel(null, message,
                     null,
                     new SimpleDateFormat("HH:mm").format(new Date())));
-            chatViewModel.setChattingLiveData(chattingItems);
+            chatViewModel.setChattingLiveData(commentModels);
 
             binding.editTextEventInfoComment.setText(null);
         });
@@ -73,8 +73,8 @@ public class EventInfoFragment extends Fragment {
         Glide.with(requireContext()).load(url).into(view);
     }
 
-    private void initRecyclerView(ArrayList<ChattingItem> chattingItems){
-        Comment_EventInfoAdapter adapter = new Comment_EventInfoAdapter(requireContext(), chattingItems);
+    private void initRecyclerView(ArrayList<CommentModel> commentModels){
+        Comment_EventInfoAdapter adapter = new Comment_EventInfoAdapter(requireContext(), commentModels);
         LinearLayoutManager manager = new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false);
         binding.recyclerViewEventInfoComment.setLayoutManager(manager);
         binding.recyclerViewEventInfoComment.setAdapter(adapter);

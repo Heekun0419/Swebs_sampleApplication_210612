@@ -12,9 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.ChatViewModel;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.ChattingItem;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 import com.example.swebs_sampleapplication_210612.adapter.Comment_EventInfoAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentBottomCommentBinding;
 
@@ -25,7 +24,7 @@ import java.util.Date;
 public class BottomCommentFragment extends Fragment {
 
     private FragmentBottomCommentBinding binding;
-    private ArrayList<ChattingItem> chattingItems = new ArrayList<>();
+    private ArrayList<CommentModel> commentModels = new ArrayList<>();
     private ChatViewModel chatViewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,26 +41,26 @@ public class BottomCommentFragment extends Fragment {
 
         binding.buttonSendComment.setOnClickListener(v -> {
             String message = binding.editTextEventInfoComment.getText().toString();
-            chattingItems.add(new ChattingItem(null, message,
+            commentModels.add(new CommentModel(null, message,
                     null,
                     new SimpleDateFormat("MM-dd HH:mm").format(new Date())));
-            chatViewModel.setChattingLiveData(chattingItems);
+            chatViewModel.setChattingLiveData(commentModels);
 
             binding.editTextEventInfoComment.setText(null);
         });
 
-        chatViewModel.getChattingLiveData().observe(getViewLifecycleOwner(), new Observer<ArrayList<ChattingItem>>() {
+        chatViewModel.getChattingLiveData().observe(getViewLifecycleOwner(), new Observer<ArrayList<CommentModel>>() {
             @Override
-            public void onChanged(ArrayList<ChattingItem> chattingItems) {
-                initRecyclerView(chattingItems);
+            public void onChanged(ArrayList<CommentModel> commentModels) {
+                initRecyclerView(commentModels);
             }
         });
 
         return binding.getRoot();
     }
 
-    private void initRecyclerView(ArrayList<ChattingItem> chattingItems){
-        Comment_EventInfoAdapter adapter = new Comment_EventInfoAdapter(requireContext(), chattingItems);
+    private void initRecyclerView(ArrayList<CommentModel> commentModels){
+        Comment_EventInfoAdapter adapter = new Comment_EventInfoAdapter(requireContext(), commentModels);
         LinearLayoutManager manager = new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false);
         binding.recyclerViewEventInfoComment.setLayoutManager(manager);
         binding.recyclerViewEventInfoComment.setAdapter(adapter);

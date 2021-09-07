@@ -25,7 +25,7 @@ public class CertifiedCompanyViewModel extends AndroidViewModel {
     private MutableLiveData<ArrayList<CertifiedCompanyDetailModel>> liveCompanyModelList = new MutableLiveData<>();
     private ArrayList<CertifiedCompanyDetailModel> arrayList = new ArrayList<>();
     // 서버에서 한번에 해당 값 만큼만 불러오기
-    private final int LIST_LOAD_COUNT =10;
+    private final int LIST_LOAD_COUNT =9999;
     public CertifiedCompanyViewModel(@NonNull Application application) {
         super(application);
     }

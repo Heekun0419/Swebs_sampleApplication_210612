@@ -4,7 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,6 +35,9 @@ public class PurchaseInfoActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         myInfoRepository = new MyInfoRepository(getApplication());
+
+        // * 표시 빨간색으로 바꿈꿈
+       renderFirstTextRed();
 
         ImageUrI = getIntent().getStringExtra("prodImageUrl");
         binding.textView12.setText(getIntent().getStringExtra("corpName"));
@@ -59,13 +66,11 @@ public class PurchaseInfoActivity extends AppCompatActivity {
         myInfoRepository.getValueToLiveData("name").observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                String temp = s.substring(0,5);
-                if(temp.startsWith("Guest")) {
+                if(s != null) {
+                    binding.userName.setText(s);
+                } else {
                     binding.editTextName.setHint("이름을 입력해주세요");
                     binding.editTextName.setVisibility(View.VISIBLE);
-                } else {
-                    binding.userName.setText(s);
-                    binding.editTextName.setVisibility(View.GONE);
                 }
             }
         });
@@ -150,4 +155,18 @@ public class PurchaseInfoActivity extends AppCompatActivity {
     private void GlideImage(ImageView view) {
         Glide.with(this).load(ImageUrI).placeholder(R.drawable.ic_camera).into(view);
     }
+
+    private void renderFirstTextRed() {
+        binding.textviewProductName.setText(spannable(binding.textviewProductName.getText().toString()));
+        binding.textviewProductSrl.setText(spannable(binding.textviewProductSrl.getText().toString()));
+        binding.textViewPurchaseDate.setText(spannable(binding.textViewPurchaseDate.getText().toString()));
+        binding.textViewPurchasePlace.setText(spannable(binding.textViewPurchasePlace.getText().toString()));
+    }
+
+    private SpannableString spannable(String string) {
+        SpannableString spannableString = new SpannableString(string);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#ED6D6D")), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannableString;
+    }
+
 }

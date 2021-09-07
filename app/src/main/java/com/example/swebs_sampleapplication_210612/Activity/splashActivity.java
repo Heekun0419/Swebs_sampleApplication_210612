@@ -31,7 +31,7 @@ import com.example.swebs_sampleapplication_210612.util.SocialLoginController;
 import com.example.swebs_sampleapplication_210612.util.UserLoginController;
 
 public class splashActivity extends AppCompatActivity {
-    long SPLASH_MIN_TIME = 0;
+    long SPLASH_MIN_TIME = 2400;
 
     private ActivitySplashBinding binding;
     CharSequence charSequence;
