@@ -179,7 +179,7 @@ public class MakeSnsAccountFragment_terms extends Fragment {
                 if (response.isSuccessful()
                 && response.body() != null) {
                     userLoginController.userDataSaveWhenLogin(response.body());
-                    Toast.makeText(requireContext(), "성공!!", Toast.LENGTH_SHORT).show();
+                    ((MakeSNSAccountActivity)requireActivity()).moveFragment(new MakeAccountFragment_success(),"success");
                 }
             }
 

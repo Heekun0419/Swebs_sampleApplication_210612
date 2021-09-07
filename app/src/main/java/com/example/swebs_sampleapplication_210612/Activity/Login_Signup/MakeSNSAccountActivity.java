@@ -30,14 +30,25 @@ public class MakeSNSAccountActivity extends AppCompatActivity {
         manager = getSupportFragmentManager();
 
         // 회원가입 Fragment
-        moveFragment(new MakeSnsAccountFragment_terms());
+        moveFragment(new MakeSnsAccountFragment_terms(),"");
 
         //뒤로가기
         binding.btnTopMenuBack.setOnClickListener(v -> onBackPressed());
     }
 
-    private void moveFragment(Fragment fragment){
+    public void moveFragment(Fragment fragment, String code){
+        if(code!=null){
+            manager.beginTransaction().replace(R.id.frame_make_account_sns, fragment)
+                    .setCustomAnimations(R.anim.slide_up,R.anim.slide_out_up)
+                    .addToBackStack(null).commit();
+        }
         manager.beginTransaction().replace(R.id.frame_make_account_sns, fragment).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (manager.getBackStackEntryCount() <= 1)
+            finish();
     }
 
     public String getUserType() {
