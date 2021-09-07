@@ -89,10 +89,12 @@ public class splashActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess() {
                             setStartIntent(SystemClock.elapsedRealtime() - NetworkTime);
+                            Toast.makeText(getApplicationContext(), "토큰 유효 통과", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void onFailed() {
+                            Log.d("login", "유효하지 않아 : " + sPmanager.getUserToken() + "\n" + sPmanager.getUserSrl());
                             Toast.makeText(getApplicationContext(), "로그인 정보가 유효하지 않습니다.", Toast.LENGTH_SHORT).show();
                             loginCheck();
                         }

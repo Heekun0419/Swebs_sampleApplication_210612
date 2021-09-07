@@ -156,7 +156,7 @@ public class MakeAccountFragment_terms extends Fragment {
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                showReferralErrorDialog("추천인 코드 안내", "추천코드가 존재하지 않습니다.\n그대로 진행하히겠습니까?");
+                showReferralErrorDialog("추천인 코드 안내", "서버 연결이 원활하지 않습니다.\n잠시 후 다시 시도 해주세요.");
             }
         });
     }

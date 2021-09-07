@@ -245,7 +245,9 @@ public class myPageFragment extends Fragment {
     private void observerStart() {
         // Data Observe -- START
         viewModel.getUserInfoFromKey("userSrl").observe(getViewLifecycleOwner(), s -> {
-            if (s == null)
+            Log.d("login", "마이페이지1 : " + s);
+            if (s == null) {
+                Log.d("login", "마이페이지2 : " + s);
                 new UserLoginController(requireActivity().getApplication(), new netSignupListener() {
                     @Override
                     public void onSuccess() {
@@ -262,6 +264,7 @@ public class myPageFragment extends Fragment {
 
                     }
                 }).signUpForGuest();
+            }
         });
 
         // userType
@@ -606,7 +609,7 @@ public class myPageFragment extends Fragment {
         } else {
             setVisible_of_NormalUser();
             if (userType.equals("kakao"))
-                renderSnsView("카카오",R.drawable.ic_kakao);
+                renderSnsView("카카오톡",R.drawable.ic_kakao);
             if (userType.equals("google"))
                 renderSnsView("구글",R.drawable.ic_google);
             if (userType.equals("naver"))

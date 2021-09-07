@@ -658,7 +658,7 @@ public class MakeAccountFragment_userInfo extends Fragment {
         else
             body.put("inputCountryRegion", RequestBody.create("none", MediaType.parse("text/plane")));
 
-        Call<NormalSignUpModel> call = retroAPI.userSingUp(body);
+        Call<NormalSignUpModel> call = retroAPI.normalSignup(body);
         call.enqueue(new Callback<NormalSignUpModel>() {
             @Override
             public void onResponse(Call<NormalSignUpModel> call, Response<NormalSignUpModel> response) {

@@ -22,13 +22,19 @@ import retrofit2.http.PartMap;
 public interface SwebsAPI {
     @Multipart
     @POST("src1/signup/signup_guest.php")
-    Call<GuestSignUpModel> guestSignUp(
+    Call<GuestSignUpModel> guestSignup(
             @PartMap Map<String, RequestBody> prams
     );
 
     @Multipart
     @POST("src1/signup/signup_normal.php")
-    Call<NormalSignUpModel> userSingUp(
+    Call<NormalSignUpModel> normalSignup(
+            @PartMap Map<String, RequestBody> prams
+    );
+
+    @Multipart
+    @POST("src1/signup/signup_social.php")
+    Call<LoginModel> socialSignup(
             @PartMap Map<String, RequestBody> prams
     );
 
@@ -65,12 +71,6 @@ public interface SwebsAPI {
     @Multipart
     @POST("src1/login/login_social.php")
     Call<LoginModel> loginSocialUser(
-            @PartMap Map<String, RequestBody> prams
-    );
-
-    @Multipart
-    @POST("src1/login/guest_sign_up.php")
-    Call<SignUpModel> guest_signUp(
             @PartMap Map<String, RequestBody> prams
     );
 

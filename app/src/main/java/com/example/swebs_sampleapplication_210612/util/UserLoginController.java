@@ -1,9 +1,12 @@
 package com.example.swebs_sampleapplication_210612.util;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.swebs_sampleapplication_210612.Activity.splashActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Listener.netSignupListener;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.GuestSignUpModel;
@@ -23,6 +26,7 @@ import retrofit2.Response;
 public class UserLoginController {
     private final SwebsAPI retroAPI;
     private final Context context;
+    private Activity activity;
     private final MyInfoRepository myInfoRepository;
     private final SPmanager sPmanager;
     private netSignupListener listener;
@@ -42,11 +46,24 @@ public class UserLoginController {
         this.listener = listener;
     }
 
+    public UserLoginController setActivity(Activity activity) {
+        this.activity = activity;
+        return this;
+    }
+
     public void userDataSaveWhenLogin(LoginModel model) {
-        myInfoRepository.insertMyInfo("userSrl", model.getUserSrl());
-        myInfoRepository.insertMyInfo("userType", model.getUserType());
-        myInfoRepository.insertMyInfo("nickName", model.getNickName());
-        myInfoRepository.insertMyInfo("name", model.getName());
+        if (model.getUserSrl() != null) {
+            myInfoRepository.insertMyInfo("userSrl", model.getUserSrl());
+            sPmanager.setUserSrl(model.getUserSrl());
+        }
+        if (model.getUserType() != null) {
+            myInfoRepository.insertMyInfo("userType", model.getUserType());
+            sPmanager.setUserType(model.getUserType());
+        }
+        if (model.getNickName() != null)
+            myInfoRepository.insertMyInfo("nickName", model.getNickName());
+        if (model.getName() != null)
+            myInfoRepository.insertMyInfo("name", model.getName());
         if (model.getBirthday() != null)
             myInfoRepository.insertMyInfo("birthday", model.getBirthday());
         if (model.getGender() != null)
@@ -61,19 +78,25 @@ public class UserLoginController {
             myInfoRepository.insertMyInfo("email", model.getEmail());
         if (model.getPoint() != null)
             myInfoRepository.insertMyInfo("point", model.getPoint());
+        if (model.getToken() != null)
+            sPmanager.setUserToken(model.getToken());
         if (model.getReferralCode() != null) {
             myInfoRepository.insertMyInfo("referralCode", model.getReferralCode());
             sPmanager.setUserReferralCode(model.getReferralCode());
         }
-
-        sPmanager.setUserSrl(model.getUserSrl());
-        sPmanager.setUserType(model.getUserType());
-        sPmanager.setUserToken(model.getToken());
     }
 
 
     public void userLogout() {
         // 데이터 삭제하기.
+        if (sPmanager.getUserType().equals("kakao")) {
+            new SocialLoginController(activity).logoutForKakao();
+        } else if (sPmanager.getUserType().equals("naver")) {
+            new SocialLoginController(activity, context).logoutForNaver();
+        } else if (sPmanager.getUserType().equals("google")) {
+            new SocialLoginController(activity).logoutForGoogle();
+        }
+
         sPmanager.removeUserSrl();
         sPmanager.removeUserType();
         sPmanager.removeUserToken();
@@ -116,7 +139,7 @@ public class UserLoginController {
 
         body.put("inputCountry", RequestBody.create(getRegionFromSystem.getCountry(), MediaType.parse("text/plane")));
 
-        Call<GuestSignUpModel> call = retroAPI.guestSignUp(body);
+        Call<GuestSignUpModel> call = retroAPI.guestSignup(body);
         call.enqueue(new Callback<GuestSignUpModel>() {
             @Override
             public void onResponse(Call<GuestSignUpModel> call, Response<GuestSignUpModel> response) {

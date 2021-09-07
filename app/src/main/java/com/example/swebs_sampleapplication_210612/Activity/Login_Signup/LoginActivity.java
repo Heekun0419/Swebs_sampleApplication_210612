@@ -24,6 +24,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityLoginBinding;
+import com.example.swebs_sampleapplication_210612.util.Listener.onSimpleLoginListener;
 import com.example.swebs_sampleapplication_210612.util.SocialLoginController;
 import com.example.swebs_sampleapplication_210612.util.UserLoginController;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -110,11 +111,33 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginForNaver() {
         new SocialLoginController(LoginActivity.this, LoginActivity.this)
+            .setListener(new onSimpleLoginListener() {
+                @Override
+                public void onSuccess(String userType, String uid, String email, String nickname) {
+                    loginSocialUser(userType, uid, email, nickname);
+                }
+
+                @Override
+                public void onFailed() {
+
+                }
+            })
             .loginForNaver();
     }
 
     private void loginForKakao() {
         new SocialLoginController(LoginActivity.this)
+            .setListener(new onSimpleLoginListener() {
+                @Override
+                public void onSuccess(String userType, String uid, String email, String nickname) {
+                    loginSocialUser(userType, uid, email, nickname);
+                }
+
+                @Override
+                public void onFailed() {
+
+                }
+            })
             .loginForKakao();
     }
 
@@ -132,19 +155,17 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("snsLogin", "google uid : " + account.getId());
                 Log.d("snsLogin", "google email : " + account.getEmail());
                 Log.d("snsLogin", "google displayname : " + account.getDisplayName());
-                loginSocialUser("google", account.getId());
+                loginSocialUser("google", account.getId(), account.getEmail(), account.getDisplayName());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w("snsLogin", "Google sign in failed", e);
             }
 
-            new SocialLoginController(LoginActivity.this)
-                .logoutForGoogle();
-
+            //new SocialLoginController(LoginActivity.this).logoutForGoogle();
         }
     });
 
-    private void loginSocialUser(String userType, String uid) {
+    private void loginSocialUser(String userType, String uid, String email, String nickname) {
         if (userType == null || uid == null) {
             showOneButtonDialog(DIALOG_TITLE, "정상적인 접근이 아닙니다.");
             return;
@@ -163,7 +184,7 @@ public class LoginActivity extends AppCompatActivity {
                                 finish();
                             } else {
                                 renderLoading(false);
-                                showOneButtonDialog(DIALOG_TITLE, "회원가입을 진행 합니다.");
+                                socialSignUpIntent(userType, uid, email, nickname);
                             }
                         } else {
                             renderLoading(false);
@@ -177,6 +198,15 @@ public class LoginActivity extends AppCompatActivity {
                         showOneButtonDialog(DIALOG_TITLE, "서버 연결이 원활하지 않습니다.\n잠시 후 다시 시도 해주세요.");
                     }
                 });
+    }
+
+    private void socialSignUpIntent(String userType, String uid, String email, String nickname) {
+        Intent intent = new Intent(getApplicationContext(),MakeSNSAccountActivity.class);
+        intent.putExtra("userType", userType);
+        intent.putExtra("uid", uid);
+        intent.putExtra("email", email);
+        intent.putExtra("nickname", nickname);
+        startActivity(intent);
     }
 
     private void loginNormalUser() {
@@ -216,12 +246,6 @@ public class LoginActivity extends AppCompatActivity {
                         showOneButtonDialog(DIALOG_TITLE, "서버 연결이 원활하지 않습니다.\n잠시 후 다시 시도 해주세요.");
                     }
                 });
-    }
-
-    private void IntentSnsLogin(String code){
-        Intent intent = new Intent(getApplicationContext(),MakeSNSAccountActivity.class);
-        intent.putExtra("resultCode", code);
-        startActivity(intent);
     }
 
     private void showOneButtonDialog(String title, String content) {

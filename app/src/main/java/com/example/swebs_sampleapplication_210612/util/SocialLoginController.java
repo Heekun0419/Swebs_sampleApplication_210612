@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.example.swebs_sampleapplication_210612.Activity.Login_Signup.LoginActivity;
+import com.example.swebs_sampleapplication_210612.util.Listener.onSimpleLoginListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -39,6 +40,7 @@ import kotlin.jvm.functions.Function2;
 public class SocialLoginController {
     private Activity activity;
     private Context context;
+    private onSimpleLoginListener listener;
 
     // Google Login
     private ActivityResultLauncher<Intent> mGoogleSignup;
@@ -74,8 +76,13 @@ public class SocialLoginController {
     }
     //
 
+    public SocialLoginController setListener(onSimpleLoginListener listener) {
+        this.listener = listener;
+        return this;
+    }
+
     public void loginForNaver() {
-        mNaverLoginInstance.startOauthLoginActivity(activity, new NaverLoginHandler(mNaverLoginInstance, context));
+        mNaverLoginInstance.startOauthLoginActivity(activity, new NaverLoginHandler(mNaverLoginInstance, context, listener));
     }
 
     public void isNaverSession() {
@@ -90,19 +97,25 @@ public class SocialLoginController {
         }
     }
 
+    public void logoutForNaver() {
+        mNaverLoginInstance.logout(context);
+    }
+
     private static class NaverLoginHandler extends OAuthLoginHandler {
         private final OAuthLogin mNaverLoginInstance;
         private final Context mContext;
+        private final onSimpleLoginListener listener;
 
-        public NaverLoginHandler(OAuthLogin mNaverLoginInstance, Context context) {
+        public NaverLoginHandler(OAuthLogin mNaverLoginInstance, Context context, onSimpleLoginListener listener) {
             this.mNaverLoginInstance = mNaverLoginInstance;
             this.mContext = context;
+            this.listener = listener;
         }
 
         @Override
         public void run(boolean success) {
             if (success) {
-                new NaverLoginHandler.RequestApiTask(mContext, mNaverLoginInstance).execute();
+                new NaverLoginHandler.RequestApiTask(mContext, mNaverLoginInstance, listener).execute();
             } else {
                 String errorCode = mNaverLoginInstance.getLastErrorCode(mContext).getCode();
                 String errorDesc = mNaverLoginInstance.getLastErrorDesc(mContext);
@@ -114,10 +127,12 @@ public class SocialLoginController {
         private class RequestApiTask extends AsyncTask<Void, Void, String> {
             private final Context mContext;
             private final OAuthLogin mOAuthLoginModule;
+            private final onSimpleLoginListener listener;
 
-            public RequestApiTask(Context mContext, OAuthLogin mOAuthLoginModule) {
+            public RequestApiTask(Context mContext, OAuthLogin mOAuthLoginModule, onSimpleLoginListener listener) {
                 this.mContext = mContext;
                 this.mOAuthLoginModule = mOAuthLoginModule;
+                this.listener = listener;
             }
 
             @Override
@@ -140,7 +155,13 @@ public class SocialLoginController {
                         Log.d("snsLogin", "네이버 id : " + response.getString("id"));
                         Log.d("snsLogin", "네이버 email : " + response.getString("email"));
                         Log.d("snsLogin", "네이버 닉네임 : " + response.getString("nickname"));
-                        mNaverLoginInstance.logout(mContext);
+                        listener.onSuccess(
+                                "naver",
+                                response.getString("id"),
+                                response.getString("email"),
+                                response.getString("nickname")
+                        );
+                        //mNaverLoginInstance.logout(mContext);
                     }
 
                 } catch (JSONException e) {
@@ -149,7 +170,6 @@ public class SocialLoginController {
             }
         }
     }
-
 
 
     public void loginForGoogle() {
@@ -239,7 +259,14 @@ public class SocialLoginController {
                 Log.d("snsLogin", "카카오 Email : " + user.getKakaoAccount().getEmail());
                 Log.d("snsLogin", "카카오 닉네임 : " + user.getKakaoAccount().getProfile().getNickname());
 
-                this.unlinkForKakao();
+                listener.onSuccess(
+                        "kakao",
+                        Long.toString(user.getId()),
+                        user.getKakaoAccount().getEmail(),
+                        user.getKakaoAccount().getProfile().getNickname()
+                );
+
+                //this.unlinkForKakao();
             }
             return null;
         });

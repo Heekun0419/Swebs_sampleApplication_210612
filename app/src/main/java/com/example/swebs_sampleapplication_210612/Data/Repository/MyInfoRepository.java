@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import com.example.swebs_sampleapplication_210612.Activity.Login_Signup.MakeSNSAccountActivity;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LoginModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
@@ -25,7 +26,7 @@ import retrofit2.Call;
 
 public class MyInfoRepository {
     public SwebsDao swebsDao;
-    private SwebsAPI retroAPI;
+    private final SwebsAPI retroAPI;
     LiveData<List<MyInfo>> mMyInfoAll;
 
     public MyInfoRepository(Application application) {
@@ -53,6 +54,21 @@ public class MyInfoRepository {
 
         return retroAPI.loginSocialUser(formData);
     }
+
+    // 소셜 회원 가입
+    public Call<LoginModel> getSignupForSocial(String userSrl, String email, String nickname, String uid, String userType, String receiveReferralCode) {
+        HashMap<String, RequestBody> formData = new HashMap<>();
+        formData.put("inputUserSrl", RequestBody.create(userSrl, MediaType.parse("text/plane")));
+        formData.put("inputEmail", RequestBody.create(email, MediaType.parse("text/plane")));
+        formData.put("inputNickname", RequestBody.create(nickname, MediaType.parse("text/plane")));
+        formData.put("inputUid", RequestBody.create(uid, MediaType.parse("text/plane")));
+        formData.put("inputUserType", RequestBody.create(userType, MediaType.parse("text/plane")));
+        if (receiveReferralCode != null)
+            formData.put("inputReceiveReferralCode", RequestBody.create(receiveReferralCode, MediaType.parse("text/plane")));
+
+        return retroAPI.socialSignup(formData);
+    }
+
 
     public LiveData<List<MyInfo>> getAllToLiveData() {
         return mMyInfoAll;

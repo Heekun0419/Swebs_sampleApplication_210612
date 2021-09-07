@@ -81,11 +81,8 @@ public class AppInformationFragment extends Fragment {
             dialog.setCancelable(false);
             dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
             dialog.show();
-            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialog) {
-                    Toast.makeText(requireContext(), "취소됨", Toast.LENGTH_SHORT).show();
-                }
+            dialog.setOnCancelListener(dialog -> {
+                Toast.makeText(requireContext(), "취소됨", Toast.LENGTH_SHORT).show();
             });
         });
 
@@ -115,14 +112,10 @@ public class AppInformationFragment extends Fragment {
 
                                     }
                                 }
-                        );
+                        ).setActivity(requireActivity());
                         userLoginController.userLogout();
                         userLoginController.signUpForGuest();
                         Toast.makeText(requireContext(), "로그아웃 완료", Toast.LENGTH_SHORT).show();
-
-                        //((InformationActivity) requireActivity()).finishAffinity();
-                        //Intent intent = new Intent(requireContext(), MainActivity.class);
-                        //startActivity(intent);
                     }
                 }
 
