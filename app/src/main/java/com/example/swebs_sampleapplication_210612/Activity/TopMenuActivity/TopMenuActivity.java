@@ -70,7 +70,7 @@ public class TopMenuActivity extends FragmentActivity {
         getCategoryFromServer();
 
         // 탭레이아웃 개수에 따라 모드 변경
-        if(list.size()<=4){
+        if(list.size()<=3){
             binding.tabLayout.setTabMode(TabLayout.MODE_FIXED);
         }else{
             binding.tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);

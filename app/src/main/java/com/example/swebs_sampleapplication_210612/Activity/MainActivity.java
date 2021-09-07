@@ -13,8 +13,14 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Observer;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,11 +42,14 @@ import com.example.swebs_sampleapplication_210612.Fragment.MainFragment.producti
 import com.google.android.material.navigation.NavigationView;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.common.KakaoSdk;
+import com.kakao.sdk.common.util.Utility;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import kotlin.Unit;
@@ -72,6 +81,7 @@ public class MainActivity extends FragmentActivity {
         binding.viewpager2Main.setCurrentItem(1, false);
         binding.viewpager2Main.setOffscreenPageLimit(2);
 
+       // Log.d("keyhas",getKeyHash(MainActivity.this));
 
         // Intro Page...
         if (!sPmanager.getIntroPage()) {
@@ -98,6 +108,8 @@ public class MainActivity extends FragmentActivity {
         manager.setFragmentResultListener("Y", this, (requestKey, result) -> {
 
         });
+
+
 
         binding.navView.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -211,7 +223,7 @@ public class MainActivity extends FragmentActivity {
         });
 
         // Name
-        myInfoRepository.getValueToLiveData("name").observe(this, new Observer<String>() {
+        myInfoRepository.getValueToLiveData("nickName").observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 if (s != null) {
@@ -281,6 +293,28 @@ public class MainActivity extends FragmentActivity {
 
     private void GlideImage(ImageView view){
         Glide.with(getApplicationContext()).load(R.drawable.ic_profile_basic).circleCrop().into(view);
+    }
+
+    public static String getKeyHash(final Context context) {
+        PackageManager pm = context.getPackageManager();
+        try {
+            PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES);
+            if (packageInfo == null)
+                return null;
+
+            for (Signature signature : packageInfo.signatures) {
+                try {
+                    MessageDigest md = MessageDigest.getInstance("SHA");
+                    md.update(signature.toByteArray());
+                    return android.util.Base64.encodeToString(md.digest(), android.util.Base64.NO_WRAP);
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 

@@ -1,20 +1,28 @@
 package com.example.swebs_sampleapplication_210612.Fragment.MainFragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 
 import com.example.swebs_sampleapplication_210612.Activity.AuthenticScanActivity;
+import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.QRLinkActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ScanSettingActivity;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanDataPushModel;
@@ -63,6 +71,8 @@ public class ScanZxingFragment extends Fragment {
     private boolean isFlashOn;
     private boolean isScanning;
 
+    private final Animation fadeIn = new AlphaAnimation(0,1);
+
     public ScanZxingFragment() {
         // Required empty public constructor
     }
@@ -80,6 +90,15 @@ public class ScanZxingFragment extends Fragment {
 
         binding = FragmentScanZxingBinding.inflate(getLayoutInflater());
 
+        binding.tutorialScanPage.getRoot().setVisibility(View.GONE);
+
+        String content = binding.textVIewScanExplain.getText().toString();
+        SpannableString spannableString = new SpannableString(content);
+        String word = "QR코드를";
+        int start = content.indexOf(word);
+        int end = start + word.length();
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#93E3BE")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        binding.textVIewScanExplain.setText(spannableString);
 
         ViewfinderView viewfinderView = binding.zxingBarcodeScanner.getViewFinder();
         try {
@@ -104,6 +123,29 @@ public class ScanZxingFragment extends Fragment {
 
             }
         });
+
+        // 앱바에 로고 안보이게 하기
+        binding.includedAppbarScan.imageView19.setVisibility(View.INVISIBLE);
+        binding.includedAppbarScan.imageButton2.setBackgroundColor(Color.TRANSPARENT);
+
+        // 네비게이션 드로어 열기
+        binding.includedAppbarScan.imageButton.setOnClickListener(v -> ((MainActivity)requireActivity()).openDrawer());
+
+        // 튜토리얼 페이지 닫기
+        binding.tutorialScanPage.textViewScanTutorialClose.setOnClickListener(v -> {
+            binding.tutorialScanPage.getRoot().setVisibility(View.GONE);
+            sPmanager.setScanTutorialExit(true);
+        });
+
+        binding.tutorialScanPage.imageButton5.setOnClickListener(v -> {
+            binding.tutorialScanPage.getRoot().setVisibility(View.GONE);
+            sPmanager.setScanTutorialExit(true);
+        });
+
+        // Bottom Sheet 열기
+        binding.includedAppbarScan.imageButton2.setOnClickListener(v ->
+                ((MainActivity)requireActivity()).BottomSheetOpen());
+
 
         // Setting Button
         binding.btnScanSetting.setOnClickListener(v -> {
@@ -140,6 +182,25 @@ public class ScanZxingFragment extends Fragment {
         isFlashOn = false;
 
         isScanning = true;
+
+        renderTutorial();
+    }
+
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void renderTutorial() {
+        Log.d("render", "tutorial is gone");
+        if(binding.tutorialScanPage.getRoot().getVisibility() == View.GONE
+                && !sPmanager.getScanTutorialExit()){
+
+            Log.d("render", "tutorial start  SP date : " + sPmanager.getScanTutorialExit());
+            fadeIn.setDuration(700);
+            binding.tutorialScanPage.getRoot().setOnTouchListener((v, event) -> true);
+            binding.tutorialScanPage.getRoot().setVisibility(View.VISIBLE);
+            binding.tutorialScanPage.getRoot().setAnimation(fadeIn);
+        }
+
+
     }
 
     @Override

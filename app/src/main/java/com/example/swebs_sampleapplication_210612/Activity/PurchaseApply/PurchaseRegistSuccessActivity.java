@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.bumptech.glide.Glide;
+import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityPurchaseRegistSuccessBinding;
 
 public class PurchaseRegistSuccessActivity extends AppCompatActivity {
@@ -20,11 +22,19 @@ public class PurchaseRegistSuccessActivity extends AppCompatActivity {
         String productName = getIntent().getStringExtra("productName");
         String productSrl = getIntent().getStringExtra("productSrl");
         String Date = getIntent().getStringExtra("date");
+        String userName = getIntent().getStringExtra("name");
+        String userPhone = getIntent().getStringExtra("phone");
+        String userEmail = getIntent().getStringExtra("email");
+        String ImageUrl = getIntent().getStringExtra("imageUrl");
 
         binding.textViewProductName.setText(productName);
         binding.textViewPurchaseDate.setText(Date);
         binding.textViewPurchaseStoreName.setText(store);
         binding.textViewProductSrl.setText(productSrl);
+        binding.textViewName.setText(userName);
+        binding.textviewEmail.setText(userEmail);
+        binding.textviewPhoneNumber.setText(userPhone);
 
+        Glide.with(this).load(ImageUrl).placeholder(R.drawable.ic_camera).into(binding.ImageViewPurchaseImage);
     }
 }

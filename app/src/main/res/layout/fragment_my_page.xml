@@ -670,6 +670,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="15dp"
+                    android:background="?attr/selectableItemBackground"
                     android:paddingBottom="15dp"
                     android:gravity="center"
                     android:orientation="horizontal">
@@ -687,9 +688,10 @@
                         android:layout_weight="1" />
 
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/btn_right_pointer" />
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:paddingStart="10dp"
+                        android:background="@drawable/btn_right_pointer" />
 
                 </LinearLayout>
 

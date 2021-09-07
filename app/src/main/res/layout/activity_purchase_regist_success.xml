@@ -16,7 +16,6 @@
             android:id="@+id/ImageView_purchase_image"
             android:layout_width="match_parent"
             android:layout_height="350dp"
-            android:background="@drawable/cosmetic_sample"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -169,10 +168,10 @@
                     android:layout_weight="1" />
 
                 <TextView
+                    android:id="@+id/textView_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="25dp"
-                    android:text="홍길동"
                     android:textColor="@color/black"
                     android:textSize="14dp" />
             </LinearLayout>
@@ -200,10 +199,10 @@
                     android:layout_weight="1" />
 
                 <TextView
+                    android:id="@+id/textview_phoneNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="25dp"
-                    android:text="010-1245-4100"
                     android:textColor="#999999"
                     android:textSize="14dp" />
             </LinearLayout>
@@ -231,10 +230,10 @@
                     android:layout_weight="1" />
 
                 <TextView
+                    android:id="@+id/textview_Email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="25dp"
-                    android:text="aa***@kakao.com"
                     android:textColor="#999999"
                     android:textSize="14dp" />
             </LinearLayout>
