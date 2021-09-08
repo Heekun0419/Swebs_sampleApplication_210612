@@ -9,6 +9,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CategoryDetailModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CategoryModel;
@@ -29,7 +30,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,23 +68,13 @@ public class TopMenuActivity extends FragmentActivity {
 
         tabLayout = binding.tabLayout;
         //고정갑 0 -> 처음 카테고리 전체로 고정.
-        list.add(new CategoryDetailModel(0,"전체"));
+        list.add(new CategoryDetailModel("0","전체"));
 
         // 서버에서 카테고리 불러오기
-        getCategoryFromServer();
+        getCategoryFromServer(requestCode);
 
-        // 탭레이아웃 개수에 따라 모드 변경
-        if(list.size()<=3){
-            binding.tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        }else{
-            binding.tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        }
-
-        viewModel.getCategoryDetailModelLiveData().observe(this, new Observer<ArrayList<CategoryDetailModel>>() {
-            @Override
-            public void onChanged(ArrayList<CategoryDetailModel> list) {
-                initViewPager(requestCode,list);
-            }
+        viewModel.getCategoryDetailModelLiveData().observe(this, list -> {
+            initViewPager(requestCode,list);
         });
     }
 
@@ -139,16 +133,25 @@ public class TopMenuActivity extends FragmentActivity {
         }
     }
 
-    private void getCategoryFromServer(){
-        Call<CategoryModel> call = retroAPI.getCategory();
+    private void getCategoryFromServer(String categoryName){
+        HashMap<String, RequestBody> formData = new HashMap<>();
+        formData.put("inputCategoryName", RequestBody.create(categoryName, MediaType.parse("text/plane")));
+        Call<CategoryModel> call = retroAPI.getCategory(formData);
         call.enqueue(new Callback<CategoryModel>() {
             @Override
             public void onResponse(Call<CategoryModel> call, Response<CategoryModel> response) {
-
-               if(response.isSuccessful() && response.body()!=null) {
+               if(response.isSuccessful()
+               && response.body()!=null) {
                    // 카테고리 List 받아오기
                    CategoryModel categoryModel = response.body();
                    list.addAll(categoryModel.getCategory());
+
+                   // 탭레이아웃 개수에 따라 모드 변경
+                   if(list.size() <= 3)
+                       binding.tabLayout.setTabMode(TabLayout.MODE_FIXED);
+                   else
+                       binding.tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
                    // 뷰모델에 Data Setting
                    viewModel.setCategoryDetailModelLiveData(list);
                }

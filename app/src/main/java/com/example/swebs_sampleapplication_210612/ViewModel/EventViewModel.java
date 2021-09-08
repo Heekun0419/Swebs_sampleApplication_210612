@@ -12,6 +12,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Even
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventDetailModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListDetailModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LikeApplyModel;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
 import com.example.swebs_sampleapplication_210612.util.EventController;
@@ -36,6 +37,7 @@ public class EventViewModel extends AndroidViewModel {
     private final MutableLiveData<ArrayList<EventModel>> liveEventList = new MutableLiveData<>();
     private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     private MutableLiveData<EventDetailInfoModel> liveEventDetailInfo = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isEventCanLike = new MutableLiveData<>();
 
     public EventViewModel(@NonNull Application application) {
         super(application);
@@ -52,6 +54,33 @@ public class EventViewModel extends AndroidViewModel {
     public MutableLiveData<EventDetailInfoModel> getLiveEventDetailInfo() {
         return liveEventDetailInfo;
     }
+    public MutableLiveData<Boolean> getIsEventCanLike() {
+        return isEventCanLike;
+    }
+
+    public void pushEventLike(String eventSrl) {
+        eventRepository.pushLike(eventSrl, sPmanager.getUserSrl(), "event")
+                .enqueue(new Callback<LikeApplyModel>() {
+                    @Override
+                    public void onResponse(Call<LikeApplyModel> call, Response<LikeApplyModel> response) {
+                        if (response.isSuccessful()
+                        && response.body() != null) {
+                            if (response.body().isSuccess()) {
+                                if (response.body().getState().equals("Insert"))
+                                    isEventCanLike.setValue(false);
+                                else
+                                    isEventCanLike.setValue(true);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<LikeApplyModel> call, Throwable t) {
+
+                    }
+                });
+        isEventCanLike.setValue(false);
+    }
 
     public void getEventDetailFromServer(String eventSrl) {
         isLoading.setValue(true);
@@ -63,6 +92,7 @@ public class EventViewModel extends AndroidViewModel {
                         if (response.isSuccessful()
                         && response.body() != null) {
                             liveEventDetailInfo.setValue(response.body().getEvent_info());
+                            isEventCanLike.setValue(response.body().getEvent_info().isCan_like());
                         }
                         isLoading.setValue(false);
                     }

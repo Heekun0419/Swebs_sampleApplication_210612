@@ -1,23 +1,24 @@
 package com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CategoryModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CertifiedCompanyDetailModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductDetailModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListlModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CommentInputModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventDetailModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.GuestSignUpModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LikeApplyModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LoginModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.NormalSignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanDataPushModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SignUpModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PartMap;
@@ -90,8 +91,11 @@ public interface SwebsAPI {
             @PartMap Map<String, RequestBody> prams
     );
 
-    @GET("src1/event/get_category.php")
-    Call<CategoryModel> getCategory();
+    @Multipart
+    @POST("src1/common/get_category.php")
+    Call<CategoryModel> getCategory(
+            @PartMap Map<String, RequestBody> prams
+    );
     // END - Event API
 
     // START - Document, Comment API
@@ -102,12 +106,27 @@ public interface SwebsAPI {
     );
     // END - Document, Comment API
 
-    // 인증업체 API
+    // START - Like API
+    @Multipart
+    @POST("KKW_TEST/like/like_apply.php")
+    Call<LikeApplyModel> pushLike(
+            @PartMap Map<String, RequestBody> prams
+    );
+    // END - Like API
+
+    // START - 인증업체 API
     @Multipart
     @POST("KKW_TEST/product/product_categorylist.php")
-    Call<ArrayList<CertifiedCompanyDetailModel>> getCorpList(
+    Call<List<ProductListlModel>> getCertifiedList(
             @PartMap Map<String,RequestBody> params
     );
+
+    @Multipart
+    @POST("KKW_TEST/product/product_detail.php")
+    Call<ProductDetailModel> getCertifiedDetail(
+            @PartMap Map<String,RequestBody> params
+    );
+    // END - 인증업체 API
 
     // 댓글 API
     @Multipart

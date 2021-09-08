@@ -83,19 +83,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            app:layout_constraintTop_toBottomOf="@+id/corp_name" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/corp_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="12dp"
             android:text="함소아"
             android:textColor="@color/swebs_main_color2"
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView_certifiedInfo_profile" />
 
@@ -106,7 +107,7 @@
             android:layout_marginEnd="25dp"
             android:background="@drawable/ic_share_link"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView7" />
+            app:layout_constraintTop_toTopOf="@+id/corp_name" />
 
         <LinearLayout
             android:id="@+id/linearLayout31"
@@ -121,6 +122,7 @@
 
             <RatingBar
                 style="@style/Widget.AppCompat.RatingBar.Small"
+                android:id="@+id/ratingBar_review"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -133,6 +135,7 @@
                 android:stepSize="0.5" />
 
             <TextView
+                android:id="@+id/rating_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -143,6 +146,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/review_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -153,7 +157,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView54"
+            android:id="@+id/category_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -164,16 +168,16 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout31" />
 
         <TextView
-            android:id="@+id/textView58"
+            android:id="@+id/category_rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:text="(21위)"
             android:textColor="#FF72B9"
             android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView54"
-            app:layout_constraintStart_toEndOf="@+id/textView54"
-            app:layout_constraintTop_toTopOf="@+id/textView54" />
+            app:layout_constraintBottom_toBottomOf="@+id/category_title"
+            app:layout_constraintStart_toEndOf="@+id/category_title"
+            app:layout_constraintTop_toTopOf="@+id/category_title" />
 
         <View
             android:id="@+id/view9"
@@ -183,7 +187,7 @@
             android:background="#F9FAFC"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView54" />
+            app:layout_constraintTop_toBottomOf="@+id/category_title" />
 
 
         <LinearLayout
@@ -206,7 +210,7 @@
                 android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/textView_productInfo"
+                android:id="@+id/textView_product_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
@@ -266,7 +270,36 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.github.chrisbanes.photoview.PhotoView
-                android:id="@+id/imageView_detailInfo"
+                android:id="@+id/imageView_detailInfo1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="15dp"
+                android:visibility="gone" />
+
+            <com.github.chrisbanes.photoview.PhotoView
+                android:id="@+id/imageView_detailInfo2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:visibility="gone" />
+
+            <com.github.chrisbanes.photoview.PhotoView
+                android:id="@+id/imageView_detailInfo3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:visibility="gone" />
+
+            <com.github.chrisbanes.photoview.PhotoView
+                android:id="@+id/imageView_detailInfo4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:visibility="gone" />
+
+            <com.github.chrisbanes.photoview.PhotoView
+                android:id="@+id/imageView_detailInfo5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"

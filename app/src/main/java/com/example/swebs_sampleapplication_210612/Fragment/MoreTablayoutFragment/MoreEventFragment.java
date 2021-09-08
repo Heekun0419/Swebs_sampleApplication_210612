@@ -31,13 +31,13 @@ public class MoreEventFragment extends Fragment implements OnItemClickListener {
 
     private FragmentMoreEventBinding binding;
     private EventViewModel viewModel;
-    private int position;
+    private String categorySrl;
 
     EventMoreAdapter eventMoreAdapter;
 
     // viewPager 및 TabLayout position 받아옴.
-    public MoreEventFragment(int position) {
-        this.position = position;
+    public MoreEventFragment(String categorySrl) {
+        this.categorySrl = categorySrl;
     }
 
     @Override
@@ -54,7 +54,6 @@ public class MoreEventFragment extends Fragment implements OnItemClickListener {
 
         //ViewModel 에서 리스트로 받아오기
         viewModel.getLiveEventList().observe(getViewLifecycleOwner(), eventModels -> {
-            Toast.makeText(requireContext(), "111", Toast.LENGTH_SHORT).show();
             if (eventModels.size() > 0) {
                 binding.noticeTextView.setVisibility(View.GONE);
                 binding.recyclerViewMoreEvent.setVisibility(View.VISIBLE);

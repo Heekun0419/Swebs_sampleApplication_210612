@@ -145,6 +145,7 @@
                     android:background="@drawable/ic_share_link" />
 
                 <ImageView
+                    android:id="@+id/like_filled"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="15dp"

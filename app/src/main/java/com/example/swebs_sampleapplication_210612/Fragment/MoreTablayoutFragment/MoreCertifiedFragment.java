@@ -1,31 +1,30 @@
 package com.example.swebs_sampleapplication_210612.Fragment.MoreTablayoutFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CertifiedCompanyDetailModel;
+import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.CertifiedCompanyActivity;
+import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.EventActivity;
 import com.example.swebs_sampleapplication_210612.ViewModel.CertifiedCompanyViewModel;
+import com.example.swebs_sampleapplication_210612.adapter.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.TablayoutAdapter.GridMoreCretifiedAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMoreCertifiedCompanyBinding;
 
-import java.util.ArrayList;
-
-public class MoreCertifiedFragment extends Fragment {
+public class MoreCertifiedFragment extends Fragment implements OnItemClickListener {
 
     private FragmentMoreCertifiedCompanyBinding binding;
-    private final int categorySrl;
+    private final String categorySrl;
     private CertifiedCompanyViewModel viewModel;
     private String LastIndex ="0";
     GridMoreCretifiedAdapter adapter;
     // viewPager 및 TabLayout position 받아옴.
-    public MoreCertifiedFragment(int categorySrl){
+    public MoreCertifiedFragment(String categorySrl){
         this.categorySrl = categorySrl;
     }
 
@@ -33,8 +32,7 @@ public class MoreCertifiedFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new CertifiedCompanyViewModel(requireActivity().getApplication());
-        String categorySrl = Integer.toString(this.categorySrl);
-        viewModel.getListFromServer(categorySrl,LastIndex);
+        viewModel.getProductListFromServer(categorySrl, LastIndex);
     }
 
     @Override
@@ -42,16 +40,13 @@ public class MoreCertifiedFragment extends Fragment {
 
         binding = FragmentMoreCertifiedCompanyBinding.inflate(inflater,container,false);
 
-        viewModel.getLiveCompanyModelList().observe(getViewLifecycleOwner(), new Observer<ArrayList<CertifiedCompanyDetailModel>>() {
-            @Override
-            public void onChanged(ArrayList<CertifiedCompanyDetailModel> certifiedCompanyModels) {
-                if (LastIndex.equals("0")) {
-                    GridMoreCretifiedAdapter adapter = new GridMoreCretifiedAdapter(requireContext(),certifiedCompanyModels);
-                    binding.gridViewMoreCertified.setAdapter(adapter);
-                } else{
-                LastIndex = certifiedCompanyModels.get(certifiedCompanyModels.size()-1).getProd_srl();
-                adapter.changeItem(certifiedCompanyModels);}
-            }
+        viewModel.getLiveCompanyModelList().observe(getViewLifecycleOwner(), certifiedCompanyModels -> {
+            if (LastIndex.equals("0")) {
+                GridMoreCretifiedAdapter adapter = new GridMoreCretifiedAdapter(requireContext(),certifiedCompanyModels, this);
+                binding.gridViewMoreCertified.setAdapter(adapter);
+            } else{
+            LastIndex = certifiedCompanyModels.get(certifiedCompanyModels.size()-1).getProd_srl();
+            adapter.changeItem(certifiedCompanyModels);}
         });
 
        // Log.d("scroll", String.valueOf(binding.gridViewMoreCertified.getScrollY()));
@@ -63,9 +58,12 @@ public class MoreCertifiedFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        String categorySrl = Integer.toString(this.categorySrl);
-        Log.d("catergo",categorySrl);
-
     }
 
+    @Override
+    public void onItemSelected(View view, int position, String code) {
+        Intent intent = new Intent(requireActivity().getApplicationContext(), CertifiedCompanyActivity.class);
+        intent.putExtra("productSrl", code);
+        startActivity(intent);
+    }
 }

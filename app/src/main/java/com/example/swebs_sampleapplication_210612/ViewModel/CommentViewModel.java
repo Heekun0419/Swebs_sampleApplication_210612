@@ -1,23 +1,16 @@
 package com.example.swebs_sampleapplication_210612.ViewModel;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.swebs_sampleapplication_210612.Data.Repository.CommentRepository;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CertifiedCompanyDetailModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

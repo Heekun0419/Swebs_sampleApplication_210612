@@ -73,6 +73,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             listener.onItemSelected(itemView,getAdapterPosition(),"event");
         }
     }
+
     private void GlideImage(ImageView view){
         Glide.with(context).load(ImageUrl).into(view);
     }

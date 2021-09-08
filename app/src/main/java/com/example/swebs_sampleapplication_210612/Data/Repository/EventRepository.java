@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventDetailModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LikeApplyModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 
@@ -26,5 +27,14 @@ public class EventRepository {
         formData.put("inputUserSrl", RequestBody.create(userSrl, MediaType.parse("text/plane")));
 
         return retroAPI.getEventDetail(formData);
+    }
+
+    public Call<LikeApplyModel> pushLike(String eventSrl, String userSrl, String targetTable) {
+        HashMap<String, RequestBody> formData = new HashMap<>();
+        formData.put("inputTargetSrl", RequestBody.create(eventSrl, MediaType.parse("text/plane")));
+        formData.put("inputUserSrl", RequestBody.create(userSrl, MediaType.parse("text/plane")));
+        formData.put("inputTargetTable", RequestBody.create(targetTable, MediaType.parse("text/plane")));
+
+        return retroAPI.pushLike(formData);
     }
 }

@@ -25,12 +25,16 @@ public class EventActivity extends AppCompatActivity {
     private ActivityEventBinding binding;
     private EventViewModel viewModel;
     private FragmentManager manager;
+    private String documentSrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityEventBinding.inflate(getLayoutInflater());
         viewModel = new EventViewModel(getApplication());
         setContentView(binding.getRoot());
+
+        Toast.makeText(this, "event SRL : " + getIntent().getStringExtra("eventSrl"), Toast.LENGTH_SHORT).show();
 
         viewModel.getEventDetailFromServer(getIntent().getStringExtra("eventSrl"));
 
@@ -39,6 +43,10 @@ public class EventActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), EventApplyActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+        });
+
+        binding.likeFilled.setOnClickListener(v -> {
+            viewModel.pushEventLike(getIntent().getStringExtra("eventSrl"));
         });
 
         binding.btnItemClickedBack.setOnClickListener(v -> onBackPressed());
@@ -54,6 +62,8 @@ public class EventActivity extends AppCompatActivity {
         });
 
         viewModel.getLiveEventDetailInfo().observe(this, models -> {
+            documentSrl = models.getDocument_srl();
+
             // 이벤트 대표 이미지
             Glide.with(this)
                     .load(getImageViewUrl(models.getFile_srl(), "1000"))
@@ -83,6 +93,13 @@ public class EventActivity extends AppCompatActivity {
             // 댓글 불러오기
             manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.frameLayout_event_activity, new BottomCommentFragment(models.getDocument_srl())).commit();
+        });
+
+        viewModel.getIsEventCanLike().observe(this, aBoolean -> {
+            if (aBoolean)
+                binding.likeFilled.setImageResource(R.drawable.ic_heart_not_filled);
+            else
+                binding.likeFilled.setImageResource(R.drawable.ic_heart_filled);
         });
     }
 

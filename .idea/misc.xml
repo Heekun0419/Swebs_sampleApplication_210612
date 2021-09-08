@@ -11,7 +11,10 @@
         <entry key="..\:/Users/KWH/Downloads/Swebs_13th/app/src/main/res/layout/fragment_make_account_terms.xml" value="0.5" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_13th/app/src/main/res/layout/fragment_make_account_user_info.xml" value="0.3115942028985507" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_13th/app/src/main/res/layout/fragment_my_page.xml" value="0.3115942028985507" />
-        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_certified_company.xml" value="0.17857142857142858" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/drawable/ic_heart_filled.xml" value="0.3972222222222222" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/drawable/ic_heart_not_filled.xml" value="0.3972222222222222" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/drawable/ic_new.xml" value="0.34375" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_certified_company.xml" value="0.33" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_event.xml" value="0.31023550724637683" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_intro.xml" value="0.33" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_item_click_view_activty.xml" value="0.307518115942029" />
@@ -37,6 +40,7 @@
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/fragment_scan.xml" value="0.23278985507246377" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/fragment_scan_zxing.xml" value="0.23278985507246377" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/item_comment.xml" value="0.33" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/item_more_certified_company.xml" value="0.75" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/item_more_event.xml" value="0.3029891304347826" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/zxing_barcode_scanner.xml" value="0.23278985507246377" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14th/app/src/main/res/layout/activity_permission_check2.xml" value="0.5" />
