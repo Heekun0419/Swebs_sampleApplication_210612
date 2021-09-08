@@ -1,5 +1,6 @@
 package com.example.swebs_sampleapplication_210612.Fragment.MoreTablayoutFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,7 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.EventActivity;
+import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity.TopMenuActivity;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.EventViewModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
@@ -47,8 +51,11 @@ public class MoreEventFragment extends Fragment implements OnItemClickListener {
         binding = FragmentMoreEventBinding.inflate(inflater,container,false);
         viewModel = new EventViewModel(requireActivity().getApplication());
 
+        viewModel.getEventListFromServer();
+
         //ViewModel 에서 리스트로 받아오기
         viewModel.getLiveEventList().observe(getViewLifecycleOwner(), eventModels -> {
+            Toast.makeText(requireContext(), "111", Toast.LENGTH_SHORT).show();
             if (eventModels.size() > 0) {
                 binding.noticeTextView.setVisibility(View.GONE);
                 binding.recyclerViewMoreEvent.setVisibility(View.VISIBLE);
@@ -59,34 +66,25 @@ public class MoreEventFragment extends Fragment implements OnItemClickListener {
             }
         });
 
-        viewModel.getIsLoading().observe(getViewLifecycleOwner(), aBoolean -> {
-            if (aBoolean != null)
-                binding.loadingView.getRoot().setVisibility(aBoolean ? View.VISIBLE : View.GONE);
-        });
-
-        viewModel.getEventListFromServer();
-
         return binding.getRoot();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean != null)
+                binding.loadingView.getRoot().setVisibility(aBoolean ? View.VISIBLE : View.GONE);
+        });
+
     }
 
     @Override
     public void onItemSelected(View view, int position, String code) {
-        for(int i=0; i<5; i++) {
-            eventMoreAdapter.addItem(new EventModel(
-                    1
-                    , "추가"
-                    , "23"
-                    , "https://images.otwojob.com/product/l/r/P/lrP1mUhYpnR780M.jpg"
-                    , "함소야"
-                    , "title ["+ i +"]"
-                    , "date of event "
-            ), eventMoreAdapter.getItemCount());
-        }
+        Intent intent = new Intent(requireContext(), EventActivity.class);
+        intent.putExtra("eventSrl", viewModel.getLiveEventList().getValue().get(position).getEventSrl());
+        startActivity(intent);
     }
 
     private void initEventRecycler(ArrayList<EventModel> list){

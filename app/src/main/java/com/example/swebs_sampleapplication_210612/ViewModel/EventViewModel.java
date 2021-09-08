@@ -7,8 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.swebs_sampleapplication_210612.Data.Repository.EventRepository;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventDetailInfoModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventDetailModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListDetailModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListModel;
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
 import com.example.swebs_sampleapplication_210612.util.EventController;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Listener.netEventListener;
@@ -26,11 +30,17 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class EventViewModel extends AndroidViewModel {
+    private SPmanager sPmanager;
+    private EventRepository eventRepository;
+
     private final MutableLiveData<ArrayList<EventModel>> liveEventList = new MutableLiveData<>();
     private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
+    private MutableLiveData<EventDetailInfoModel> liveEventDetailInfo = new MutableLiveData<>();
 
     public EventViewModel(@NonNull Application application) {
         super(application);
+        eventRepository = new EventRepository(application);
+        sPmanager = new SPmanager(application.getApplicationContext());
     }
 
     public MutableLiveData<Boolean> getIsLoading() {
@@ -38,6 +48,30 @@ public class EventViewModel extends AndroidViewModel {
     }
     public MutableLiveData<ArrayList<EventModel>> getLiveEventList() {
         return liveEventList;
+    }
+    public MutableLiveData<EventDetailInfoModel> getLiveEventDetailInfo() {
+        return liveEventDetailInfo;
+    }
+
+    public void getEventDetailFromServer(String eventSrl) {
+        isLoading.setValue(true);
+
+        eventRepository.getEventDetail(eventSrl, sPmanager.getUserSrl())
+                .enqueue(new Callback<EventDetailModel>() {
+                    @Override
+                    public void onResponse(Call<EventDetailModel> call, Response<EventDetailModel> response) {
+                        if (response.isSuccessful()
+                        && response.body() != null) {
+                            liveEventDetailInfo.setValue(response.body().getEvent_info());
+                        }
+                        isLoading.setValue(false);
+                    }
+
+                    @Override
+                    public void onFailure(Call<EventDetailModel> call, Throwable t) {
+                        isLoading.setValue(false);
+                    }
+                });
     }
 
     public void getEventListFromServer() {

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
 import com.example.swebs_sampleapplication_210612.adapter.OnItemClickListener;
@@ -17,7 +18,6 @@ import com.example.swebs_sampleapplication_210612.databinding.ItemMoreEventBindi
 import java.util.ArrayList;
 
 public class EventMoreAdapter extends RecyclerView.Adapter<EventMoreAdapter.EventMoreViewHolder> {
-    private final String IMAGE_VIEW_URL = "http://3.35.249.81/php/KKW_TEST/files/file_viewer.php";
 
     private ItemMoreEventBinding binding;
     private Context context;
@@ -79,14 +79,14 @@ public class EventMoreAdapter extends RecyclerView.Adapter<EventMoreAdapter.Even
     }
 
     private String getImageViewUrl(String fileSrl, String Width) {
-        String result = IMAGE_VIEW_URL + "?inputFileSrl=" + fileSrl;
+        String result = context.getString(R.string.IMAGE_VIEW_URL) + "?inputFileSrl=" + fileSrl;
         if (Width != null)
             result += "&inputImageWidth=" + Width;
         return result;
     }
 
     private void GlideImage(ImageView view, String url){
-        Glide.with(context).load(url).into(view);
+        Glide.with(context).load(url).centerCrop().into(view);
     }
 
     public void addItem(EventModel model, int position){

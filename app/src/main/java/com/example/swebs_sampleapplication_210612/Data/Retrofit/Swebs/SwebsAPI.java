@@ -2,6 +2,7 @@ package com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CategoryModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CertifiedCompanyDetailModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventDetailModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.GuestSignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LoginModel;
@@ -76,8 +77,14 @@ public interface SwebsAPI {
 
     // Event API
     @Multipart
-    @POST("KKW_TEST/event/event_list.php")
+    @POST("src1/event/event_list.php")
     Call<EventListModel> getEventList(
+            @PartMap Map<String, RequestBody> prams
+    );
+
+    @Multipart
+    @POST("KKW_TEST/event/event_detail.php")
+    Call<EventDetailModel> getEventDetail(
             @PartMap Map<String, RequestBody> prams
     );
 
