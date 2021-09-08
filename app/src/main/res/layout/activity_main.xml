@@ -9,12 +9,12 @@
     android:fitsSystemWindows="false"
     tools:openDrawer="start">
 
-    <androidx.viewpager.widget.ViewPager
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager2_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </androidx.viewpager.widget.ViewPager>
+    </androidx.viewpager2.widget.ViewPager2>
 
     <include
         android:id="@+id/nav_view"
