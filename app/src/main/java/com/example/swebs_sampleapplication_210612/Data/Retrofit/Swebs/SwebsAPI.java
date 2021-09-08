@@ -2,6 +2,7 @@ package com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CategoryModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CertifiedCompanyDetailModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CommentInputModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventDetailModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.GuestSignUpModel;
@@ -75,7 +76,7 @@ public interface SwebsAPI {
             @PartMap Map<String, RequestBody> prams
     );
 
-    // Event API
+    // START - Event API
     @Multipart
     @POST("src1/event/event_list.php")
     Call<EventListModel> getEventList(
@@ -90,6 +91,15 @@ public interface SwebsAPI {
 
     @GET("src1/event/get_category.php")
     Call<CategoryModel> getCategory();
+    // END - Event API
+
+    // START - Document, Comment API
+    @Multipart
+    @POST("KKW_TEST/document/comment_input.php")
+    Call<CommentInputModel> pushComment(
+            @PartMap Map<String, RequestBody> prams
+    );
+    // END - Document, Comment API
 
     // 인증업체 API
     @Multipart
