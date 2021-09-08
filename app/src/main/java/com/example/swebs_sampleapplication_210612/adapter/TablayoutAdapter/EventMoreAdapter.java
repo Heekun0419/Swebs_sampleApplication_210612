@@ -17,6 +17,7 @@ import com.example.swebs_sampleapplication_210612.databinding.ItemMoreEventBindi
 import java.util.ArrayList;
 
 public class EventMoreAdapter extends RecyclerView.Adapter<EventMoreAdapter.EventMoreViewHolder> {
+    private final String IMAGE_VIEW_URL = "http://3.35.249.81/php/KKW_TEST/files/file_viewer.php";
 
     private ItemMoreEventBinding binding;
     private Context context;
@@ -40,7 +41,8 @@ public class EventMoreAdapter extends RecyclerView.Adapter<EventMoreAdapter.Even
     public void onBindViewHolder(@NonNull EventMoreViewHolder holder, int position) {
        ImageView profile = holder.binding.imageViewProductEventProfile;
        EventModel eventModel = EventList.get(position);
-       GlideImage(profile,eventModel.getImageUrl());
+       // 이미지 등록
+       GlideImage(profile, getImageViewUrl(eventModel.getImageSrl(), "800"));
        holder.binding.textViewCompanyName.setText(eventModel.getCompanyName());
        holder.binding.textViewEventDate.setText(eventModel.getDateOfEvent());
        holder.binding.textViewEventTitle.setText(eventModel.getTitle());
@@ -75,6 +77,14 @@ public class EventMoreAdapter extends RecyclerView.Adapter<EventMoreAdapter.Even
                     listener.onItemSelected(binding.getRoot(),getAdapterPosition(),""));
         }
     }
+
+    private String getImageViewUrl(String fileSrl, String Width) {
+        String result = IMAGE_VIEW_URL + "?inputFileSrl=" + fileSrl;
+        if (Width != null)
+            result += "&inputImageWidth=" + Width;
+        return result;
+    }
+
     private void GlideImage(ImageView view, String url){
         Glide.with(context).load(url).into(view);
     }

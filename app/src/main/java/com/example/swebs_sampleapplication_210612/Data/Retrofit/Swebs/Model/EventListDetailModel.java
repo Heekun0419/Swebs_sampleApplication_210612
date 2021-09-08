@@ -7,6 +7,7 @@ public class EventListDetailModel {
     private String end_date;
     private String category_title;
     private String file_srl;
+    private String corp_name;
 
     public String getEvent_srl() {
         return event_srl;
@@ -30,5 +31,9 @@ public class EventListDetailModel {
 
     public String getFile_srl() {
         return file_srl;
+    }
+
+    public String getCorp_name() {
+        return corp_name;
     }
 }

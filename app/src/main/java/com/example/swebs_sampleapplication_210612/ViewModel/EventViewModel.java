@@ -33,11 +33,9 @@ public class EventViewModel extends AndroidViewModel {
         super(application);
     }
 
-
     public MutableLiveData<Boolean> getIsLoading() {
         return isLoading;
     }
-
     public MutableLiveData<ArrayList<EventModel>> getLiveEventList() {
         return liveEventList;
     }
@@ -69,8 +67,9 @@ public class EventViewModel extends AndroidViewModel {
                                     new EventModel(
                                             1
                                             , detailModel.getCategory_title()
-                                            ,"https://images.otwojob.com/product/l/r/P/lrP1mUhYpnR780M.jpg"
-                                            , "함소야"
+                                            , detailModel.getEvent_srl()
+                                            , detailModel.getFile_srl()
+                                            , detailModel.getCorp_name()
                                             , detailModel.getEvent_title()
                                             , (endDate.getTime() - nowDate.getTime())/86400000 + "일 남음"
                                     )
@@ -89,8 +88,9 @@ public class EventViewModel extends AndroidViewModel {
                                     new EventModel(
                                             statusType
                                             , statusText
-                                            ,"https://images.otwojob.com/product/l/r/P/lrP1mUhYpnR780M.jpg"
-                                            , "함소야"
+                                            , detailModel.getEvent_srl()
+                                            , detailModel.getFile_srl()
+                                            , detailModel.getCorp_name()
                                             , detailModel.getEvent_title()
                                             , simpleDateFormat.format(startDate) + " ~ " + simpleDateFormat.format(endDate)
                                     )

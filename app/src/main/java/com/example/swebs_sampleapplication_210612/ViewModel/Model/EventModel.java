@@ -9,15 +9,17 @@ public class EventModel {
     private int status;
     private String statusText;
 
-    private String ImageUrl;
+    private String eventSrl;
+    private String imageSrl;
     private String CompanyName;
     private String Title;
     private String DateOfEvent;
 
-    public EventModel(int status, String statusText, String imageUrl, String companyName, String title, String dateOfEvent) {
+    public EventModel(int status, String statusText, String eventSrl, String imageSrl, String companyName, String title, String dateOfEvent) {
         this.status = status;
         this.statusText = statusText;
-        ImageUrl = imageUrl;
+        this.eventSrl = eventSrl;
+        this.imageSrl = imageSrl;
         CompanyName = companyName;
         Title = title;
         DateOfEvent = dateOfEvent;
@@ -31,8 +33,12 @@ public class EventModel {
         return statusText;
     }
 
-    public String getImageUrl() {
-        return ImageUrl;
+    public String getEventSrl() {
+        return eventSrl;
+    }
+
+    public String getImageSrl() {
+        return imageSrl;
     }
 
     public String getCompanyName() {

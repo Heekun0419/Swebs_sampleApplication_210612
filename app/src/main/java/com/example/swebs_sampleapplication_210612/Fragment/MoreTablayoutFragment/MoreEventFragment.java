@@ -66,32 +66,27 @@ public class MoreEventFragment extends Fragment implements OnItemClickListener {
 
         viewModel.getEventListFromServer();
 
-        Spinner spinner = binding.spinnerEventMore;
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(),
-                R.array.spinner_list, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
-
-
         return binding.getRoot();
     }
 
     @Override
-    public void onItemSelected(View view, int position, String code) {
+    public void onResume() {
+        super.onResume();
+    }
 
+    @Override
+    public void onItemSelected(View view, int position, String code) {
         for(int i=0; i<5; i++) {
             eventMoreAdapter.addItem(new EventModel(
                     1
                     , "추가"
+                    , "23"
                     , "https://images.otwojob.com/product/l/r/P/lrP1mUhYpnR780M.jpg"
                     , "함소야"
                     , "title ["+ i +"]"
                     , "date of event "
             ), eventMoreAdapter.getItemCount());
         }
-
     }
 
     private void initEventRecycler(ArrayList<EventModel> list){

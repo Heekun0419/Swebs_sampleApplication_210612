@@ -76,7 +76,7 @@ public interface SwebsAPI {
 
     // Event API
     @Multipart
-    @POST("KKW_TEST/event_endpoint/event_list.php")
+    @POST("KKW_TEST/event/event_list.php")
     Call<EventListModel> getEventList(
             @PartMap Map<String, RequestBody> prams
     );
