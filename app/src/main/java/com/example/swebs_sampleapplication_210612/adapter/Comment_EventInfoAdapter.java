@@ -2,6 +2,7 @@ package com.example.swebs_sampleapplication_210612.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -39,8 +40,12 @@ public class Comment_EventInfoAdapter extends RecyclerView.Adapter<Comment_Event
     @Override
     public void onBindViewHolder(@NonNull @NotNull CommentViewHolder holder, int position) {
         CommentModel commentModel = commentModels.get(position);
-        holder.binding.textViewCommentContent.setText(commentModel.getContent());
+
+        // 댓글 본문
+        holder.binding.textViewCommentContent.setText(htmlToString(commentModel.getContent()));
+        // 댓글 등록 일자
         holder.binding.textViewCommentDate.setText(commentModel.getLastupadate());
+        // 댓글 닉네임
         holder.binding.textViewUserName.setText(commentModel.getNickname());
         holder.binding.textViewRecommentCount.setText(commentModel.getRecomment_count()+" 개의 답글");
         GlideImage(holder.binding.imageViewCommentProfile, commentModel.getProfile_srl());
@@ -60,12 +65,16 @@ public class Comment_EventInfoAdapter extends RecyclerView.Adapter<Comment_Event
     }
 
     private void GlideImage(ImageView view,String srl){
-        Glide.with(context).load(getImageViewUrl(srl,"300")).circleCrop().into(view);
+        Glide.with(context).load(getImageViewUrl(srl,"300")).placeholder(R.drawable.ic_profile_basic).circleCrop().into(view);
     }
 
     private String getImageViewUrl(String fileSrl, String Width) {
         String result = context.getString(R.string.IMAGE_VIEW_URL) + "?inputFileSrl=" + fileSrl;
         if (Width != null) result += "&inputImageWidth=" + Width;
         return result;
+    }
+
+    private String htmlToString(String html) {
+        return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString();
     }
 }

@@ -2,12 +2,14 @@ package com.example.swebs_sampleapplication_210612.Fragment.cardViewFragment;
 
 import android.os.Bundle;
 
+import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
@@ -39,7 +41,6 @@ public class BottomCommentFragment extends Fragment {
     private FragmentBottomCommentBinding binding;
     private ArrayList<CommentModel> commentModels = new ArrayList<>();
     private CommentViewModel viewModel;
-    private ChatViewModel chatViewModel;
     private MyInfoRepository myInfoRepository;
     private CommentRepository commentRepository;
 
@@ -48,7 +49,11 @@ public class BottomCommentFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new CommentViewModel(requireActivity().getApplication());
-        viewModel.getListFromServer("77");
+
+
+        viewModel.getListFromServer("5080");
+
+
         commentRepository = new CommentRepository(requireActivity().getApplication());
         myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
     }
@@ -76,6 +81,12 @@ public class BottomCommentFragment extends Fragment {
                             if (response.isSuccessful()
                             && response.body() != null) {
                                 Toast.makeText(requireContext(), "업로드 성공 : " + response.body().getComment_srl(), Toast.LENGTH_SHORT).show();
+                                commentModels.add(new CommentModel(null
+                                        , message
+                                        ,null
+                                        ,  new SimpleDateFormat("MM-dd HH:mm").format(new Date())
+                                ));
+                                viewModel.setCommentLiveData(commentModels);
                             }
                         }
 
@@ -84,13 +95,6 @@ public class BottomCommentFragment extends Fragment {
 
                         }
                     });
-
-            Toast.makeText(requireContext(), Html.toHtml(binding.editTextEventInfoComment.getText()), Toast.LENGTH_SHORT).show();
-            commentModels.add(new CommentModel(message,name,
-                    new SimpleDateFormat("MM-dd HH:mm").format(new Date()),
-                    ""
-                    ));
-            viewModel.setCommentLiveData(commentModels);
 
             binding.editTextEventInfoComment.setText(null);
         });
@@ -112,7 +116,7 @@ public class BottomCommentFragment extends Fragment {
         binding.recyclerViewEventInfoComment.setAdapter(adapter);
     }
 
-    private String stringToHtml(Spanned string) {
-        return Html.toHtml(string, Html.FROM_HTML_MODE_LEGACY);
+    private String stringToHtml(Editable string) {
+        return HtmlCompat.toHtml(string, HtmlCompat.TO_HTML_PARAGRAPH_LINES_INDIVIDUAL);
     }
 }
