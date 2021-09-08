@@ -2,31 +2,51 @@ package com.example.swebs_sampleapplication_210612.ViewModel.Model;
 
 public class CommentModel {
 
-    private String ImageUrl;
+    private String comment_srl;
     private String content;
-    private String user_name;
-    private String RegDate;
+    private String member_srl;
+    private String regdate;
+    private String lastupadate;
+    private String nickname;
+    private String profile_srl;
+    private String recomment_count;
 
-    public CommentModel(String ImageUrl, String content, String user_name, String RegDate ){
-        this.ImageUrl = ImageUrl;
-        this.RegDate = RegDate;
+    public CommentModel(String content, String nickname, String lastupadate, String profile_srl ){
         this.content = content;
-        this.user_name = user_name;
+        this.lastupadate = lastupadate;
+        this.nickname = nickname;
+        this.profile_srl = profile_srl;
     }
 
-    public String getImageUrl() {
-        return ImageUrl;
+    public String getComment_srl() {
+        return comment_srl;
     }
 
     public String getContent() {
         return content;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getMember_srl() {
+        return member_srl;
     }
 
-    public String getRegDate() {
-        return RegDate;
+    public String getRegdate() {
+        return regdate;
+    }
+
+    public String getLastupadate() {
+        return lastupadate;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public String getProfile_srl() {
+        return profile_srl;
+    }
+
+    public String getRecomment_count() {
+        return recomment_count;
     }
 }

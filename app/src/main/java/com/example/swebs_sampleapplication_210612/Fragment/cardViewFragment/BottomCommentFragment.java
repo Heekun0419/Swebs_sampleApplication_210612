@@ -16,8 +16,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Data.Repository.CommentRepository;
+import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CommentInputModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.ChatViewModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.CommentViewModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 import com.example.swebs_sampleapplication_210612.adapter.Comment_EventInfoAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentBottomCommentBinding;
@@ -36,14 +38,19 @@ public class BottomCommentFragment extends Fragment {
 
     private FragmentBottomCommentBinding binding;
     private ArrayList<CommentModel> commentModels = new ArrayList<>();
+    private CommentViewModel viewModel;
     private ChatViewModel chatViewModel;
-
+    private MyInfoRepository myInfoRepository;
     private CommentRepository commentRepository;
+
+    private String name;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        chatViewModel = new ViewModelProvider(this).get(ChatViewModel.class);
+        viewModel = new CommentViewModel(requireActivity().getApplication());
+        viewModel.getListFromServer("77");
         commentRepository = new CommentRepository(requireActivity().getApplication());
+        myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
     }
 
     @Override
@@ -52,9 +59,15 @@ public class BottomCommentFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentBottomCommentBinding.inflate(inflater,container,false);
 
+        myInfoRepository.getValueToLiveData("name").observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if(s != null) name = s;
+            }
+        });
+
         binding.buttonSendComment.setOnClickListener(v -> {
             String message = binding.editTextEventInfoComment.getText().toString();
-
 
             commentRepository.pushComment("1", "5080", stringToHtml(binding.editTextEventInfoComment.getText()), null)
                     .enqueue(new Callback<CommentInputModel>() {
@@ -73,15 +86,16 @@ public class BottomCommentFragment extends Fragment {
                     });
 
             Toast.makeText(requireContext(), Html.toHtml(binding.editTextEventInfoComment.getText()), Toast.LENGTH_SHORT).show();
-            commentModels.add(new CommentModel(null, message,
-                    null,
-                    new SimpleDateFormat("MM-dd HH:mm").format(new Date())));
-            chatViewModel.setChattingLiveData(commentModels);
+            commentModels.add(new CommentModel(message,name,
+                    new SimpleDateFormat("MM-dd HH:mm").format(new Date()),
+                    ""
+                    ));
+            viewModel.setCommentLiveData(commentModels);
 
             binding.editTextEventInfoComment.setText(null);
         });
 
-        chatViewModel.getChattingLiveData().observe(getViewLifecycleOwner(), new Observer<ArrayList<CommentModel>>() {
+        viewModel.getCommentLiveData().observe(getViewLifecycleOwner(), new Observer<ArrayList<CommentModel>>() {
             @Override
             public void onChanged(ArrayList<CommentModel> commentModels) {
                 initRecyclerView(commentModels);

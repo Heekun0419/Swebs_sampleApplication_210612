@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView_eventInfo_commentProfile"
+        android:id="@+id/imageView_commentProfile"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginStart="25dp"
@@ -25,27 +25,25 @@
         app:layout_constraintTop_toBottomOf="@+id/dividerView" />
 
     <TextView
-        android:id="@+id/textView31"
+        android:id="@+id/textView_userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:text="박규빈"
         android:textColor="@color/black"
         android:textSize="15dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView_eventInfo_commentProfile"
-        app:layout_constraintStart_toEndOf="@+id/imageView_eventInfo_commentProfile"
-        app:layout_constraintTop_toTopOf="@+id/imageView_eventInfo_commentProfile" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_commentProfile"
+        app:layout_constraintStart_toEndOf="@+id/imageView_commentProfile"
+        app:layout_constraintTop_toTopOf="@+id/imageView_commentProfile" />
 
     <TextView
         android:id="@+id/textView_comment_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"
-        android:text="5일전"
-        app:layout_constraintBottom_toBottomOf="@+id/textView31"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_userName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView31" />
+        app:layout_constraintTop_toTopOf="@+id/textView_userName" />
 
     <TextView
         android:id="@+id/textView_comment_content"
@@ -59,7 +57,19 @@
         android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_eventInfo_commentProfile" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_commentProfile" />
+
+    <TextView
+        android:id="@+id/textView_recomment_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:text="답글"
+        android:textColor="#217DC6"
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_comment_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,7 +80,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_comment_content">
+        app:layout_constraintTop_toBottomOf="@+id/textView_recomment_count">
 
         <ImageView
             android:layout_width="20dp"

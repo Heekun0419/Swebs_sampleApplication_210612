@@ -1,5 +1,6 @@
 package com.example.swebs_sampleapplication_210612.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -29,17 +30,20 @@ public class Comment_EventInfoAdapter extends RecyclerView.Adapter<Comment_Event
     }
 
     @Override
-    public CommentViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
+    public CommentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         binding = ItemCommentBinding.inflate(LayoutInflater.from(context),parent,false);
         return new CommentViewHolder(binding);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull @NotNull CommentViewHolder holder, int position) {
         CommentModel commentModel = commentModels.get(position);
-        holder.textView_Comment.setText(commentModel.getContent());
-        holder.textView_Date.setText(commentModel.getRegDate());
-        GlideImage(holder.imageView);
+        holder.binding.textViewCommentContent.setText(commentModel.getContent());
+        holder.binding.textViewCommentDate.setText(commentModel.getLastupadate());
+        holder.binding.textViewUserName.setText(commentModel.getNickname());
+        holder.binding.textViewRecommentCount.setText(commentModel.getRecomment_count()+" 개의 답글");
+        GlideImage(holder.binding.imageViewCommentProfile, commentModel.getProfile_srl());
     }
 
     @Override
@@ -48,18 +52,20 @@ public class Comment_EventInfoAdapter extends RecyclerView.Adapter<Comment_Event
     }
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
-        TextView textView_Comment, textView_Date, TextView_name;
-        ImageView imageView;
-
+        ItemCommentBinding binding;
         public CommentViewHolder(ItemCommentBinding binding) {
             super(binding.getRoot());
-            textView_Comment = binding.textViewCommentContent;
-            textView_Date = binding.textViewCommentDate;
-            imageView = binding.imageViewEventInfoCommentProfile;
+            this.binding = binding;
         }
     }
 
-    private void GlideImage(ImageView view){
-        Glide.with(context).load(R.drawable.userprofile).override(300,300).circleCrop().into(view);
+    private void GlideImage(ImageView view,String srl){
+        Glide.with(context).load(getImageViewUrl(srl,"300")).circleCrop().into(view);
+    }
+
+    private String getImageViewUrl(String fileSrl, String Width) {
+        String result = context.getString(R.string.IMAGE_VIEW_URL) + "?inputFileSrl=" + fileSrl;
+        if (Width != null) result += "&inputImageWidth=" + Width;
+        return result;
     }
 }

@@ -10,6 +10,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Logi
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.NormalSignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanDataPushModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SignUpModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -105,6 +106,13 @@ public interface SwebsAPI {
     @Multipart
     @POST("KKW_TEST/product/product_categorylist.php")
     Call<ArrayList<CertifiedCompanyDetailModel>> getCorpList(
+            @PartMap Map<String,RequestBody> params
+    );
+
+    // 댓글 API
+    @Multipart
+    @POST("KKW_TEST/document/comment_list.php")
+    Call<ArrayList<CommentModel>> getCommentList(
             @PartMap Map<String,RequestBody> params
     );
 }

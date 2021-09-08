@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -31,6 +32,9 @@ public class EventActivity extends AppCompatActivity {
         viewModel = new EventViewModel(getApplication());
         setContentView(binding.getRoot());
 
+        String s = getIntent().getStringExtra("eventSrl");
+        viewModel.getEventDetailFromServer(s);
+
         // 댓글 불러오기
         manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.frameLayout_event_activity, new BottomCommentFragment()).commit();
@@ -43,8 +47,6 @@ public class EventActivity extends AppCompatActivity {
         });
 
         binding.btnItemClickedBack.setOnClickListener(v -> onBackPressed());
-
-        viewModel.getEventDetailFromServer(getIntent().getStringExtra("eventSrl"));
     }
 
     @Override
@@ -61,7 +63,7 @@ public class EventActivity extends AppCompatActivity {
             Glide.with(this)
                     .load(getImageViewUrl(models.getFile_srl(), "1000"))
                     .into(binding.imageViewEventInfoProfile);
-            
+
             // 업체명
             binding.companyName.setText(models.getCorp_name());
 

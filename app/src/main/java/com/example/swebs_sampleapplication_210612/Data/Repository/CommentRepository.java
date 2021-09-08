@@ -3,10 +3,11 @@ package com.example.swebs_sampleapplication_210612.Data.Repository;
 import android.app.Application;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CommentInputModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventDetailModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import okhttp3.MediaType;
@@ -29,5 +30,17 @@ public class CommentRepository {
             formData.put("inputNestedSrl", RequestBody.create(nestedSrl, MediaType.parse("text/plane")));
 
         return retroAPI.pushComment(formData);
+    }
+
+    public Call<ArrayList<CommentModel>> getComment(String documentSrl, String lastIndex, String listCount){
+
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("inputDocumentSrl", RequestBody.create(documentSrl, MediaType.parse("text/plane")));
+        if(lastIndex != null)
+        map.put("inputLastIndex", RequestBody.create(lastIndex, MediaType.parse("text/plane")));
+        if(listCount != null)
+        map.put("inputListCount", RequestBody.create(listCount, MediaType.parse("text/plane")));
+
+       return retroAPI.getCommentList(map);
     }
 }

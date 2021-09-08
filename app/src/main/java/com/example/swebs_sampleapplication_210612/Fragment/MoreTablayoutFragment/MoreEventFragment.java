@@ -43,15 +43,14 @@ public class MoreEventFragment extends Fragment implements OnItemClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new EventViewModel(requireActivity().getApplication());
+        viewModel.getEventListFromServer();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMoreEventBinding.inflate(inflater,container,false);
-        viewModel = new EventViewModel(requireActivity().getApplication());
-
-        viewModel.getEventListFromServer();
 
         //ViewModel 에서 리스트로 받아오기
         viewModel.getLiveEventList().observe(getViewLifecycleOwner(), eventModels -> {
@@ -82,7 +81,7 @@ public class MoreEventFragment extends Fragment implements OnItemClickListener {
 
     @Override
     public void onItemSelected(View view, int position, String code) {
-        Intent intent = new Intent(requireContext(), EventActivity.class);
+        Intent intent = new Intent(requireActivity().getApplicationContext(), EventActivity.class);
         intent.putExtra("eventSrl", viewModel.getLiveEventList().getValue().get(position).getEventSrl());
         startActivity(intent);
     }
