@@ -32,12 +32,7 @@ public class EventActivity extends AppCompatActivity {
         viewModel = new EventViewModel(getApplication());
         setContentView(binding.getRoot());
 
-        String s = getIntent().getStringExtra("eventSrl");
-        viewModel.getEventDetailFromServer(s);
-
-        // 댓글 불러오기
-        manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.frameLayout_event_activity, new BottomCommentFragment()).commit();
+        viewModel.getEventDetailFromServer(getIntent().getStringExtra("eventSrl"));
 
         // 이벤트 신청...
         binding.btnEventApply.setOnClickListener(v -> {
@@ -84,6 +79,10 @@ public class EventActivity extends AppCompatActivity {
 
             // 이벤트 본문
             binding.textViewEventInfoDetailText.setText(htmlToString(models.getContent()));
+
+            // 댓글 불러오기
+            manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.frameLayout_event_activity, new BottomCommentFragment(models.getDocument_srl())).commit();
         });
     }
 

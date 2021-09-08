@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.swebs_sampleapplication_210612.Data.Repository.CommentRepository;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CommentInputModel;
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.ViewModel.ChatViewModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.CommentViewModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
@@ -44,14 +45,22 @@ public class BottomCommentFragment extends Fragment {
     private MyInfoRepository myInfoRepository;
     private CommentRepository commentRepository;
 
+    private SPmanager sPmanager;
+
+    private final String documentSrl;
+
+    public BottomCommentFragment(String documentSrl) {
+        this.documentSrl = documentSrl;
+    }
+
     private String name;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new CommentViewModel(requireActivity().getApplication());
+        sPmanager = new SPmanager(requireActivity().getApplication());
 
-
-        viewModel.getListFromServer("5080");
+        viewModel.getListFromServer(documentSrl);
 
 
         commentRepository = new CommentRepository(requireActivity().getApplication());
@@ -74,15 +83,15 @@ public class BottomCommentFragment extends Fragment {
         binding.buttonSendComment.setOnClickListener(v -> {
             String message = binding.editTextEventInfoComment.getText().toString();
 
-            commentRepository.pushComment("1", "5080", stringToHtml(binding.editTextEventInfoComment.getText()), null)
+            commentRepository.pushComment(sPmanager.getUserSrl(), documentSrl, stringToHtml(binding.editTextEventInfoComment.getText()), null)
                     .enqueue(new Callback<CommentInputModel>() {
                         @Override
                         public void onResponse(Call<CommentInputModel> call, Response<CommentInputModel> response) {
                             if (response.isSuccessful()
                             && response.body() != null) {
                                 Toast.makeText(requireContext(), "업로드 성공 : " + response.body().getComment_srl(), Toast.LENGTH_SHORT).show();
-                                commentModels.add(new CommentModel(null
-                                        , message
+                                commentModels.add(new CommentModel(message
+                                        , "시발"
                                         ,null
                                         ,  new SimpleDateFormat("MM-dd HH:mm").format(new Date())
                                 ));
