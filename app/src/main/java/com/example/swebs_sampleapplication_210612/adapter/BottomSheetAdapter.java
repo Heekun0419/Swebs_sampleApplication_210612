@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.swebs_sampleapplication_210612.R;
+import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -4,6 +4,8 @@ public class CommentInputModel {
     private boolean success;
     private String comment_srl;
     private String reason;
+    private String nickname;
+    private String profile_srl;
 
     public boolean isSuccess() {
         return success;
@@ -15,5 +17,13 @@ public class CommentInputModel {
 
     public String getReason() {
         return reason;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public String getProfile_srl() {
+        return profile_srl;
     }
 }

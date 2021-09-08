@@ -2,6 +2,7 @@ package com.example.swebs_sampleapplication_210612.Fragment.cardViewFragment;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.core.text.HtmlCompat;
@@ -21,14 +22,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.swebs_sampleapplication_210612.Activity.ReCommentActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.CommentRepository;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CommentInputModel;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
-import com.example.swebs_sampleapplication_210612.ViewModel.ChatViewModel;
+import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.CommentViewModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 import com.example.swebs_sampleapplication_210612.adapter.Comment_EventInfoAdapter;
+import com.example.swebs_sampleapplication_210612.adapter.Listener.CommentClickListener;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentBottomCommentBinding;
 
 import java.io.UnsupportedEncodingException;
@@ -36,12 +39,13 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BottomCommentFragment extends Fragment {
+public class BottomCommentFragment extends Fragment implements CommentClickListener {
 
     private FragmentBottomCommentBinding binding;
     private CommentViewModel viewModel;
@@ -50,7 +54,6 @@ public class BottomCommentFragment extends Fragment {
     private Comment_EventInfoAdapter adapter;
     private SPmanager sPmanager;
 
-    //InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(INPUT_METHOD_SERVICE);
 
     private final String documentSrl;
 
@@ -65,8 +68,7 @@ public class BottomCommentFragment extends Fragment {
         viewModel = new CommentViewModel(requireActivity().getApplication());
         sPmanager = new SPmanager(requireActivity().getApplication());
 
-        viewModel.getListFromServer(documentSrl);
-
+        viewModel.getCommentList(documentSrl, null, null);
 
         commentRepository = new CommentRepository(requireActivity().getApplication());
         myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
@@ -86,40 +88,18 @@ public class BottomCommentFragment extends Fragment {
         });
 
         binding.buttonSendComment.setOnClickListener(v -> {
-            String message = binding.editTextEventInfoComment.getText().toString();
-
-            commentRepository.pushComment(sPmanager.getUserSrl(), documentSrl, stringToHtml(binding.editTextEventInfoComment.getText()), null)
-                    .enqueue(new Callback<CommentInputModel>() {
-                        @Override
-                        public void onResponse(Call<CommentInputModel> call, Response<CommentInputModel> response) {
-                            if (response.isSuccessful()
-                            && response.body() != null) {
-                                Toast.makeText(requireContext(), "업로드 성공 : " + response.body().getComment_srl(), Toast.LENGTH_SHORT).show();
-                                adapter.addItem(new CommentModel(
-                                        response.body().getComment_srl()
-                                        , message
-                                        , sPmanager.getUserSrl()
-                                        , new SimpleDateFormat("yyyy-MM-DD").format(new Date())
-                                        , new SimpleDateFormat("yyyy-MM-DD").format(new Date())
-                                        , nickname
-                                        , "0"
-                                        , "0"
-                                ), adapter.getItemCount());
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<CommentInputModel> call, Throwable t) {
-
-                        }
-                    });
+            viewModel.pushComment(documentSrl, binding.editTextEventInfoComment.getText(), null);
             binding.editTextEventInfoComment.setText(null);
-
         });
 
-        viewModel.getCommentLiveData().observe(getViewLifecycleOwner(), new Observer<ArrayList<CommentModel>>() {
-            @Override
-            public void onChanged(ArrayList<CommentModel> commentModels) {
+        viewModel.getCommentLiveData().observe(getViewLifecycleOwner(), commentModels -> {
+            if (adapter != null) {
+                // 추가
+                for (int i=0; i<commentModels.size(); i++){
+                    adapter.addItem(commentModels.get(i), adapter.getItemCount()+i);
+                }
+            } else {
+                // 초기화
                 initRecyclerView(commentModels);
             }
         });
@@ -132,14 +112,44 @@ public class BottomCommentFragment extends Fragment {
         super.onResume();
     }
 
-    private void initRecyclerView(ArrayList<CommentModel> commentModels) {
+    private void initRecyclerView(List<CommentModel> commentModels) {
         LinearLayoutManager manager = new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false);
-        adapter = new Comment_EventInfoAdapter(requireContext(), commentModels);
+        adapter = new Comment_EventInfoAdapter(requireContext(), commentModels, this);
         binding.recyclerViewEventInfoComment.setLayoutManager(manager);
         binding.recyclerViewEventInfoComment.setAdapter(adapter);
     }
 
     private String stringToHtml(Editable string) {
         return HtmlCompat.toHtml(string, HtmlCompat.TO_HTML_PARAGRAPH_LINES_INDIVIDUAL);
+    }
+
+    @Override
+    public void reportClicked(int position) {
+        Toast.makeText(requireContext(), "신고", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void modifyClicked(int position) {
+        Toast.makeText(requireContext(), "수정", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void removeClicked(int position) {
+        Toast.makeText(requireContext(), "삭제", Toast.LENGTH_SHORT).show();
+        adapter.removeItem(position);
+    }
+
+    @Override
+    public void reCommentClicked(int position, CommentModel model) {
+        Intent intent = new Intent(requireContext(), ReCommentActivity.class);
+        intent.putExtra("name",model.getNickname());
+        intent.putExtra("recomment_count",model.getRecomment_count());
+        intent.putExtra("content",model.getContent());
+        intent.putExtra("profile",model.getProfile_srl());
+        intent.putExtra("date",model.getRegdate());
+        intent.putExtra("documentSrl",documentSrl);
+        intent.putExtra("commentSrl",model.getComment_srl());
+        startActivity(intent);
+        requireActivity().overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 }

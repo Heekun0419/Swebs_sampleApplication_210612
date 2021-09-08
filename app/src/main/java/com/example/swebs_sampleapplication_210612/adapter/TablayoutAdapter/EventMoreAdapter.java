@@ -9,10 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.Target;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
-import com.example.swebs_sampleapplication_210612.adapter.OnItemClickListener;
+import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.databinding.ItemMoreEventBinding;
 
 import java.util.ArrayList;

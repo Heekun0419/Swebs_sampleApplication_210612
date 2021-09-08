@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,33 +18,37 @@ import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanage
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
+import com.example.swebs_sampleapplication_210612.adapter.Listener.CommentClickListener;
 import com.example.swebs_sampleapplication_210612.databinding.ItemCommentBinding;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Comment_EventInfoAdapter extends RecyclerView.Adapter<Comment_EventInfoAdapter.CommentViewHolder> {
     Context context;
     private SPmanager sPmanager;
     private ItemCommentBinding binding;
-    private ArrayList<CommentModel> commentModels;
+    private List<CommentModel> commentModels = new ArrayList<>();
+    private CommentClickListener listener;
 
-    public Comment_EventInfoAdapter(Context context, ArrayList<CommentModel> commentModels){
+    public Comment_EventInfoAdapter(Context context, List<CommentModel> commentModels, CommentClickListener listener){
         sPmanager = new SPmanager(context);
         this.context = context;
         this.commentModels = commentModels;
+        this.listener = listener;
     }
 
     @Override
     public CommentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         binding = ItemCommentBinding.inflate(LayoutInflater.from(context),parent,false);
-        return new CommentViewHolder(binding);
+        return new CommentViewHolder(binding, listener, commentModels);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull @NotNull CommentViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull CommentViewHolder holder, @SuppressLint("RecyclerView") int position) {
         CommentModel commentModel = commentModels.get(position);
 
         // 댓글 본문
@@ -58,6 +63,29 @@ public class Comment_EventInfoAdapter extends RecyclerView.Adapter<Comment_Event
         // 대댓글
         holder.binding.textViewRecommentCount.setText(commentModel.getRecomment_count()+" 개의 답글");
 
+
+        // 답글달기 클릭시
+        holder.binding.textViewRecommentCount.setOnClickListener(v ->
+                listener.reCommentClicked(position,commentModel));
+
+        // 뷰전체 클릭시
+        holder.binding.layoutComment.setOnClickListener(v -> {
+            listener.reCommentClicked(position,commentModel);
+        });
+
+        // 삭제 클릭시
+        holder.binding.deleteComment.setOnClickListener(v -> {
+            listener.removeClicked(position);
+        });
+        // 수정 클릭시
+        holder.binding.modifyComment.setOnClickListener(v -> {
+            listener.modifyClicked(position);
+        });
+        // 신고 클릭시
+        holder.binding.reportComment.setOnClickListener(v -> {
+            listener.reportClicked(position);
+        });
+
         if (commentModel.getMember_srl().equals(sPmanager.getUserSrl())) {
             holder.binding.deleteComment.setVisibility(View.VISIBLE);
             holder.binding.modifyComment.setVisibility(View.VISIBLE);
@@ -71,11 +99,17 @@ public class Comment_EventInfoAdapter extends RecyclerView.Adapter<Comment_Event
         return commentModels.size();
     }
 
-    public static class CommentViewHolder extends RecyclerView.ViewHolder {
+    public static class CommentViewHolder extends RecyclerView.ViewHolder{
         ItemCommentBinding binding;
-        public CommentViewHolder(ItemCommentBinding binding) {
+        CommentClickListener listener;
+        List<CommentModel> list;
+
+        public CommentViewHolder(ItemCommentBinding binding, CommentClickListener listener, List<CommentModel> list) {
             super(binding.getRoot());
             this.binding = binding;
+            this.listener = listener;
+            this.list = list;
+
         }
     }
 
@@ -94,7 +128,7 @@ public class Comment_EventInfoAdapter extends RecyclerView.Adapter<Comment_Event
     }
 
     public void addItem(CommentModel model, int position){
-        commentModels.add(position,model);
+        commentModels.add(position, model);
         notifyItemInserted(position);
     }
 

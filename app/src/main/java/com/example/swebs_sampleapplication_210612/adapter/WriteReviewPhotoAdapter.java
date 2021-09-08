@@ -14,11 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import com.example.swebs_sampleapplication_210612.adapter.Listener.HistoryListClickListener;
 import com.example.swebs_sampleapplication_210612.databinding.ItemReviewPhotoAddBinding;
 
 import java.util.ArrayList;
-
-import retrofit2.http.Url;
 
 public class WriteReviewPhotoAdapter extends RecyclerView.Adapter<WriteReviewPhotoAdapter.WriteReviewViewHolder> {
 

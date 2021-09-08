@@ -50,16 +50,6 @@ public class EventActivity extends AppCompatActivity {
         });
 
         binding.btnItemClickedBack.setOnClickListener(v -> onBackPressed());
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        viewModel.getIsLoading().observe(this, aBoolean -> {
-            if (aBoolean != null)
-                binding.loadingView.getRoot().setVisibility(aBoolean ? View.VISIBLE : View.GONE);
-        });
 
         viewModel.getLiveEventDetailInfo().observe(this, models -> {
             documentSrl = models.getDocument_srl();
@@ -101,6 +91,17 @@ public class EventActivity extends AppCompatActivity {
             else
                 binding.likeFilled.setImageResource(R.drawable.ic_heart_filled);
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        viewModel.getIsLoading().observe(this, aBoolean -> {
+            if (aBoolean != null)
+                binding.loadingView.getRoot().setVisibility(aBoolean ? View.VISIBLE : View.GONE);
+        });
+
     }
 
     private String getImageViewUrl(String fileSrl, String Width) {

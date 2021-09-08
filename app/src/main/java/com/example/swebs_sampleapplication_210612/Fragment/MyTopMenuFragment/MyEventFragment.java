@@ -3,7 +3,6 @@ package com.example.swebs_sampleapplication_210612.Fragment.MyTopMenuFragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -12,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.swebs_sampleapplication_210612.ViewModel.EventViewModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
-import com.example.swebs_sampleapplication_210612.adapter.OnItemClickListener;
+import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.TablayoutAdapter.EventMoreAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMyEventBinding;
 

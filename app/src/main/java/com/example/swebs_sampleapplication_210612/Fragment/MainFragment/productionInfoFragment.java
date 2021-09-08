@@ -18,7 +18,7 @@ import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity.TopMenuActivity;
 import com.example.swebs_sampleapplication_210612.adapter.CertifiedCompanyAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.EventAdapter;
-import com.example.swebs_sampleapplication_210612.adapter.OnItemClickListener;
+import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.ReviewAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.SurveyAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMainProductBinding;

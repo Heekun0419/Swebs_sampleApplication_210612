@@ -28,15 +28,6 @@
             android:layout_height="match_parent">
 
 
-            <ImageView
-                android:id="@+id/imageView_product_main_profile"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_new_tab"
                 android:visibility="gone"
@@ -67,6 +58,17 @@
                     app:layout_constraintTop_toTopOf="@+id/imageView_New_mark" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <ImageView
+                android:id="@+id/imageView_product_main_profile"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <ImageView
                 android:layout_width="20dp"

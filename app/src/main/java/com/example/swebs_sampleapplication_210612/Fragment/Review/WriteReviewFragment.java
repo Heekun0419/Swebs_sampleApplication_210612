@@ -30,7 +30,7 @@ import com.example.swebs_sampleapplication_210612.Activity.ReviewWriteActivity;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.ImagePickerDialog;
 import com.example.swebs_sampleapplication_210612.ViewModel.ReviewPhotoViewModel;
-import com.example.swebs_sampleapplication_210612.adapter.HistoryListClickListener;
+import com.example.swebs_sampleapplication_210612.adapter.Listener.HistoryListClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.WriteReviewPhotoAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentWriteReviewBinding;
 

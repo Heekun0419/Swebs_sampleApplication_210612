@@ -1,4 +1,4 @@
-package com.example.swebs_sampleapplication_210612.adapter;
+package com.example.swebs_sampleapplication_210612.adapter.Listener;
 
 import android.view.View;
 import android.widget.ImageButton;

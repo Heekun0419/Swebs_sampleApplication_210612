@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Activity.ReviewWriteActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -60,10 +61,55 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imageView_userProfile"
+                android:layout_width="60dp"
+                android:layout_height="60dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView_userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/textView_review_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="#F9FAFC" />
 
         <LinearLayout
             android:id="@+id/linearLayout_Top11"
@@ -107,7 +153,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView_review_title"
+                    android:id="@+id/textView_product_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -120,9 +166,7 @@
                     android:id="@+id/linearLayout_RatingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="@+id/textView_myReview_userName"
-                    app:layout_constraintTop_toBottomOf="@+id/textView_myReview_userName">
+                    android:orientation="horizontal">
 
                     <RatingBar
                         style="@style/Widget.AppCompat.RatingBar.Small"
@@ -160,16 +204,146 @@
 
         </LinearLayout>
 
-        <View
-            android:id="@+id/view9"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="#F9FAFC"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager2_review"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_marginTop="10dp"
+            android:background="#F9FAFC" />
+
+        </androidx.cardview.widget.CardView>
+
+        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+            android:padding="10dp"
+            app:dotsColor="#7093E3BE"
+            app:dotsCornerRadius="20dp"
+            app:dotsSize="6dp"
+            app:dotsSpacing="6dp"
+            app:dotsWidthFactor="1"
+            app:progressMode="true"
+            app:selectedDotColor="#21CCB2"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/textView_review_title"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"/>
+
+        <TextView
+            android:id="@+id/textView_review_content"
+            android:textColor="#999999"
+            android:textSize="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout_Top11" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_comment_content">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView_regDate"
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:textColor="#217DC6"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="5dp"
+                android:layout_gravity="center"
+                android:background="#DFDFDF" />
+
+            <TextView
+                android:id="@+id/report_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:text="신고" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/imageView_like"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_heart_simple_shape_silhouette"/>
+
+            <TextView
+                android:id="@+id/textView_like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:layout_marginStart="10dp"
+                android:textColor="#999999"
+                android:layout_marginEnd="25dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            style="@style/Divider"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/lower_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:layout_marginStart="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/swebs_main_color2"
+                android:text="시리얼 넘버"
+                android:textSize="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:textColor="@color/black"
+                android:textSize="16dp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="#F9FAFC" />
+
+    </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <FrameLayout
         android:id="@+id/frameLayout_review_activity"
@@ -181,4 +355,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

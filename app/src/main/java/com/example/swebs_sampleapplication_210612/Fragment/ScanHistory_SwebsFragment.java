@@ -13,9 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.swebs_sampleapplication_210612.Activity.ReviewWriteActivity;
-import com.example.swebs_sampleapplication_210612.Activity.ScanHistoryActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ServiceNotReadyActivity;
-import com.example.swebs_sampleapplication_210612.adapter.HistoryListClickListener;
+import com.example.swebs_sampleapplication_210612.adapter.Listener.HistoryListClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.ScanHistoryAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentScanHistorySwebsBinding;
 

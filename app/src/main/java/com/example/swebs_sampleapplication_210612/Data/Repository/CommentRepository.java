@@ -9,6 +9,7 @@ import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -42,5 +43,17 @@ public class CommentRepository {
         map.put("inputListCount", RequestBody.create(listCount, MediaType.parse("text/plane")));
 
        return retroAPI.getCommentList(map);
+    }
+
+    public Call<List<CommentModel>> getReComment(String documentSrl, String commentSrl, String lastIndex, String listCount){
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("inputDocumentSrl", RequestBody.create(documentSrl, MediaType.parse("text/plane")));
+        if(lastIndex != null)
+            map.put("inputLastIndex", RequestBody.create(lastIndex, MediaType.parse("text/plane")));
+        if(listCount != null)
+            map.put("inputListCount", RequestBody.create(listCount, MediaType.parse("text/plane")));
+        map.put("inputCommentSrl", RequestBody.create(commentSrl, MediaType.parse("text/plane")));
+
+        return retroAPI.getReCommentList(map);
     }
 }

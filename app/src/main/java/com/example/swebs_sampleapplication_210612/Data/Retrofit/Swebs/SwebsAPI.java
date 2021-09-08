@@ -134,4 +134,12 @@ public interface SwebsAPI {
     Call<ArrayList<CommentModel>> getCommentList(
             @PartMap Map<String,RequestBody> params
     );
+
+    // 대댓글 API
+    @Multipart
+    @POST("KKW_TEST/document/recomment_list.php")
+    Call<List<CommentModel>> getReCommentList(
+            @PartMap Map<String,RequestBody> params
+    );
+
 }

@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.swebs_sampleapplication_210612.ViewModel.ProductRegisterViewModel;
 
-import com.example.swebs_sampleapplication_210612.adapter.OnItemClickListener;
+import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.ProductTagAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentProductRegisterBinding;
 
