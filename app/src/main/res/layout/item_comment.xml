@@ -105,6 +105,7 @@
             android:background="#DFDFDF" />
 
         <TextView
+            android:id="@+id/report_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -117,17 +118,21 @@
 
 
         <TextView
+            android:id="@+id/modify_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:text="수정"
+            android:visibility="gone"
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/delete_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="25dp"
             android:text="삭제"
+            android:visibility="gone"
             android:textColor="#FF7272" />
 
 

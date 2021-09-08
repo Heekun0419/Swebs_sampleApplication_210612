@@ -53,7 +53,7 @@ public class BottomCommentFragment extends Fragment {
         this.documentSrl = documentSrl;
     }
 
-    private String name;
+    private String nickname;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,10 +73,10 @@ public class BottomCommentFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentBottomCommentBinding.inflate(inflater,container,false);
 
-        myInfoRepository.getValueToLiveData("name").observe(getViewLifecycleOwner(), new Observer<String>() {
+        myInfoRepository.getValueToLiveData("nickName").observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                if(s != null) name = s;
+                if(s != null) nickname = s;
             }
         });
 
@@ -90,11 +90,18 @@ public class BottomCommentFragment extends Fragment {
                             if (response.isSuccessful()
                             && response.body() != null) {
                                 Toast.makeText(requireContext(), "업로드 성공 : " + response.body().getComment_srl(), Toast.LENGTH_SHORT).show();
-                                commentModels.add(new CommentModel(message
-                                        , "시발"
-                                        ,null
-                                        ,  new SimpleDateFormat("MM-dd HH:mm").format(new Date())
-                                ));
+                                commentModels.add(
+                                        new CommentModel(
+                                                response.body().getComment_srl()
+                                                , binding.editTextEventInfoComment.getText().toString()
+                                                , sPmanager.getUserSrl()
+                                                , new SimpleDateFormat("yyyy-MM-DD").format(new Date())
+                                                , new SimpleDateFormat("yyyy-MM-DD").format(new Date())
+                                                , nickname
+                                                , "0"
+                                                , "0"
+                                        )
+                                );
                                 viewModel.setCommentLiveData(commentModels);
                             }
                         }

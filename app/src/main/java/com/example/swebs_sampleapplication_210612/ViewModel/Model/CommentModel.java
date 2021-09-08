@@ -1,7 +1,6 @@
 package com.example.swebs_sampleapplication_210612.ViewModel.Model;
 
 public class CommentModel {
-
     private String comment_srl;
     private String content;
     private String member_srl;
@@ -11,11 +10,15 @@ public class CommentModel {
     private String profile_srl;
     private String recomment_count;
 
-    public CommentModel(String content, String nickname, String lastupadate, String profile_srl ){
+    public CommentModel(String comment_srl, String content, String member_srl, String regdate, String lastupadate, String nickname, String profile_srl, String recomment_count) {
+        this.comment_srl = comment_srl;
         this.content = content;
+        this.member_srl = member_srl;
+        this.regdate = regdate;
         this.lastupadate = lastupadate;
         this.nickname = nickname;
         this.profile_srl = profile_srl;
+        this.recomment_count = recomment_count;
     }
 
     public String getComment_srl() {

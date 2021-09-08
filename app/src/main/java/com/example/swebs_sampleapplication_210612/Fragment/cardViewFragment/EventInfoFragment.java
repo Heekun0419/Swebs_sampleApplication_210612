@@ -54,11 +54,13 @@ public class EventInfoFragment extends Fragment {
         });
 
         binding.buttonSendComment.setOnClickListener(v -> {
+            /*
             String message = binding.editTextEventInfoComment.getText().toString();
             commentModels.add(new CommentModel(null, message,
                     null,
                     new SimpleDateFormat("HH:mm").format(new Date())));
             chatViewModel.setChattingLiveData(commentModels);
+            */
 
             binding.editTextEventInfoComment.setText(null);
         });
