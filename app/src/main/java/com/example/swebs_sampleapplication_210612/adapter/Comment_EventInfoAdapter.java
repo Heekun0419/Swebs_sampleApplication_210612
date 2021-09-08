@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
 import com.example.swebs_sampleapplication_210612.databinding.ItemCommentBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -90,5 +91,16 @@ public class Comment_EventInfoAdapter extends RecyclerView.Adapter<Comment_Event
 
     private String htmlToString(String html) {
         return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString();
+    }
+
+    public void addItem(CommentModel model, int position){
+        commentModels.add(position,model);
+        notifyItemInserted(position);
+    }
+
+    public void removeItem(int position){
+        commentModels.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position,commentModels.size());
     }
 }

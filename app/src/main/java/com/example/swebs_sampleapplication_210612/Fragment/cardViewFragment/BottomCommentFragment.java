@@ -1,5 +1,7 @@
 package com.example.swebs_sampleapplication_210612.Fragment.cardViewFragment;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
+
 import android.os.Bundle;
 
 import androidx.core.text.HtmlCompat;
@@ -15,6 +17,8 @@ import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.swebs_sampleapplication_210612.Data.Repository.CommentRepository;
@@ -40,12 +44,13 @@ import retrofit2.Response;
 public class BottomCommentFragment extends Fragment {
 
     private FragmentBottomCommentBinding binding;
-    private ArrayList<CommentModel> commentModels = new ArrayList<>();
     private CommentViewModel viewModel;
     private MyInfoRepository myInfoRepository;
     private CommentRepository commentRepository;
-
+    private Comment_EventInfoAdapter adapter;
     private SPmanager sPmanager;
+
+    //InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(INPUT_METHOD_SERVICE);
 
     private final String documentSrl;
 
@@ -90,19 +95,16 @@ public class BottomCommentFragment extends Fragment {
                             if (response.isSuccessful()
                             && response.body() != null) {
                                 Toast.makeText(requireContext(), "업로드 성공 : " + response.body().getComment_srl(), Toast.LENGTH_SHORT).show();
-                                commentModels.add(
-                                        new CommentModel(
-                                                response.body().getComment_srl()
-                                                , binding.editTextEventInfoComment.getText().toString()
-                                                , sPmanager.getUserSrl()
-                                                , new SimpleDateFormat("yyyy-MM-DD").format(new Date())
-                                                , new SimpleDateFormat("yyyy-MM-DD").format(new Date())
-                                                , nickname
-                                                , "0"
-                                                , "0"
-                                        )
-                                );
-                                viewModel.setCommentLiveData(commentModels);
+                                adapter.addItem(new CommentModel(
+                                        response.body().getComment_srl()
+                                        , message
+                                        , sPmanager.getUserSrl()
+                                        , new SimpleDateFormat("yyyy-MM-DD").format(new Date())
+                                        , new SimpleDateFormat("yyyy-MM-DD").format(new Date())
+                                        , nickname
+                                        , "0"
+                                        , "0"
+                                ), adapter.getItemCount());
                             }
                         }
 
@@ -111,8 +113,8 @@ public class BottomCommentFragment extends Fragment {
 
                         }
                     });
-
             binding.editTextEventInfoComment.setText(null);
+
         });
 
         viewModel.getCommentLiveData().observe(getViewLifecycleOwner(), new Observer<ArrayList<CommentModel>>() {
@@ -125,9 +127,14 @@ public class BottomCommentFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void initRecyclerView(ArrayList<CommentModel> commentModels){
-        Comment_EventInfoAdapter adapter = new Comment_EventInfoAdapter(requireContext(), commentModels);
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    private void initRecyclerView(ArrayList<CommentModel> commentModels) {
         LinearLayoutManager manager = new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false);
+        adapter = new Comment_EventInfoAdapter(requireContext(), commentModels);
         binding.recyclerViewEventInfoComment.setLayoutManager(manager);
         binding.recyclerViewEventInfoComment.setAdapter(adapter);
     }
