@@ -52,10 +52,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function2;
 
 public class MainActivity extends FragmentActivity {
 
@@ -103,51 +99,57 @@ public class MainActivity extends FragmentActivity {
 
         GlideImage(binding.navView.imageViewProfile);
 
-        binding.navView.companyProductRegister.setOnClickListener(v -> {
-            Intent intent1 = new Intent(MainActivity.this,InformationActivity.class);
-            intent1.putExtra("resultCode","product");
-            startActivity(intent1);
-        });
+
 
         manager.setFragmentResultListener("Y", this, (requestKey, result) -> {
 
         });
 
+        //기업사 제품 등록하기
+        binding.navView.companyProductRegister.setOnClickListener(v -> {
+            IntentInfoActivity("product");
+        });
+        // 어플 정보
+        binding.navView.textviewNavDrawerAppInfo.setOnClickListener(v -> {
+            IntentInfoActivity("app_info");
+        });
+        // 제품등록 리스트
+        binding.navView.textviewNavDrawerProductList.setOnClickListener(v -> {
 
-
-        binding.navView.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                Intent intent = null;
-                if (item.getItemId() == R.id.drawer_item_scan_history) {
-                    intent = new Intent(getApplicationContext(), ScanHistoryActivity.class);
-                    intent.putExtra("resultCode","scanHistory");
-                } else if (item.getItemId() == R.id.drawer_item_report_copy) {
-                    intent = new Intent(getApplicationContext(),ScanHistoryActivity.class);
-                    intent.putExtra("resultCode","copy");
-                } else if (item.getItemId() == R.id.drawer_item_APP_info) {
-                    intent = new Intent(getApplicationContext(),InformationActivity.class);
-                    intent.putExtra("resultCode","app_info");
-                } else if (item.getItemId() == R.id.drawer_item_FAQ) {
-                    intent = new Intent(getApplicationContext(),InformationActivity.class);
-                    intent.putExtra("resultCode","FAQ");
-                } else if (item.getItemId() == R.id.drawer_item_manual) {
-                    intent = new Intent(getApplicationContext(),InformationActivity.class);
-                    intent.putExtra("resultCode","manual");
-                } else if (item.getItemId() == R.id.drawer_item_purchasing) {
-                    intent = new Intent(getApplicationContext(),InformationActivity.class);
-                    intent.putExtra("resultCode","purchase_question");
-                } else if (item.getItemId() == R.id.drawer_item_company_info) {
-                    intent = new Intent(getApplicationContext(), TopMenuActivity.class);
-                    intent.putExtra("resultCode", "certified");
-                } else {
-                    intent = new Intent(getApplicationContext(), InformationActivity.class);
-                    intent.putExtra("resultCode", "notice");
-                }
-
-                    startActivity(intent);
-                return true;
-            }
+        });
+        // 인증업체
+        binding.navView.textviewNavDrawerCertifiedCompany.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), TopMenuActivity.class);
+            intent.putExtra("resultCode","certified");
+            startActivity(intent);
+        });
+        // 구매문의
+        binding.navView.textviewNavDrawerPurchaseQuestion.setOnClickListener(v -> {
+            IntentInfoActivity("purchase_question");
+        });
+        // 구매문의
+        binding.navView.textviewNavDrawerNotice.setOnClickListener(v -> {
+            IntentInfoActivity("notice");
+        });
+        // 복제품 신고
+        binding.navView.textviewNavDrawerReportCopy.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), ScanHistoryActivity.class);
+            intent.putExtra("resultCode","copy");
+            startActivity(intent);
+        });
+        // 스캔 히스토리
+        binding.navView.textviewNavDrawerReportCopy.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), ScanHistoryActivity.class);
+            intent.putExtra("resultCode","scanHistory");
+            startActivity(intent);
+        });
+        // FAQ
+        binding.navView.textviewNavDrawerNotice.setOnClickListener(v -> {
+            IntentInfoActivity("FAQ");
+        });
+        // 사용법
+        binding.navView.textviewNavDrawerNotice.setOnClickListener(v -> {
+            IntentInfoActivity("manual");
         });
 
         /*
@@ -197,6 +199,11 @@ public class MainActivity extends FragmentActivity {
         });
         // END 카카오 로그인 테스트
         */
+    }
+    private void IntentInfoActivity(String code){
+        Intent intent = new Intent(getApplicationContext(),InformationActivity.class);
+        intent.putExtra("resultCode",code);
+        startActivity(intent);
     }
 
     @Override

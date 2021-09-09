@@ -14,7 +14,7 @@
 
     <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar" >
         <item name="android:textColorPrimary">@color/black</item>
-        <item name="colorControlNormal">#C8C8C8</item>
+        <item name="colorControlNormal">#E8E8E8</item>
         <item name="android:textSize">14sp</item>
 
     </style>

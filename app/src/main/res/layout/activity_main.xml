@@ -20,7 +20,7 @@
         android:id="@+id/nav_view"
         layout="@layout/navigation_drawer_header_item"
         android:layout_height="match_parent"
-        android:layout_width="360dp"
+        android:layout_width="330dp"
         android:layout_gravity="start"
         android:fitsSystemWindows="false"/>
 
