@@ -273,10 +273,6 @@ public class LoginActivity extends AppCompatActivity {
         oneButtonBasicDialog.show();
     }
 
-    private void Toast(String msg){
-        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     private void renderLoading(boolean isView) {
         if (isView) {

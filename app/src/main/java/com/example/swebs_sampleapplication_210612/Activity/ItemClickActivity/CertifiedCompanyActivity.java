@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
+import com.example.swebs_sampleapplication_210612.Activity.ServiceNotReadyActivity;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductDetailModel;
 import com.example.swebs_sampleapplication_210612.Fragment.cardViewFragment.BottomReviewFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.cardViewFragment.CertifiedCompanyInfoFragment;
@@ -23,6 +27,7 @@ public class CertifiedCompanyActivity extends AppCompatActivity {
     private ActivityCertifiedCompanyBinding binding;
     private CertifiedCompanyViewModel viewModel;
     private FragmentManager manager;
+    private String marketLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,18 @@ public class CertifiedCompanyActivity extends AppCompatActivity {
                 binding.imageViewDetailInfo5.setVisibility(View.VISIBLE);
         });
 
+        // AS 신청 클릭
+        binding.btnAS.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ServiceNotReadyActivity.class);
+            startActivity(intent);
+        });
+
+        // MARKET LINK 클릭
+        binding.btnMarket.setOnClickListener(v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(marketLink));
+            startActivity(browserIntent);
+        });
+
         viewModel.getLiveProductDetail().observe(this, models -> {
             if (models != null) {
                 // 대표 이미지
@@ -73,7 +90,7 @@ public class CertifiedCompanyActivity extends AppCompatActivity {
                 binding.ratingBarReview.setRating(Float.parseFloat(models.getRating()));
 
                 // 레이팅 표시
-                binding.ratingText.setText(models.getRating());
+                binding.ratingText.setText(Float.toString(binding.ratingBarReview.getRating()));
 
                 // 리뷰 갯수
                 binding.reviewCount.setText("("+models.getReview_count()+")");
@@ -91,6 +108,23 @@ public class CertifiedCompanyActivity extends AppCompatActivity {
                 for (int i=0; i<models.getContent_file_srl().size(); i++) {
                     loadImageViewDetail(i+1, models.getContent_file_srl().get(i));
                 }
+
+                // 마켓 링크...
+                marketLink = models.getMarket_link();
+            }
+        });
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        viewModel.getIsLoading().observe(this, aBoolean -> {
+            if (aBoolean != null) {
+                if (aBoolean)
+                    binding.loadingView.getRoot().setOnTouchListener((v, event) -> true);
+                binding.loadingView.getRoot().setVisibility(aBoolean ? View.VISIBLE : View.GONE);
             }
         });
     }

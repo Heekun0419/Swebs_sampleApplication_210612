@@ -35,11 +35,6 @@ public class BottomReviewFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentBottomReviewBinding.inflate(inflater,container,false);
 
-        binding.btnAS.setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), ServiceNotReadyActivity.class);
-            startActivity(intent);
-        });
-
         addArrayList();
         initRecyclerView(reviewList);
 

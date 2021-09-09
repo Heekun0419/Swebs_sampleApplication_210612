@@ -28,38 +28,6 @@
             android:layout_height="match_parent">
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_new_tab"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/imageView_New_mark"
-                    android:layout_width="40dp"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/ic_new"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="NEW"
-                    android:textColor="@color/white"
-                    android:textSize="10dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView_New_mark"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView_New_mark"
-                    app:layout_constraintStart_toStartOf="@+id/imageView_New_mark"
-                    app:layout_constraintTop_toTopOf="@+id/imageView_New_mark" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
             <ImageView
                 android:id="@+id/imageView_product_main_profile"
                 android:layout_width="match_parent"
@@ -115,6 +83,37 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_new_tab"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView_New_mark"
+                    android:layout_width="40dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/ic_new"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NEW"
+                    android:textColor="@color/white"
+                    android:textSize="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView_New_mark"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView_New_mark"
+                    app:layout_constraintStart_toStartOf="@+id/imageView_New_mark"
+                    app:layout_constraintTop_toTopOf="@+id/imageView_New_mark" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

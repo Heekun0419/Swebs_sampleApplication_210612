@@ -22,6 +22,7 @@ public class CertifiedCompanyViewModel extends AndroidViewModel {
     private MutableLiveData<ArrayList<ProductListlModel>> liveCompanyModelList = new MutableLiveData<>();
     private ArrayList<ProductListlModel> arrayList = new ArrayList<>();
     private MutableLiveData<ProductDetailModel> liveProductDetail = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
 
 
     // 서버에서 한번에 해당 값 만큼만 불러오기
@@ -43,7 +44,12 @@ public class CertifiedCompanyViewModel extends AndroidViewModel {
         return liveProductDetail;
     }
 
+    public MutableLiveData<Boolean> getIsLoading() {
+        return isLoading;
+    }
+
     public void getProductListFromServer(String categorySrl, String LastIndex) {
+        isLoading.setValue(true);
         productRepository.getProductList(categorySrl, LastIndex, Integer.toString(LIST_LOAD_COUNT))
                 .enqueue(new Callback<List<ProductListlModel>>() {
                     @Override
@@ -53,16 +59,19 @@ public class CertifiedCompanyViewModel extends AndroidViewModel {
                             arrayList.addAll(response.body());
                             setLiveComapnyModelList(arrayList);
                         }
+
+                        isLoading.setValue(false);
                     }
 
                     @Override
                     public void onFailure(Call<List<ProductListlModel>> call, Throwable t) {
-
+                        isLoading.setValue(false);
                     }
                 });
     }
 
     public void getProductDetailFromServer(String productSrl) {
+        isLoading.setValue(true);
         productRepository.getProductDetail(productSrl)
                 .enqueue(new Callback<ProductDetailModel>() {
                     @Override
@@ -76,11 +85,13 @@ public class CertifiedCompanyViewModel extends AndroidViewModel {
                             }
 
                         }
+
+                        isLoading.setValue(false);
                     }
 
                     @Override
                     public void onFailure(Call<ProductDetailModel> call, Throwable t) {
-
+                        isLoading.setValue(false);
                     }
                 });
     }

@@ -37,7 +37,7 @@ public class MoreEventFragment extends Fragment implements OnItemClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new EventViewModel(requireActivity().getApplication());
-        viewModel.getEventListFromServer();
+        viewModel.getEventListFromServer(categorySrl);
     }
 
     @Override

@@ -44,8 +44,6 @@ public class MyEventFragment extends Fragment implements OnItemClickListener {
             }
         });
 
-        viewModel.getEventListFromServer();
-
         return binding.getRoot();
     }
 

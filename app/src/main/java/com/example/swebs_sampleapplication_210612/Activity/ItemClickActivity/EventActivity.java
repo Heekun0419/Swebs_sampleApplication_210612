@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -33,8 +34,6 @@ public class EventActivity extends AppCompatActivity {
         binding = ActivityEventBinding.inflate(getLayoutInflater());
         viewModel = new EventViewModel(getApplication());
         setContentView(binding.getRoot());
-
-        Toast.makeText(this, "event SRL : " + getIntent().getStringExtra("eventSrl"), Toast.LENGTH_SHORT).show();
 
         viewModel.getEventDetailFromServer(getIntent().getStringExtra("eventSrl"));
 
@@ -93,13 +92,17 @@ public class EventActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onResume() {
         super.onResume();
 
         viewModel.getIsLoading().observe(this, aBoolean -> {
-            if (aBoolean != null)
+            if (aBoolean != null) {
+                if (aBoolean)
+                    binding.loadingView.getRoot().setOnTouchListener((v, event) -> true);
                 binding.loadingView.getRoot().setVisibility(aBoolean ? View.VISIBLE : View.GONE);
+            }
         });
 
     }

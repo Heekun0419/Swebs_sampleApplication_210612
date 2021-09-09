@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -38,14 +39,19 @@ public class MoreCertifiedFragment extends Fragment implements OnItemClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentMoreCertifiedCompanyBinding.inflate(inflater,container,false);
+        binding.noticeTextView.setVisibility(View.VISIBLE);
 
         viewModel.getLiveCompanyModelList().observe(getViewLifecycleOwner(), certifiedCompanyModels -> {
             if (LastIndex.equals("0")) {
                 GridMoreCretifiedAdapter adapter = new GridMoreCretifiedAdapter(requireContext(),certifiedCompanyModels, this);
                 binding.gridViewMoreCertified.setAdapter(adapter);
-            } else{
+            } else {
             LastIndex = certifiedCompanyModels.get(certifiedCompanyModels.size()-1).getProd_srl();
             adapter.changeItem(certifiedCompanyModels);}
+
+            if (certifiedCompanyModels.size() > 0) {
+                binding.noticeTextView.setVisibility(View.GONE);
+            }
         });
 
        // Log.d("scroll", String.valueOf(binding.gridViewMoreCertified.getScrollY()));
@@ -57,6 +63,11 @@ public class MoreCertifiedFragment extends Fragment implements OnItemClickListen
     @Override
     public void onResume() {
         super.onResume();
+
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean != null)
+                binding.loadingView.getRoot().setVisibility(aBoolean ? View.VISIBLE : View.GONE);
+        });
     }
 
     @Override
