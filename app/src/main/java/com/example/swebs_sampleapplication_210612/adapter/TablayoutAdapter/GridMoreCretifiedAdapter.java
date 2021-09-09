@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListlModel;
 import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.adapter.OnItemClickListener;
+import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.databinding.ItemMoreCertifiedCompanyBinding;
 
 import java.util.ArrayList;

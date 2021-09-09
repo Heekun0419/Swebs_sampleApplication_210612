@@ -10,9 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.CertifiedCompanyActivity;
-import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.EventActivity;
 import com.example.swebs_sampleapplication_210612.ViewModel.CertifiedCompanyViewModel;
-import com.example.swebs_sampleapplication_210612.adapter.OnItemClickListener;
+import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.TablayoutAdapter.GridMoreCretifiedAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMoreCertifiedCompanyBinding;
 
