@@ -127,7 +127,7 @@ public class MainActivity extends FragmentActivity {
         binding.navView.textviewNavDrawerPurchaseQuestion.setOnClickListener(v -> {
             IntentInfoActivity("purchase_question");
         });
-        // 구매문의
+        // 공지사항
         binding.navView.textviewNavDrawerNotice.setOnClickListener(v -> {
             IntentInfoActivity("notice");
         });
@@ -138,17 +138,17 @@ public class MainActivity extends FragmentActivity {
             startActivity(intent);
         });
         // 스캔 히스토리
-        binding.navView.textviewNavDrawerReportCopy.setOnClickListener(v -> {
+        binding.navView.textviewNavDrawerScanHistory.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), ScanHistoryActivity.class);
             intent.putExtra("resultCode","scanHistory");
             startActivity(intent);
         });
         // FAQ
-        binding.navView.textviewNavDrawerNotice.setOnClickListener(v -> {
+        binding.navView.textviewNavDrawerFaq.setOnClickListener(v -> {
             IntentInfoActivity("FAQ");
         });
         // 사용법
-        binding.navView.textviewNavDrawerNotice.setOnClickListener(v -> {
+        binding.navView.textviewNavDrawerManual.setOnClickListener(v -> {
             IntentInfoActivity("manual");
         });
 

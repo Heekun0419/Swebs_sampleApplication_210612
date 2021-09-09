@@ -1,5 +1,6 @@
 package com.example.swebs_sampleapplication_210612.Fragment.MakeAccountFragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentTermsBinding;
@@ -37,7 +41,24 @@ public class TermsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentTermsBinding.inflate(inflater,container,false);
+        webViewInit();
         binding.webView.loadUrl(html);
         return binding.getRoot();
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private void webViewInit() {
+        binding.webView.getSettings().setJavaScriptEnabled(true);
+        binding.webView.getSettings().setLoadWithOverviewMode(true);
+        binding.webView.getSettings().setDomStorageEnabled(true);
+
+        binding.webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+
+                super.onPageFinished(view, url);
+            }
+        });
+        binding.webView.setWebChromeClient(new WebChromeClient());
     }
 }
