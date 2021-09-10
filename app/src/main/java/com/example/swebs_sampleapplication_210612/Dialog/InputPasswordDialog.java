@@ -39,9 +39,10 @@ public class InputPasswordDialog extends Dialog {
         binding.editTextInputPass.addTextChangedListener(watcherPassword);
 
         binding.btnDialogOk.setOnClickListener(v -> {
-            listener.onPositiveClick("success");
+            listener.onPositiveClick(binding.editTextInputPass.getText().toString());
             dismiss();
         });
+
         binding.closeDialog.setOnClickListener(v -> {
             listener.onCloseClick();
             dismiss();

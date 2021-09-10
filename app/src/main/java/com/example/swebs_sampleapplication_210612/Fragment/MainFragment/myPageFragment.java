@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.SystemClock;
@@ -35,12 +36,13 @@ import com.example.swebs_sampleapplication_210612.Dialog.DialogClickStringListen
 import com.example.swebs_sampleapplication_210612.Dialog.EditTextDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.InputPasswordDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog2;
+import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.NumberPickerModel2;
 import com.example.swebs_sampleapplication_210612.Dialog.RecommendCodeDialog;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
-import com.example.swebs_sampleapplication_210612.ViewModel.UserInfoViewModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.MyInfoViewModel;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMyPageBinding;
 import com.example.swebs_sampleapplication_210612.util.UserLoginController;
 
@@ -51,14 +53,17 @@ import java.util.List;
 import java.util.Locale;
 
 public class myPageFragment extends Fragment {
+    private final String DIALOG_TITLE = "마이 페이지";
     private FragmentMyPageBinding binding;
-    private String country;
-    private String userType;
     private SPmanager sPmanager;
     private final Animation fadeOut = new AlphaAnimation(1,0);
     private final Animation fadeIn = new AlphaAnimation(0,1);
 
-    private UserInfoViewModel viewModel;
+    private String country;
+    private String userType;
+    private String email;
+
+    private MyInfoViewModel viewModel;
 
     private long mLastClickTime;
 
@@ -83,7 +88,7 @@ public class myPageFragment extends Fragment {
         binding = FragmentMyPageBinding.inflate(inflater,container,false);
 
         // 뷰모델 설정
-        viewModel = new ViewModelProvider(this).get(UserInfoViewModel.class);
+        viewModel = new ViewModelProvider(this).get(MyInfoViewModel.class);
 
         // user type 검사해서 View 변환
         sPmanager = new SPmanager(requireContext());
@@ -248,7 +253,7 @@ public class myPageFragment extends Fragment {
         setTutorial();
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     private void observerStart() {
         // Data Observe -- START
         viewModel.getUserInfoFromKey("userSrl").observe(getViewLifecycleOwner(), s -> {
@@ -284,8 +289,10 @@ public class myPageFragment extends Fragment {
 
         // Email
         viewModel.getUserInfoFromKey("email").observe(getViewLifecycleOwner(), s -> {
-            if (s != null)
+            if (s != null) {
                 binding.mypageTextViewID.setText(s);
+                email = s;
+            }
         });
 
         // Name
@@ -336,6 +343,27 @@ public class myPageFragment extends Fragment {
             binding.mypageCountryTextView.setText(viewText);
         });
 
+        // 비밀번호 수정시...
+        viewModel.getLoginProgressResult().observe(getViewLifecycleOwner(), s -> {
+            if (s != null) {
+                if (s.equals("success"))
+                    Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+                else if (s.equals("failed"))
+                    showOneButtonDialog(DIALOG_TITLE, "비밀번호를 확인 해주세요.");
+                else if (s.equals("serverError"))
+                    showOneButtonDialog(DIALOG_TITLE, "서버 연결이 원활하지 않습니다.\n잠시 후 다시 시도 해주세요.");
+            }
+        });
+
+        // 로딩 화면
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean != null) {
+                if (aBoolean)
+                    binding.loadingView.getRoot().setOnTouchListener((v, event) -> true);
+                binding.loadingView.getRoot().setVisibility(aBoolean ? View.VISIBLE : View.GONE);
+            }
+        });
+
         // Data observe -- END
     }
 
@@ -368,34 +396,36 @@ public class myPageFragment extends Fragment {
         return null;
     }
 
-    private void dialogInputPass(){
+    private void dialogInputPass() {
+        if (sPmanager.getUserType().equals("normal")) {
+            InputPasswordDialog dialog = new InputPasswordDialog(requireContext(), new DialogClickStringListener() {
+                @Override
+                public void onPositiveClick(String string) {
+                    if (string != null && !string.equals(""))
+                        viewModel.loginForNormal(email, string);
+                }
 
-        InputPasswordDialog dialog = new InputPasswordDialog(requireContext(), new DialogClickStringListener() {
-            @Override
-            public void onPositiveClick(String string) {
-                Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
-            }
+                @Override
+                public void onNegativeClick() {
 
-            @Override
-            public void onNegativeClick() {
+                }
 
-            }
+                @Override
+                public void onCloseClick() {
 
-            @Override
-            public void onCloseClick() {
-
-            }
-        });
-        dialog.setCancelable(false);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        dialog.show();
-        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
+                }
+            });
+            dialog.setCancelable(false);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+            dialog.show();
+            dialog.setOnCancelListener(dialog1 -> {
                 Toast.makeText(requireContext(), "취소됨", Toast.LENGTH_SHORT).show();
-            }
-        });
+            });
+            return;
+        }
+
+        Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
     }
 
     private void dialogBirthday() {
@@ -603,6 +633,31 @@ public class myPageFragment extends Fragment {
             binding.tutorialMyPage.getRoot().setVisibility(View.VISIBLE);
             binding.tutorialMyPage.getRoot().setAnimation(fadeIn);
         }
+    }
+
+    private void showOneButtonDialog(String title, String content) {
+        OneButtonBasicDialog oneButtonBasicDialog = new OneButtonBasicDialog(getContext()
+                , new BasicDialogTextModel(title, content, "확인", "")
+                , new DialogClickListener() {
+            @Override
+            public void onPositiveClick(int position) {
+
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+
+            @Override
+            public void onCloseClick() {
+
+            }
+        });
+
+        oneButtonBasicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        oneButtonBasicDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        oneButtonBasicDialog.show();
     }
 
     private void RenderMyPageFromUserType(String userType){

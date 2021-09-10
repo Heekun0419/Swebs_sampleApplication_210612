@@ -69,6 +69,8 @@ public class MyInfoRepository {
         return retroAPI.socialSignup(formData);
     }
 
+    // 회원 정보 수정 전체...
+
 
     public LiveData<List<MyInfo>> getAllToLiveData() {
         return mMyInfoAll;

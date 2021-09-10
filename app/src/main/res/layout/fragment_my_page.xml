@@ -714,5 +714,11 @@
         layout="@layout/tutorial_mypage_layout"
         android:animateLayoutChanges="true"/>
 
+    <include
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        layout="@layout/animation_loading_layout"/>
 
 </FrameLayout>

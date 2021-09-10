@@ -39,6 +39,7 @@ import com.example.swebs_sampleapplication_210612.Dialog.ImagePickerDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog2;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.NumberPickerModel2;
 import com.example.swebs_sampleapplication_210612.R;
+import com.example.swebs_sampleapplication_210612.ViewModel.MyInfoViewModel;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityModifyUserInfoBinding;
 import com.example.swebs_sampleapplication_210612.util.FilePathFinder;
 import com.example.swebs_sampleapplication_210612.util.Listener.onSingleClickListener;
@@ -64,7 +65,7 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
     private Uri imageUri = null;
     FilePathFinder filePathFinder;
     private SPmanager sPmanager;
-    private SwebsAPI retroAPI;
+    private MyInfoViewModel viewModel;
 
     private MyInfoRepository myInfoRepository;
     private final String DIALOG_TITLE = "회원정보 수정 안내";
@@ -72,7 +73,6 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
     private String selectGender = null;
     private String country = null;
     private String region = null;
-    private boolean checkEmailOverlap;
     private boolean checkPasswordForm;
     private boolean checkPasswordConfirm;
     private boolean checkBirthdayForm;
@@ -88,13 +88,13 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         binding = ActivityModifyUserInfoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
+        viewModel = new MyInfoViewModel(getApplication());
+
         sPmanager = new SPmanager(this);
 
         myInfoRepository = new MyInfoRepository(getApplication());
 
         // value init;
-        checkEmailOverlap = false;
         checkPasswordForm = false;
         checkPasswordConfirm = false;
         checkBirthdayForm = false;
@@ -107,13 +107,14 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         //뒤로가기 버튼
         binding.btnInformationActivityBack.setOnClickListener(v -> onBackPressed());
         profileImage = binding.imageViewProfileModify;
+
         //디폴트 프로필 이미지 생성
-        GlideImage("default",profileImage);
+        GlideImage("default", profileImage);
 
         binding.editTextUserInfoPassword.setFilters(new InputFilter[] {filterPassword});
         binding.editTextUserInfoPasswordConfirm.setFilters(new InputFilter[] {filterPassword});
         binding.editTextUserInfoNickname.setFilters(new InputFilter[] {filterNickname});
-        binding.editTextUserInfoUsername.setFilters(new InputFilter[] {filtername});
+        binding.editTextUserInfoUsername.setFilters(new InputFilter[] {filterName});
 
         // 성별 설정 버튼 이벤트
         binding.btnGenderFemale.setOnClickListener(v -> {
@@ -142,51 +143,80 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
             }
         });
 
-        binding.imageViewProfileModify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog = new ImagePickerDialog(ModifyUserInfoActivity.this, new DialogClickListener() {
-                    @Override
-                    public void onPositiveClick(int position) {
-                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        try {
-                            photoFile = filePathFinder.createMakefile();
-                            photoPath = photoFile.getAbsolutePath();
-                            Uri uri = FileProvider.getUriForFile(ModifyUserInfoActivity.this,
-                                    "com.example.swebs_sampleapplication_210612.provider",
-                                    photoFile);
-                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
-                            if (takePictureIntent.resolveActivity(ModifyUserInfoActivity.this.getPackageManager()) != null) {
-                                startActivityForResult(takePictureIntent, TAKE_PHOTO_REQUEST);
-                            }
+        binding.imageViewProfileModify.setOnClickListener(v -> {
+            dialog = new ImagePickerDialog(ModifyUserInfoActivity.this, new DialogClickListener() {
+                @Override
+                public void onPositiveClick(int position) {
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    try {
+                        photoFile = filePathFinder.createMakefile();
+                        photoPath = photoFile.getAbsolutePath();
+                        Uri uri = FileProvider.getUriForFile(
+                                ModifyUserInfoActivity.this,
+                                "com.example.swebs_sampleapplication_210612.provider",
+                                photoFile
+                        );
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+                        if (takePictureIntent.resolveActivity(ModifyUserInfoActivity.this.getPackageManager()) != null) {
+                            startActivityForResult(takePictureIntent, TAKE_PHOTO_REQUEST);
                         }
-                    }
 
-                    @Override
-                    public void onNegativeClick() {
-                        Intent intent = new Intent(Intent.ACTION_PICK,
-                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
+                }
 
-                    @Override
-                    public void onCloseClick() {
+                @Override
+                public void onNegativeClick() {
+                    Intent intent = new Intent(Intent.ACTION_PICK,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+                }
 
-                    }
-                });
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                dialog.show();
+                @Override
+                public void onCloseClick() {
+
+                }
+            });
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+            dialog.show();
+        });
+
+        binding.btnModifyProgress.setOnClickListener(v -> {
+            String content = null;
+            if (binding.editTextUserInfoPassword.getText().toString().length() > 0 && !checkPasswordForm) {
+                content = "비밀번호 형식을 확인 해주세요.";
+            } else if (binding.editTextUserInfoPassword.getText().toString().length() > 0 && !checkPasswordConfirm) {
+                content = "비밀번호 확인이 일치하지 않습니다.";
+            } else if (binding.editTextUserInfoNickname.getText().toString().length() <= 0) {
+                content = "닉네임을 입력 해주세요.";
+            } else if (binding.editTextUserInfoUsername.getText().toString().length() <= 0) {
+                content = "이름을 입력 해주세요.";
+            } else if (!checkBirthdayForm) {
+                content = "생년월일 형식을 확인 해주세요.";
+            } else if (binding.editTextUserInfoPhoneNumber.getText().toString().length() <= 0) {
+                content = "전화번호를 입력 해주세요.";
+            } else if (selectGender == null) {
+                content = "성별을 선택 해주세요.";
+            } else if (country == null) {
+                content = "국가를 선택 해주세요.";
+            } else if (binding.layoutRegionSelect.getVisibility() == View.VISIBLE && region == null) {
+                content = "지역을 선택 해주세요.";
             }
+
+            if (content != null) {
+                Toast.makeText(this, "" + content, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
         });
 
     }
 
     private void requestStoragePermission() {
-
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(ModifyUserInfoActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 457);
         }
@@ -212,7 +242,7 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
                     // You can update this bitmap to your server
                     realPath = filePathFinder.getPath(imageUri);
                     //  Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), imageUri)
-                    GlideImage(realPath,profileImage);
+                    GlideImage(realPath, profileImage);
                 }
                 break;
         }
@@ -278,33 +308,6 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         // END - data Observe
 
         binding.editTextUserInfoPhoneNumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
-
-        // 이메일 형식 체크 후 중복 확인.
-        binding.editTextEmail.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()) {
-                    if (binding.editTextEmail.getVisibility() == View.VISIBLE)
-                        binding.emailOverlapCheck.setVisibility(View.VISIBLE);
-                } else if (binding.emailOverlapCheck.getVisibility() == View.VISIBLE){
-                    binding.emailOverlapCheck.setVisibility(View.GONE);
-                }
-
-                checkEmailOverlap = false;
-                if (!binding.emailOverlapCheck.getText().toString().equals("중복확인"))
-                    binding.emailOverlapCheck.setText("중복확인");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
         // EditText Watcher - 비밀번호 체크
         binding.editTextUserInfoPassword.addTextChangedListener(watcherPassword);
@@ -664,7 +667,7 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
     };
 
     protected  InputFilter filterNickname = (source, start, end, dest, dstart, dend) -> {
-        Pattern ps = Pattern.compile("[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ._-]*$");
+        Pattern ps = Pattern.compile("[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ._-]+$");
         if (!ps.matcher(source).matches()) {
             Toast.makeText(getApplicationContext(), "닉네임에 입력할 수 없는 형식입니다.", Toast.LENGTH_SHORT).show();
             return "";
@@ -672,8 +675,8 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         return null;
     };
 
-    protected  InputFilter filtername = (source, start, end, dest, dstart, dend) -> {
-        Pattern ps = Pattern.compile("[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ._-]*$");
+    protected  InputFilter filterName = (source, start, end, dest, dstart, dend) -> {
+        Pattern ps = Pattern.compile("[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ._-]+$");
         if (!ps.matcher(source).matches()) {
             Toast.makeText(getApplicationContext(), "이름에 입력할 수 없는 형식입니다.", Toast.LENGTH_SHORT).show();
             return "";
