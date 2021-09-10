@@ -16,6 +16,7 @@ import com.example.swebs_sampleapplication_210612.Activity.ServiceNotReadyActivi
 import com.example.swebs_sampleapplication_210612.Data.Repository.ReviewRepository;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.ReViewViewModel;
+import com.example.swebs_sampleapplication_210612.adapter.Listener.ReviewClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.ReviewProductAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentBottomReviewBinding;
 
@@ -24,12 +25,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class BottomReviewFragment extends Fragment {
+public class BottomReviewFragment extends Fragment implements ReviewClickListener {
 
     private FragmentBottomReviewBinding binding;
     private ReviewRepository repository;
     private String prodSrl;
     private ReViewViewModel reViewViewModel;
+    ReviewProductAdapter adapter;
 
     public BottomReviewFragment(String prodSrl){
         this.prodSrl = prodSrl;
@@ -55,15 +57,50 @@ public class BottomReviewFragment extends Fragment {
             }
         });
 
+        reViewViewModel.getIsLike().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                adapter.isLiked(aBoolean);
+            }
+        });
 
         return binding.getRoot();
     }
 
     private void initRecyclerView(List<ReviewModel> reviewModelArrayList){
-        ReviewProductAdapter adapter = new ReviewProductAdapter(requireContext(), reviewModelArrayList);
+        adapter = new ReviewProductAdapter(requireContext(), reviewModelArrayList, this);
         LinearLayoutManager manager = new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false);
         binding.recyclerViewProductReview.setLayoutManager(manager);
         binding.recyclerViewProductReview.setAdapter(adapter);
     }
 
+    @Override
+    public void profileClicked(int position) {
+
+    }
+
+    @Override
+    public void LikeClicked(int position, boolean isLike) {
+       reViewViewModel.setIsLike(isLike);
+    }
+
+    @Override
+    public void reportClicked(int position) {
+
+    }
+
+    @Override
+    public void modifyClicked(int position) {
+
+    }
+
+    @Override
+    public void removeClicked(int position) {
+
+    }
+
+    @Override
+    public void CommentClicked(int position, ReviewModel model) {
+
+    }
 }

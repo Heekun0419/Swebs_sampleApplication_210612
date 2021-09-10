@@ -22,6 +22,7 @@ import retrofit2.Response;
 public class ReViewViewModel extends AndroidViewModel {
     private MutableLiveData<List<ReviewListModel>> LiveReviewList = new MutableLiveData<>();
     private MutableLiveData<List<ReviewModel>> liveDataReviewOnly = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isLike = new MutableLiveData<>();
     private ReviewRepository repository;
     public ReViewViewModel(@NonNull Application application) {
         super(application);
@@ -79,5 +80,13 @@ public class ReViewViewModel extends AndroidViewModel {
 
     public void setLiveDataReviewOnly(List<ReviewModel> liveDataReviewOnly) {
         this.liveDataReviewOnly.setValue(liveDataReviewOnly);
+    }
+
+    public MutableLiveData<Boolean> getIsLike() {
+        return isLike;
+    }
+
+    public void setIsLike(Boolean isLike) {
+        this.isLike.setValue(isLike);
     }
 }

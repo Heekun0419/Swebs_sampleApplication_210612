@@ -24,12 +24,7 @@ public class ReviewWriteActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         binding.btnCloseReviewWrite.setVisibility(View.GONE);
 
-        binding.btnCloseReviewWrite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        binding.btnCloseReviewWrite.setOnClickListener(v -> onBackPressed());
         binding.btnReviewActivityBack.setOnClickListener(v -> onBackPressed());
 
         manager = getSupportFragmentManager();
@@ -37,13 +32,14 @@ public class ReviewWriteActivity extends AppCompatActivity {
     }
 
     public void moveFragment(Fragment fragment, String string){
-        if(string.equals("")){
+
+        if(string.equals("")) {
             binding.btnCloseReviewWrite.setVisibility(View.VISIBLE);
             binding.textViewReviewActivityName.setText(string);
             binding.btnReviewActivityBack.setVisibility(View.GONE);
             manager.beginTransaction().setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left)
                     .replace(R.id.frameLayout_review_activity, fragment).addToBackStack(null).commit();
-        }else{
+        } else {
             binding.textViewReviewActivityName.setText(string);
             manager.beginTransaction().replace(R.id.frameLayout_review_activity, fragment).addToBackStack(null).commit();
         }
