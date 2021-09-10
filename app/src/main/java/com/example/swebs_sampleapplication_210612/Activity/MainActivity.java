@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Observer;
+import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -52,10 +53,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity {
 
-    public static final int NUM_PAGES = 3;
     private ActivityMainBinding binding;
     private FragmentManager manager;
     private MyInfoRepository myInfoRepository;
@@ -74,12 +75,12 @@ public class MainActivity extends FragmentActivity {
         manager = getSupportFragmentManager();
         myInfoRepository = new MyInfoRepository(getApplication());
 
-        ScreenSlidePagerAdapter viewPagerAdapter = new ScreenSlidePagerAdapter(this);
-        ViewPager2 viewPager =  binding.viewpager2Main;
-        viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
+        ScreenSlidePagerAdapter viewPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        ViewPager viewPager =  binding.viewpagerMain;
+
         viewPager.setAdapter(viewPagerAdapter);
-        binding.viewpager2Main.setCurrentItem(1, false);
-        //binding.viewpager2Main.setOffscreenPageLimit(2);
+        binding.viewpagerMain.setCurrentItem(1, false);
+        binding.viewpagerMain.setOffscreenPageLimit(2);
 
        // Log.d("keyhas",getKeyHash(MainActivity.this));
 
@@ -222,35 +223,38 @@ public class MainActivity extends FragmentActivity {
         binding.drawerLayout.openDrawer(GravityCompat.START);
     }
 
-    private static class ScreenSlidePagerAdapter extends FragmentStateAdapter {
-        // FragmentManager manager;
-        // ArrayList<Fragment> fragments = new ArrayList<>();
+    private static class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
+        FragmentManager manager;
+        ArrayList<Fragment> fragments = new ArrayList<>();
 
-        public ScreenSlidePagerAdapter(@NonNull FragmentActivity fragmentActivity) {
-            super(fragmentActivity);
+        public ScreenSlidePagerAdapter(@NonNull FragmentManager fm) {
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+            this.manager = fm;
+            fragments.add(new productionInfoFragment());
+            //fragments.add(new ScanFragment());
+            fragments.add(new ScanZxingFragment());
+            fragments.add(new myPageFragment());
+
         }
 
         @NonNull
         @Override
-        public Fragment createFragment(int position) {
-            if (position == 0)
-                return new productionInfoFragment();
-            else if (position == 1)
-                return new ScanZxingFragment();
-            else
-                return new myPageFragment();
+        public Fragment getItem(int position) {
+            return fragments.get(position);
         }
 
         @Override
-        public int getItemCount() {
-            return NUM_PAGES;
+        public int getCount() {
+            return 3;
         }
-
-
+        @Override
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+            super.destroyItem(container, position, object);
+        }
     }
 
 
-    public void BottomSheetOpen(){
+        public void BottomSheetOpen(){
         manager.beginTransaction().add(new bottomSheetFragment(),"dialog").commit();
     }
 
@@ -279,6 +283,7 @@ public class MainActivity extends FragmentActivity {
         }
         return null;
     }
+
 }
 
 
