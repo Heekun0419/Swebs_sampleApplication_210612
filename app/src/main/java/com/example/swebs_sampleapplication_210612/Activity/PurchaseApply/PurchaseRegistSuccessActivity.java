@@ -2,9 +2,12 @@ package com.example.swebs_sampleapplication_210612.Activity.PurchaseApply;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
+import com.example.swebs_sampleapplication_210612.Activity.ReviewWriteActivity;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityPurchaseRegistSuccessBinding;
 
@@ -34,6 +37,12 @@ public class PurchaseRegistSuccessActivity extends AppCompatActivity {
         binding.textViewName.setText(userName);
         binding.textviewEmail.setText(userEmail);
         binding.textviewPhoneNumber.setText(userPhone);
+
+
+        binding.btnReviewWrite.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), ReviewWriteActivity.class);
+            startActivity(intent);
+        });
 
         Glide.with(this).load(ImageUrl).placeholder(R.drawable.ic_camera).into(binding.ImageViewPurchaseImage);
     }

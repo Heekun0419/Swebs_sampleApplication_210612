@@ -93,7 +93,7 @@ public class PurchaseInfoActivity extends AppCompatActivity {
             @Override
             public void onChanged(String s) {
                 if (s != null) {
-                    binding.userName.setText(s);
+                    binding.userEmail.setText(s);
                 } else {
                     binding.editTextEmail.setHint("이메일을 입력해주세요");
                     binding.editTextEmail.setVisibility(View.VISIBLE);

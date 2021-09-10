@@ -41,7 +41,6 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ReviewProductViewHolder holder, int position) {
-        GlideImage(binding.imageViewMyReviewUserProfile);
         ReviewModel model = reviewList.get(position);
 
         holder.binding.textViewCommentContent.setText(model.getContent());
@@ -54,6 +53,8 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
 
         holder.binding.textViewMyReviewUserName.setText(model.getNickname());
         holder.binding.likeNum.setText(model.getLike_count());
+
+        GlideImage(holder.binding.imageViewMyReviewUserProfile, getImageViewUrl(model.getProfile_srl(), "100"));
     }
 
     @Override
@@ -70,7 +71,14 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
         }
     }
 
-    private void GlideImage(ImageView view){
-        Glide.with(context).load(R.drawable.userprofile).override(300,300).circleCrop().into(view);
+    private String getImageViewUrl(String fileSrl, String Width) {
+        String result = context.getString(R.string.IMAGE_VIEW_URL) + "?inputFileSrl=" + fileSrl;
+        if (Width != null)
+            result += "&inputImageWidth=" + Width;
+        return result;
+    }
+
+    private void GlideImage(ImageView view, String url){
+        Glide.with(context).load(url).placeholder(R.drawable.ic_profile_basic).circleCrop().into(view);
     }
 }

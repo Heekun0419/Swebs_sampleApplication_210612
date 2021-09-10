@@ -56,6 +56,10 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 public class ModifyUserInfoActivity extends AppCompatActivity {
 
     private ActivityModifyUserInfoBinding binding;
@@ -100,9 +104,6 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         checkBirthdayForm = false;
         regionList = new ArrayList<>();
 
-        // 퍼미션 허용 한번 더 검사
-        requestStoragePermission();
-
         filePathFinder = new FilePathFinder(getApplicationContext());
         //뒤로가기 버튼
         binding.btnInformationActivityBack.setOnClickListener(v -> onBackPressed());
@@ -142,6 +143,7 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
                 dialogRegion();
             }
         });
+
 
         binding.imageViewProfileModify.setOnClickListener(v -> {
             dialog = new ImagePickerDialog(ModifyUserInfoActivity.this, new DialogClickListener() {
@@ -209,14 +211,45 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
             if (content != null) {
                 Toast.makeText(this, "" + content, Toast.LENGTH_SHORT).show();
                 return;
+            } else {
+                String path = null;
+                if(photoPath != null && realPath == null) {
+                    path = photoPath;
+                } else if(realPath != null && photoPath == null){
+                    path = realPath;
+                }
+
+                modifyUserInfo(path
+                        , sPmanager.getUserSrl()
+                        , binding.editTextUserInfoPasswordConfirm.getText().toString()
+                        , binding.editTextUserInfoPhoneNumber.getText().toString()
+                        , binding.editTextUserInfoUsername.getText().toString()
+                        , binding.editTextUserInfoBirthday.getText().toString()
+                        , selectGender
+                        , binding.editTextUserInfoNickname.getText().toString()
+                        , binding.textViewCountrySelect.getText().toString()
+                        , binding.textViewRegionSelect.getText().toString());
             }
+
+
 
 
         });
 
     }
 
+    private void modifyUserInfo(String path, String UserSrl, String UserPassWord, String phoneNumber,
+                                String UserName, String Birthday, String Gender, String Nickname, String Country, String Region){
+        File file = new File(path);
+        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData(
+                "files",
+                file.getName(),
+                RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        );
+    }
+
     private void requestStoragePermission() {
+
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(ModifyUserInfoActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 457);
         }
@@ -683,5 +716,4 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         }
         return null;
     };
-
 }

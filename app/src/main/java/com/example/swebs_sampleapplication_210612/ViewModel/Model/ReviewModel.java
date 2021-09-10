@@ -1,13 +1,16 @@
 package com.example.swebs_sampleapplication_210612.ViewModel.Model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ReviewModel {
 
     // profile srl
     private String profile_srl;
+
     //사용자가 추가한 이미지 (최대 5걔)
-    // private ArrayList<String> reviewImageList = new ArrayList<>();
+    private List<String> files = new ArrayList<>();
+
     // 작성한 유저 이름
     private String nickname;
     // 작성 날짜
@@ -59,5 +62,9 @@ public class ReviewModel {
 
     public String getReview_srl() {
         return review_srl;
+    }
+
+    public List<String> getFiles() {
+        return files;
     }
 }

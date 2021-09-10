@@ -317,13 +317,15 @@
 
             </LinearLayout>
 
-            <TextView
+            <EditText
+                android:id="@+id/editText_eventAddress_modify"
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="25dp"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:paddingTop="15dp"
+                android:maxLines="5"
                 android:paddingStart="20dp"
                 android:background="@drawable/radious_button_graycolor"
                 android:backgroundTint="#F9FAFC"/>

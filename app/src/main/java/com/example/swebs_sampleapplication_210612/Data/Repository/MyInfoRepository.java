@@ -71,7 +71,6 @@ public class MyInfoRepository {
 
     // 회원 정보 수정 전체...
 
-
     public LiveData<List<MyInfo>> getAllToLiveData() {
         return mMyInfoAll;
     }
