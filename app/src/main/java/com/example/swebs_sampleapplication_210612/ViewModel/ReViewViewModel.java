@@ -1,6 +1,7 @@
 package com.example.swebs_sampleapplication_210612.ViewModel;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -32,13 +33,16 @@ public class ReViewViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<List<ReviewListModel>> call, Response<List<ReviewListModel>> response) {
                 if(response.isSuccessful()){
-                    if(response.body() != null)
+                    if (response.body() != null)
                         setLiveReviewList(response.body());
+
+                    Log.d("test_", inputCategorySrl + " -> size : " + response.body().size());
                 }
             }
+
             @Override
             public void onFailure(Call<List<ReviewListModel>> call, Throwable t) {
-
+                Log.d("test_", inputCategorySrl + " -> Faile : " + t);
             }
         });
     }

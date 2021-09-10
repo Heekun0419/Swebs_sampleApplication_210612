@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,13 +44,15 @@ public class MoreReviewFragment extends Fragment implements OnItemClickListener 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ReViewViewModel(requireActivity().getApplication());
-        viewModel.getReviewList(categorySrl,null,null);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMoreReviewBinding.inflate(inflater,container,false);
+
+        Log.d("test_", "review : [" + categorySrl + "]");
+        viewModel.getReviewList(categorySrl,null,null);
 
         viewModel.getLiveReviewList().observe(getViewLifecycleOwner(), list ->{
             if (reviewAdapter != null) {

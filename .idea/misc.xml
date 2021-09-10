@@ -11,10 +11,21 @@
         <entry key="..\:/Users/KWH/Downloads/Swebs_13th/app/src/main/res/layout/fragment_make_account_terms.xml" value="0.5" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_13th/app/src/main/res/layout/fragment_make_account_user_info.xml" value="0.3115942028985507" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_13th/app/src/main/res/layout/fragment_my_page.xml" value="0.3115942028985507" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/drawable/ic_heart_filled.xml" value="0.3972222222222222" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/drawable/ic_heart_not_filled.xml" value="0.3972222222222222" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/drawable/ic_new.xml" value="0.34375" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_address_search.xml" value="0.3671875" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_adress_modify.xml" value="0.3671875" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_apply_event.xml" value="0.3671875" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_certified_company.xml" value="0.33" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_event.xml" value="0.31023550724637683" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_event_register_success.xml" value="0.3671875" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_intro.xml" value="0.33" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_item_click_view_activty.xml" value="0.307518115942029" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_login.xml" value="0.1595744680851064" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_make_account.xml" value="0.307518115942029" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_my_top_menu.xml" value="0.29393115942028986" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_purchase_info.xml" value="0.31023550724637683" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_top_menu.xml" value="0.29393115942028986" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/appbar_layout.xml" value="0.2672239108409321" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/fragment_app_information.xml" value="0.31023550724637683" />
@@ -34,6 +45,8 @@
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/fragment_purchase_question2.xml" value="0.31431159420289856" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/fragment_scan.xml" value="0.23278985507246377" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/fragment_scan_zxing.xml" value="0.23278985507246377" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/item_comment.xml" value="0.33" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/item_more_certified_company.xml" value="0.75" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/item_more_event.xml" value="0.3029891304347826" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/item_product_certified_company.xml" value="0.31023550724637683" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/zxing_barcode_scanner.xml" value="0.23278985507246377" />
@@ -70,7 +83,7 @@
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_infomation.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_item_click_view_activty.xml" value="0.2653985507246377" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_login.xml" value="0.19114583333333332" />
-        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_main.xml" value="0.11865942028985507" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_make_account.xml" value="0.26268115942028986" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_make_snsaccount.xml" value="0.26268115942028986" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_modify_user_info.xml" value="0.2653985507246377" />
@@ -80,7 +93,6 @@
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_re_comment.xml" value="0.20425724637681159" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_review.xml" value="0.22" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_review2.xml" value="0.2776268115942029" />
-        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_review_product.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_scan_history.xml" value="0.2726449275362319" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_service_not_ready.xml" value="0.2726449275362319" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_survey.xml" value="0.2776268115942029" />
@@ -88,12 +100,11 @@
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_top_menu.xml" value="0.291213768115942" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/animation_loading_layout.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/dialog_2btn_basic.xml" value="0.17477203647416414" />
-        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/dialog_edittext.xml" value="0.17299898682877407" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/dialog_event_apply.xml" value="0.26766304347826086" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/dialog_image_picker.xml" value="0.2653985507246377" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/dialog_language.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/dialog_recommend_code.xml" value="0.2753623188405797" />
-        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_app_information.xml" value="0.22" />
+        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_app_information.xml" value="0.17477203647416414" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_bottom_comment.xml" value="0.2776268115942029" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_bottom_review.xml" value="0.2776268115942029" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/fragment_buying_list.xml" value="0.2708333333333333" />
@@ -135,7 +146,6 @@
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/item_review_product.xml" value="0.2776268115942029" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/item_scan_history_list.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/navigation_drawer_header_item.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/navigation_drawer_header_item.xml" value="0.22" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/tutorial_mypage_layout.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/tutorial_scan_layout.xml" value="0.29981884057971014" />
         <entry key="app/src/main/res/layout/activity_authentic_scan2.xml" value="0.19375" />

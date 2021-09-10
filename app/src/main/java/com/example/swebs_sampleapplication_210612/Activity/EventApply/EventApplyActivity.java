@@ -1,13 +1,17 @@
 package com.example.swebs_sampleapplication_210612.Activity.EventApply;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import com.example.swebs_sampleapplication_210612.Activity.AddressSearchActivity;
 import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity.TopMenuActivity;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.EventApplyDialog;
@@ -32,7 +36,9 @@ public class EventApplyActivity extends AppCompatActivity {
             finish();
             overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
         });
+
     }
+
 
     private void EventApplyDialog(){
         EventApplyDialog dialog = new EventApplyDialog(this, new DialogClickListener() {

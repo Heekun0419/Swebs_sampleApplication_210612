@@ -151,54 +151,6 @@ public class MainActivity extends FragmentActivity {
         binding.navView.textviewNavDrawerManual.setOnClickListener(v -> {
             IntentInfoActivity("manual");
         });
-
-        /*
-        // START 카카오 로그인 테스트
-        KakaoSdk.init(this, "9e9aaead2ab6303029c565df975aec9d");
-        if (UserApiClient.getInstance().isKakaoTalkLoginAvailable(MainActivity.this)) {
-            UserApiClient.getInstance().loginWithKakaoTalk(MainActivity.this, ((oAuthToken, error) -> {
-                if (error != null) {
-                    if (error.getMessage() != null
-                    && error.getMessage().contains("installed")) {
-                        UserApiClient.getInstance().loginWithKakaoAccount(MainActivity.this, (oAuthToken1, error1) -> {
-                            if (error1 != null) {
-                                Log.d("kakao_test", "로그인 실패 : " + error1);
-                            } else if (oAuthToken1 != null) {
-                                Log.i("kakao_test", "로그인 성공(토큰) : " + oAuthToken1.getAccessToken());
-                            }
-
-                            return null;
-                        });
-                    }
-                } else if (oAuthToken != null) {
-                    Log.i("kakao_test", "로그인 성공(토큰) : " + oAuthToken.getAccessToken());
-                }
-                return null;
-            }));
-        } else {
-            UserApiClient.getInstance().loginWithKakaoAccount(MainActivity.this, (oAuthToken, error) -> {
-                if (error != null) {
-                    Log.d("kakao_test", "로그인 실패 : " + error);
-                } else if (oAuthToken != null) {
-                    Log.i("kakao_test", "로그인 성공(토큰) : " + oAuthToken.getAccessToken());
-                }
-
-                return null;
-            });
-        }
-
-        UserApiClient.getInstance().me((user, error) -> {
-            if (error != null) {
-                Log.e("kakao_test", "사용자 정보 요청 실패", error);
-            } else {
-                Log.i("kakao_test", "사용자 정보 요청 성공" +
-                        "\n회원번호: "+user.getId() +
-                        "\n이메일: "+user.getKakaoAccount().getEmail());
-            }
-            return null;
-        });
-        // END 카카오 로그인 테스트
-        */
     }
     private void IntentInfoActivity(String code){
         Intent intent = new Intent(getApplicationContext(),InformationActivity.class);
