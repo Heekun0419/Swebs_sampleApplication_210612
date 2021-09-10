@@ -22,8 +22,10 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.Activity.AdressModifyActivity;
 import com.example.swebs_sampleapplication_210612.Activity.InformationActivity;
 import com.example.swebs_sampleapplication_210612.Activity.Login_Signup.LoginActivity;
@@ -294,6 +296,9 @@ public class myPageFragment extends Fragment {
                 email = s;
             }
         });
+        // 프로필 이미지 수정
+        viewModel.getUserInfoFromKey("profileSrl").observe(getViewLifecycleOwner(), s ->
+                GlideImage(binding.mypageImageProfile, getImageViewUrl(s, "200")));
 
         // Name
         viewModel.getUserInfoFromKey("name").observe(getViewLifecycleOwner(), s -> {
@@ -797,6 +802,17 @@ public class myPageFragment extends Fragment {
         binding.mypageSnsTextView.setText("미등록");
         binding.mypageSnsImageView.setVisibility(View.GONE);
 
+    }
+
+    private String getImageViewUrl(String fileSrl, String Width) {
+        String result = getString(R.string.IMAGE_VIEW_URL) + "?inputFileSrl=" + fileSrl;
+        if (Width != null)
+            result += "&inputImageWidth=" + Width;
+        return result;
+    }
+
+    private void GlideImage(ImageView view, String url){
+        Glide.with(requireContext()).load(url).circleCrop().into(view);
     }
 
 }

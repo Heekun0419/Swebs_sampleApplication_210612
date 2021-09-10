@@ -19,7 +19,10 @@ import com.example.swebs_sampleapplication_210612.ViewModel.ReViewViewModel;
 import com.example.swebs_sampleapplication_210612.adapter.Listener.ReviewClickListener;
 import com.example.swebs_sampleapplication_210612.databinding.ItemReviewProductBinding;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdapter.ReviewProductViewHolder> {
@@ -47,13 +50,18 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
         return new ReviewProductViewHolder(binding);
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
     @Override
     public void onBindViewHolder(@NonNull ReviewProductViewHolder holder, @SuppressLint("RecyclerView") int position) {
         ReviewModel model = reviewList.get(position);
 
+        // 리뷰 내용
         holder.binding.textViewCommentContent.setText(model.getContent());
-        holder.binding.textViewMyReviewDate.setText(model.getRegdate());
+        // 날짜
+        Date date = new SimpleDateFormat("yyyyMMddHHmmss").parse(model.getRegdate(),new ParsePosition(0));
+        holder.binding.textViewMyReviewDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(date));
+
+
         // 별점
         holder.binding.ratingBarReview.setRating(Float.parseFloat(model.getRate()));
         holder.binding.textViewRatingNumMyReview.setText(Float.toString(binding.ratingBarReview.getRating()));
