@@ -88,7 +88,7 @@ public interface SwebsAPI {
     );
 
     @Multipart
-    @POST("KKW_TEST/event/event_detail.php")
+    @POST("src1/event/event_detail.php")
     Call<EventDetailModel> getEventDetail(
             @PartMap Map<String, RequestBody> prams
     );
@@ -102,15 +102,29 @@ public interface SwebsAPI {
 
     // START - Document, Comment API
     @Multipart
-    @POST("KKW_TEST/document/comment_input.php")
+    @POST("src1/comment/comment_input.php")
     Call<CommentInputModel> pushComment(
             @PartMap Map<String, RequestBody> prams
+    );
+
+    // 댓글 API
+    @Multipart
+    @POST("src1/comment/comment_list.php")
+    Call<ArrayList<CommentModel>> getCommentList(
+            @PartMap Map<String,RequestBody> params
+    );
+
+    // 대댓글 API
+    @Multipart
+    @POST("src1/comment/recomment_list.php")
+    Call<List<CommentModel>> getReCommentList(
+            @PartMap Map<String,RequestBody> params
     );
     // END - Document, Comment API
 
     // START - Like API
     @Multipart
-    @POST("KKW_TEST/like/like_apply.php")
+    @POST("src1/like/like_apply.php")
     Call<LikeApplyModel> pushLike(
             @PartMap Map<String, RequestBody> prams
     );
@@ -118,42 +132,28 @@ public interface SwebsAPI {
 
     // START - 인증업체 API
     @Multipart
-    @POST("KKW_TEST/product/product_categorylist.php")
+    @POST("src1/product/product_categorylist.php")
     Call<List<ProductListlModel>> getCertifiedList(
             @PartMap Map<String,RequestBody> params
     );
 
     @Multipart
-    @POST("KKW_TEST/product/product_detail.php")
+    @POST("src1/product/product_detail.php")
     Call<ProductDetailModel> getCertifiedDetail(
             @PartMap Map<String,RequestBody> params
     );
     // END - 인증업체 API
 
-    // 댓글 API
+    // Item Click 후 리뷰 가져오기
     @Multipart
-    @POST("KKW_TEST/document/comment_list.php")
-    Call<ArrayList<CommentModel>> getCommentList(
-            @PartMap Map<String,RequestBody> params
-    );
-
-    // 대댓글 API
-    @Multipart
-    @POST("KKW_TEST/document/recomment_list.php")
-    Call<List<CommentModel>> getReCommentList(
-            @PartMap Map<String,RequestBody> params
-    );
-
-    // Item Click 후 리뷰 탭 제품리스트 가져오기
-    @Multipart
-    @POST("KKW_TEST/product/review_list.php")
+    @POST("src1/product/review_list.php")
     Call<List<ReviewListModel>> getProductReview(
             @PartMap Map<String,RequestBody> params
     );
 
     // 제품 내 -> 리뷰만 가져오기
     @Multipart
-    @POST("KKW_TEST/product/review_only.php")
+    @POST("src1/product/review_only.php")
     Call<List<ReviewModel>> getReviewList(
             @PartMap Map<String,RequestBody> params
     );

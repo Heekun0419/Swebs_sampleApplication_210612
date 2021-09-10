@@ -44,6 +44,7 @@ public class EventActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
         });
 
+        // 찜 클릭
         binding.likeFilled.setOnClickListener(v -> {
             viewModel.pushEventLike(getIntent().getStringExtra("eventSrl"));
         });
