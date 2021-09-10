@@ -812,7 +812,7 @@ public class myPageFragment extends Fragment {
     }
 
     private void GlideImage(ImageView view, String url){
-        Glide.with(requireContext()).load(url).circleCrop().into(view);
+        Glide.with(requireContext()).load(url).placeholder(R.drawable.ic_profile_basic).circleCrop().into(view);
     }
 
 }
