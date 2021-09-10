@@ -37,7 +37,7 @@ public class CertifiedCompanyActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.frameLayout_certified_activity, new BottomReviewFragment()).commit();
+        manager.beginTransaction().replace(R.id.frameLayout_certified_activity, new BottomReviewFragment(getIntent().getStringExtra("productSrl"))).commit();
 
         binding.btnItemClickedBack.setOnClickListener(v -> onBackPressed());
 

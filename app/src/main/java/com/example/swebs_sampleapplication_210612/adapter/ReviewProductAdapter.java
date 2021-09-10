@@ -18,14 +18,15 @@ import com.example.swebs_sampleapplication_210612.databinding.ItemCommentBinding
 import com.example.swebs_sampleapplication_210612.databinding.ItemReviewProductBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdapter.ReviewProductViewHolder> {
 
     private ItemReviewProductBinding binding;
     private Context context;
-    private ArrayList<ReviewModel> reviewList = new ArrayList<>();
+    private List<ReviewModel> reviewList = new ArrayList<>();
 
-    public ReviewProductAdapter(Context context, ArrayList<ReviewModel> reviewList) {
+    public ReviewProductAdapter(Context context, List<ReviewModel> reviewList) {
         this.context = context;
         this.reviewList = reviewList;
     }
@@ -43,12 +44,16 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
         GlideImage(binding.imageViewMyReviewUserProfile);
         ReviewModel model = reviewList.get(position);
 
-        holder.binding.ratingBarReview.setRating(Float.parseFloat(model.getRatingNum()));
         holder.binding.textViewCommentContent.setText(model.getContent());
-        holder.binding.textViewMyReviewDate.setText(model.getDate());
-        holder.binding.textViewRatingNumMyReview.setText(model.getRatingNum());
-        holder.binding.textViewMyReviewUserName.setText(model.getUserName());
-        holder.binding.likeNum.setText(model.getLikeNum());
+        holder.binding.textViewMyReviewDate.setText(model.getRegdate());
+        // 별점
+        holder.binding.ratingBarReview.setRating(Float.parseFloat(model.getRate()));
+        holder.binding.textViewRatingNumMyReview.setText(Float.toString(binding.ratingBarReview.getRating()));
+
+        holder.binding.textViewMyReviewTitle.setText(model.getReview_title());
+
+        holder.binding.textViewMyReviewUserName.setText(model.getNickname());
+        holder.binding.likeNum.setText(model.getLike_count());
     }
 
     @Override

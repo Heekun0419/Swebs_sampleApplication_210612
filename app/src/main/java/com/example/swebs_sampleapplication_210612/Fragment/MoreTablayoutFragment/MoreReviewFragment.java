@@ -1,5 +1,6 @@
 package com.example.swebs_sampleapplication_210612.Fragment.MoreTablayoutFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,7 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.ReviewActivity;
+import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.ReviewProductActivity;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.ReViewViewModel;
@@ -57,12 +63,21 @@ public class MoreReviewFragment extends Fragment implements OnItemClickListener 
             }
         });
 
-
         return binding.getRoot();
     }
 
     @Override
     public void onItemSelected(View view, int position, String code) {
+        ReviewListModel model = viewModel.getLiveReviewList().getValue().get(position);
+        Intent intent = new Intent(requireContext(), ReviewProductActivity.class);
+        intent.putExtra("prod_srl", code);
+        intent.putExtra("corpName",model.getCorp_name());
+        intent.putExtra("fileSrl",model.getFile_srl());
+        intent.putExtra("title",model.getProd_title());
+        intent.putExtra("rating",model.getAvg_rate());
+        intent.putExtra("review_count",model.getReview_count());
+
+        startActivity(intent);
 
     }
 
@@ -72,6 +87,5 @@ public class MoreReviewFragment extends Fragment implements OnItemClickListener 
         binding.recyclerViewMoreReview.setLayoutManager(linearLayoutManager);
         binding.recyclerViewMoreReview.setAdapter(reviewAdapter);
     }
-
 
 }

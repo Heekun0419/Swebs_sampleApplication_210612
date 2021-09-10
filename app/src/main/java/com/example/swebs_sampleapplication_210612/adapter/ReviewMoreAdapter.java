@@ -47,14 +47,29 @@ public class ReviewMoreAdapter extends RecyclerView.Adapter<ReviewMoreAdapter.Re
     @Override
     public void onBindViewHolder(@NonNull @NotNull ReviewViewHolder holder, int position) {
         ReviewListModel model = list.get(position);
+
+        //순위 이미지, 텍스트
         holder.binding.textViewRank.setText(""+(position+1));
+        if(position>2)
+        holder.binding.imageViewRankCircle.setBackgroundResource(R.drawable.ic_baseline_circle_24);
+
+        //별점
         holder.binding.ratingBarReview.setRating(Float.parseFloat(model.getAvg_rate()));
         holder.binding.textViewRatingNum.setText(Float.toString(binding.ratingBarReview.getRating()));
+        // 기업명
         holder.binding.textViewReviewBrandName.setText(model.getCorp_name());
+        // 리뷰 갯수
         holder.binding.textViewReviewCount.setText("("+model.getReview_count()+")");
+        // 제품 명
         holder.binding.textViewReviewTitle.setText(model.getProd_title());
 
-        GlideImage(holder.binding.imageViewReviewProfile, getImageViewUrl(model.getFile_srl(), "600"));
+        // 해당 제품 프로필 이미지
+        GlideImage(holder.binding.imageViewReviewProfile, getImageViewUrl(model.getFile_srl(), "300"));
+
+        // 레이아웃 클릭시
+        holder.binding.layoutReviewRank.setOnClickListener(v ->
+                listener.onItemSelected(binding.layoutReviewRank,position,model.getProd_srl()));
+
     }
 
     @Override

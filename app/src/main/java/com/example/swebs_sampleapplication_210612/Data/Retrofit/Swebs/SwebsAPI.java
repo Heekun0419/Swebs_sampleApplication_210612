@@ -144,14 +144,14 @@ public interface SwebsAPI {
             @PartMap Map<String,RequestBody> params
     );
 
-    // Item Click 후 리뷰 가져오기
+    // Item Click 후 리뷰 탭 제품리스트 가져오기
     @Multipart
     @POST("KKW_TEST/product/review_list.php")
     Call<List<ReviewListModel>> getProductReview(
             @PartMap Map<String,RequestBody> params
     );
 
-    // 리뷰만 가져오기
+    // 제품 내 -> 리뷰만 가져오기
     @Multipart
     @POST("KKW_TEST/product/review_only.php")
     Call<List<ReviewModel>> getReviewList(
