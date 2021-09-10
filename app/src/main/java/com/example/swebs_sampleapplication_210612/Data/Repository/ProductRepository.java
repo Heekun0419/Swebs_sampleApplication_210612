@@ -23,11 +23,13 @@ public class ProductRepository {
         this.retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
     }
 
-    public Call<List<ProductListlModel>> getProductList(String categorySrl, String lastIndex, String LoadCount) {
+    public Call<List<ProductListlModel>> getProductList(String categorySrl, String lastIndex, String loadCount) {
         HashMap<String, RequestBody> formBody = new HashMap<>();
         formBody.put("inputCategorySrl", RequestBody.create(categorySrl, MediaType.parse("text/plane")));
-        formBody.put("inputLastIndex", RequestBody.create(lastIndex, MediaType.parse("text/plane")));
-        formBody.put("inputListCount", RequestBody.create(LoadCount, MediaType.parse("text/plane")));
+        if (lastIndex != null)
+            formBody.put("inputLastIndex", RequestBody.create(lastIndex, MediaType.parse("text/plane")));
+        if (loadCount != null)
+            formBody.put("inputListCount", RequestBody.create(loadCount, MediaType.parse("text/plane")));
 
        return retroAPI.getCertifiedList(formBody);
     }

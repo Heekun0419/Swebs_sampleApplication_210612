@@ -74,7 +74,7 @@ public class TopMenuActivity extends FragmentActivity {
         getCategoryFromServer(requestCode);
 
         viewModel.getCategoryDetailModelLiveData().observe(this, list -> {
-            initViewPager(requestCode,list);
+            initViewPager(requestCode, list);
         });
     }
 
@@ -164,8 +164,7 @@ public class TopMenuActivity extends FragmentActivity {
         });
     }
 
-    private void initViewPager(String title, ArrayList<CategoryDetailModel> list){
-
+    private void initViewPager(String title, ArrayList<CategoryDetailModel> list) {
        // ViewPager Adapter 설정.
         ViewPagerAdapter adapter = new ViewPagerAdapter(this,this, title, list);
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
@@ -175,5 +174,7 @@ public class TopMenuActivity extends FragmentActivity {
             // 타이틀 탭레이아웃에 set
             tab.setText(list.get(position).getCategory_title());
         }).attach();
+
+        viewPager.setOffscreenPageLimit(list.size()-1);
     }
 }

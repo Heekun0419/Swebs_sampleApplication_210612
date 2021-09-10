@@ -98,8 +98,8 @@ public class ReCommentAdapter extends RecyclerView.Adapter<ReCommentAdapter.ReCo
         return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString();
     }
 
-    public void addItem(CommentModel model, int position){
-        list.add(position,model);
+    public void addItem(CommentModel model, int position) {
+        list.add(position, model);
         notifyItemInserted(position);
     }
 

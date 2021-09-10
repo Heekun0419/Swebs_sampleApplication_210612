@@ -1,6 +1,7 @@
 package com.example.swebs_sampleapplication_210612.ViewModel;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -19,10 +20,15 @@ import retrofit2.Response;
 
 public class CertifiedCompanyViewModel extends AndroidViewModel {
     private final ProductRepository productRepository;
-    private MutableLiveData<ArrayList<ProductListlModel>> liveCompanyModelList = new MutableLiveData<>();
-    private ArrayList<ProductListlModel> arrayList = new ArrayList<>();
-    private MutableLiveData<ProductDetailModel> liveProductDetail = new MutableLiveData<>();
-    private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<ProductListlModel>> liveCompanyModelList = new MutableLiveData<>();
+    private final ArrayList<ProductListlModel> arrayList = new ArrayList<>();
+    private final MutableLiveData<ProductDetailModel> liveProductDetail = new MutableLiveData<>();
+
+    // 로딩 화면..
+    private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
+
+    // 상품 리스트 유무
+    private final MutableLiveData<Boolean> existProductList = new MutableLiveData<>();
 
 
     // 서버에서 한번에 해당 값 만큼만 불러오기
@@ -48,16 +54,24 @@ public class CertifiedCompanyViewModel extends AndroidViewModel {
         return isLoading;
     }
 
-    public void getProductListFromServer(String categorySrl, String LastIndex) {
+    public MutableLiveData<Boolean> getExistProductList() {
+        return existProductList;
+    }
+
+    public void getProductListFromServer(String categorySrl, String lastIndex, String loadCount) {
         isLoading.setValue(true);
-        productRepository.getProductList(categorySrl, LastIndex, Integer.toString(LIST_LOAD_COUNT))
+        productRepository.getProductList(categorySrl, lastIndex, loadCount)
                 .enqueue(new Callback<List<ProductListlModel>>() {
                     @Override
                     public void onResponse(Call<List<ProductListlModel>> call, Response<List<ProductListlModel>> response) {
-                        if (response.isSuccessful()
-                            && response.body() != null) {
-                            arrayList.addAll(response.body());
-                            setLiveComapnyModelList(arrayList);
+                        if (response.isSuccessful()) {
+                            if (response.body() != null) {
+                                arrayList.addAll(response.body());
+                                setLiveComapnyModelList(arrayList);
+                                existProductList.setValue(true);
+                            } else {
+                                setLiveComapnyModelList(null);
+                            }
                         }
 
                         isLoading.setValue(false);
@@ -65,6 +79,7 @@ public class CertifiedCompanyViewModel extends AndroidViewModel {
 
                     @Override
                     public void onFailure(Call<List<ProductListlModel>> call, Throwable t) {
+                        existProductList.setValue(false);
                         isLoading.setValue(false);
                     }
                 });
