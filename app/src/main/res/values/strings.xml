@@ -2,7 +2,7 @@
     <string name="app_name">SWEBS</string>
     <!-- TODO: Remove or change this placeholder text -->
 
-    <string name="IMAGE_VIEW_URL">http://3.35.249.81/php/KKW_TEST/files/file_viewer.php</string>
+    <string name="IMAGE_VIEW_URL">http://dev.swebsapp.com/php/KKW_TEST/files/file_viewer.php</string>
 
     <string name="open">open</string>
     <string name="closed">closed</string>

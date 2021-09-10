@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SwebsClient {
 
-    private static String baseUrl = "http://3.35.249.81/php/";
+    private static String baseUrl = "http://dev.swebsapp.com/php/";
     private static Retrofit retrofit;
 
     public static Retrofit getRetrofitClient() {
