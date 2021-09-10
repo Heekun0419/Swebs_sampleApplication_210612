@@ -14,6 +14,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Scan
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.UserConfigModify;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +80,14 @@ public interface SwebsAPI {
     @Multipart
     @POST("src1/login/login_social.php")
     Call<LoginModel> loginSocialUser(
+            @PartMap Map<String, RequestBody> prams
+    );
+
+    // 일반회원 - 정보 수정
+    @Multipart
+    @POST("src1/login/user_config.php")
+    Call<UserConfigModify> normalUserConfigModify(
+            @Part MultipartBody.Part file,
             @PartMap Map<String, RequestBody> prams
     );
 

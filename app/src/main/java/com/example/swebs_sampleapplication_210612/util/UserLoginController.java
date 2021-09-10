@@ -86,6 +86,27 @@ public class UserLoginController {
         }
     }
 
+    public void userDataSaveWhenModify(String phoneNumber, String name, String nickname, String birthday, String gender, String country, String region, String point,String profileSrl) {
+        if (phoneNumber != null)
+            myInfoRepository.insertMyInfo("phoneNumber", phoneNumber);
+        if (name != null)
+            myInfoRepository.insertMyInfo("name", name);
+        if (nickname != null)
+            myInfoRepository.insertMyInfo("nickName", nickname);
+        if (birthday != null)
+            myInfoRepository.insertMyInfo("birthday", birthday);
+        if (gender != null)
+            myInfoRepository.insertMyInfo("gender", gender);
+        if (country != null)
+            myInfoRepository.insertMyInfo("country", country);
+        if (region != null)
+            myInfoRepository.insertMyInfo("region", region);
+        if (point != null)
+            myInfoRepository.insertMyInfo("point", point);
+        if (profileSrl != null)
+            myInfoRepository.insertMyInfo("profileSrl", profileSrl);
+    }
+
 
     public void userLogout() {
         // 데이터 삭제하기.

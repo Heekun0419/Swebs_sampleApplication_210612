@@ -10,6 +10,9 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LoginModel;
 import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.Entity.MyInfo;
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.UserConfigModify;
+import com.example.swebs_sampleapplication_210612.util.UserLoginController;
 
 import java.util.List;
 
@@ -18,7 +21,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MyInfoViewModel extends AndroidViewModel {
-    private final MutableLiveData<String> loginProgressResult = new MutableLiveData<>();
+    private final SPmanager sPmanager;
+
+    private final MutableLiveData<String> progressResult = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
 
     public MyInfoRepository myInfoRepository;
@@ -27,7 +32,7 @@ public class MyInfoViewModel extends AndroidViewModel {
         super(application);
 
         myInfoRepository = new MyInfoRepository(application);
-
+        sPmanager = new SPmanager(application.getApplicationContext());
     }
 
     public LiveData<List<MyInfo>> getUserInfoAll() {
@@ -42,8 +47,8 @@ public class MyInfoViewModel extends AndroidViewModel {
         myInfoRepository.insertMyInfo(key, value);
     }
 
-    public MutableLiveData<String> getLoginProgressResult() {
-        return loginProgressResult;
+    public MutableLiveData<String> getProgressResult() {
+        return progressResult;
     }
 
     public MutableLiveData<Boolean> getIsLoading() {
@@ -59,20 +64,66 @@ public class MyInfoViewModel extends AndroidViewModel {
                         if (response.isSuccessful()
                         && response.body() != null) {
                             if (response.body().isSuccess())
-                                loginProgressResult.setValue("success");
+                                progressResult.setValue("loginSuccess");
                             else
-                                loginProgressResult.setValue("failed");
+                                progressResult.setValue("loginFailed");
                         } else
-                            loginProgressResult.setValue("serverError");
+                            progressResult.setValue("serverError");
 
                         isLoading.setValue(false);
                     }
 
                     @Override
                     public void onFailure(Call<LoginModel> call, Throwable t) {
-                        loginProgressResult.setValue("serverError");
+                        progressResult.setValue("serverError");
                         isLoading.setValue(false);
                     }
                 });
+    }
+
+    // 일반 유저 회원정보 수정
+    public void normalUserConfigModify(String password, String phoneNumber, String name, String nickname, String birthday, String gender, String country, String region, String profilePath) {
+        isLoading.setValue(true);
+        myInfoRepository.pushUserConfigModify(
+                sPmanager.getUserSrl(),
+                password,
+                phoneNumber,
+                name,
+                nickname,
+                birthday,
+                gender,
+                country,
+                region,
+                profilePath
+        ).enqueue(new Callback<UserConfigModify>() {
+            @Override
+            public void onResponse(Call<UserConfigModify> call, Response<UserConfigModify> response) {
+                isLoading.setValue(false);
+                if (response.isSuccessful()
+                && response.body() != null) {
+                    if (response.body().isSuccess()) {
+                        new UserLoginController(getApplication()).userDataSaveWhenModify(
+                                phoneNumber,
+                                name,
+                                nickname,
+                                birthday,
+                                gender,
+                                country,
+                                region,
+                                response.body().getPoint(),
+                                response.body().getProfile_srl()
+                        );
+                        progressResult.setValue("modifySuccess");
+                    } else
+                        progressResult.setValue("modifyFailed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserConfigModify> call, Throwable t) {
+                isLoading.setValue(false);
+                progressResult.setValue("serverError");
+            }
+        });
     }
 }

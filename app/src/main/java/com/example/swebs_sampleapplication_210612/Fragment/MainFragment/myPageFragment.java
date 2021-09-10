@@ -344,14 +344,19 @@ public class myPageFragment extends Fragment {
         });
 
         // 비밀번호 수정시...
-        viewModel.getLoginProgressResult().observe(getViewLifecycleOwner(), s -> {
+        viewModel.getProgressResult().observe(getViewLifecycleOwner(), s -> {
             if (s != null) {
-                if (s.equals("success"))
-                    Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
-                else if (s.equals("failed"))
-                    showOneButtonDialog(DIALOG_TITLE, "비밀번호를 확인 해주세요.");
-                else if (s.equals("serverError"))
-                    showOneButtonDialog(DIALOG_TITLE, "서버 연결이 원활하지 않습니다.\n잠시 후 다시 시도 해주세요.");
+                switch (s) {
+                    case "loginSuccess":
+                        Intent_to_Activity("", new Intent(requireContext(), ModifyUserInfoActivity.class));
+                        break;
+                    case "loginFailed":
+                        showOneButtonDialog(DIALOG_TITLE, "비밀번호를 확인 해주세요.");
+                        break;
+                    case "serverError":
+                        showOneButtonDialog(DIALOG_TITLE, "서버 연결이 원활하지 않습니다.\n잠시 후 다시 시도 해주세요.");
+                        break;
+                }
             }
         });
 

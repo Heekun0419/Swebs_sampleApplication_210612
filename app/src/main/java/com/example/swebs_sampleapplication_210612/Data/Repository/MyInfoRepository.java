@@ -16,11 +16,14 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClien
 import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.Entity.MyInfo;
 import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.SwebsDao;
 import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.SwebsDatabase;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.UserConfigModify;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 
@@ -69,7 +72,34 @@ public class MyInfoRepository {
         return retroAPI.socialSignup(formData);
     }
 
-    // 회원 정보 수정 전체...
+    // 일반 회원 정보 수정 전체...
+    public Call<UserConfigModify> pushUserConfigModify(String userSrl, String password, String phoneNumber, String name, String nickname, String birthday, String gender, String country, String region, String profilePath) {
+        MultipartBody.Part multipartBody = null;
+        HashMap<String, RequestBody> formData = new HashMap<>();
+        formData.put("inputUserSrl", RequestBody.create(userSrl, MediaType.parse("text/plane")));
+        if (password != null)
+            formData.put("inputPassword", RequestBody.create(password, MediaType.parse("text/plane")));
+        formData.put("inputPhoneNumber", RequestBody.create(phoneNumber, MediaType.parse("text/plane")));
+        formData.put("inputName", RequestBody.create(name, MediaType.parse("text/plane")));
+        formData.put("inputNickName", RequestBody.create(nickname, MediaType.parse("text/plane")));
+        formData.put("inputBirthday", RequestBody.create(birthday, MediaType.parse("text/plane")));
+        formData.put("inputGender", RequestBody.create(gender, MediaType.parse("text/plane")));
+        formData.put("inputCountry", RequestBody.create(country, MediaType.parse("text/plane")));
+        if (region != null)
+            formData.put("inputRegion", RequestBody.create(region, MediaType.parse("text/plane")));
+
+        // 파일
+        if (profilePath != null) {
+            File file = new File(profilePath);
+            multipartBody = MultipartBody.Part.createFormData(
+                    "files",
+                    file.getName(),
+                    RequestBody.create(MediaType.parse("multipart/form-data"), file)
+            );
+        }
+
+        return retroAPI.normalUserConfigModify(multipartBody, formData);
+    }
 
     public LiveData<List<MyInfo>> getAllToLiveData() {
         return mMyInfoAll;

@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.lifecycle.Observer;
 
 import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
@@ -37,6 +38,8 @@ import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanage
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.ImagePickerDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog2;
+import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
+import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.NumberPickerModel2;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.MyInfoViewModel;
@@ -61,7 +64,6 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 public class ModifyUserInfoActivity extends AppCompatActivity {
-
     private ActivityModifyUserInfoBinding binding;
     private ImagePickerDialog dialog;
     private File photoFile;
@@ -72,8 +74,9 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
     private MyInfoViewModel viewModel;
 
     private MyInfoRepository myInfoRepository;
-    private final String DIALOG_TITLE = "회원정보 수정 안내";
+    private final String DIALOG_TITLE = "회원정보 수정";
 
+    private String profilePath = null;
     private String selectGender = null;
     private String country = null;
     private String region = null;
@@ -187,65 +190,55 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         });
 
         binding.btnModifyProgress.setOnClickListener(v -> {
-            String content = null;
-            if (binding.editTextUserInfoPassword.getText().toString().length() > 0 && !checkPasswordForm) {
-                content = "비밀번호 형식을 확인 해주세요.";
-            } else if (binding.editTextUserInfoPassword.getText().toString().length() > 0 && !checkPasswordConfirm) {
-                content = "비밀번호 확인이 일치하지 않습니다.";
-            } else if (binding.editTextUserInfoNickname.getText().toString().length() <= 0) {
-                content = "닉네임을 입력 해주세요.";
-            } else if (binding.editTextUserInfoUsername.getText().toString().length() <= 0) {
-                content = "이름을 입력 해주세요.";
-            } else if (!checkBirthdayForm) {
-                content = "생년월일 형식을 확인 해주세요.";
-            } else if (binding.editTextUserInfoPhoneNumber.getText().toString().length() <= 0) {
-                content = "전화번호를 입력 해주세요.";
-            } else if (selectGender == null) {
-                content = "성별을 선택 해주세요.";
-            } else if (country == null) {
-                content = "국가를 선택 해주세요.";
-            } else if (binding.layoutRegionSelect.getVisibility() == View.VISIBLE && region == null) {
-                content = "지역을 선택 해주세요.";
-            }
+            progressModify();
+        });
 
-            if (content != null) {
-                Toast.makeText(this, "" + content, Toast.LENGTH_SHORT).show();
-                return;
-            } else {
-                String path = null;
-                if(photoPath != null && realPath == null) {
-                    path = photoPath;
-                } else if(realPath != null && photoPath == null){
-                    path = realPath;
-                }
-
-                modifyUserInfo(path
-                        , sPmanager.getUserSrl()
-                        , binding.editTextUserInfoPasswordConfirm.getText().toString()
-                        , binding.editTextUserInfoPhoneNumber.getText().toString()
-                        , binding.editTextUserInfoUsername.getText().toString()
-                        , binding.editTextUserInfoBirthday.getText().toString()
-                        , selectGender
-                        , binding.editTextUserInfoNickname.getText().toString()
-                        , binding.textViewCountrySelect.getText().toString()
-                        , binding.textViewRegionSelect.getText().toString());
-            }
-
-
-
-
+        viewModel.getProgressResult().observe(this, s -> {
+            if (s.equals("modifySuccess"))
+                showOneButtonDialog(DIALOG_TITLE, "회원 정보 수정이 완료 되었습니다.");
+            else if (s.equals("modifyFailed") || s.equals("serverError"))
+                showOneButtonDialog(DIALOG_TITLE, "서버 연결이 원활하지 않습니다.\n잠시 후 다시 시도 해주세요.");
         });
 
     }
 
-    private void modifyUserInfo(String path, String UserSrl, String UserPassWord, String phoneNumber,
-                                String UserName, String Birthday, String Gender, String Nickname, String Country, String Region){
-        File file = new File(path);
-        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData(
-                "files",
-                file.getName(),
-                RequestBody.create(MediaType.parse("multipart/form-data"), file)
-        );
+    private void progressModify() {
+        String content = null;
+        if (binding.editTextUserInfoPassword.getText().toString().length() > 0 && !checkPasswordForm) {
+            content = "비밀번호 형식을 확인 해주세요.";
+        } else if (binding.editTextUserInfoPassword.getText().toString().length() > 0 && !checkPasswordConfirm) {
+            content = "비밀번호 확인이 일치하지 않습니다.";
+        } else if (binding.editTextUserInfoNickname.getText().toString().length() <= 0) {
+            content = "닉네임을 입력 해주세요.";
+        } else if (binding.editTextUserInfoUsername.getText().toString().length() <= 0) {
+            content = "이름을 입력 해주세요.";
+        } else if (!checkBirthdayForm) {
+            content = "생년월일 형식을 확인 해주세요.";
+        } else if (binding.editTextUserInfoPhoneNumber.getText().toString().length() <= 0) {
+            content = "전화번호를 입력 해주세요.";
+        } else if (selectGender == null) {
+            content = "성별을 선택 해주세요.";
+        } else if (country == null) {
+            content = "국가를 선택 해주세요.";
+        } else if (binding.layoutRegionSelect.getVisibility() == View.VISIBLE && region == null) {
+            content = "지역을 선택 해주세요.";
+        }
+
+        if (content != null) {
+            Toast.makeText(this, "" + content, Toast.LENGTH_SHORT).show();
+        } else {
+            viewModel.normalUserConfigModify(
+                    binding.editTextUserInfoPassword.getText().toString().length() > 0 ? binding.editTextUserInfoPassword.getText().toString() : null,
+                    binding.editTextUserInfoPhoneNumber.getText().toString(),
+                    binding.editTextUserInfoUsername.getText().toString(),
+                    binding.editTextUserInfoNickname.getText().toString(),
+                    binding.editTextUserInfoBirthday.getText().toString(),
+                    selectGender,
+                    country,
+                    region,
+                    profilePath
+            );
+        }
     }
 
     private void requestStoragePermission() {
@@ -273,9 +266,9 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
                     assert data != null;
                     imageUri = data.getData();
                     // You can update this bitmap to your server
-                    realPath = filePathFinder.getPath(imageUri);
+                    profilePath = filePathFinder.getPath(imageUri);
                     //  Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), imageUri)
-                    GlideImage(realPath, profileImage);
+                    GlideImage(profilePath, profileImage);
                 }
                 break;
         }
@@ -716,4 +709,31 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         }
         return null;
     };
+
+    private void showOneButtonDialog(String title, String content) {
+        OneButtonBasicDialog oneButtonBasicDialog = new OneButtonBasicDialog(this
+                , new BasicDialogTextModel(title, content, "확인", "")
+                , new DialogClickListener() {
+            @Override
+            public void onPositiveClick(int position) {
+                finish();
+            }
+
+            @Override
+            public void onNegativeClick() {
+                finish();
+            }
+
+            @Override
+            public void onCloseClick() {
+                finish();
+            }
+        });
+
+        oneButtonBasicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        oneButtonBasicDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        oneButtonBasicDialog.setOnCancelListener(dialog -> finish());
+        oneButtonBasicDialog.show();
+    }
+
 }
