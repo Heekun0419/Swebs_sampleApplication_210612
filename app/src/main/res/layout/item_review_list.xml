@@ -13,8 +13,8 @@
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         app:cardCornerRadius="10dp"
-        android:layout_width="80dp"
-        android:layout_height="80dp">
+        android:layout_width="100dp"
+        android:layout_height="100dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,7 +24,6 @@
                 android:id="@+id/imageView_review_profile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#C3C3C3"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -32,24 +31,24 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView9"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:id="@+id/imageView_rank_circle"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:background="@drawable/ic_baseline_circle_24"
                 android:backgroundTint="#ED89E0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/textView_Rank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1"
                 android:textColor="@color/white"
                 android:textSize="11dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView9"
-                app:layout_constraintEnd_toEndOf="@+id/imageView9"
-                app:layout_constraintStart_toStartOf="@+id/imageView9"
-                app:layout_constraintTop_toTopOf="@+id/imageView9" />
+                app:layout_constraintBottom_toBottomOf="@+id/imageView_rank_circle"
+                app:layout_constraintEnd_toEndOf="@+id/imageView_rank_circle"
+                app:layout_constraintStart_toStartOf="@+id/imageView_rank_circle"
+                app:layout_constraintTop_toTopOf="@+id/imageView_rank_circle" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -59,7 +58,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -73,8 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="함소아"
-                android:textSize="12dp"
+                android:textSize="13dp"
                 android:textColor="@color/swebs_main_color1"
                 android:textStyle="bold"
                 android:layout_marginStart="10dp"/>
@@ -85,12 +83,11 @@
             android:id="@+id/textView_review_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13dp"
+            android:textSize="15dp"
             android:layout_marginTop="5dp"
             android:textStyle="bold"
             android:textColor="#373737"
-            android:layout_marginStart="10dp"
-            android:text="밸런싱 모이스쳐 밀크 토너 120ml"/>
+            android:layout_marginStart="10dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,33 +96,33 @@
             android:orientation="horizontal">
 
             <RatingBar
+                android:id="@+id/ratingBar_review"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:numStars="5"
                 style="@style/Widget.AppCompat.RatingBar.Small"
-                android:rating="4.5"
                 android:progressTint="#FADB32"
                 android:progressBackgroundTint="#575757"
                 android:secondaryProgressTint="@color/white"
                 android:stepSize="0.5"/>
 
             <TextView
+                android:id="@+id/textView_ratingNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4.5"
                 android:textColor="#21CCB2"
-                android:textSize="12dp"
+                android:textSize="13dp"
                 android:textStyle="bold"
                 android:layout_marginTop="3sp"
                 android:layout_marginStart="10dp"/>
 
             <TextView
+                android:id="@+id/textView_review_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="11dp"
-                android:text="(112)"
                 android:textColor="@color/lower_gray"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"/>

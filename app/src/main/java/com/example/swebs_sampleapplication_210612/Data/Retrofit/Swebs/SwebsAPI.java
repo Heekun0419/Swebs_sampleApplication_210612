@@ -12,6 +12,8 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Logi
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.NormalSignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanDataPushModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewListModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,6 +141,20 @@ public interface SwebsAPI {
     @Multipart
     @POST("KKW_TEST/document/recomment_list.php")
     Call<List<CommentModel>> getReCommentList(
+            @PartMap Map<String,RequestBody> params
+    );
+
+    // Item Click 후 리뷰 가져오기
+    @Multipart
+    @POST("KKW_TEST/product/review_list.php")
+    Call<List<ReviewListModel>> getProductReview(
+            @PartMap Map<String,RequestBody> params
+    );
+
+    // 리뷰만 가져오기
+    @Multipart
+    @POST("KKW_TEST/product/review_only.php")
+    Call<List<ReviewModel>> getReviewList(
             @PartMap Map<String,RequestBody> params
     );
 
