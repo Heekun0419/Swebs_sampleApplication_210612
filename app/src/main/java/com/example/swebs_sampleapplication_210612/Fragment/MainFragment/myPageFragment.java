@@ -296,9 +296,13 @@ public class myPageFragment extends Fragment {
                 email = s;
             }
         });
+
         // 프로필 이미지 수정
-        viewModel.getUserInfoFromKey("profileSrl").observe(getViewLifecycleOwner(), s ->
-                GlideImage(binding.mypageImageProfile, getImageViewUrl(s, "200")));
+        viewModel.getUserInfoFromKey("profileSrl").observe(getViewLifecycleOwner(), s -> {
+            Log.d("test_", "profileSrl : " + s);
+            if (s != null && !s.equals("0"))
+                GlideImage(binding.mypageImageProfile, getImageViewUrl(s, "200"));
+        });
 
         // Name
         viewModel.getUserInfoFromKey("name").observe(getViewLifecycleOwner(), s -> {

@@ -31,6 +31,7 @@ public class LoginModel {
     private String referralCode;
     @Nullable
     private String point;
+    private String profileSrl;
 
 
     public boolean isSuccess() {
@@ -100,6 +101,10 @@ public class LoginModel {
     @Nullable
     public String getPoint() {
         return point;
+    }
+
+    public String getProfileSrl() {
+        return profileSrl;
     }
 }
 

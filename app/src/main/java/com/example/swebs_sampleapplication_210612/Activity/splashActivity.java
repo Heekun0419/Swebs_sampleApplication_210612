@@ -90,7 +90,7 @@ public class splashActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess() {
                             setStartIntent(SystemClock.elapsedRealtime() - NetworkTime);
-                            Toast.makeText(getApplicationContext(), "토큰 유효 통과", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), "토큰 유효 통과", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override

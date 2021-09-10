@@ -84,6 +84,8 @@ public class UserLoginController {
             myInfoRepository.insertMyInfo("referralCode", model.getReferralCode());
             sPmanager.setUserReferralCode(model.getReferralCode());
         }
+        if (model.getProfileSrl() != null)
+            myInfoRepository.insertMyInfo("profileSrl", model.getProfileSrl());
     }
 
     public void userDataSaveWhenModify(String phoneNumber, String name, String nickname, String birthday, String gender, String country, String region, String point,String profileSrl) {
