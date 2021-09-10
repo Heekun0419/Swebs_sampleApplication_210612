@@ -114,32 +114,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView_my_review_photo">
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="25dp"
-            android:background="@drawable/ic_baseline_add_comment_24"
-            android:backgroundTint="#D8D6D6" />
-
         <TextView
+            android:id="@+id/textView_comment_of_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="댓글달기" />
+            android:padding="15dp"
+            android:layout_marginStart="10dp" />
 
         <View
             android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="3dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
             android:background="#DFDFDF" />
 
         <TextView
+            android:id="@+id/report_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:padding="15dp"
             android:text="신고" />
 
         <View
@@ -148,33 +140,37 @@
             android:layout_weight="1" />
 
         <ImageView
+            android:id="@+id/imageView_like"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="5dp"
-            android:background="@drawable/ic_baseline_favorite_border_24"
-            android:backgroundTint="#999999"/>
+            android:layout_gravity="center" />
 
         <TextView
             android:id="@+id/likeNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="20"
             android:textSize="15dp"
             android:layout_marginEnd="20dp"
             android:textColor="#999999"/>
 
         <TextView
+            android:id="@+id/modify_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
+            android:padding="15dp"
             android:text="수정"
+            android:visibility="gone"
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/delete_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="25dp"
+            android:layout_marginEnd="10dp"
             android:text="삭제"
+            android:visibility="gone"
+            android:padding="15dp"
             android:textColor="#FF7272" />
 
     </LinearLayout>

@@ -81,6 +81,7 @@ public class MoreReviewFragment extends Fragment implements OnItemClickListener 
         intent.putExtra("review_count",model.getReview_count());
 
         startActivity(intent);
+        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
     }
 

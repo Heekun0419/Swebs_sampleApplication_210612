@@ -11,6 +11,8 @@ public class ReviewModel {
     //사용자가 추가한 이미지 (최대 5걔)
     private List<String> files = new ArrayList<>();
 
+    private String member_srl;
+
     // 작성한 유저 이름
     private String nickname;
     // 작성 날짜
@@ -27,6 +29,10 @@ public class ReviewModel {
     private String document_srl;
 
     private String review_srl;
+
+    public String getMember_srl() {
+        return member_srl;
+    }
 
     public String getProfile_srl() {
         return profile_srl;

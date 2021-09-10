@@ -3,18 +3,20 @@ package com.example.swebs_sampleapplication_210612.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewModel;
-import com.example.swebs_sampleapplication_210612.databinding.ItemCommentBinding;
+import com.example.swebs_sampleapplication_210612.ViewModel.ReViewViewModel;
+import com.example.swebs_sampleapplication_210612.adapter.Listener.ReviewClickListener;
 import com.example.swebs_sampleapplication_210612.databinding.ItemReviewProductBinding;
 
 import java.util.ArrayList;
@@ -25,10 +27,17 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
     private ItemReviewProductBinding binding;
     private Context context;
     private List<ReviewModel> reviewList = new ArrayList<>();
+    private ReviewClickListener listener;
+    private SPmanager sPmanager;
+    private boolean isLike = false;
 
-    public ReviewProductAdapter(Context context, List<ReviewModel> reviewList) {
+
+    public ReviewProductAdapter(Context context, List<ReviewModel> reviewList, ReviewClickListener listener) {
         this.context = context;
         this.reviewList = reviewList;
+        this.listener = listener;
+        sPmanager = new SPmanager(context);
+
     }
 
     @NonNull
@@ -40,7 +49,7 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull ReviewProductViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ReviewProductViewHolder holder, @SuppressLint("RecyclerView") int position) {
         ReviewModel model = reviewList.get(position);
 
         holder.binding.textViewCommentContent.setText(model.getContent());
@@ -53,6 +62,26 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
 
         holder.binding.textViewMyReviewUserName.setText(model.getNickname());
         holder.binding.likeNum.setText(model.getLike_count());
+
+        if(model.getMember_srl().equals(sPmanager.getUserSrl())) {
+            holder.binding.reportReview.setVisibility(View.GONE);
+            holder.binding.modifyReview.setVisibility(View.VISIBLE);
+            holder.binding.deleteReview.setVisibility(View.VISIBLE);
+        }
+
+        holder.binding.imageViewLike.setImageResource(R.drawable.ic_heart_simple_shape_silhouette);
+        holder.binding.imageViewLike.setOnClickListener(v -> {
+            if(!isLike){
+                holder.binding.imageViewLike.setImageResource(R.drawable.ic_heart_simple_shape_filled);
+                isLike = true;
+            } else {
+                holder.binding.imageViewLike.setImageResource(R.drawable.ic_heart_simple_shape_silhouette);
+                isLike = false;
+            }
+            listener.LikeClicked(position,isLike);
+        });
+
+        holder.binding.textViewCommentOfReview.setText("0개의 댓글");
 
         GlideImage(holder.binding.imageViewMyReviewUserProfile, getImageViewUrl(model.getProfile_srl(), "100"));
     }
@@ -80,5 +109,9 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
 
     private void GlideImage(ImageView view, String url){
         Glide.with(context).load(url).placeholder(R.drawable.ic_profile_basic).circleCrop().into(view);
+    }
+
+    public void isLiked(boolean like){
+        this.isLike = like;
     }
 }
