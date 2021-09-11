@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
@@ -34,7 +36,7 @@ public class ReviewViewPagerAdapter extends RecyclerView.Adapter<ReviewViewPager
     @Override
     public void onBindViewHolder(@NonNull reviewPagerViewHolder holder, int position) {
         String file_srl = list.get(position);
-        GlideImage(holder.view, getImageViewUrl(file_srl, "800"));
+        GlideImage(holder.view, getImageViewUrl(file_srl, "1000"));
     }
 
     @Override

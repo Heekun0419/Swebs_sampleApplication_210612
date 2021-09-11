@@ -117,13 +117,13 @@ public class TopMenuActivity extends FragmentActivity {
             CategoryDetailModel detailModel = list.get(position);
             switch (title) {
                 case "certified":
-                    return new MoreCertifiedFragment(detailModel.getCategory_srl());
+                    return MoreCertifiedFragment.newInstance(detailModel.getCategory_srl());
                 case "event":
-                    return new MoreEventFragment(detailModel.getCategory_srl());
+                    return MoreEventFragment.newInstance(detailModel.getCategory_srl());
                 case "review":
-                    return new MoreReviewFragment(detailModel.getCategory_srl());
+                    return MoreReviewFragment.newInstance(detailModel.getCategory_srl());
                 default:
-                    return new MoreSurveyFragment(detailModel.getCategory_srl());
+                    return MoreSurveyFragment.newInstance(detailModel.getCategory_srl());
             }
         }
 

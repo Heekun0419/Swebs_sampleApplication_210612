@@ -29,8 +29,17 @@ public class MoreEventFragment extends Fragment implements OnItemClickListener {
     EventMoreAdapter eventMoreAdapter;
 
     // viewPager 및 TabLayout position 받아옴.
-    public MoreEventFragment(String categorySrl) {
-        this.categorySrl = categorySrl;
+    public MoreEventFragment() {
+        // 프라그먼트 생성자는 비어있어야 함.
+    }
+
+    public static MoreEventFragment newInstance(String categorySrl) {
+
+        Bundle args = new Bundle();
+        args.putString("category_srl", categorySrl);
+        MoreEventFragment fragment = new MoreEventFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override

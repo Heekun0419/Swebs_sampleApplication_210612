@@ -55,6 +55,7 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
         this.listener = listener;
         sPmanager = new SPmanager(context);
         this.retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
+
     }
 
     @NonNull
@@ -78,7 +79,7 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
         holder.binding.textViewCommentContent.setText(model.getContent());
 
         // 날짜
-        Date date = new SimpleDateFormat("yyyyMMddHHmmss").parse(model.getRegdate(),new ParsePosition(0));
+        Date date = new SimpleDateFormat("yyyyMMddHHmmss").parse(model.getRegdate(), new ParsePosition(0));
         holder.binding.textViewMyReviewDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(date));
 
         // 별점
@@ -90,7 +91,7 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
         holder.binding.textViewMyReviewUserName.setText(model.getNickname());
         holder.binding.likeNum.setText(model.getLike_count());
 
-        if(model.getMember_srl().equals(sPmanager.getUserSrl())) {
+        if (model.getMember_srl().equals(sPmanager.getUserSrl())) {
             holder.binding.reportReview.setVisibility(View.GONE);
             holder.binding.modifyReview.setVisibility(View.VISIBLE);
             holder.binding.deleteReview.setVisibility(View.VISIBLE);
@@ -106,16 +107,16 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
                 @Override
                 public void onResponse(Call<LikeApplyModel> call, Response<LikeApplyModel> response) {
                     if (response.isSuccessful()
-                    && response.body() != null) {
+                            && response.body() != null) {
                         if (response.body().getState().equals("Insert")) {
                             holder.binding.likeNum.setText(
-                                    Integer.toString(Integer.parseInt(holder.binding.likeNum.getText().toString())+1)
+                                    Integer.toString(Integer.parseInt(holder.binding.likeNum.getText().toString()) + 1)
                             );
 
                             holder.binding.imageViewLike.setImageResource(R.drawable.ic_heart_simple_shape_filled);
                         } else {
                             holder.binding.likeNum.setText(
-                                    Integer.toString(Integer.parseInt(holder.binding.likeNum.getText().toString())-1)
+                                    Integer.toString(Integer.parseInt(holder.binding.likeNum.getText().toString()) - 1)
                             );
 
                             holder.binding.imageViewLike.setImageResource(R.drawable.ic_heart_simple_shape_silhouette);
@@ -140,17 +141,19 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
         });
 
         holder.binding.layoutReview.setOnClickListener(v -> {
-            listener.CommentClicked(position,model);
+            listener.CommentClicked(position, model);
         });
 
         holder.binding.textViewCommentOfReview.setText("0개의 댓글");
 
         GlideImage(holder.binding.imageViewMyReviewUserProfile, getImageViewUrl(model.getProfile_srl(), "100"));
 
-        ReviewPhotoListAdapter photoListAdapter = new ReviewPhotoListAdapter(context,model.getFile_srl());
-        LinearLayoutManager manager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
+
+        ReviewPhotoListAdapter photoListAdapter = new ReviewPhotoListAdapter(context, model.getFile_srl());
+        LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         holder.binding.recyclerViewMyReviewPhoto.setLayoutManager(manager);
         holder.binding.recyclerViewMyReviewPhoto.setAdapter(photoListAdapter);
+
     }
 
     @Override

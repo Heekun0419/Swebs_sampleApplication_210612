@@ -27,16 +27,28 @@ public class MoreCertifiedFragment extends Fragment implements OnItemClickListen
     private CertifiedCompanyViewModel viewModel;
     GridMoreCretifiedAdapter adapter;
 
-    private final String categorySrl;
+    private String categorySrl;
 
     // viewPager 및 TabLayout position 받아옴.
-    public MoreCertifiedFragment(String categorySrl){
-        this.categorySrl = categorySrl;
+    public MoreCertifiedFragment(){
+
+    }
+
+    public static MoreCertifiedFragment newInstance(String categorySrl) {
+
+        Bundle args = new Bundle();
+        args.putString("category_srl", categorySrl);
+        MoreCertifiedFragment fragment = new MoreCertifiedFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null){
+            categorySrl = getArguments().getString("category_srl");
+        }
         viewModel = new CertifiedCompanyViewModel(requireActivity().getApplication());
     }
 

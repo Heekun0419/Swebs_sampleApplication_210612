@@ -1,6 +1,7 @@
 package com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CategoryModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.MyReviewModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductDetailModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListlModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CommentInputModel;
@@ -12,9 +13,10 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Logi
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.NormalSignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanDataPushModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.MyEventListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyDetailModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.UserConfigModify;
 
@@ -173,22 +175,29 @@ public interface SwebsAPI {
 
     // 리뷰 자세히보기
     @Multipart
-    @POST("KKW_TEST/product/review_view.php")
+    @POST("src1/product/review_view.php")
     Call<ReviewModel> getReviewDetailList(
-            @PartMap Map<String,RequestBody> params
-    );
-
-    // 내 서베이
-    @Multipart
-    @POST("KKW_TEST/survey/survey_history.php")
-    Call<List<SurveyModel>> getMySurveyList(
             @PartMap Map<String,RequestBody> params
     );
 
     // 내 이벤트
    @Multipart
-    @POST("KKW_TEST/event/event_history.php")
-    Call<List<EventModel>> getMyEventList(
+    @POST("src1/event/event_history.php")
+    Call<MyEventListModel> getMyEventList(
+            @PartMap Map<String,RequestBody> params
+    );
+
+   // 내리뷰
+   @Multipart
+   @POST("src1/product/review_history.php")
+   Call<MyReviewModel> getMyReviewList(
+           @PartMap Map<String,RequestBody> params
+   );
+
+    // 내 서베이
+    @Multipart
+    @POST("src1/survey/survey_history.php")
+    Call<List<SurveyDetailModel>> getMySurveyList(
             @PartMap Map<String,RequestBody> params
     );
 

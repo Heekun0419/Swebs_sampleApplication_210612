@@ -3,24 +3,36 @@ package com.example.swebs_sampleapplication_210612.Fragment.MyTopMenuFragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.R;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.SurveyVIewModel;
 import com.example.swebs_sampleapplication_210612.adapter.TablayoutAdapter.SurveyMoreAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMySurveyBinding;
 
+import java.util.List;
+
 
 public class MySurveyFragment extends Fragment {
+
     private FragmentMySurveyBinding binding;
+    private SPmanager sPmanager;
+    private SurveyVIewModel vIewModel;
+    SurveyMoreAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        sPmanager = new SPmanager(requireContext());
+        vIewModel = new SurveyVIewModel(requireActivity().getApplication());
+        vIewModel.getMySurveyListFromServer(sPmanager.getUserSrl());
     }
 
     @Override
@@ -29,11 +41,19 @@ public class MySurveyFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentMySurveyBinding.inflate(inflater,container,false);
 
-        SurveyMoreAdapter adapter = new SurveyMoreAdapter(requireContext());
+        vIewModel.getLiveDataSurveyList().observe(getViewLifecycleOwner(), surveyModels -> {
+            initRecycler(surveyModels);
+        });
+
+        return binding.getRoot();
+    }
+
+
+    private void initRecycler(List<SurveyModel> list){
+        adapter = new SurveyMoreAdapter(requireContext(), list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
         binding.recyclerViewMySurvey.setLayoutManager(linearLayoutManager);
         binding.recyclerViewMySurvey.setAdapter(adapter);
 
-        return binding.getRoot();
     }
 }

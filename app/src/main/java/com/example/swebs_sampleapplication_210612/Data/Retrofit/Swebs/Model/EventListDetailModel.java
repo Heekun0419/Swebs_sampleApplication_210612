@@ -1,6 +1,7 @@
 package com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model;
 
 public class EventListDetailModel {
+
     private String event_srl;
     private String event_title;
     private String start_date;

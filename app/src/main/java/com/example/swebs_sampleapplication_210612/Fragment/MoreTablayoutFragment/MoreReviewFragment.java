@@ -36,13 +36,22 @@ public class MoreReviewFragment extends Fragment implements OnItemClickListener 
     ReviewMoreAdapter reviewAdapter;
 
     // viewPager 및 TabLayout position 받아옴.
-    public MoreReviewFragment(String categorySrl) {
-        this.categorySrl = categorySrl;
+    public MoreReviewFragment() {
+
+    }
+    public static MoreReviewFragment newInstance(String categorySrl) {
+        Bundle args = new Bundle();
+        args.putString("category_srl", categorySrl);
+        MoreReviewFragment fragment = new MoreReviewFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null)
+            categorySrl = getArguments().getString("category_srl");
         viewModel = new ReViewViewModel(requireActivity().getApplication());
     }
 

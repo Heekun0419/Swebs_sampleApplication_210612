@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.ViewModel.EventViewModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
 import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
@@ -21,10 +22,13 @@ public class MyEventFragment extends Fragment implements OnItemClickListener {
 
     private FragmentMyEventBinding binding;
     private EventViewModel viewModel;
+    private SPmanager sPmanager;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new EventViewModel(requireActivity().getApplication());
+        sPmanager = new SPmanager(requireContext());
+        viewModel.getMyEventListFromServer(sPmanager.getUserSrl());
     }
 
     @Override

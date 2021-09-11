@@ -82,7 +82,8 @@ public class EventActivity extends AppCompatActivity {
 
             // 댓글 불러오기
             manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.frameLayout_event_activity, new BottomCommentFragment(models.getDocument_srl())).commit();
+            manager.beginTransaction().replace(R.id.frameLayout_event_activity
+                    , BottomCommentFragment.newInstance(models.getDocument_srl())).commit();
         });
 
         viewModel.getIsEventCanLike().observe(this, aBoolean -> {

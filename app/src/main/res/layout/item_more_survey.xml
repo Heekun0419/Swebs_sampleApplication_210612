@@ -44,47 +44,47 @@
             <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginBottom="25dp"
+                android:layout_height="1dp"
+                android:layout_marginBottom="30dp"
                 android:background="@color/transparent"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView_product_survey_profile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginEnd="5dp"
+            <Button
+                android:id="@+id/imageView_point"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/white"
+                android:textSize="10dp"
                 android:background="@drawable/ic_baseline_circle_24"
                 android:backgroundTint="@color/swebs_main_color2"
                 app:layout_constraintEnd_toEndOf="@+id/view"
                 app:layout_constraintTop_toTopOf="@+id/view" />
 
             <TextView
-                android:id="@+id/textView_productName"
+                android:id="@+id/textView_survey_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:text="제이준 블랙마스크 접착력은 어떤가요?"
                 android:textStyle="bold"
                 android:textSize="14dp"
                 android:textColor="#4A4A4A"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+                app:layout_constraintTop_toBottomOf="@+id/textView_category_title" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/textView_category_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginTop="10dp"
-                android:text="화장품"
                 android:textColor="#F35A79"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -98,29 +98,29 @@
                 android:layout_marginBottom="20dp"
                 android:text="기간 : "
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textView_productName"
-                app:layout_constraintTop_toBottomOf="@+id/textView_productName" />
+                app:layout_constraintStart_toStartOf="@+id/textView_survey_title"
+                app:layout_constraintTop_toBottomOf="@+id/textView_survey_title" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/textView_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text="2021.02.05 ~ 2021.03.07"
                 android:textColor="@color/swebs_main_color1"
                 app:layout_constraintBottom_toBottomOf="@+id/textView8"
                 app:layout_constraintStart_toEndOf="@+id/textView8"
                 app:layout_constraintTop_toTopOf="@+id/textView8" />
 
             <TextView
+                android:id="@+id/textview_join_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
                 android:text="54,321명 참여"
                 android:textSize="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView9"
+                app:layout_constraintBottom_toBottomOf="@+id/textView_date"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView9"
-                app:layout_constraintTop_toTopOf="@+id/textView9" />
+                app:layout_constraintTop_toTopOf="@+id/textView_date" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

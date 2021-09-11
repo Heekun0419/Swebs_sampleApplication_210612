@@ -1,57 +1,72 @@
 package com.example.swebs_sampleapplication_210612.ViewModel.Model;
 
+import java.util.List;
+
 public class SurveyModel {
-    // 메인 이미지
-    private String ImageUrl;
-    // 서베이 참여시 지급 포인트
-    private String plusPoint;
-    // 서베이 제목
+
+    /*
+ status = 1 >> 진행 중
+ status = 2 >> 미 진행
+ status = 3 >> 모집 종료
+ */
+    private int status;
+    private String statusText;
+
+    private String surveySrl;
+    private String imageSrl;
+    private String category_title;
     private String title;
-    // 시작일
-    private String startDate;
-    // 종료일
-    private String endDate;
-    // 참여한 인원
-    private String joinPeopleNum;
-    // 분류
-    private String category;
+    private String DateOfEvent;
+    private String point;
+    private String joinCount;
 
-    public SurveyModel(String imageUrl, String plusPoint, String title,
-                       String startDate, String endDate, String joinPeopleNum, String category) {
-        ImageUrl = imageUrl;
-        this.plusPoint = plusPoint;
+
+
+    public SurveyModel(int status, String statusText, String surveySrl, String imageSrl, String category_title, String title, String dateOfEvent, String point, String joinCount) {
+        this.status = status;
+        this.statusText = statusText;
+        this.surveySrl = surveySrl;
+        this.imageSrl = imageSrl;
+        this.category_title = category_title;
         this.title = title;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.joinPeopleNum = joinPeopleNum;
-        this.category = category;
+        DateOfEvent = dateOfEvent;
+        this.point = point;
+        this.joinCount = joinCount;
     }
 
-    public String getImageUrl() {
-        return ImageUrl;
+    public int getStatus() {
+        return status;
     }
 
-    public String getPlusPoint() {
-        return plusPoint;
+    public String getStatusText() {
+        return statusText;
+    }
+
+    public String getSurveySrl() {
+        return surveySrl;
+    }
+
+    public String getImageSrl() {
+        return imageSrl;
+    }
+
+    public String getCategory_title() {
+        return category_title;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getDateOfEvent() {
+        return DateOfEvent;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getPoint() {
+        return point;
     }
 
-    public String getJoinPeopleNum() {
-        return joinPeopleNum;
-    }
-
-    public String getCategory() {
-        return category;
+    public String getJoinCount() {
+        return joinCount;
     }
 }

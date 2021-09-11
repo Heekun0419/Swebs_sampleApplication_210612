@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewModel {
+
     // profile srl
     private String profile_srl;
     //사용자가 추가한 이미지 (최대 5걔)
     private List<String> file_srl;
+
     private String member_srl;
     // 작성한 유저 이름
     private String nickname;
+    // 제품 사진 srl
+    private String prod_file_srl;
     // 작성 날짜
     private String regdate;
     // 리뷰 타이틀 - 사용자가 작성한 리뷰 타이틀
@@ -27,8 +31,42 @@ public class ReviewModel {
     private String review_srl;
     //like 값
     private boolean can_like;
-
+    //
     private String prod_srl;
+    //제품 타이틀
+    private String prod_title;
+    // 기업 이름
+    private String corp_name;
+    // 별점
+    private String avg_rate;
+    // 제품 리뷰갯수
+    private String review_count;
+    // 해당 회원 리뷰 갯수
+    private String member_review_count;
+
+    public String getProd_file_srl() {
+        return prod_file_srl;
+    }
+
+    public String getProd_title() {
+        return prod_title;
+    }
+
+    public String getCorp_name() {
+        return corp_name;
+    }
+
+    public String getAvg_rate() {
+        return avg_rate;
+    }
+
+    public String getReview_count() {
+        return review_count;
+    }
+
+    public String getMember_review_count() {
+        return member_review_count;
+    }
 
     public String getProd_srl() {
        return prod_srl; }

@@ -167,6 +167,7 @@
                     android:orientation="horizontal">
 
                     <RatingBar
+                        android:id="@+id/ratingBar"
                         style="@style/Widget.AppCompat.RatingBar.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -201,19 +202,11 @@
 
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="20dp">
-
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager2_review"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:layout_marginTop="10dp"
-            android:background="#F9FAFC" />
-
-        </androidx.cardview.widget.CardView>
+            android:layout_height="wrap_content"
+            android:padding="20dp"/>
 
         <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
             android:id="@+id/indicator_review"
@@ -223,7 +216,7 @@
             app:dotsSize="6dp"
             app:dotsSpacing="6dp"
             app:dotsWidthFactor="1"
-            app:progressMode="true"
+            app:progressMode="false"
             app:selectedDotColor="#21CCB2"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -242,6 +235,7 @@
             android:id="@+id/textView_review_content"
             android:textColor="#999999"
             android:textSize="14dp"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -339,20 +333,13 @@
             android:layout_height="20dp"
             android:background="#F9FAFC" />
 
+        <FrameLayout
+            android:id="@+id/frameLayout_review_activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-    <FrameLayout
-        android:id="@+id/frameLayout_review_activity"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintVertical_weight="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-
 
 </LinearLayout>

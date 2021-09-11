@@ -33,14 +33,24 @@ public class BottomReviewFragment extends Fragment implements ReviewClickListene
     private ReViewViewModel reViewViewModel;
     ReviewProductAdapter adapter;
 
-    public BottomReviewFragment(String prodSrl){
-        this.prodSrl = prodSrl;
+    public BottomReviewFragment(){
+
     }
+
+    public static BottomReviewFragment newInstance(String prodSrl) {
+        Bundle args = new Bundle();
+        args.putString("prod_srl", prodSrl);
+        BottomReviewFragment fragment = new BottomReviewFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getArguments() != null)
+           prodSrl =  getArguments().getString("prod_srl");
         reViewViewModel = new ReViewViewModel(requireActivity().getApplication());
-
         reViewViewModel.getReviewOnlyList(prodSrl,null,null);
     }
 
@@ -101,7 +111,7 @@ public class BottomReviewFragment extends Fragment implements ReviewClickListene
 
     @Override
     public void CommentClicked(int position, ReviewModel model) {
-        Intent intent = new Intent(requireContext(), ReviewActivity.class);
+        Intent intent = new Intent(requireActivity().getApplicationContext(), ReviewActivity.class);
         intent.putExtra("reviewSrl",model.getReview_srl());
         intent.putExtra("memberSrl", model.getMember_srl());
         intent.putExtra("documentSrl", model.getDocument_srl());

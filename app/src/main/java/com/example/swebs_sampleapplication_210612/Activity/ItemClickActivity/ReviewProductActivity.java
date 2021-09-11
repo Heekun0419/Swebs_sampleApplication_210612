@@ -31,7 +31,8 @@ public class ReviewProductActivity extends AppCompatActivity {
         Log.d("prod_Srl", " prod : "+getIntent().getStringExtra("prod_srl"));
 
         manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.frameLayout_review_product_activity,new BottomReviewFragment(getIntent().getStringExtra("prod_srl"))).commit();
+        manager.beginTransaction().replace(R.id.frameLayout_review_product_activity
+                , BottomReviewFragment.newInstance(getIntent().getStringExtra("prod_srl"))).commit();
     }
 
     @SuppressLint("SetTextI18n")

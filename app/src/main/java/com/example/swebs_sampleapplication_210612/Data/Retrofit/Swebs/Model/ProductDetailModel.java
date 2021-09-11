@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDetailModel {
+
     private boolean success;
     private String corp_srl;
     private String corp_name;

@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.swebs_sampleapplication_210612.Data.Repository.ReviewRepository;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.MyReviewModel;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewListModel;
@@ -21,12 +22,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ReViewViewModel extends AndroidViewModel {
+
     private MutableLiveData<List<ReviewListModel>> LiveReviewList = new MutableLiveData<>();
     private MutableLiveData<List<ReviewModel>> liveDataReviewOnly = new MutableLiveData<>();
     private MutableLiveData<ReviewModel> LiveDetailReviewModel = new MutableLiveData<>();
+
     private MutableLiveData<Boolean> isLike = new MutableLiveData<>();
+
     private final ReviewRepository repository;
     private final SPmanager sPmanager;
+
     public ReViewViewModel(@NonNull Application application) {
         super(application);
         repository = new ReviewRepository(application);
@@ -82,6 +87,24 @@ public class ReViewViewModel extends AndroidViewModel {
 
                     @Override
                     public void onFailure(Call<ReviewModel> call, Throwable t) {
+
+                    }
+                });
+    }
+
+    public void getMyReviewList(String userSrl, String lastIndex, String listCount){
+        repository.getMyReviewList(userSrl,lastIndex,listCount)
+                .enqueue(new Callback<MyReviewModel>() {
+                    @Override
+                    public void onResponse(Call<MyReviewModel> call, Response<MyReviewModel> response) {
+                        if(response.isSuccessful() && response.body() != null){
+                            if(response.body().isSuccess())
+                            liveDataReviewOnly.setValue(response.body().getReview());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyReviewModel> call, Throwable t) {
 
                     }
                 });

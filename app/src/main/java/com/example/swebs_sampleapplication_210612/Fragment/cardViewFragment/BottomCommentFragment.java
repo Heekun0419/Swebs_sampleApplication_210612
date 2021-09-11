@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,18 +54,25 @@ public class BottomCommentFragment extends Fragment implements CommentClickListe
     private CommentRepository commentRepository;
     private Comment_EventInfoAdapter adapter;
     private SPmanager sPmanager;
+    private String nickname;
+    private String documentSrl;
 
-
-    private final String documentSrl;
-
-    public BottomCommentFragment(String documentSrl) {
-        this.documentSrl = documentSrl;
+    public BottomCommentFragment() {
     }
 
-    private String nickname;
+    public static BottomCommentFragment newInstance(String documentSrl) {
+        Bundle args = new Bundle();
+        args.putString("document_srl", documentSrl);
+        BottomCommentFragment fragment = new BottomCommentFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null){
+           documentSrl = getArguments().getString("document_srl");
+        }
         viewModel = new CommentViewModel(requireActivity().getApplication());
         sPmanager = new SPmanager(requireActivity().getApplication());
 
