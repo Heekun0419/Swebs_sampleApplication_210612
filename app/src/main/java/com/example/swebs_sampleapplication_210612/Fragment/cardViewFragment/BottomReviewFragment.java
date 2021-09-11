@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +42,6 @@ public class BottomReviewFragment extends Fragment implements ReviewClickListene
         reViewViewModel = new ReViewViewModel(requireActivity().getApplication());
 
         reViewViewModel.getReviewOnlyList(prodSrl,null,null);
-
     }
 
     @Override
@@ -55,7 +53,6 @@ public class BottomReviewFragment extends Fragment implements ReviewClickListene
         reViewViewModel.getLiveDataReviewOnly().observe(getViewLifecycleOwner(), new Observer<List<ReviewModel>>() {
             @Override
             public void onChanged(List<ReviewModel> list) {
-                Log.d("testtest", list.get(0).getReview_title());
                 initRecyclerView(list);
             }
         });

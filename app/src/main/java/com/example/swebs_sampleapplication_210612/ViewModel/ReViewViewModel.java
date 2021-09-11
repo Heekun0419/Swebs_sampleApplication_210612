@@ -40,14 +40,11 @@ public class ReViewViewModel extends AndroidViewModel {
                 if(response.isSuccessful()){
                     if (response.body() != null)
                         setLiveReviewList(response.body());
-
-                    Log.d("test_", inputCategorySrl + " -> size : " + response.body().size());
                 }
             }
 
             @Override
             public void onFailure(Call<List<ReviewListModel>> call, Throwable t) {
-                Log.d("test_", inputCategorySrl + " -> Faile : " + t);
             }
         });
     }
@@ -58,15 +55,15 @@ public class ReViewViewModel extends AndroidViewModel {
             .enqueue(new Callback<List<ReviewModel>>() {
                 @Override
                 public void onResponse(Call<List<ReviewModel>> call, Response<List<ReviewModel>> response) {
-                    if (response.isSuccessful()){
-                        if (response.body() != null)
-                           setLiveDataReviewOnly(response.body());
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            setLiveDataReviewOnly(response.body());
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<List<ReviewModel>> call, Throwable t) {
-
                 }
             }
         );

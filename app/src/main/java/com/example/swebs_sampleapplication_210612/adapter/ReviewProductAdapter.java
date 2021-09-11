@@ -68,7 +68,6 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
     @Override
     public void onBindViewHolder(@NonNull ReviewProductViewHolder holder, @SuppressLint("RecyclerView") int position) {
         ReviewModel model = reviewList.get(position);
-        Log.d("test_", position + " -> can_like : " + model.isCan_like());
         // 좋아요.
         if (model.isCan_like())
             holder.binding.imageViewLike.setImageResource(R.drawable.ic_heart_simple_shape_silhouette);
@@ -106,7 +105,6 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
             call.enqueue(new Callback<LikeApplyModel>() {
                 @Override
                 public void onResponse(Call<LikeApplyModel> call, Response<LikeApplyModel> response) {
-                    Log.d("test_", "like 엥?");
                     if (response.isSuccessful()
                     && response.body() != null) {
                         if (response.body().getState().equals("Insert")) {
