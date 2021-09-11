@@ -2,6 +2,7 @@ package com.example.swebs_sampleapplication_210612.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,13 +66,19 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
     @Override
     public void onBindViewHolder(@NonNull ReviewProductViewHolder holder, @SuppressLint("RecyclerView") int position) {
         ReviewModel model = reviewList.get(position);
+        Log.d("test_", position + " -> can_like : " + model.isCan_like());
+        // 좋아요.
+        if (model.isCan_like())
+            holder.binding.imageViewLike.setImageResource(R.drawable.ic_heart_simple_shape_silhouette);
+        else
+            holder.binding.imageViewLike.setImageResource(R.drawable.ic_heart_simple_shape_filled);
 
         // 리뷰 내용
         holder.binding.textViewCommentContent.setText(model.getContent());
+
         // 날짜
         Date date = new SimpleDateFormat("yyyyMMddHHmmss").parse(model.getRegdate(),new ParsePosition(0));
         holder.binding.textViewMyReviewDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(date));
-
 
         // 별점
         holder.binding.ratingBarReview.setRating(Float.parseFloat(model.getRate()));
@@ -88,8 +95,6 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
             holder.binding.deleteReview.setVisibility(View.VISIBLE);
         }
 
-        holder.binding.imageViewLike.setImageResource(R.drawable.ic_heart_simple_shape_silhouette);
-
         holder.binding.imageViewLike.setOnClickListener(v -> {
             HashMap<String, RequestBody> formData = new HashMap<>();
             formData.put("inputTargetSrl", RequestBody.create(model.getReview_srl(), MediaType.parse("text/plane")));
@@ -99,12 +104,22 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
             call.enqueue(new Callback<LikeApplyModel>() {
                 @Override
                 public void onResponse(Call<LikeApplyModel> call, Response<LikeApplyModel> response) {
+                    Log.d("test_", "like 엥?");
                     if (response.isSuccessful()
                     && response.body() != null) {
-                        if (response.body().getState().equals("Insert"))
+                        if (response.body().getState().equals("Insert")) {
+                            holder.binding.likeNum.setText(
+                                    Integer.toString(Integer.parseInt(holder.binding.likeNum.getText().toString())+1)
+                            );
+
                             holder.binding.imageViewLike.setImageResource(R.drawable.ic_heart_simple_shape_filled);
-                        else
+                        } else {
+                            holder.binding.likeNum.setText(
+                                    Integer.toString(Integer.parseInt(holder.binding.likeNum.getText().toString())-1)
+                            );
+
                             holder.binding.imageViewLike.setImageResource(R.drawable.ic_heart_simple_shape_silhouette);
+                        }
                     }
                 }
 

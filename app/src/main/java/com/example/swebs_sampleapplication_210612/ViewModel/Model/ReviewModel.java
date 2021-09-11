@@ -7,12 +7,9 @@ public class ReviewModel {
 
     // profile srl
     private String profile_srl;
-
     //사용자가 추가한 이미지 (최대 5걔)
     private List<String> files = new ArrayList<>();
-
     private String member_srl;
-
     // 작성한 유저 이름
     private String nickname;
     // 작성 날짜
@@ -25,10 +22,9 @@ public class ReviewModel {
     private String content;
     // 리뷰 좋아요 개수
     private String like_count;
-
     private String document_srl;
-
     private String review_srl;
+    private boolean can_like;
 
     public String getMember_srl() {
         return member_srl;
@@ -72,5 +68,9 @@ public class ReviewModel {
 
     public List<String> getFiles() {
         return files;
+    }
+
+    public boolean isCan_like() {
+        return can_like;
     }
 }

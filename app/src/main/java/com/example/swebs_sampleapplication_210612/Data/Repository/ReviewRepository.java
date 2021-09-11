@@ -36,8 +36,9 @@ public class ReviewRepository {
         return retroAPI.getProductReview(map);
     }
 
-    public Call<List<ReviewModel>> getReviewOnlyList(String inputProdSrl, String lastIndex, String listCount){
+    public Call<List<ReviewModel>> getReviewOnlyList(String userSrl, String inputProdSrl, String lastIndex, String listCount){
         HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("inputUserSrl", RequestBody.create(userSrl, MediaType.parse("text/plane")));
         map.put("inputProductSrl", RequestBody.create(inputProdSrl, MediaType.parse("text/plane")));
         if(lastIndex != null)
             map.put("inputLastIndex", RequestBody.create(lastIndex, MediaType.parse("text/plane")));

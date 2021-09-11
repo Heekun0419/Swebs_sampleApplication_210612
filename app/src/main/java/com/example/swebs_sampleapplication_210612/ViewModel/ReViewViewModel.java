@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.swebs_sampleapplication_210612.Data.Repository.ReviewRepository;
+import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewModel;
@@ -23,10 +24,12 @@ public class ReViewViewModel extends AndroidViewModel {
     private MutableLiveData<List<ReviewListModel>> LiveReviewList = new MutableLiveData<>();
     private MutableLiveData<List<ReviewModel>> liveDataReviewOnly = new MutableLiveData<>();
     private MutableLiveData<Boolean> isLike = new MutableLiveData<>();
-    private ReviewRepository repository;
+    private final ReviewRepository repository;
+    private final SPmanager sPmanager;
     public ReViewViewModel(@NonNull Application application) {
         super(application);
         repository = new ReviewRepository(application);
+        sPmanager = new SPmanager(application.getApplicationContext());
     }
 
     public void getReviewList(String inputCategorySrl, String loadCount, String lastIndex) {
@@ -49,20 +52,22 @@ public class ReViewViewModel extends AndroidViewModel {
     }
 
     public void getReviewOnlyList(String inputCategorySrl, String loadCount, String lastIndex) {
-        repository.getReviewOnlyList(inputCategorySrl, lastIndex, loadCount).enqueue(new Callback<List<ReviewModel>>() {
-            @Override
-            public void onResponse(Call<List<ReviewModel>> call, Response<List<ReviewModel>> response) {
-                if (response.isSuccessful()){
-                    if (response.body() != null)
-                       setLiveDataReviewOnly(response.body());
+        repository.getReviewOnlyList(sPmanager.getUserSrl(), inputCategorySrl, lastIndex, loadCount)
+            .enqueue(new Callback<List<ReviewModel>>() {
+                @Override
+                public void onResponse(Call<List<ReviewModel>> call, Response<List<ReviewModel>> response) {
+                    if (response.isSuccessful()){
+                        if (response.body() != null)
+                           setLiveDataReviewOnly(response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<ReviewModel>> call, Throwable t) {
+
                 }
             }
-
-            @Override
-            public void onFailure(Call<List<ReviewModel>> call, Throwable t) {
-
-            }
-        });
+        );
     }
 
 
