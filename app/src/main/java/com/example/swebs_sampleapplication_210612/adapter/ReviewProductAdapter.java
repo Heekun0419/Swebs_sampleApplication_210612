@@ -10,8 +10,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.L;
 import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LikeApplyModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
@@ -146,6 +148,11 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
         holder.binding.textViewCommentOfReview.setText("0개의 댓글");
 
         GlideImage(holder.binding.imageViewMyReviewUserProfile, getImageViewUrl(model.getProfile_srl(), "100"));
+
+        ReviewPhotoListAdapter photoListAdapter = new ReviewPhotoListAdapter(context,model.getFile_srl());
+        LinearLayoutManager manager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
+        holder.binding.recyclerViewMyReviewPhoto.setLayoutManager(manager);
+        holder.binding.recyclerViewMyReviewPhoto.setAdapter(photoListAdapter);
     }
 
     @Override

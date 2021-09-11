@@ -53,8 +53,8 @@ public class ReViewViewModel extends AndroidViewModel {
     }
 
     //
-    public void getReviewOnlyList(String inputCategorySrl, String loadCount, String lastIndex) {
-        repository.getReviewOnlyList(sPmanager.getUserSrl(), inputCategorySrl, lastIndex, loadCount)
+    public void getReviewOnlyList(String inputProdSrl, String loadCount, String lastIndex) {
+        repository.getReviewOnlyList(sPmanager.getUserSrl(), inputProdSrl, lastIndex, loadCount)
             .enqueue(new Callback<List<ReviewModel>>() {
                 @Override
                 public void onResponse(Call<List<ReviewModel>> call, Response<List<ReviewModel>> response) {

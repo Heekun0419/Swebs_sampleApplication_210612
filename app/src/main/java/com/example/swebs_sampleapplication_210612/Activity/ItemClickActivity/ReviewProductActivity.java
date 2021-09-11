@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -26,6 +27,8 @@ public class ReviewProductActivity extends AppCompatActivity {
 
         // 상단 제품 정보 설정
         renderView();
+
+        Log.d("prod_Srl", " prod : "+getIntent().getStringExtra("prod_srl"));
 
         manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.frameLayout_review_product_activity,new BottomReviewFragment(getIntent().getStringExtra("prod_srl"))).commit();

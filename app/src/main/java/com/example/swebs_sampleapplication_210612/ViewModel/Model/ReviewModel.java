@@ -28,11 +28,10 @@ public class ReviewModel {
     //like 값
     private boolean can_like;
 
-   // private String prod_srl;
+    private String prod_srl;
 
-  //  public String getProd_srl() {
-       // return prod_srl;
-    //}
+    public String getProd_srl() {
+       return prod_srl; }
 
     public List<String> getFile_srl() {
         return file_srl;
