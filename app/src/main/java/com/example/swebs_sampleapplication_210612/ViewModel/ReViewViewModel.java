@@ -23,6 +23,7 @@ import retrofit2.Response;
 public class ReViewViewModel extends AndroidViewModel {
     private MutableLiveData<List<ReviewListModel>> LiveReviewList = new MutableLiveData<>();
     private MutableLiveData<List<ReviewModel>> liveDataReviewOnly = new MutableLiveData<>();
+    private MutableLiveData<ReviewModel> LiveDetailReviewModel = new MutableLiveData<>();
     private MutableLiveData<Boolean> isLike = new MutableLiveData<>();
     private final ReviewRepository repository;
     private final SPmanager sPmanager;
@@ -51,6 +52,7 @@ public class ReViewViewModel extends AndroidViewModel {
         });
     }
 
+    //
     public void getReviewOnlyList(String inputCategorySrl, String loadCount, String lastIndex) {
         repository.getReviewOnlyList(sPmanager.getUserSrl(), inputCategorySrl, lastIndex, loadCount)
             .enqueue(new Callback<List<ReviewModel>>() {
@@ -70,6 +72,31 @@ public class ReViewViewModel extends AndroidViewModel {
         );
     }
 
+    public void getReviewDetailList(String userSrl, String inputReviewSrl, String lastIndex, String listCount){
+        repository.getReviewDetailList(userSrl, inputReviewSrl,lastIndex,listCount)
+                .enqueue(new Callback<ReviewModel>() {
+                    @Override
+                    public void onResponse(Call<ReviewModel> call, Response<ReviewModel> response) {
+                        if (response.isSuccessful()){
+                            if (response.body() != null)
+                                setLiveDetailReviewModel(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ReviewModel> call, Throwable t) {
+
+                    }
+                });
+    }
+
+    public MutableLiveData<ReviewModel> getLiveDetailReviewModel() {
+        return LiveDetailReviewModel;
+    }
+
+    public void setLiveDetailReviewModel(ReviewModel liveDetailReviewModel) {
+        LiveDetailReviewModel.setValue(liveDetailReviewModel);
+    }
 
     public MutableLiveData<List<ReviewListModel>> getLiveReviewList() {
         return LiveReviewList;

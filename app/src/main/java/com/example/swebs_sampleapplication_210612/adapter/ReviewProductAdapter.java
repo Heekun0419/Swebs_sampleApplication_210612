@@ -131,6 +131,18 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
         });
 
 
+        holder.binding.reportReview.setOnClickListener(v -> {
+            listener.reportClicked(position);
+        });
+
+        holder.binding.deleteReview.setOnClickListener(v -> {
+            listener.removeClicked(position);
+        });
+
+        holder.binding.layoutReview.setOnClickListener(v -> {
+            listener.CommentClicked(position,model);
+        });
+
         holder.binding.textViewCommentOfReview.setText("0개의 댓글");
 
         GlideImage(holder.binding.imageViewMyReviewUserProfile, getImageViewUrl(model.getProfile_srl(), "100"));

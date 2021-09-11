@@ -1,6 +1,7 @@
 package com.example.swebs_sampleapplication_210612.ViewModel.Model;
 
 public class CommentModel {
+
     private String comment_srl;
     private String content;
     private String member_srl;

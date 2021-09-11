@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.ReviewActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ServiceNotReadyActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.ReviewRepository;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewModel;
@@ -100,6 +101,11 @@ public class BottomReviewFragment extends Fragment implements ReviewClickListene
 
     @Override
     public void CommentClicked(int position, ReviewModel model) {
-
+        Intent intent = new Intent(requireContext(), ReviewActivity.class);
+        intent.putExtra("reviewSrl",model.getReview_srl());
+        intent.putExtra("memberSrl", model.getMember_srl());
+        intent.putExtra("documentSrl", model.getDocument_srl());
+        intent.putExtra("profileSrl", model.getProfile_srl());
+        startActivity(intent);
     }
 }

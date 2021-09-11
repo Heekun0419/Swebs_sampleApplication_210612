@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewModel {
-
     // profile srl
     private String profile_srl;
     //사용자가 추가한 이미지 (최대 5걔)
-    private List<String> files = new ArrayList<>();
+    private List<String> file_srl = new ArrayList<>();
     private String member_srl;
     // 작성한 유저 이름
     private String nickname;
@@ -22,9 +21,22 @@ public class ReviewModel {
     private String content;
     // 리뷰 좋아요 개수
     private String like_count;
+    // 리뷰 내 댓글 불러올때 필요
     private String document_srl;
+    // 리뷰 srl 넘겨서 리뷰 자세히 보기
     private String review_srl;
+    //like 값
     private boolean can_like;
+
+   // private String prod_srl;
+
+  //  public String getProd_srl() {
+       // return prod_srl;
+    //}
+
+    public List<String> getFile_srl() {
+        return file_srl;
+    }
 
     public String getMember_srl() {
         return member_srl;
@@ -64,10 +76,6 @@ public class ReviewModel {
 
     public String getReview_srl() {
         return review_srl;
-    }
-
-    public List<String> getFiles() {
-        return files;
     }
 
     public boolean isCan_like() {

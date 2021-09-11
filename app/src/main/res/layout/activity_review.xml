@@ -147,7 +147,6 @@
                     android:id="@+id/textView_review_brand_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="함소아"
                     android:textColor="@color/swebs_main_color1"
                     android:textSize="10dp"
                     android:textStyle="bold" />
@@ -157,7 +156,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="밸런싱 모이스쳐 밀크 토너 120ml"
                     android:textColor="#373737"
                     android:textSize="15dp"
                     android:textStyle="bold" />
@@ -194,7 +192,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="(121)"
                         android:textColor="#999999"
                         android:textSize="12dp" />
 
@@ -219,6 +216,7 @@
         </androidx.cardview.widget.CardView>
 
         <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+            android:id="@+id/indicator_review"
             android:padding="10dp"
             app:dotsColor="#7093E3BE"
             app:dotsCornerRadius="20dp"

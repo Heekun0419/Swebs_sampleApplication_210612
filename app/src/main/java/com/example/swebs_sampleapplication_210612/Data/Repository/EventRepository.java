@@ -8,8 +8,11 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Even
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LikeApplyModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyModel;
 
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -45,5 +48,16 @@ public class EventRepository {
         formData.put("inputTargetTable", RequestBody.create(targetTable, MediaType.parse("text/plane")));
 
         return retroAPI.pushLike(formData);
+    }
+
+    public Call<List<EventModel>> getMyEventList(String userSrl, String lastIndex, String loadCount) {
+        HashMap<String, RequestBody> formBody = new HashMap<>();
+        formBody.put("inputUserSrl", RequestBody.create(userSrl, MediaType.parse("text/plane")));
+        if (lastIndex != null)
+            formBody.put("inputLastIndex", RequestBody.create(lastIndex, MediaType.parse("text/plane")));
+        if (loadCount != null)
+            formBody.put("inputListCount", RequestBody.create(loadCount, MediaType.parse("text/plane")));
+
+        return retroAPI.getMyEventList(formBody);
     }
 }

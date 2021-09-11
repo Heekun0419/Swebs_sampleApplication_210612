@@ -12,8 +12,10 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Logi
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.NormalSignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanDataPushModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.UserConfigModify;
 
 import java.util.ArrayList;
@@ -168,5 +170,27 @@ public interface SwebsAPI {
     Call<List<ReviewModel>> getReviewList(
             @PartMap Map<String,RequestBody> params
     );
+
+    // 리뷰 자세히보기
+    @Multipart
+    @POST("KKW_TEST/product/review_view.php")
+    Call<ReviewModel> getReviewDetailList(
+            @PartMap Map<String,RequestBody> params
+    );
+
+    // 내 서베이
+    @Multipart
+    @POST("KKW_TEST/survey/survey_history.php")
+    Call<List<SurveyModel>> getMySurveyList(
+            @PartMap Map<String,RequestBody> params
+    );
+
+    // 내 이벤트
+   @Multipart
+    @POST("KKW_TEST/event/event_history.php")
+    Call<List<EventModel>> getMyEventList(
+            @PartMap Map<String,RequestBody> params
+    );
+
 
 }
