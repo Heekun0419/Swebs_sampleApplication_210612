@@ -7,7 +7,7 @@ public class ReviewModel {
     // profile srl
     private String profile_srl;
     //사용자가 추가한 이미지 (최대 5걔)
-    private List<String> file_srl = new ArrayList<>();
+    private List<String> file_srl;
     private String member_srl;
     // 작성한 유저 이름
     private String nickname;

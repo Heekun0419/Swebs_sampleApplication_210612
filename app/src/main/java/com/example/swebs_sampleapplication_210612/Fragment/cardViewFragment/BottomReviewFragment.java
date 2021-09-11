@@ -39,9 +39,6 @@ public class BottomReviewFragment extends Fragment implements ReviewClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        reViewViewModel = new ReViewViewModel(requireActivity().getApplication());
-
-        reViewViewModel.getReviewOnlyList(prodSrl,null,null);
     }
 
     @Override
@@ -49,6 +46,10 @@ public class BottomReviewFragment extends Fragment implements ReviewClickListene
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentBottomReviewBinding.inflate(inflater,container,false);
+
+        reViewViewModel = new ReViewViewModel(requireActivity().getApplication());
+
+        reViewViewModel.getReviewOnlyList(prodSrl,null,null);
 
         reViewViewModel.getLiveDataReviewOnly().observe(getViewLifecycleOwner(), new Observer<List<ReviewModel>>() {
             @Override
