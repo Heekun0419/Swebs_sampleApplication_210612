@@ -12,6 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LikeApplyModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewModel;
@@ -23,15 +26,23 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdapter.ReviewProductViewHolder> {
 
     private ItemReviewProductBinding binding;
-    private Context context;
+    private final Context context;
     private List<ReviewModel> reviewList = new ArrayList<>();
     private ReviewClickListener listener;
-    private SPmanager sPmanager;
+    private final SPmanager sPmanager;
+    private final SwebsAPI retroAPI;
     private boolean isLike = false;
 
 
@@ -40,7 +51,7 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
         this.reviewList = reviewList;
         this.listener = listener;
         sPmanager = new SPmanager(context);
-
+        this.retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
     }
 
     @NonNull
@@ -78,16 +89,32 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
         }
 
         holder.binding.imageViewLike.setImageResource(R.drawable.ic_heart_simple_shape_silhouette);
+
         holder.binding.imageViewLike.setOnClickListener(v -> {
-            if(!isLike){
-                holder.binding.imageViewLike.setImageResource(R.drawable.ic_heart_simple_shape_filled);
-                isLike = true;
-            } else {
-                holder.binding.imageViewLike.setImageResource(R.drawable.ic_heart_simple_shape_silhouette);
-                isLike = false;
-            }
-            listener.LikeClicked(position,isLike);
+            HashMap<String, RequestBody> formData = new HashMap<>();
+            formData.put("inputTargetSrl", RequestBody.create(model.getReview_srl(), MediaType.parse("text/plane")));
+            formData.put("inputUserSrl", RequestBody.create(sPmanager.getUserSrl(), MediaType.parse("text/plane")));
+            formData.put("inputTargetTable", RequestBody.create("review", MediaType.parse("text/plane")));
+            Call<LikeApplyModel> call = retroAPI.pushLike(formData);
+            call.enqueue(new Callback<LikeApplyModel>() {
+                @Override
+                public void onResponse(Call<LikeApplyModel> call, Response<LikeApplyModel> response) {
+                    if (response.isSuccessful()
+                    && response.body() != null) {
+                        if (response.body().getState().equals("Insert"))
+                            holder.binding.imageViewLike.setImageResource(R.drawable.ic_heart_simple_shape_filled);
+                        else
+                            holder.binding.imageViewLike.setImageResource(R.drawable.ic_heart_simple_shape_silhouette);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<LikeApplyModel> call, Throwable t) {
+
+                }
+            });
         });
+
 
         holder.binding.textViewCommentOfReview.setText("0개의 댓글");
 

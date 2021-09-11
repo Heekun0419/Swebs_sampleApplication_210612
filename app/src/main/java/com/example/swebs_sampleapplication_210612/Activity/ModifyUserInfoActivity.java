@@ -70,10 +70,9 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
     private String realPath= null, photoPath =null;
     private Uri imageUri = null;
     FilePathFinder filePathFinder;
-    private SPmanager sPmanager;
-    private MyInfoViewModel viewModel;
 
-    private MyInfoRepository myInfoRepository;
+    private MyInfoViewModel viewModel;
+    private SPmanager sPmanager;
     private final String DIALOG_TITLE = "회원정보 수정";
 
     private String profilePath = null;
@@ -99,8 +98,6 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
 
         sPmanager = new SPmanager(this);
 
-        myInfoRepository = new MyInfoRepository(getApplication());
-
         // value init;
         checkPasswordForm = false;
         checkPasswordConfirm = false;
@@ -108,12 +105,12 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         regionList = new ArrayList<>();
 
         filePathFinder = new FilePathFinder(getApplicationContext());
+
         //뒤로가기 버튼
         binding.btnInformationActivityBack.setOnClickListener(v -> onBackPressed());
-        profileImage = binding.imageViewProfileModify;
 
-        //디폴트 프로필 이미지 생성
-        GlideImage("default", profileImage);
+        // 비밀번호..
+        renderPassword(sPmanager.getUserType());
 
         binding.editTextUserInfoPassword.setFilters(new InputFilter[] {filterPassword});
         binding.editTextUserInfoPasswordConfirm.setFilters(new InputFilter[] {filterPassword});
@@ -257,7 +254,8 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         switch (requestCode) {
             case TAKE_PHOTO_REQUEST:
                 if (resultCode == Activity.RESULT_OK) {
-                    GlideImage(photoPath, profileImage);
+                    profilePath = photoPath;
+                    setProfileImageFromUri(profilePath);
                 }
                 break;
 
@@ -268,19 +266,27 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
                     // You can update this bitmap to your server
                     profilePath = filePathFinder.getPath(imageUri);
                     //  Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), imageUri)
-                    GlideImage(profilePath, profileImage);
+                    setProfileImageFromUri(profilePath);
                 }
                 break;
         }
     }
 
 
-    private void GlideImage(String uri, ImageView view) {
+    private void setProfileImageFromUri(String uri) {
         Glide.with(getApplicationContext()).load(uri)
                 .placeholder(R.drawable.ic_profile_basic)
-                .override(600, 600)
+                .override(600)
                 .circleCrop()
-                .into(view);
+                .into(binding.imageViewProfileModify);
+    }
+
+    private void setProfileImageFromUrl(String url) {
+        Glide.with(getApplicationContext()).load(url)
+                .placeholder(R.drawable.ic_profile_basic)
+                .override(600)
+                .circleCrop()
+                .into(binding.imageViewProfileModify);
     }
 
     @Override
@@ -288,20 +294,26 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         super.onResume();
 
         // START - data Observe
+        // profile_image
+        viewModel.getUserInfoFromKey("profileSrl").observe(this, s -> {
+            //디폴트 프로필 이미지 생성
+            setProfileImageFromUrl(getImageViewUrl(s, "500"));
+        });
+
         // nickname
-        myInfoRepository.getValueToLiveData("nickName").observe(this, s -> {
+        viewModel.getUserInfoFromKey("nickName").observe(this, s -> {
             if (s != null)
                 binding.editTextUserInfoNickname.setText(s);
         });
 
         // birthday
-        myInfoRepository.getValueToLiveData("birthday").observe(this, s -> {
+        viewModel.getUserInfoFromKey("birthday").observe(this, s -> {
             if (s != null)
                 binding.editTextUserInfoBirthday.setText(s);
         });
 
         // gender
-        myInfoRepository.getValueToLiveData("gender").observe(this, s -> {
+        viewModel.getUserInfoFromKey("gender").observe(this, s -> {
             if (s != null) {
                 selectGender = s;
                 renderGenderButton();
@@ -309,19 +321,25 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         });
 
         //Email
-        myInfoRepository.getValueToLiveData("email").observe(this,s -> {
+        viewModel.getUserInfoFromKey("email").observe(this,s -> {
             if(s!=null)
                 binding.editTextEmail.setText(s);
         });
 
         //Name
-        myInfoRepository.getValueToLiveData("name").observe(this,s -> {
+        viewModel.getUserInfoFromKey("name").observe(this,s -> {
             if(s!=null)
                 binding.editTextUserInfoUsername.setText(s);
         });
 
+        // Phone_Number
+        viewModel.getUserInfoFromKey("phoneNumber").observe(this, s -> {
+            if (s != null)
+                binding.editTextUserInfoPhoneNumber.setText(s);
+        });
+
         // Country
-        myInfoRepository.getValueToLiveData("country").observe(this, s -> {
+        viewModel.getUserInfoFromKey("country").observe(this, s -> {
             String viewText = "국가 선택";
             if (s != null) {
                 country = s;
@@ -330,6 +348,17 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
 
             binding.textViewCountrySelect.setText(viewText);
             renderRegionSelect(Objects.requireNonNull(s));
+        });
+
+        // Region
+        viewModel.getUserInfoFromKey("region").observe(this, s -> {
+            String viewText = "지역 선택";
+            if (s != null) {
+                region = s;
+                viewText = s;
+            }
+
+            binding.textViewRegionSelect.setText(viewText);
         });
         // END - data Observe
 
@@ -358,6 +387,13 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void renderPassword(String userType) {
+        if (!userType.equals("normal")) {
+            binding.linearLayout6.setVisibility(View.GONE);
+            binding.linearLayout7.setVisibility(View.GONE);
+        }
     }
 
 
@@ -734,6 +770,14 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
         oneButtonBasicDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         oneButtonBasicDialog.setOnCancelListener(dialog -> finish());
         oneButtonBasicDialog.show();
+    }
+
+
+    private String getImageViewUrl(String fileSrl, String Width) {
+        String result = getString(R.string.IMAGE_VIEW_URL) + "?inputFileSrl=" + fileSrl;
+        if (Width != null)
+            result += "&inputImageWidth=" + Width;
+        return result;
     }
 
 }

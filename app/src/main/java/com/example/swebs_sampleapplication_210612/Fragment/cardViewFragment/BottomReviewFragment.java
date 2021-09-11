@@ -28,7 +28,6 @@ import java.util.List;
 public class BottomReviewFragment extends Fragment implements ReviewClickListener {
 
     private FragmentBottomReviewBinding binding;
-    private ReviewRepository repository;
     private String prodSrl;
     private ReViewViewModel reViewViewModel;
     ReviewProductAdapter adapter;
@@ -39,8 +38,8 @@ public class BottomReviewFragment extends Fragment implements ReviewClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        repository = new ReviewRepository(requireActivity().getApplication());
         reViewViewModel = new ReViewViewModel(requireActivity().getApplication());
+
         reViewViewModel.getReviewOnlyList(prodSrl,null,null);
     }
 
