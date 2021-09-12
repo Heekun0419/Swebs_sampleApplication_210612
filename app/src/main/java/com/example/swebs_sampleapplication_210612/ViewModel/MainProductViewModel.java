@@ -6,20 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.swebs_sampleapplication_210612.Data.Repository.EventRepository;
-import com.example.swebs_sampleapplication_210612.Data.Repository.ProductRepository;
-import com.example.swebs_sampleapplication_210612.Data.Repository.SurveyRepository;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListDetailModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListlModel;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewListModel;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyDetailModel;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.MainItemModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.MainReviewModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -27,44 +20,63 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainProductViewModel extends AndroidViewModel {
+    private final SwebsAPI retroAPI;
 
-    private ProductRepository productRepository;
-    private EventRepository eventRepository;
-    private SurveyRepository surveyRepository;
-    private MutableLiveData<List<ProductListlModel>> LiveProductList = new MutableLiveData<>();
-    private MutableLiveData<List<EventModel>> LiveEventList = new MutableLiveData<>();
-    private MutableLiveData<List<SurveyModel>> liveDataSurveyList = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
 
+    // 인증업체 관련...
+    private final MutableLiveData<List<ProductListModel>> productList = new MutableLiveData<>();
+    // 이벤트 관련..
+    private final MutableLiveData<List<EventListDetailModel>> eventList = new MutableLiveData<>();
+    // 리뷰 관련..
+    private final MutableLiveData<List<MainReviewModel>> reviewList = new MutableLiveData<>();
 
     public MainProductViewModel(@NonNull Application application) {
         super(application);
-        productRepository = new ProductRepository(application);
-        eventRepository = new EventRepository(application);
-        surveyRepository = new SurveyRepository(application);
+        retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
     }
 
-    public MutableLiveData<List<SurveyModel>> getLiveDataSurveyList() {
-        return liveDataSurveyList;
+    public MutableLiveData<Boolean> getIsLoading() {
+        return isLoading;
     }
 
-    public void setLiveDataSurveyList(List<SurveyModel> liveDataSurveyList) {
-        this.liveDataSurveyList.setValue(liveDataSurveyList);
+    public MutableLiveData<List<ProductListModel>> getProductList() {
+        return productList;
     }
 
-
-    public MutableLiveData<List<EventModel>> getLiveEventList() {
-        return LiveEventList;
+    public MutableLiveData<List<EventListDetailModel>> getEventList() {
+        return eventList;
     }
 
-    public void setLiveEventList(MutableLiveData<List<EventModel>> liveEventList) {
-        LiveEventList = liveEventList;
+    public MutableLiveData<List<MainReviewModel>> getReviewList() {
+        return reviewList;
     }
 
-    public MutableLiveData<List<ProductListlModel>> getLiveProductList() {
-        return LiveProductList;
-    }
+    public void getListFromServer() {
+        isLoading.setValue(true);
+        Call<MainItemModel> call = retroAPI.getMainItemList();
+        call.enqueue(new Callback<MainItemModel>() {
+            @Override
+            public void onResponse(Call<MainItemModel> call, Response<MainItemModel> response) {
+                if (response.isSuccessful()
+                && response.body() != null) {
+                    if (response.body().isSuccess()) {
+                        // 인증업체 데이터 넣기..
+                        productList.setValue(response.body().getProduct());
+                        // 이벤트 데이터 넣기.
+                        eventList.setValue(response.body().getEvent());
+                        // 리뷰 관련
+                        reviewList.setValue(response.body().getReview());
+                    }
+                }
 
-    public void setLiveProductList(List<ProductListlModel> liveProductList) {
-        LiveProductList.setValue(liveProductList);
+                isLoading.setValue(false);
+            }
+
+            @Override
+            public void onFailure(Call<MainItemModel> call, Throwable t) {
+                isLoading.setValue(false);
+            }
+        });
     }
 }

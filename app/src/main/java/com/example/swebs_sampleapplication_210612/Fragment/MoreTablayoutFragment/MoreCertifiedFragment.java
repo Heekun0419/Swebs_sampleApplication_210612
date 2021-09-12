@@ -2,18 +2,15 @@ package com.example.swebs_sampleapplication_210612.Fragment.MoreTablayoutFragmen
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 
 import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.CertifiedCompanyActivity;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListlModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.CertifiedCompanyViewModel;
 import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.TablayoutAdapter.GridMoreCretifiedAdapter;
@@ -96,7 +93,7 @@ public class MoreCertifiedFragment extends Fragment implements OnItemClickListen
         startActivity(intent);
     }
 
-    private void initGridView(List<ProductListlModel> list) {
+    private void initGridView(List<ProductListModel> list) {
         adapter = new GridMoreCretifiedAdapter(requireContext(), list, this);
         binding.gridViewMoreCertified.setAdapter(adapter);
     }

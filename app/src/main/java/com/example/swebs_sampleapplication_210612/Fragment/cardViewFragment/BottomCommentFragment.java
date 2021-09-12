@@ -113,8 +113,7 @@ public class BottomCommentFragment extends Fragment implements CommentClickListe
         });
 
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), aBoolean -> {
-            if (aBoolean != null)
-                binding.progressLoading.setVisibility(aBoolean ? View.VISIBLE : View.GONE);
+            if (aBoolean != null) binding.progressLoading.setVisibility(aBoolean ? View.VISIBLE : View.GONE);
         });
 
         return binding.getRoot();

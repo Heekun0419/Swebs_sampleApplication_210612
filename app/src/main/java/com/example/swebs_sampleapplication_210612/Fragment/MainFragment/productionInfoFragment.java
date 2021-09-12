@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -17,7 +16,8 @@ import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.Eve
 import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.SurveyActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity.TopMenuActivity;
-import com.example.swebs_sampleapplication_210612.ViewModel.CertifiedCompanyViewModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListDetailModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.MainProductViewModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
 import com.example.swebs_sampleapplication_210612.adapter.CertifiedCompanyAdapter;
@@ -34,6 +34,12 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
     private FragmentMainProductBinding binding;
     private MainProductViewModel viewModel;
 
+    // 리사클러뷰 어뎁터
+    private CertifiedCompanyAdapter productAdapter;
+    private EventAdapter eventAdapter;
+    private ReviewAdapter reviewAdapter;
+    private SurveyAdapter surveyAdapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,14 +54,31 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         binding = FragmentMainProductBinding.inflate(inflater,container,false);
 
         // 네비게이션 드로어 열기
-        binding.includedAppbarProduct.imageButton.setOnClickListener(v ->
-                ((MainActivity)requireActivity()).openDrawer());
+        binding.includedAppbarProduct.imageButton.setOnClickListener(v -> ((MainActivity)requireActivity()).openDrawer());
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
-        CertifiedCompanyAdapter certifiedCompanyAdapter = new CertifiedCompanyAdapter(requireContext(),this);
-        binding.recyclerViewCertifiedCompany.setLayoutManager(linearLayoutManager);
-        binding.recyclerViewCertifiedCompany.setAdapter(certifiedCompanyAdapter);
+        // 서버에서 데이터 받아오기...
+        viewModel.getListFromServer();
 
+        // 인증 업체 관련 데이터
+        viewModel.getProductList().observe(getViewLifecycleOwner(), models -> {
+            if (productAdapter != null && models != null) {
+                // 데이터 하나씩 넣기.
+            } else
+                initProductRecycler(models);
+        });
+
+        // 이벤트 관련 데이터
+        viewModel.getEventList().observe(getViewLifecycleOwner(), models -> {
+            if (eventAdapter != null && models != null) {
+                // 데이터 하나씩 넣기.
+            } else
+                initEventRecycler(models);
+        });
+
+        // 리뷰 관련 데이터
+        viewModel.getReviewList().observe(getViewLifecycleOwner(), models -> {
+
+        });
 
 
         ReviewAdapter reviewAdapter = new ReviewAdapter(requireContext());
@@ -120,7 +143,14 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         startActivity(intent);
     }
 
-    private void initEventRecycler(List<EventModel> list){
+    private void initProductRecycler(List<ProductListModel> models) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
+        productAdapter = new CertifiedCompanyAdapter(requireContext(),this);
+        binding.recyclerViewCertifiedCompany.setLayoutManager(linearLayoutManager);
+        binding.recyclerViewCertifiedCompany.setAdapter(productAdapter);
+    }
+
+    private void initEventRecycler(List<EventListDetailModel> list){
         EventAdapter eventAdapter = new EventAdapter(requireContext(),list,this);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
         binding.recyclerViewEvent.setLayoutManager(linearLayoutManager2);

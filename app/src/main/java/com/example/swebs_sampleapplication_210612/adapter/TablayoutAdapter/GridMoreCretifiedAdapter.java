@@ -9,9 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListlModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListModel;
 import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.databinding.ItemMoreCertifiedCompanyBinding;
 
@@ -22,10 +21,10 @@ public class GridMoreCretifiedAdapter extends BaseAdapter {
 
     private Context context;
     private ItemMoreCertifiedCompanyBinding binding;
-    private List<ProductListlModel> list = new ArrayList<>();
+    private List<ProductListModel> list = new ArrayList<>();
     private OnItemClickListener listener;
 
-    public GridMoreCretifiedAdapter(Context context, List<ProductListlModel> list, OnItemClickListener listener){
+    public GridMoreCretifiedAdapter(Context context, List<ProductListModel> list, OnItemClickListener listener){
         this.list = list;
         this.context = context;
         this.listener = listener;
@@ -51,7 +50,7 @@ public class GridMoreCretifiedAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         binding = ItemMoreCertifiedCompanyBinding.inflate(LayoutInflater.from(context),parent,false);
         convertView = binding.getRoot();
-        ProductListlModel model = list.get(position);
+        ProductListModel model = list.get(position);
 
         GlideImage(binding.imageViewProductMainProfile, getImageViewUrl(model.getFile_srl(), "300"));
 
@@ -78,12 +77,12 @@ public class GridMoreCretifiedAdapter extends BaseAdapter {
         Glide.with(context).load(url).centerCrop().into(view);
     }
 
-    public void addItem(ProductListlModel model, int position) {
+    public void addItem(ProductListModel model, int position) {
         this.list.add(position, model);
         notifyDataSetChanged();
     }
 
-    public void changeItem(List<ProductListlModel> list){
+    public void changeItem(List<ProductListModel> list){
         this.list = list;
         notifyDataSetChanged();
     }

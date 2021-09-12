@@ -1,19 +1,15 @@
 package com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model;
 
-public class ProductListlModel {
+public class MainReviewModel {
     private String prod_srl;
-    private String prod_title;
     private String file_srl;
     private String corp_name;
-    private String logo_link;
-    private boolean isNew;
+    private String prod_title;
+    private String review_title;
+    private String rate;
 
     public String getProd_srl() {
         return prod_srl;
-    }
-
-    public String getProd_title() {
-        return prod_title;
     }
 
     public String getFile_srl() {
@@ -24,11 +20,15 @@ public class ProductListlModel {
         return corp_name;
     }
 
-    public String getLogo_link() {
-        return logo_link;
+    public String getProd_title() {
+        return prod_title;
     }
 
-    public boolean isNew() {
-        return isNew;
+    public String getReview_title() {
+        return review_title;
+    }
+
+    public String getRate() {
+        return rate;
     }
 }

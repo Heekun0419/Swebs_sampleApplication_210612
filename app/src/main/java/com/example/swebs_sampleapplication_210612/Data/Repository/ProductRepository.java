@@ -3,7 +3,7 @@ package com.example.swebs_sampleapplication_210612.Data.Repository;
 import android.app.Application;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductDetailModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListlModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 
@@ -23,7 +23,7 @@ public class ProductRepository {
         this.retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
     }
 
-    public Call<List<ProductListlModel>> getProductList(String categorySrl, String lastIndex, String loadCount) {
+    public Call<List<ProductListModel>> getProductList(String categorySrl, String lastIndex, String loadCount) {
         HashMap<String, RequestBody> formBody = new HashMap<>();
         formBody.put("inputCategorySrl", RequestBody.create(categorySrl, MediaType.parse("text/plane")));
         if (lastIndex != null)

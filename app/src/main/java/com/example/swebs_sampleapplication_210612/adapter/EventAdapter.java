@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListDetailModel;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
 import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
@@ -24,9 +25,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     Context context;
     private ItemProductEventBinding binding;
     OnItemClickListener listener;
-    List<EventModel> list;
+    List<EventListDetailModel> list;
 
-    public EventAdapter (Context context, List<EventModel> list, OnItemClickListener listener){
+    public EventAdapter (Context context, List<EventListDetailModel> list, OnItemClickListener listener){
         this.context = context;
         this.listener = listener;
         this.list = list;

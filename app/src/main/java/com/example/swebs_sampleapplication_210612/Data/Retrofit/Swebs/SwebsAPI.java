@@ -1,9 +1,10 @@
 package com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CategoryModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.MainItemModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.MyReviewModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductDetailModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListlModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CommentInputModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventDetailModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListModel;
@@ -17,16 +18,15 @@ import com.example.swebs_sampleapplication_210612.ViewModel.Model.MyEventListMod
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyDetailModel;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.UserConfigModify;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -95,6 +95,10 @@ public interface SwebsAPI {
             @PartMap Map<String, RequestBody> prams
     );
 
+    // 메인 페이지 API
+    @GET("src1/main/main_list.php")
+    Call<MainItemModel> getMainItemList();
+
     // START - Event API
     @Multipart
     @POST("src1/event/event_list.php")
@@ -148,7 +152,7 @@ public interface SwebsAPI {
     // START - 인증업체 API
     @Multipart
     @POST("src1/product/product_categorylist.php")
-    Call<List<ProductListlModel>> getCertifiedList(
+    Call<List<ProductListModel>> getCertifiedList(
             @PartMap Map<String,RequestBody> params
     );
 
