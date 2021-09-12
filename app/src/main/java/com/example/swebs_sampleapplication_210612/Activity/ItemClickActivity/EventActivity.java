@@ -27,7 +27,7 @@ public class EventActivity extends AppCompatActivity {
     private EventViewModel viewModel;
     private FragmentManager manager;
     private String documentSrl;
-    private boolean isApplied ;
+    private boolean isApplied = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +40,9 @@ public class EventActivity extends AppCompatActivity {
         // 이벤트 신청...
         binding.btnEventApply.setOnClickListener(v -> {
             if(isApplied) {
-            Intent intent = new Intent(getApplicationContext(), EventApplyActivity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                Intent intent = new Intent(getApplicationContext(), EventApplyActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             } else {
                 Toast.makeText(this, "참여한 이벤트 입니다.", Toast.LENGTH_SHORT).show();
             }
@@ -80,6 +80,9 @@ public class EventActivity extends AppCompatActivity {
                         .load(getImageViewUrl(models.getContent_file_srl(), "1000"))
                         .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                         .into(binding.imageViewEventInfo);
+
+            // 이벤트 참여 가능...
+            renderEventApplyButton(models.isCan_join());
 
             // 이벤트 본문
             binding.textViewEventInfoDetailText.setText(htmlToString(models.getContent()));
@@ -123,13 +126,15 @@ public class EventActivity extends AppCompatActivity {
         return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString();
     }
 
-    private void renderEventApplyButton(){
-        // 활성화 아닐때
-        binding.btnEventApply.setImageResource(R.drawable.radious_button_graycolor);
-        isApplied = false;
-
-        // 활성화 일때
-        binding.btnEventApply.setImageResource(R.drawable.radious_button_swebscolor);
-        isApplied = true;
+    private void renderEventApplyButton(boolean isCanJoin) {
+        if (isCanJoin) {
+            binding.btnEventApply.setImageResource(R.drawable.radious_button_swebscolor);
+            binding.textviewEventApply.setText("이벤트 신청하기");
+            isApplied = true;
+        } else {
+            binding.btnEventApply.setImageResource(R.drawable.radious_button_graycolor);
+            binding.textviewEventApply.setText("신청 완료");
+            isApplied = false;
+        }
     }
 }
