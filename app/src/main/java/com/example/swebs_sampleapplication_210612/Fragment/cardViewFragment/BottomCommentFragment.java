@@ -160,7 +160,7 @@ public class BottomCommentFragment extends Fragment implements CommentClickListe
 
     @Override
     public void modifyClicked(int position) {
-        Toast.makeText(requireContext(), "수정", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

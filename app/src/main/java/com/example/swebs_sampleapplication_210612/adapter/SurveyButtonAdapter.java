@@ -1,7 +1,9 @@
 package com.example.swebs_sampleapplication_210612.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +24,7 @@ public class SurveyButtonAdapter extends RecyclerView.Adapter<SurveyButtonAdapte
     private List<SurveyOptionModel> list;
     private OnItemClickListener listener;
     private ItemSurveyButtonBinding binding;
-    private boolean isClicked;
+    public boolean isClicked = false;
 
     public SurveyButtonAdapter(Context context, List<SurveyOptionModel> list, OnItemClickListener listener) {
         this.context = context;
@@ -41,14 +43,6 @@ public class SurveyButtonAdapter extends RecyclerView.Adapter<SurveyButtonAdapte
     public void onBindViewHolder(@NonNull surveyButtonViewHolder holder, int position) {
         SurveyOptionModel model = list.get(position);
         holder.binding.textViewSurveyInfo.setText(model.getOption_title());
-
-        holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
     }
 
     @Override
@@ -64,12 +58,9 @@ public class SurveyButtonAdapter extends RecyclerView.Adapter<SurveyButtonAdapte
             this.binding = binding;
             this.listener = listener;
 
-            binding.getRoot().setOnClickListener(v ->
+            binding.btnSurvey.setOnClickListener(v ->
                     listener.onItemSelected(binding.btnSurvey,getAdapterPosition(), ""));
         }
     }
 
-    public void setButtonChange(int position){
-        isClicked = true;
-    }
 }

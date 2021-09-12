@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -25,7 +26,7 @@ import com.example.swebs_sampleapplication_210612.databinding.ActivitySurveyBind
 
 import java.util.List;
 
-public class SurveyActivity extends AppCompatActivity implements OnItemClickListener {
+public class SurveyActivity extends AppCompatActivity implements OnItemClickListener{
 
     private ActivitySurveyBinding binding;
     private SurveyVIewModel vIewModel;
@@ -56,12 +57,6 @@ public class SurveyActivity extends AppCompatActivity implements OnItemClickList
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
 
-        vIewModel.getLiveDataSurveyOptionList().observe(this, new Observer<List<SurveyOptionModel>>() {
-            @Override
-            public void onChanged(List<SurveyOptionModel> surveyOptionModels) {
-                initButtonAdapter(surveyOptionModels);
-            }
-        });
 
         vIewModel.getLiveDataSurveyDetail().observe(this, new Observer<SurveyDetailInfoModel>() {
             @Override
@@ -70,10 +65,17 @@ public class SurveyActivity extends AppCompatActivity implements OnItemClickList
             }
         });
 
+        vIewModel.getLiveDataSurveyOptionList().observe(this, new Observer<List<SurveyOptionModel>>() {
+            @Override
+            public void onChanged(List<SurveyOptionModel> list) {
+                initButtonAdapter(list);
+            }
+        });
+
     }
 
-    private void initButtonAdapter(List<SurveyOptionModel> surveyOptionModels){
-        buttonAdapter = new SurveyButtonAdapter(this,surveyOptionModels ,this);
+    private void initButtonAdapter(List<SurveyOptionModel> list) {
+        buttonAdapter = new SurveyButtonAdapter(this, list, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         binding.recyclerViewButton.setLayoutManager(linearLayoutManager);
         binding.recyclerViewButton.setAdapter(buttonAdapter);
@@ -81,8 +83,9 @@ public class SurveyActivity extends AppCompatActivity implements OnItemClickList
 
     @Override
     public void onItemSelected(View view, int position, String code) {
-
+        Toast.makeText(getApplicationContext(), "selected : " + position, Toast.LENGTH_SHORT).show();
     }
+
 /*
     private void btn_select1(){
         binding.btnSurvey1.setSelected(true);
