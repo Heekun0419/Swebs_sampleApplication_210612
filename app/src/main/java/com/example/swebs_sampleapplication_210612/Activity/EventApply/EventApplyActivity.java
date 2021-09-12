@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.Activity.AddressSearchActivity;
+import com.example.swebs_sampleapplication_210612.Activity.TermsActivity;
 import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity.TopMenuActivity;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventOptionModel;
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
@@ -62,15 +63,28 @@ public class EventApplyActivity extends AppCompatActivity {
         // 이벤트 옵션 불러오기...
         eventViewModel.getEventOption(getIntent().getStringExtra("eventSrl"));
 
+        // 이벤트 신청하기 버튼
         binding.btnEventApplyOk.setOnClickListener(v -> {
+            if(binding.checkBoxTerms.isChecked()) {
+                EventApplyDialog();
+            } else {
+                Toast.makeText(this, "약관 동의가 필요합니다.", Toast.LENGTH_SHORT).show();
+            }
             pushEventApply();
         });
 
+        // 뒤로가기 클릭
         binding.btnBack.setOnClickListener(v -> {
             finish();
             overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
         });
 
+        // 약관 보기 버튼 클릭
+        binding.showTerms.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), TermsActivity.class);
+            intent.putExtra("url","http://3.35.249.81/ToS/ToS_S.html");
+            startActivity(intent);
+        });
         // 주소 검색
         binding.btnAddressSearch.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), AddressSearchActivity.class);
