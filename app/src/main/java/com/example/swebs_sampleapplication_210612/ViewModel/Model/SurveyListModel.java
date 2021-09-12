@@ -2,7 +2,7 @@ package com.example.swebs_sampleapplication_210612.ViewModel.Model;
 
 import java.util.List;
 
-public class SurveyModel {
+public class SurveyListModel {
 
     /*
  status = 1 >> 진행 중
@@ -20,7 +20,7 @@ public class SurveyModel {
     private String point;
     private String joinCount;
 
-    public SurveyModel(int status, String statusText, String surveySrl, String imageSrl, String category_title, String title, String dateOfEvent, String point, String joinCount) {
+    public SurveyListModel(int status, String statusText, String surveySrl, String imageSrl, String category_title, String title, String dateOfEvent, String point, String joinCount) {
         this.status = status;
         this.statusText = statusText;
         this.surveySrl = surveySrl;

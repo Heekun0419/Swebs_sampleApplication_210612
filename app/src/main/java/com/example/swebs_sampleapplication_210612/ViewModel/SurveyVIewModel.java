@@ -6,15 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.swebs_sampleapplication_210612.Data.Repository.ReviewRepository;
 import com.example.swebs_sampleapplication_210612.Data.Repository.SurveyRepository;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListDetailModel;
-import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyListModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyDetailInfoModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyDetailModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyOptionModel;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.MyEventListModel;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyDetailModel;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyListDetailModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyListModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,8 +25,10 @@ import retrofit2.Response;
 
 public class SurveyVIewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<SurveyModel>> liveDataSurveyList = new MutableLiveData<>();
-
+    private MutableLiveData<List<SurveyListModel>> liveDataSurveyList = new MutableLiveData<>();
+    private MutableLiveData<SurveyDetailInfoModel> LiveDataSurveyDetail = new MutableLiveData<>();
+    private MutableLiveData<List<SurveyOptionModel>> LiveDataSurveyOptionList = new MutableLiveData<>();
+    private MutableLiveData<String> optionSrl = new MutableLiveData<>();
     private SurveyRepository surveyRepository;
     private final SPmanager sPmanager;
 
@@ -39,28 +39,61 @@ public class SurveyVIewModel extends AndroidViewModel {
         sPmanager = new SPmanager(application.getApplicationContext());
     }
 
-    public MutableLiveData<List<SurveyModel>> getLiveDataSurveyList() {
+    public MutableLiveData<List<SurveyListModel>> getLiveDataSurveyList() {
         return liveDataSurveyList;
     }
 
-    public void setLiveDataSurveyList(List<SurveyModel> liveDataSurveyList) {
+    public void setLiveDataSurveyList(List<SurveyListModel> liveDataSurveyList) {
         this.liveDataSurveyList.setValue(liveDataSurveyList);
+    }
+
+    public MutableLiveData<SurveyDetailInfoModel> getLiveDataSurveyDetail() {
+        return LiveDataSurveyDetail;
+    }
+
+    public MutableLiveData<List<SurveyOptionModel>> getLiveDataSurveyOptionList() {
+        return LiveDataSurveyOptionList;
+    }
+
+    public MutableLiveData<String> getOptionSrl() {
+        return optionSrl;
+    }
+
+    public void getSurveyDetailInfo(String inputSurveySrl){
+        surveyRepository.getSurveyDetailInfo(inputSurveySrl, sPmanager.getUserSrl())
+                .enqueue(new Callback<SurveyDetailModel>() {
+                    @Override
+                    public void onResponse(Call<SurveyDetailModel> call, Response<SurveyDetailModel> response) {
+                        if(response.isSuccessful() && response.body() != null){
+                            if(response.body().isSuccess()){
+                                optionSrl.setValue(response.body().getSelected_option_srl());
+                                LiveDataSurveyDetail.setValue(response.body().getSurvey_info());
+                                LiveDataSurveyOptionList.setValue(response.body().getSurvey_info().getOption());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<SurveyDetailModel> call, Throwable t) {
+
+                    }
+                });
     }
 
     public void getSurveyListFromServer(String categoryType) {
         surveyRepository.getSurveyList(sPmanager.getUserSrl(), categoryType, null, null)
-                .enqueue(new Callback<SurveyListModel>() {
+                .enqueue(new Callback<com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyListModel>() {
                     @Override
-                    public void onResponse(Call<SurveyListModel> call, Response<SurveyListModel> response) {
+                    public void onResponse(Call<com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyListModel> call, Response<com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyListModel> response) {
                         if (response.isSuccessful()
                         && response.body() != null) {
                             if (response.body().isSuccess()) {
-                                List<SurveyModel> tempModel = new ArrayList<>();
+                                List<SurveyListModel> tempModel = new ArrayList<>();
 
                                 int enableCount = 0;
                                 int disableCount = 0;
                                 for(int i =0; i<response.body().getSurvey().size();i++) {
-                                    SurveyDetailModel model = response.body().getSurvey().get(i);
+                                    SurveyListDetailModel model = response.body().getSurvey().get(i);
                                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                     Date startDate = null, endDate = null, nowDate = null;
                                     try {
@@ -75,7 +108,7 @@ public class SurveyVIewModel extends AndroidViewModel {
                                                 && nowDate.compareTo(endDate) <= 0) {
                                             //
                                             tempModel.add(enableCount++,
-                                                    new SurveyModel(
+                                                    new SurveyListModel(
                                                             1
                                                             , "진행중"
                                                             , model.getSurvey_srl()
@@ -98,7 +131,7 @@ public class SurveyVIewModel extends AndroidViewModel {
                                                 statusText = "마감";
                                             }
                                             tempModel.add(enableCount+(disableCount++),
-                                                    new SurveyModel(
+                                                    new SurveyListModel(
                                                             statusType
                                                             , statusText
                                                             , model.getSurvey_srl()
@@ -119,7 +152,7 @@ public class SurveyVIewModel extends AndroidViewModel {
                     }
 
                     @Override
-                    public void onFailure(Call<SurveyListModel> call, Throwable t) {
+                    public void onFailure(Call<com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyListModel> call, Throwable t) {
 
                     }
                 });

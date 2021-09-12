@@ -14,12 +14,12 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Like
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LoginModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.NormalSignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanDataPushModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyDetailModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.MyEventListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewModel;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyDetailModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.UserConfigModify;
 
 import java.util.List;
@@ -225,6 +225,13 @@ public interface SwebsAPI {
     @Multipart
     @POST("src1/survey/survey_list.php")
     Call<SurveyListModel> getSurveyList(
+            @PartMap Map<String,RequestBody> params
+    );
+
+    // 서베이 자세히 보기
+    @Multipart
+    @POST("src1/survey/survey_detail.php")
+    Call<SurveyDetailModel> getSurveyDetailList(
             @PartMap Map<String,RequestBody> params
     );
 

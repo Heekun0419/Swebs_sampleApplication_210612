@@ -1,6 +1,6 @@
 package com.example.swebs_sampleapplication_210612.ViewModel.Model;
 
-public class SurveyDetailModel {
+public class SurveyListDetailModel {
     private String survey_srl;
     // 메인 이미지
     private String file_srl;

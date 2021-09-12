@@ -2,7 +2,6 @@ package com.example.swebs_sampleapplication_210612.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyDetailModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyListDetailModel;
 import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.databinding.ItemSurveyBinding;
 
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 
@@ -28,9 +24,9 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.surveyView
     private ItemSurveyBinding binding;
     OnItemClickListener listener;
     Context context;
-    List<SurveyDetailModel> list;
+    List<SurveyListDetailModel> list;
 
-    public SurveyAdapter(Context context, List<SurveyDetailModel> list, OnItemClickListener listener){
+    public SurveyAdapter(Context context, List<SurveyListDetailModel> list, OnItemClickListener listener){
         this.context = context;
         this.listener = listener;
         this.list = list;
@@ -46,7 +42,7 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.surveyView
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull surveyViewHolder holder, int position) {
-        SurveyDetailModel model = list.get(position);
+        SurveyListDetailModel model = list.get(position);
         RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) binding.getRoot().getLayoutParams();
         if(position == 0 || position == 9) {
             if (position == 0) {
@@ -82,7 +78,7 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.surveyView
 
     }
 
-    public SurveyDetailModel getItem(int position){
+    public SurveyListDetailModel getItem(int position){
         return list.get(position);
     }
 

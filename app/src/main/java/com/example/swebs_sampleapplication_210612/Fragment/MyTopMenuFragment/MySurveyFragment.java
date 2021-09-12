@@ -3,17 +3,13 @@ package com.example.swebs_sampleapplication_210612.Fragment.MyTopMenuFragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
-import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.SurveyVIewModel;
 import com.example.swebs_sampleapplication_210612.adapter.TablayoutAdapter.SurveyMoreAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMySurveyBinding;
@@ -76,7 +72,7 @@ public class MySurveyFragment extends Fragment {
     }
 
 
-    private void initRecycler(List<SurveyModel> list){
+    private void initRecycler(List<SurveyListModel> list){
         adapter = new SurveyMoreAdapter(requireContext(), list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
         binding.recyclerViewMySurvey.setLayoutManager(linearLayoutManager);

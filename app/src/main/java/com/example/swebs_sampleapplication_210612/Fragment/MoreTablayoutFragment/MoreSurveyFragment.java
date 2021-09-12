@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyListModel;
 import com.example.swebs_sampleapplication_210612.adapter.TablayoutAdapter.SurveyMoreAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMoreSurveyBinding;
 
@@ -20,7 +20,7 @@ public class MoreSurveyFragment extends Fragment {
 
     private FragmentMoreSurveyBinding binding;
     private String categorySrl;
-    private List<SurveyModel> list = new ArrayList<>();
+    private List<SurveyListModel> list = new ArrayList<>();
     public MoreSurveyFragment(){
     }
 
@@ -54,7 +54,7 @@ public class MoreSurveyFragment extends Fragment {
 
     private void addList(){
         for(int i =0; i<10; i++)
-        list.add(new SurveyModel(
+        list.add(new SurveyListModel(
                 1
                 , "진행중"
                 , "0"

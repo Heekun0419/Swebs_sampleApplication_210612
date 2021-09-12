@@ -12,7 +12,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Main
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyDetailModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyListDetailModel;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class MainProductViewModel extends AndroidViewModel {
     // 리뷰 관련..
     private final MutableLiveData<List<MainReviewModel>> reviewList = new MutableLiveData<>();
     // 서베이 관련
-    private final MutableLiveData<List<SurveyDetailModel>> surveyList = new MutableLiveData<>();
+    private final MutableLiveData<List<SurveyListDetailModel>> surveyList = new MutableLiveData<>();
 
     public MainProductViewModel(@NonNull Application application) {
         super(application);
@@ -55,7 +55,7 @@ public class MainProductViewModel extends AndroidViewModel {
         return reviewList;
     }
 
-    public MutableLiveData<List<SurveyDetailModel>> getSurveyList() {
+    public MutableLiveData<List<SurveyListDetailModel>> getSurveyList() {
         return surveyList;
     }
 
