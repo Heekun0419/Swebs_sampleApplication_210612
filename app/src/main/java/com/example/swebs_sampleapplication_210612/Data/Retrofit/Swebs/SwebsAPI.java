@@ -1,6 +1,7 @@
 package com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CategoryModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventAddressModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.MainItemModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.MyReviewModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductDetailModel;
@@ -100,6 +101,20 @@ public interface SwebsAPI {
     @Multipart
     @POST("src1/login/guest_config.php")
     Call<Boolean> guestUserConfigModify(
+            @PartMap Map<String, RequestBody> prams
+    );
+
+    // 이벤트 배송지 수정
+    @Multipart
+    @POST("src1/login/set_event_address_info.php")
+    Call<Boolean> pushAddressModify(
+            @PartMap Map<String, RequestBody> prams
+    );
+
+    // 이벤트 배송지 얻어오기
+    @Multipart
+    @POST("src1/login/get_event_address_info.php")
+    Call<EventAddressModel> getAddressModify(
             @PartMap Map<String, RequestBody> prams
     );
 

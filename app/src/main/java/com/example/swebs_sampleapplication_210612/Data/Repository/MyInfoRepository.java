@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.example.swebs_sampleapplication_210612.Activity.Login_Signup.MakeSNSAccountActivity;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventAddressModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LoginModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
@@ -115,6 +116,30 @@ public class MyInfoRepository {
             formData.put("inputCountry", RequestBody.create(country, MediaType.parse("text/plane")));
 
         return retroAPI.guestUserConfigModify(formData);
+    }
+
+    // 이벤트 정보 수정..
+    public Call<Boolean> pushAddressModify(String userSrl, String name, String phoneNumber, String address1, String address2) {
+        HashMap<String, RequestBody> formData = new HashMap<>();
+        formData.put("inputUserSrl", RequestBody.create(userSrl, MediaType.parse("text/plane")));
+        if (name != null)
+            formData.put("inputName", RequestBody.create(name, MediaType.parse("text/plane")));
+        if (phoneNumber != null)
+            formData.put("inputPhone", RequestBody.create(phoneNumber, MediaType.parse("text/plane")));
+        if (address1 != null)
+            formData.put("inputAddress1", RequestBody.create(address1, MediaType.parse("text/plane")));
+        if (address2 != null)
+            formData.put("inputAddress2", RequestBody.create(address2, MediaType.parse("text/plane")));
+
+        return retroAPI.pushAddressModify(formData);
+    }
+
+    // 이벤트 정보 얻오기.
+    public Call<EventAddressModel> getAddressModify(String userSrl) {
+        HashMap<String, RequestBody> formData = new HashMap<>();
+        formData.put("inputUserSrl", RequestBody.create(userSrl, MediaType.parse("text/plane")));
+
+        return retroAPI.getAddressModify(formData);
     }
 
     public LiveData<List<MyInfo>> getAllToLiveData() {

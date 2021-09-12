@@ -101,7 +101,7 @@
 
 
                 <EditText
-                    android:id="@+id/editText_purchaseQ_company"
+                    android:id="@+id/editText_name"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="25dp"
@@ -136,7 +136,7 @@
 
 
                 <EditText
-                    android:id="@+id/editText_purchaseQ_managerName"
+                    android:id="@+id/editText_phoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="25dp"
@@ -145,7 +145,8 @@
                     android:background="@drawable/radius_login_edittext"
                     android:backgroundTint="#E8EAEA"
                     android:paddingStart="20dp"
-                    android:hint="@string/modify_address4"
+                    android:inputType="phone"
+                    android:hint="010-1234-5678"
                     android:textSize="13dp" />
 
             </LinearLayout>
@@ -238,7 +239,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
 
                 <ImageButton
-                    android:id="@+id/btn_makeAccount_ok"
+                    android:id="@+id/btn_modify_progress"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/radious_button_swebscolor"
@@ -253,10 +254,10 @@
                     android:textColor="@color/white"
                     android:textSize="15dp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/btn_makeAccount_ok"
-                    app:layout_constraintEnd_toEndOf="@+id/btn_makeAccount_ok"
-                    app:layout_constraintStart_toStartOf="@+id/btn_makeAccount_ok"
-                    app:layout_constraintTop_toTopOf="@+id/btn_makeAccount_ok" />
+                    app:layout_constraintBottom_toBottomOf="@+id/btn_modify_progress"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_modify_progress"
+                    app:layout_constraintStart_toStartOf="@+id/btn_modify_progress"
+                    app:layout_constraintTop_toTopOf="@+id/btn_modify_progress" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -264,5 +265,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <include
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        layout="@layout/animation_loading_layout"/>
 
 </FrameLayout>
