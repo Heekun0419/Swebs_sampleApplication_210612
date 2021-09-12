@@ -86,7 +86,7 @@ public class CertifiedCompanyAdapter extends RecyclerView.Adapter<CertifiedCompa
 
         @Override
         public void onClick(View v) {
-            listener.onItemSelected(binding.getRoot(),getAdapterPosition(),"certified");
+            listener.onItemSelected(binding.getRoot(), getAdapterPosition(),"certified");
         }
     }
 
