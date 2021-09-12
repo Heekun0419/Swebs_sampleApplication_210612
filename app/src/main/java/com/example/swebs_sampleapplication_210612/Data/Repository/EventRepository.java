@@ -22,10 +22,11 @@ public class EventRepository {
         this.retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
     }
 
-    public Call<EventListModel> getEventList(String categorySrl) {
+    public Call<EventListModel> getEventList(String categorySrl, String userSrl) {
         HashMap<String, RequestBody> formData = new HashMap<>();
         formData.put("inputCategorySrl", RequestBody.create(categorySrl, MediaType.parse("text/plane")));
-        //formData.put("inputLastIndex", RequestBody.create("9999", MediaType.parse("text/plane")));
+        if (userSrl != null)
+            formData.put("inputUserSrl", RequestBody.create(userSrl, MediaType.parse("text/plane")));
 
         return retroAPI.getEventList(formData);
     }

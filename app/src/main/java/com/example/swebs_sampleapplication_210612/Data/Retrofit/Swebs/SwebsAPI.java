@@ -181,7 +181,7 @@ public interface SwebsAPI {
     );
 
     // 내 이벤트
-   @Multipart
+    @Multipart
     @POST("src1/event/event_history.php")
     Call<MyEventListModel> getMyEventList(
             @PartMap Map<String,RequestBody> params

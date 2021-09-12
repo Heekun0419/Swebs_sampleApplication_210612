@@ -24,7 +24,6 @@ public class MoreEventFragment extends Fragment implements OnItemClickListener {
 
     private FragmentMoreEventBinding binding;
     private EventViewModel viewModel;
-    private String categorySrl;
 
     EventMoreAdapter eventMoreAdapter;
 
@@ -34,7 +33,6 @@ public class MoreEventFragment extends Fragment implements OnItemClickListener {
     }
 
     public static MoreEventFragment newInstance(String categorySrl) {
-
         Bundle args = new Bundle();
         args.putString("category_srl", categorySrl);
         MoreEventFragment fragment = new MoreEventFragment();
@@ -46,7 +44,8 @@ public class MoreEventFragment extends Fragment implements OnItemClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new EventViewModel(requireActivity().getApplication());
-        viewModel.getEventListFromServer(categorySrl);
+        if (getArguments() != null)
+            viewModel.getEventListFromServer(getArguments().getString("category_srl"), null);
     }
 
     @Override

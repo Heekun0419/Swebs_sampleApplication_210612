@@ -98,9 +98,9 @@ public class EventViewModel extends AndroidViewModel {
                 });
     }
 
-    public void getEventListFromServer(String categorySrl) {
+    public void getEventListFromServer(String categorySrl, String userSrl) {
         isLoading.setValue(true);
-        eventRepository.getEventList(categorySrl)
+        eventRepository.getEventList(categorySrl, userSrl)
                 .enqueue(new Callback<EventListModel>() {
                     @Override
                     public void onResponse(Call<EventListModel> call, Response<EventListModel> response) {
@@ -171,152 +171,6 @@ public class EventViewModel extends AndroidViewModel {
 
                     }
                 });
-        /*
-        new EventController(getApplication(), new netEventListener() {
-            @Override
-            public void onSuccess(EventListModel data) {
-                ArrayList<EventModel> tempModel = new ArrayList<>();
-
-                int enableCount = 0;
-                int disableCount = 0;
-                for(EventListDetailModel detailModel : data.getEvent()) {
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    Date startDate = null, endDate = null, nowDate = null;
-                    try {
-                        startDate = simpleDateFormat.parse(detailModel.getStart_date());
-                        endDate = simpleDateFormat.parse(detailModel.getEnd_date());
-                        nowDate = simpleDateFormat.parse(data.getNow_date());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    if (startDate != null && endDate != null && nowDate != null) {
-                        if (nowDate.compareTo(startDate) >= 0
-                        && nowDate.compareTo(endDate) <= 0) {
-                            //
-                            tempModel.add(enableCount++,
-                                    new EventModel(
-                                            1
-                                            , detailModel.getCategory_title()
-                                            , detailModel.getEvent_srl()
-                                            , detailModel.getFile_srl()
-                                            , detailModel.getCorp_name()
-                                            , detailModel.getEvent_title()
-                                            , (endDate.getTime() - nowDate.getTime())/86400000 + "일 남음"
-                                    )
-                            );
-                        } else {
-                            int statusType;
-                            String statusText;
-                            if (nowDate.compareTo(endDate) <= 0) {
-                                statusType = 2;
-                                statusText = "미 진행";
-                            } else {
-                                statusType = 3;
-                                statusText = "모집 종료";
-                            }
-                            tempModel.add(enableCount+(disableCount++),
-                                    new EventModel(
-                                            statusType
-                                            , statusText
-                                            , detailModel.getEvent_srl()
-                                            , detailModel.getFile_srl()
-                                            , detailModel.getCorp_name()
-                                            , detailModel.getEvent_title()
-                                            , simpleDateFormat.format(startDate) + " ~ " + simpleDateFormat.format(endDate)
-                                    )
-                            );
-                        }
-                    }
-                }
-
-                liveEventList.setValue(tempModel);
-                isLoading.setValue(false);
-            }
-
-            @Override
-            public void onFailed() {
-
-            }
-
-            @Override
-            public void onServerError() {
-
-            }
-        }).getEventList();
-         */
-    }
-
-    public void getMyEventListFromServer(String userSrl) {
-        eventRepository.getMyEventList(userSrl, null, null )
-                .enqueue(new Callback<MyEventListModel>() {
-                    @Override
-                    public void onResponse(Call<MyEventListModel> call, Response<MyEventListModel> response) {
-                        if (response.isSuccessful()
-                                && response.body() != null) {
-
-                            ArrayList<EventModel> tempModel = new ArrayList<>();
-
-                            int enableCount = 0;
-                            int disableCount = 0;
-                            for(EventListDetailModel detailModel : response.body().getEvent_history()) {
-                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                Date startDate = null, endDate = null, nowDate = null;
-                                try {
-                                    startDate = simpleDateFormat.parse(detailModel.getStart_date());
-                                    endDate = simpleDateFormat.parse(detailModel.getEnd_date());
-                                    nowDate = simpleDateFormat.parse(response.body().getNow_date());
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                if (startDate != null && endDate != null && nowDate != null) {
-                                    if (nowDate.compareTo(startDate) >= 0
-                                            && nowDate.compareTo(endDate) <= 0) {
-                                        //
-                                        tempModel.add(enableCount++,
-                                                new EventModel(
-                                                        1
-                                                        , detailModel.getCategory_title()
-                                                        , detailModel.getEvent_srl()
-                                                        , detailModel.getFile_srl()
-                                                        , detailModel.getCorp_name()
-                                                        , detailModel.getEvent_title()
-                                                        , (endDate.getTime() - nowDate.getTime())/86400000 + "일 남음"
-                                                )
-                                        );
-                                    } else {
-                                        int statusType;
-                                        String statusText;
-                                        if (nowDate.compareTo(endDate) <= 0) {
-                                            statusType = 2;
-                                            statusText = "미 진행";
-                                        } else {
-                                            statusType = 3;
-                                            statusText = "모집 종료";
-                                        }
-                                        tempModel.add(enableCount+(disableCount++),
-                                                new EventModel(
-                                                        statusType
-                                                        , statusText
-                                                        , detailModel.getEvent_srl()
-                                                        , detailModel.getFile_srl()
-                                                        , detailModel.getCorp_name()
-                                                        , detailModel.getEvent_title()
-                                                        , simpleDateFormat.format(startDate) + " ~ " + simpleDateFormat.format(endDate)
-                                                )
-                                        );
-                                    }
-                                }
-                            }
-                            liveEventList.setValue(tempModel);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<MyEventListModel> call, Throwable t) {
-
-                    }
-                });
-
     }
 
 }

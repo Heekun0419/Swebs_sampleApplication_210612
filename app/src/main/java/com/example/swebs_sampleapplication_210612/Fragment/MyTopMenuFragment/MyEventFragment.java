@@ -28,7 +28,7 @@ public class MyEventFragment extends Fragment implements OnItemClickListener {
         super.onCreate(savedInstanceState);
         viewModel = new EventViewModel(requireActivity().getApplication());
         sPmanager = new SPmanager(requireContext());
-        viewModel.getMyEventListFromServer(sPmanager.getUserSrl());
+        viewModel.getEventListFromServer("myLike", sPmanager.getUserSrl());
     }
 
     @Override
