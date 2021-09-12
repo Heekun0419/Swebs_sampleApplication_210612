@@ -55,4 +55,7 @@ public class SurveyDetailModel {
     public String getCategory_title() {
         return category_title;
     }
+
+
+
 }

@@ -20,8 +20,6 @@ public class SurveyModel {
     private String point;
     private String joinCount;
 
-
-
     public SurveyModel(int status, String statusText, String surveySrl, String imageSrl, String category_title, String title, String dateOfEvent, String point, String joinCount) {
         this.status = status;
         this.statusText = statusText;

@@ -12,6 +12,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Main
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyDetailModel;
 
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class MainProductViewModel extends AndroidViewModel {
     private final MutableLiveData<List<EventListDetailModel>> eventList = new MutableLiveData<>();
     // 리뷰 관련..
     private final MutableLiveData<List<MainReviewModel>> reviewList = new MutableLiveData<>();
+    // 서베이 관련
+    private final MutableLiveData<List<SurveyDetailModel>> surveyList = new MutableLiveData<>();
 
     public MainProductViewModel(@NonNull Application application) {
         super(application);
@@ -52,6 +55,10 @@ public class MainProductViewModel extends AndroidViewModel {
         return reviewList;
     }
 
+    public MutableLiveData<List<SurveyDetailModel>> getSurveyList() {
+        return surveyList;
+    }
+
     public void getListFromServer() {
         isLoading.setValue(true);
         Call<MainItemModel> call = retroAPI.getMainItemList();
@@ -67,6 +74,8 @@ public class MainProductViewModel extends AndroidViewModel {
                         eventList.setValue(response.body().getEvent());
                         // 리뷰 관련
                         reviewList.setValue(response.body().getReview());
+                        // 서베이 관련
+                        surveyList.setValue(response.body().getSurvey());
                     }
                 }
 
