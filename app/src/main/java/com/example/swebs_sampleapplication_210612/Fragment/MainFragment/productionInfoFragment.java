@@ -13,10 +13,12 @@ import android.view.ViewGroup;
 
 import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.CertifiedCompanyActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.EventActivity;
+import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.ReviewProductActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.SurveyActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity.TopMenuActivity;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListDetailModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.MainReviewModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.MainProductViewModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
@@ -77,19 +79,13 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
 
         // 리뷰 관련 데이터
         viewModel.getReviewList().observe(getViewLifecycleOwner(), models -> {
-
+            if (reviewAdapter != null && models != null){
+                // 데이터 하나씩 넣기
+            } else {
+                initReviewRecycler(models);
+            }
         });
 
-
-        ReviewAdapter reviewAdapter = new ReviewAdapter(requireContext());
-        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
-        binding.recyclerViewReview.setLayoutManager(linearLayoutManager3);
-        binding.recyclerViewReview.setAdapter(reviewAdapter);
-
-        SurveyAdapter surveyAdapter = new SurveyAdapter(requireContext(),this);
-        LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
-        binding.recyclerViewSurvey.setLayoutManager(linearLayoutManager4);
-        binding.recyclerViewSurvey.setAdapter(surveyAdapter);
 
         binding.btnEvent.setOnClickListener(v -> {
             moveActivity("event");
@@ -117,7 +113,8 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
     public void onItemSelected(View view, int position, String code) {
         switch (code) {
             case "event": {
-                Intent intent = new Intent(requireContext(), EventActivity.class);
+                Intent intent = new Intent(requireActivity().getApplicationContext(), EventActivity.class);
+                intent.putExtra("eventSrl",eventAdapter.getItem(position).getEvent_srl());
                 startActivity(intent);
                 break;
             }
@@ -129,9 +126,19 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
             case "certified": {
                 Intent intent = new Intent(requireActivity().getApplicationContext(), CertifiedCompanyActivity.class);
                 intent.putExtra("productSrl", productAdapter.getItem(position).getProd_srl());
+
                 startActivity(intent);
                 break;
             }
+            case "review":
+                Intent intent = new Intent(requireActivity().getApplicationContext(), ReviewProductActivity.class);
+                intent.putExtra("prod_srl",reviewAdapter.getItem(position).getProd_srl());
+                intent.putExtra("title",reviewAdapter.getItem(position).getProd_title());
+                intent.putExtra("rating",reviewAdapter.getItem(position).getRate());
+                intent.putExtra("corpName",reviewAdapter.getItem(position).getCorp_name());
+                intent.putExtra("fileSrl",reviewAdapter.getItem(position).getFile_srl());
+                startActivity(intent);
+                break;
         }
     }
 
@@ -143,7 +150,7 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
 
     private void initProductRecycler(List<ProductListModel> models) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
-        productAdapter = new CertifiedCompanyAdapter(requireContext(), models, this);
+        productAdapter = new CertifiedCompanyAdapter(requireContext(),models,this);
         binding.recyclerViewCertifiedCompany.setLayoutManager(linearLayoutManager);
         binding.recyclerViewCertifiedCompany.setAdapter(productAdapter);
     }
@@ -153,5 +160,20 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
         binding.recyclerViewEvent.setLayoutManager(linearLayoutManager2);
         binding.recyclerViewEvent.setAdapter(eventAdapter);
+    }
+
+    private void initReviewRecycler(List<MainReviewModel> list){
+        reviewAdapter = new ReviewAdapter(requireContext(), list, this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
+        binding.recyclerViewReview.setLayoutManager(linearLayoutManager);
+        binding.recyclerViewReview.setAdapter(reviewAdapter);
+    }
+
+    private void initSurveyRecycler(){
+        surveyAdapter = new SurveyAdapter(requireContext(),this);
+        LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
+        binding.recyclerViewSurvey.setLayoutManager(linearLayoutManager4);
+        binding.recyclerViewSurvey.setAdapter(surveyAdapter);
+
     }
 }

@@ -1,5 +1,6 @@
 package com.example.swebs_sampleapplication_210612.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,9 @@ import com.example.swebs_sampleapplication_210612.databinding.ItemProductEventBi
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
@@ -41,8 +45,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         return new EventViewHolder(binding, listener);
     }
 
+    @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
     @Override
     public void onBindViewHolder(@NonNull @NotNull EventViewHolder holder, int position) {
+        EventListDetailModel model = list.get(position);
+
         RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) binding.getRoot().getLayoutParams();
         if(position == 0 || position == 9) {
             if (position == 0) {
@@ -56,6 +63,17 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             layoutParams.leftMargin = 50;
             layoutParams.rightMargin = 0;
         }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date StartDate =simpleDateFormat.parse(model.getStart_date(),new ParsePosition(0));
+        Date EndDate = simpleDateFormat.parse(model.getEnd_date(),new ParsePosition(0));
+
+
+        GlideImage(holder.binding.imageViewProductEventProfile, getImageViewUrl(model.getFile_srl(), "800"));
+        holder.binding.textViewCompanyName.setText(model.getCorp_name());
+        holder.binding.textViewStartDate.setText(simpleDateFormat.format(StartDate));
+        holder.binding.textViewTitle.setText(model.getEvent_title());
+        holder.binding.textViewEndDate.setText("~" + simpleDateFormat.format(EndDate));
+
 
     }
 
@@ -64,22 +82,37 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         return list.size();
     }
 
+    public EventListDetailModel getItem(int position) {
+        return list.get(position);
+    }
+
     public static class EventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView view;
+
         OnItemClickListener listener;
         ItemProductEventBinding binding;
         public EventViewHolder(ItemProductEventBinding binding, OnItemClickListener listener) {
             super(binding.getRoot());
             this.listener = listener;
             this.binding = binding;
-            view = binding.imageViewProductEventProfile;
-            binding.getRoot().setOnClickListener(this);
+
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            listener.onItemSelected(binding.getRoot(),getAdapterPosition(),"event");
+            listener.onItemSelected(itemView,getAdapterPosition(),"event");
         }
+    }
+
+    private String getImageViewUrl(String fileSrl, String Width) {
+        String result = context.getString(R.string.IMAGE_VIEW_URL) + "?inputFileSrl=" + fileSrl;
+        if (Width != null)
+            result += "&inputImageWidth=" + Width;
+        return result;
+    }
+
+    private void GlideImage(ImageView view, String url){
+        Glide.with(context).load(url).centerCrop().into(view);
     }
 
 }

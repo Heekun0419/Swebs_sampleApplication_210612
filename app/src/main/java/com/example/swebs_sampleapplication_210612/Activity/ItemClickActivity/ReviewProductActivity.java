@@ -40,7 +40,7 @@ public class ReviewProductActivity extends AppCompatActivity {
         binding.textViewProductName.setText( getIntent().getStringExtra("title"));
         binding.ratingBar.setRating(Float.parseFloat(getIntent().getStringExtra("rating")));
         binding.textViewRatingNum.setText(Float.toString(binding.ratingBar.getRating()));
-        binding.textViewReviewNum.setText("("+getIntent().getStringExtra("review_count")+")");
+       // binding.textViewReviewNum.setText("("+getIntent().getStringExtra("review_count")+")");
         binding.textViewReviewBrandName.setText(getIntent().getStringExtra("corpName"));
         GlideImage(binding.imageViewReviewProfile, getImageViewUrl(getIntent().getStringExtra("fileSrl"), "300"));
     }
