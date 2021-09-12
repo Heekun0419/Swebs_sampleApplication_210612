@@ -18,6 +18,7 @@ import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.Eve
 import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.ReviewProductActivity;
 import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.SurveyActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
+import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity.MyTopMenuActivity;
 import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity.TopMenuActivity;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListDetailModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.MainReviewModel;
@@ -110,7 +111,10 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         });
 
         binding.btnSurvey.setOnClickListener(v -> {
-            moveActivity("survey");
+            Intent intent = new Intent(requireActivity().getApplicationContext(), MyTopMenuActivity.class);
+            intent.putExtra("resultCode","my_survey");
+            startActivity(intent);
+
         });
 
         binding.includedAppbarProduct.imageButton2.setOnClickListener(v -> {
