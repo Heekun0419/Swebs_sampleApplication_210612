@@ -101,6 +101,22 @@ public class MyInfoRepository {
         return retroAPI.normalUserConfigModify(multipartBody, formData);
     }
 
+    // 게스트 회원 정보 수정...
+    public Call<Boolean> pushGuestConfigModify(String userSrl, String nickname, String birthday, String gender, String country) {
+        HashMap<String, RequestBody> formData = new HashMap<>();
+        formData.put("inputUserSrl", RequestBody.create(userSrl, MediaType.parse("text/plane")));
+        if (nickname != null)
+            formData.put("inputNickName", RequestBody.create(nickname, MediaType.parse("text/plane")));
+        if (birthday != null)
+            formData.put("inputBirthday", RequestBody.create(birthday, MediaType.parse("text/plane")));
+        if (gender != null)
+            formData.put("inputGender", RequestBody.create(gender, MediaType.parse("text/plane")));
+        if (country != null)
+            formData.put("inputCountry", RequestBody.create(country, MediaType.parse("text/plane")));
+
+        return retroAPI.guestUserConfigModify(formData);
+    }
+
     public LiveData<List<MyInfo>> getAllToLiveData() {
         return mMyInfoAll;
     }

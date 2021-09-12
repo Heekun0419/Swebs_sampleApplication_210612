@@ -472,7 +472,12 @@ public class myPageFragment extends Fragment {
                 new DialogClickListener() {
                     @Override
                     public void onPositiveClick(int position) {
-                        viewModel.insertUserInfo("birthday", inputData.get(position));
+                        viewModel.guestUserConfigModify(
+                                null,
+                                inputData.get(position),
+                                null,
+                                null
+                        );
                     }
 
                     @Override
@@ -500,8 +505,12 @@ public class myPageFragment extends Fragment {
                 "취소"), new DialogClickStringListener() {
             @Override
             public void onPositiveClick(String string) {
-                viewModel.insertUserInfo("nickName", string);
-
+                viewModel.guestUserConfigModify(
+                        string,
+                        null,
+                        null,
+                        null
+                );
             }
 
             @Override
@@ -544,9 +553,19 @@ public class myPageFragment extends Fragment {
                     @Override
                     public void onPositiveClick(int position) {
                         if (position == 0)
-                            viewModel.insertUserInfo("gender", "male");
+                            viewModel.guestUserConfigModify(
+                                    null,
+                                    null,
+                                    "male",
+                                    null
+                            );
                         else
-                            viewModel.insertUserInfo("gender", "female");
+                            viewModel.guestUserConfigModify(
+                                    null,
+                                    null,
+                                    "female",
+                                    null
+                            );
                     }
 
                     @Override
@@ -611,7 +630,12 @@ public class myPageFragment extends Fragment {
                 new DialogClickListener() {
                     @Override
                     public void onPositiveClick(int position) {
-                        viewModel.insertUserInfo("country", countryNameToCode(inputData.get(position)));
+                        viewModel.guestUserConfigModify(
+                                null,
+                                null,
+                                null,
+                                countryNameToCode(inputData.get(position))
+                        );
                     }
 
                     @Override

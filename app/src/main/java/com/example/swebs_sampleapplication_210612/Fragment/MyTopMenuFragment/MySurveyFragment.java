@@ -30,7 +30,7 @@ public class MySurveyFragment extends Fragment {
 
     public static MySurveyFragment newInstance(String tabPosition) {
         Bundle args = new Bundle();
-        args.putString("tab",tabPosition);
+        args.putString("tab", tabPosition);
         MySurveyFragment fragment = new MySurveyFragment();
         fragment.setArguments(args);
         return fragment;
@@ -39,7 +39,7 @@ public class MySurveyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null){
+        if (getArguments() != null) {
             tabPosition = getArguments().getString("tab");
         }
         sPmanager = new SPmanager(requireContext());

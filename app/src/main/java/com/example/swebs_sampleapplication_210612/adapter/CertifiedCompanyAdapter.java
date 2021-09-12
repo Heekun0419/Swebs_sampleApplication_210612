@@ -14,6 +14,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Prod
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.databinding.ItemProductCertifiedCompanyBinding;
+import com.example.swebs_sampleapplication_210612.databinding.ItemReCommentBinding;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -24,6 +25,7 @@ public class CertifiedCompanyAdapter extends RecyclerView.Adapter<CertifiedCompa
 
     Context context;
     private ItemProductCertifiedCompanyBinding binding;
+    String ImageUrl = "https://i.pinimg.com/originals/a2/4f/e6/a24fe6cabab71872039e30af52e7dd9e.png";
     OnItemClickListener listener;
     List<ProductListModel> list;
     public CertifiedCompanyAdapter(Context context, List<ProductListModel> list, OnItemClickListener listener){

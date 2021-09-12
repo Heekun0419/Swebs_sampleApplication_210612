@@ -126,4 +126,36 @@ public class MyInfoViewModel extends AndroidViewModel {
             }
         });
     }
+
+    // 게스트 회원 수정...
+    public void guestUserConfigModify(String nickname, String birthday, String gender, String country) {
+        myInfoRepository.pushGuestConfigModify(
+                sPmanager.getUserSrl(),
+                nickname,
+                birthday,
+                gender,
+                country
+        ).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()
+                && response.body() != null
+                && response.body()) {
+                    if (nickname != null)
+                        myInfoRepository.insertMyInfo("nickName", nickname);
+                    if (birthday != null)
+                        myInfoRepository.insertMyInfo("birthday", birthday);
+                    if (gender != null)
+                        myInfoRepository.insertMyInfo("gender", gender);
+                    if (country != null)
+                        myInfoRepository.insertMyInfo("country", country);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+
+            }
+        });
+    }
 }

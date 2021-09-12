@@ -95,6 +95,13 @@ public interface SwebsAPI {
             @PartMap Map<String, RequestBody> prams
     );
 
+    // 게스트회원 - 정보 수정
+    @Multipart
+    @POST("src1/login/guest_config.php")
+    Call<Boolean> guestUserConfigModify(
+            @PartMap Map<String, RequestBody> prams
+    );
+
     // 메인 페이지 API
     @GET("src1/main/main_list.php")
     Call<MainItemModel> getMainItemList();
