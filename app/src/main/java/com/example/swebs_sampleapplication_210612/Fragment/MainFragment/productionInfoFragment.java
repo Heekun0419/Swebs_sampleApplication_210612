@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Main
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.MainProductViewModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyDetailModel;
 import com.example.swebs_sampleapplication_210612.adapter.CertifiedCompanyAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.EventAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
@@ -83,6 +85,13 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
                 // 데이터 하나씩 넣기
             } else {
                 initReviewRecycler(models);
+            }
+        });
+        viewModel.getSurveyList().observe(getViewLifecycleOwner(), models -> {
+            if(surveyAdapter != null && models != null){
+                // 데이터 하나씩 넣기
+            } else {
+                initSurveyRecycler(models);
             }
         });
 
@@ -169,8 +178,8 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         binding.recyclerViewReview.setAdapter(reviewAdapter);
     }
 
-    private void initSurveyRecycler(){
-        surveyAdapter = new SurveyAdapter(requireContext(),this);
+    private void initSurveyRecycler(List<SurveyDetailModel> list){
+        surveyAdapter = new SurveyAdapter(requireContext(),list,this);
         LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
         binding.recyclerViewSurvey.setLayoutManager(linearLayoutManager4);
         binding.recyclerViewSurvey.setAdapter(surveyAdapter);

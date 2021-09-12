@@ -27,7 +27,7 @@ public class EventActivity extends AppCompatActivity {
     private EventViewModel viewModel;
     private FragmentManager manager;
     private String documentSrl;
-
+    private boolean isApplied ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +39,13 @@ public class EventActivity extends AppCompatActivity {
 
         // 이벤트 신청...
         binding.btnEventApply.setOnClickListener(v -> {
+            if(isApplied) {
             Intent intent = new Intent(getApplicationContext(), EventApplyActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+            } else {
+                Toast.makeText(this, "참여한 이벤트 입니다.", Toast.LENGTH_SHORT).show();
+            }
         });
 
         // 찜 클릭
@@ -117,5 +121,15 @@ public class EventActivity extends AppCompatActivity {
 
     private String htmlToString(String html) {
         return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString();
+    }
+
+    private void renderEventApplyButton(){
+        // 활성화 아닐때
+        binding.btnEventApply.setImageResource(R.drawable.radious_button_graycolor);
+        isApplied = false;
+
+        // 활성화 일때
+        binding.btnEventApply.setImageResource(R.drawable.radious_button_swebscolor);
+        isApplied = true;
     }
 }

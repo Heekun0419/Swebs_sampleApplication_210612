@@ -150,16 +150,36 @@
                     android:layout_marginStart="15dp"
                     android:background="@drawable/ic_heart_not_filled" />
 
-                <Button
-                    android:id="@+id/btn_event_apply"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="20dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/radious_button_graycolor"
-                    android:text="이벤트 신청하기"
-                    android:textSize="15dp"
-                    android:textStyle="bold" />
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/btn_event_apply"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/radious_button_swebscolor"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textview_event_apply"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="이벤트 신청하기"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/btn_event_apply"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/btn_event_apply"
+                        app:layout_constraintTop_toTopOf="@+id/btn_event_apply" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 
