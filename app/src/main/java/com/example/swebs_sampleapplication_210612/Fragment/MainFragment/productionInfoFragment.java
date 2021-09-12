@@ -92,26 +92,23 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         binding.recyclerViewSurvey.setAdapter(surveyAdapter);
 
         binding.btnEvent.setOnClickListener(v -> {
-          moveActivity("event");
+            moveActivity("event");
         });
 
         binding.btnCertifiedCompany.setOnClickListener(v -> {
-           moveActivity("certified");
+            moveActivity("certified");
         });
 
         binding.btnReview.setOnClickListener(v -> {
-          moveActivity("review");
+            moveActivity("review");
         });
 
         binding.btnSurvey.setOnClickListener(v -> {
-          moveActivity("survey");
+            moveActivity("survey");
         });
 
-        binding.includedAppbarProduct.imageButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity)requireActivity()).BottomSheetOpen();
-            }
+        binding.includedAppbarProduct.imageButton2.setOnClickListener(v -> {
+            ((MainActivity)requireActivity()).BottomSheetOpen();
         });
         return binding.getRoot();
     }
@@ -130,7 +127,8 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
                 break;
             }
             case "certified": {
-                Intent intent = new Intent(requireContext(), CertifiedCompanyActivity.class);
+                Intent intent = new Intent(requireActivity().getApplicationContext(), CertifiedCompanyActivity.class);
+                intent.putExtra("productSrl", productAdapter.getItem(position).getProd_srl());
                 startActivity(intent);
                 break;
             }
@@ -145,7 +143,7 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
 
     private void initProductRecycler(List<ProductListModel> models) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
-        productAdapter = new CertifiedCompanyAdapter(requireContext(),this);
+        productAdapter = new CertifiedCompanyAdapter(requireContext(), models, this);
         binding.recyclerViewCertifiedCompany.setLayoutManager(linearLayoutManager);
         binding.recyclerViewCertifiedCompany.setAdapter(productAdapter);
     }
