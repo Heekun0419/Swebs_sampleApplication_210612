@@ -1,6 +1,6 @@
 package com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model;
 
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyDetailModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyListDetailModel;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class MainItemModel {
     private List<ProductListModel> product;
     private List<EventListDetailModel> event;
     private List<MainReviewModel> review;
-    private List<SurveyDetailModel> survey;
+    private List<SurveyListDetailModel> survey;
 
     public boolean isSuccess() {
         return success;
@@ -33,7 +33,7 @@ public class MainItemModel {
         return review;
     }
 
-    public List<SurveyDetailModel> getSurvey() {
+    public List<SurveyListDetailModel> getSurvey() {
         return survey;
     }
 }

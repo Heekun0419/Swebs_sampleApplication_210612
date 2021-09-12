@@ -2,14 +2,12 @@ package com.example.swebs_sampleapplication_210612.Data.Repository;
 
 import android.app.Application;
 
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyDetailModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyListModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.MyEventListModel;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyDetailModel;
 
 import java.util.HashMap;
-import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -33,4 +31,14 @@ public class SurveyRepository {
 
         return retroAPI.getSurveyList(formBody);
     }
+
+    public Call<SurveyDetailModel> getSurveyDetailInfo(String inputSurveySrl, String inputUserSrl){
+
+        HashMap<String, RequestBody> formBody = new HashMap<>();
+        formBody.put("inputUserSrl", RequestBody.create(inputUserSrl, MediaType.parse("text/plane")));
+        formBody.put("inputSurveySrl", RequestBody.create(inputSurveySrl, MediaType.parse("text/plane")));
+
+        return retroAPI.getSurveyDetailList(formBody);
+    }
+
 }

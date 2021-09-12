@@ -3,7 +3,6 @@ package com.example.swebs_sampleapplication_210612.adapter.TablayoutAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.R;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyListModel;
 import com.example.swebs_sampleapplication_210612.databinding.ItemMoreSurveyBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,9 +23,9 @@ public class SurveyMoreAdapter extends RecyclerView.Adapter<SurveyMoreAdapter.Su
 
     private ItemMoreSurveyBinding binding;
     Context context;
-    List<SurveyModel> list = new ArrayList<>();
+    List<SurveyListModel> list = new ArrayList<>();
 
-    public SurveyMoreAdapter(Context context, List<SurveyModel>  list){
+    public SurveyMoreAdapter(Context context, List<SurveyListModel>  list){
         this.context = context;
         this.list = list;
     }
@@ -41,7 +40,7 @@ public class SurveyMoreAdapter extends RecyclerView.Adapter<SurveyMoreAdapter.Su
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull @NotNull SurveyMoreHolder holder, int position) {
-        SurveyModel model = list.get(position);
+        SurveyListModel model = list.get(position);
         holder.binding.textviewJoinCount.setText(model.getJoinCount()+ "명 참여중");
         holder.binding.textViewDate.setText(model.getDateOfEvent());
         holder.binding.textViewSurveyTitle.setText(model.getTitle());

@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +22,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Even
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.MainReviewModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.MainProductViewModel;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
-import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyDetailModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyListDetailModel;
 import com.example.swebs_sampleapplication_210612.adapter.CertifiedCompanyAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.EventAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
@@ -133,13 +130,13 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
             }
             case "survey": {
                 Intent intent = new Intent(requireContext(), SurveyActivity.class);
+                intent.putExtra("surveySrl",surveyAdapter.getItem(position).getSurvey_srl());
                 startActivity(intent);
                 break;
             }
             case "certified": {
                 Intent intent = new Intent(requireActivity().getApplicationContext(), CertifiedCompanyActivity.class);
                 intent.putExtra("productSrl", productAdapter.getItem(position).getProd_srl());
-
                 startActivity(intent);
                 break;
             }
@@ -182,7 +179,7 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         binding.recyclerViewReview.setAdapter(reviewAdapter);
     }
 
-    private void initSurveyRecycler(List<SurveyDetailModel> list){
+    private void initSurveyRecycler(List<SurveyListDetailModel> list){
         surveyAdapter = new SurveyAdapter(requireContext(),list,this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
         binding.recyclerViewSurvey.setLayoutManager(linearLayoutManager);
