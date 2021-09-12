@@ -6,6 +6,7 @@ public class CommentInputModel {
     private String reason;
     private String nickname;
     private String profile_srl;
+    private String regdate;
 
     public boolean isSuccess() {
         return success;
@@ -25,5 +26,9 @@ public class CommentInputModel {
 
     public String getProfile_srl() {
         return profile_srl;
+    }
+
+    public String getRegdate() {
+        return regdate;
     }
 }

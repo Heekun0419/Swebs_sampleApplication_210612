@@ -93,19 +93,23 @@ public class CommentViewModel extends AndroidViewModel {
         ).enqueue(new Callback<CommentInputModel>() {
             @Override
             public void onResponse(Call<CommentInputModel> call, Response<CommentInputModel> response) {
-                List<CommentModel> tempCommentListModel = new ArrayList<>();
-                tempCommentListModel.add(new CommentModel(
-                        response.body().getComment_srl()
-                        , content.toString()
-                        , sPmanager.getUserSrl()
-                        , new SimpleDateFormat("yyyy-MM-dd").format(new Date())
-                        , new SimpleDateFormat("yyyy-MM-dd").format(new Date())
-                        , response.body().getNickname()
-                        , response.body().getProfile_srl()
-                        , "0"
-                ));
-                CommentLiveData.setValue(tempCommentListModel);
-
+                if (response.isSuccessful()
+                && response.body() != null) {
+                    if (response.body().isSuccess()) {
+                        List<CommentModel> tempCommentListModel = new ArrayList<>();
+                        tempCommentListModel.add(new CommentModel(
+                                response.body().getComment_srl()
+                                , content.toString()
+                                , sPmanager.getUserSrl()
+                                , new SimpleDateFormat("yyyy-MM-dd").format(new Date())
+                                , new SimpleDateFormat("yyyy-MM-dd").format(new Date())
+                                , response.body().getNickname()
+                                , response.body().getProfile_srl()
+                                , "0"
+                        ));
+                        CommentLiveData.setValue(tempCommentListModel);
+                    }
+                }
             }
 
             @Override

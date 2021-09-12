@@ -103,7 +103,7 @@ public class BottomCommentFragment extends Fragment implements CommentClickListe
         viewModel.getCommentLiveData().observe(getViewLifecycleOwner(), commentModels -> {
             if (adapter != null) {
                 // 추가
-                for (int i=0; i<commentModels.size(); i++){
+                for (int i=0; i<commentModels.size(); i++) {
                     adapter.addItem(commentModels.get(i), adapter.getItemCount()+i);
                 }
             } else {
