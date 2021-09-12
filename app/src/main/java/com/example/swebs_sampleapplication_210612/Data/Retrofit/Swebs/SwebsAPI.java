@@ -125,7 +125,7 @@ public interface SwebsAPI {
     // 댓글 API
     @Multipart
     @POST("src1/comment/comment_list.php")
-    Call<ArrayList<CommentModel>> getCommentList(
+    Call<List<CommentModel>> getCommentList(
             @PartMap Map<String,RequestBody> params
     );
 

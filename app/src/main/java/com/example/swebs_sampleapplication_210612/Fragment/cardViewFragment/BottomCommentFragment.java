@@ -112,12 +112,23 @@ public class BottomCommentFragment extends Fragment implements CommentClickListe
             }
         });
 
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean != null)
+                binding.progressLoading.setVisibility(aBoolean ? View.VISIBLE : View.GONE);
+        });
+
         return binding.getRoot();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        viewModel.allNetworkCancel();
     }
 
     private void initRecyclerView(List<CommentModel> commentModels) {

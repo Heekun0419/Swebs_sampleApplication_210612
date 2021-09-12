@@ -29,11 +29,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CommentViewModel extends AndroidViewModel {
-
-    private MutableLiveData<List<CommentModel>> CommentLiveData = new MutableLiveData<>();
-    private MutableLiveData<List<CommentModel>> ReCommentLiveData = new MutableLiveData<>();
-    private CommentRepository commentRepository;
-    private SPmanager sPmanager;
+    private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
+    private final MutableLiveData<List<CommentModel>> CommentLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<CommentModel>> ReCommentLiveData = new MutableLiveData<>();
+    private final CommentRepository commentRepository;
+    private final SPmanager sPmanager;
+    private Call<List<CommentModel>> callGetComment;
 
     public CommentViewModel(@NonNull Application application) {
         super(application);
@@ -42,19 +43,25 @@ public class CommentViewModel extends AndroidViewModel {
     }
 
     public void getCommentList(String documentSrl, String loadCount, String lastIndex) {
-        commentRepository.getComment(documentSrl, lastIndex, loadCount).enqueue(new Callback<ArrayList<CommentModel>>() {
+        isLoading.setValue(true);
+        callGetComment = commentRepository.getComment(documentSrl, lastIndex, loadCount);
+        callGetComment.enqueue(new Callback<List<CommentModel>>() {
             @Override
-            public void onResponse(Call<ArrayList<CommentModel>> call, Response<ArrayList<CommentModel>> response) {
+            public void onResponse(Call<List<CommentModel>> call, Response<List<CommentModel>> response) {
                 if(response.isSuccessful()) {
                     if(response.body()!=null) {
                         setCommentLiveData(response.body());
                     }
                 }
+
+                isLoading.setValue(false);
+                callGetComment = null;
             }
 
             @Override
-            public void onFailure(Call<ArrayList<CommentModel>> call, Throwable t) {
-
+            public void onFailure(Call<List<CommentModel>> call, Throwable t) {
+                isLoading.setValue(false);
+                callGetComment = null;
             }
         });
     }
@@ -108,6 +115,11 @@ public class CommentViewModel extends AndroidViewModel {
         });
     }
 
+    public void allNetworkCancel() {
+        if (callGetComment != null)
+            callGetComment.cancel();
+    }
+
     public MutableLiveData<List<CommentModel>> getCommentLiveData() {
         return CommentLiveData;
     }
@@ -122,6 +134,10 @@ public class CommentViewModel extends AndroidViewModel {
 
     public void setReCommentLiveData(List<CommentModel> reCommentLiveData) {
         ReCommentLiveData.setValue(reCommentLiveData);
+    }
+
+    public MutableLiveData<Boolean> getIsLoading() {
+        return isLoading;
     }
 
     private String stringToHtml(Editable string) {

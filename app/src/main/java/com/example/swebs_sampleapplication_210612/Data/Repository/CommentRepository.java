@@ -33,7 +33,7 @@ public class CommentRepository {
         return retroAPI.pushComment(formData);
     }
 
-    public Call<ArrayList<CommentModel>> getComment(String documentSrl, String lastIndex, String listCount){
+    public Call<List<CommentModel>> getComment(String documentSrl, String lastIndex, String listCount){
 
         HashMap<String, RequestBody> map = new HashMap<>();
         map.put("inputDocumentSrl", RequestBody.create(documentSrl, MediaType.parse("text/plane")));
