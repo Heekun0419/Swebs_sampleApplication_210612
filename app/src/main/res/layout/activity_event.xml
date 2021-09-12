@@ -207,14 +207,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view9" />
 
-            <ImageView
-                android:id="@+id/imageView_event_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView29" />
-
             <TextView
                 android:id="@+id/textView_event_info_detailText"
                 android:layout_width="match_parent"
@@ -225,31 +217,16 @@
                 android:text="@string/event_info_sample"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView_event_info"/>
+                app:layout_constraintTop_toBottomOf="@+id/textView29"/>
 
-            <ImageButton
-                android:id="@+id/imageButton13"
-                android:layout_width="360dp"
-                android:layout_height="60dp"
+            <ImageView
+                android:id="@+id/imageView_event_info"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/stroke_radius_button_maincolor"
-                android:text="@string/event_info_sample"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_event_info_detailText" />
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="제품정보 자세히 보기 >"
-                android:textColor="@color/swebs_main_color2"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/imageButton13"
-                app:layout_constraintEnd_toEndOf="@+id/imageButton13"
-                app:layout_constraintStart_toStartOf="@+id/imageButton13"
-                app:layout_constraintTop_toTopOf="@+id/imageButton13" />
-
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_event_info_detailText"/>
 
             <View
                 android:id="@+id/view10"
@@ -259,8 +236,7 @@
                 android:background="#F9FAFC"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageButton13" />
-
+                app:layout_constraintTop_toBottomOf="@+id/imageView_event_info" />
 
             <FrameLayout
                 android:id="@+id/frameLayout_event_activity"

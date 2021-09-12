@@ -30,7 +30,7 @@ public class Comment_EventInfoAdapter extends RecyclerView.Adapter<Comment_Event
     Context context;
     private SPmanager sPmanager;
     private ItemCommentBinding binding;
-    private List<CommentModel> commentModels = new ArrayList<>();
+    private List<CommentModel> commentModels;
     private CommentClickListener listener;
 
     public Comment_EventInfoAdapter(Context context, List<CommentModel> commentModels, CommentClickListener listener){
