@@ -288,7 +288,7 @@
                 android:layout_marginBottom="20dp">
 
                 <ImageButton
-                    android:id="@+id/imageButton8"
+                    android:id="@+id/btn_event_delete"
                     android:layout_width="360dp"
                     android:layout_height="50dp"
                     android:background="@drawable/radious_rectangle_red"
@@ -303,10 +303,10 @@
                     android:textColor="@color/white"
                     android:textSize="15dp"
                     android:text="이벤트 취소"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageButton8"
-                    app:layout_constraintEnd_toEndOf="@+id/imageButton8"
-                    app:layout_constraintStart_toStartOf="@+id/imageButton8"
-                    app:layout_constraintTop_toTopOf="@+id/imageButton8" />
+                    app:layout_constraintBottom_toBottomOf="@+id/btn_event_delete"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_event_delete"
+                    app:layout_constraintStart_toStartOf="@+id/btn_event_delete"
+                    app:layout_constraintTop_toTopOf="@+id/btn_event_delete" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

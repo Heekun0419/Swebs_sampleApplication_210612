@@ -92,4 +92,12 @@ public class EventRepository {
 
         return retroAPI.getEventApplyInfo(formBody);
     }
+
+    // 이벤트 신청 취소
+    public Call<Boolean> pushEventApplyDelete(String partSrl) {
+        HashMap<String, RequestBody> formBody = new HashMap<>();
+        formBody.put("inputPartSrl", RequestBody.create(partSrl, MediaType.parse("text/plane")));
+
+        return retroAPI.pushEventApplyDelete(formBody);
+    }
 }

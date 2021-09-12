@@ -3,6 +3,7 @@ package com.example.swebs_sampleapplication_210612.Activity.EventApply;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.R;
@@ -28,6 +29,22 @@ public class EventRegisterSuccessActivity extends AppCompatActivity {
         // 신청 정보 받아오기기
         eventViewModel.getEventApplyInfo(getIntent().getStringExtra("partSrl"));
 
+
+        binding.btnEventDelete.setOnClickListener(v -> {
+            eventViewModel.pushEventApplyDelete(getIntent().getStringExtra("partSrl"));
+        });
+        
+        // 정보... 
+        eventViewModel.getProgressResult().observe(this, s -> {
+            if (s != null)
+                if (s.equals("deleteSuccess")) {
+                    Toast.makeText(this, "이벤트 신청 취소 완료", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else if (s.equals("deleteFailed"))
+                    Toast.makeText(this, "이벤트 신청 실패", Toast.LENGTH_SHORT).show();
+                else if (s.equals("serverError"))
+                    Toast.makeText(this, "서버와 연결이 원활하지 않습니다.", Toast.LENGTH_SHORT).show();
+        });
 
         // 신청 정보 UI UPDATE
         eventViewModel.getLiveEventApplyInfo().observe(this, model -> {

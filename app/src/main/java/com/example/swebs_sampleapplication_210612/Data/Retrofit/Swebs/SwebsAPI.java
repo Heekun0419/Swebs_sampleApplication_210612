@@ -171,6 +171,13 @@ public interface SwebsAPI {
     Call<EventApplyInfoModel> getEventApplyInfo(
             @PartMap Map<String,RequestBody> params
     );
+
+    // 이벤트 신청 취소
+    @Multipart
+    @POST("src1/event/event_apply_delete.php")
+    Call<Boolean> pushEventApplyDelete(
+            @PartMap Map<String,RequestBody> params
+    );
     // END - Event API
 
     // START - Document, Comment API

@@ -24,6 +24,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Even
 import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
 import com.example.swebs_sampleapplication_210612.Dialog.EventApplyDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.NumberPickerDialog2;
+import com.example.swebs_sampleapplication_210612.Dialog.OneButtonBasicDialog;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.NumberPickerModel2;
 import com.example.swebs_sampleapplication_210612.R;
@@ -35,11 +36,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventApplyActivity extends AppCompatActivity {
+    private final String DIALOG_TITLE = "이벤트 신청 안내";
     private ActivityApplyEventBinding binding;
     private MyInfoViewModel myInfoViewModel;
     private EventViewModel eventViewModel;
     private List<EventOptionModel> eventOption;
-    private String selectOptionSrl;
+    private String selectOptionSrl = null;
     private String eventPartSrl;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -141,6 +143,20 @@ public class EventApplyActivity extends AppCompatActivity {
 
     private void pushEventApply() {
         // 빈칸 체크
+        String dialogMsg = null;
+        if (binding.editTextName.getText().length() <= 0)
+            dialogMsg = "이름을 입력 해주세요.";
+        else if (binding.editTextPhoneNumber.getText().length() <= 0)
+            dialogMsg = "전화번호를 입력 해주세요.";
+        else if (binding.addressData1.getText().length() <= 0)
+            dialogMsg = "주소를 입력해주세요.";
+        else if (eventOption.size() >= 1 && selectOptionSrl == null)
+            dialogMsg = "옵션을 선택 해주세요.";
+
+        if (dialogMsg != null) {
+            showOneButtonDialog(DIALOG_TITLE, dialogMsg);
+            return;
+        }
 
         eventViewModel.pushEventApply(
                 getIntent().getStringExtra("eventSrl"),
@@ -244,5 +260,30 @@ public class EventApplyActivity extends AppCompatActivity {
         String result = getString(R.string.IMAGE_VIEW_URL) + "?inputFileSrl=" + fileSrl;
         if (Width != null) result += "&inputImageWidth=" + Width;
         return result;
+    }
+
+    private void showOneButtonDialog(String title, String content) {
+        OneButtonBasicDialog oneButtonBasicDialog = new OneButtonBasicDialog(this
+                , new BasicDialogTextModel(title, content, "확인", "")
+                , new DialogClickListener() {
+            @Override
+            public void onPositiveClick(int position) {
+
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+
+            @Override
+            public void onCloseClick() {
+
+            }
+        });
+
+        oneButtonBasicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        oneButtonBasicDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        oneButtonBasicDialog.show();
     }
 }

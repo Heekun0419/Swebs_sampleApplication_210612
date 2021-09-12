@@ -40,6 +40,7 @@ public class EventViewModel extends AndroidViewModel {
     private final MutableLiveData<List<EventOptionModel>> liveEventOption = new MutableLiveData<>();
     private final MutableLiveData<String> liveApplyEventPartSrl = new MutableLiveData<>();
     private final MutableLiveData<EventApplyInfoModel> liveEventApplyInfo = new MutableLiveData<>();
+    private final MutableLiveData<String> progressResult = new MutableLiveData<>();
 
     public EventViewModel(@NonNull Application application) {
         super(application);
@@ -68,6 +69,9 @@ public class EventViewModel extends AndroidViewModel {
     }
     public MutableLiveData<EventApplyInfoModel> getLiveEventApplyInfo() {
         return liveEventApplyInfo;
+    }
+    public MutableLiveData<String> getProgressResult() {
+        return progressResult;
     }
 
     public void pushEventLike(String eventSrl) {
@@ -253,6 +257,28 @@ public class EventViewModel extends AndroidViewModel {
                     @Override
                     public void onFailure(Call<EventApplyInfoModel> call, Throwable t) {
 
+                    }
+                });
+    }
+
+    // 이벤트 신청 취소
+    public void pushEventApplyDelete(String partSrl) {
+        eventRepository.pushEventApplyDelete(partSrl)
+                .enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful()
+                        && response.body() != null) {
+                            if (response.body())
+                                progressResult.setValue("deleteSuccess");
+                            else
+                                progressResult.setValue("deleteFailed");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        progressResult.setValue("serverError");
                     }
                 });
     }
