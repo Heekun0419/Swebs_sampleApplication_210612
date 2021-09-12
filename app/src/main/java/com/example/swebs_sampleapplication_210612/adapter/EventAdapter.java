@@ -29,7 +29,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     Context context;
     private ItemProductEventBinding binding;
     OnItemClickListener listener;
-    List<EventListDetailModel> list;
+    private final List<EventListDetailModel> list;
 
     public EventAdapter (Context context, List<EventListDetailModel> list, OnItemClickListener listener){
         this.context = context;
@@ -73,8 +73,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         holder.binding.textViewStartDate.setText(simpleDateFormat.format(StartDate));
         holder.binding.textViewTitle.setText(model.getEvent_title());
         holder.binding.textViewEndDate.setText("~" + simpleDateFormat.format(EndDate));
-
-
     }
 
     @Override
@@ -100,7 +98,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
         @Override
         public void onClick(View v) {
-            listener.onItemSelected(itemView,getAdapterPosition(),"event");
+            listener.onItemSelected(itemView, getAdapterPosition(),"event");
         }
     }
 

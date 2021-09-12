@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,7 +124,7 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         switch (code) {
             case "event": {
                 Intent intent = new Intent(requireActivity().getApplicationContext(), EventActivity.class);
-                intent.putExtra("eventSrl",eventAdapter.getItem(position).getEvent_srl());
+                intent.putExtra("eventSrl", eventAdapter.getItem(position).getEvent_srl());
                 startActivity(intent);
                 break;
             }
@@ -164,10 +165,10 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         binding.recyclerViewCertifiedCompany.setAdapter(productAdapter);
     }
 
-    private void initEventRecycler(List<EventListDetailModel> list){
-        EventAdapter eventAdapter = new EventAdapter(requireContext(),list,this);
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
-        binding.recyclerViewEvent.setLayoutManager(linearLayoutManager2);
+    private void initEventRecycler(List<EventListDetailModel> models){
+        eventAdapter = new EventAdapter(requireContext(),models,this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
+        binding.recyclerViewEvent.setLayoutManager(linearLayoutManager);
         binding.recyclerViewEvent.setAdapter(eventAdapter);
     }
 
@@ -180,8 +181,8 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
 
     private void initSurveyRecycler(List<SurveyDetailModel> list){
         surveyAdapter = new SurveyAdapter(requireContext(),list,this);
-        LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
-        binding.recyclerViewSurvey.setLayoutManager(linearLayoutManager4);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
+        binding.recyclerViewSurvey.setLayoutManager(linearLayoutManager);
         binding.recyclerViewSurvey.setAdapter(surveyAdapter);
 
     }
