@@ -2,6 +2,9 @@ package com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CategoryModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventAddressModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventApplyInfoModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventApplyModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventOptionModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.MainItemModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.MyReviewModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ProductDetailModel;
@@ -140,6 +143,34 @@ public interface SwebsAPI {
     Call<CategoryModel> getCategory(
             @PartMap Map<String, RequestBody> prams
     );
+
+    // 내 이벤트
+    @Multipart
+    @POST("src1/event/event_history.php")
+    Call<MyEventListModel> getMyEventList(
+            @PartMap Map<String,RequestBody> params
+    );
+
+    // 이벤트 옵션 불러오기
+    @Multipart
+    @POST("src1/event/get_event_option.php")
+    Call<List<EventOptionModel>> getEventOption(
+            @PartMap Map<String,RequestBody> params
+    );
+
+    // 이벤트 신청 하기.
+    @Multipart
+    @POST("src1/event/event_apply.php")
+    Call<EventApplyModel> pushEventApply(
+            @PartMap Map<String,RequestBody> params
+    );
+
+    // 이벤트 신청 입력 정보
+    @Multipart
+    @POST("src1/event/get_apply_info.php")
+    Call<EventApplyInfoModel> getEventApplyInfo(
+            @PartMap Map<String,RequestBody> params
+    );
     // END - Event API
 
     // START - Document, Comment API
@@ -204,13 +235,6 @@ public interface SwebsAPI {
     @Multipart
     @POST("src1/product/review_view.php")
     Call<ReviewModel> getReviewDetailList(
-            @PartMap Map<String,RequestBody> params
-    );
-
-    // 내 이벤트
-    @Multipart
-    @POST("src1/event/event_history.php")
-    Call<MyEventListModel> getMyEventList(
             @PartMap Map<String,RequestBody> params
     );
 

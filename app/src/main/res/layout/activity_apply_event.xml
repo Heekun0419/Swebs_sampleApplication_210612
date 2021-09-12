@@ -161,6 +161,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView_company_name" />
 
+                    <!--
                     <TextView
                         android:id="@+id/textView8"
                         android:layout_width="wrap_content"
@@ -179,6 +180,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/textView8"
                         app:layout_constraintStart_toEndOf="@+id/textView8"
                         app:layout_constraintTop_toTopOf="@+id/textView8" />
+                    -->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -218,7 +220,7 @@
 
 
             <EditText
-                android:id="@+id/editText_purchaseQ_company"
+                android:id="@+id/editText_name"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="25dp"
@@ -253,7 +255,7 @@
 
 
             <EditText
-                android:id="@+id/editText_purchaseQ_managerName"
+                android:id="@+id/editText_phoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="25dp"
@@ -261,8 +263,9 @@
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/radius_login_edittext"
                 android:backgroundTint="#F9FAFC"
+                android:hint="010-1234-5678"
+                android:inputType="phone"
                 android:paddingStart="20dp"
-                android:hint="@string/modify_address4"
                 android:textSize="13dp" />
 
         </LinearLayout>
@@ -304,7 +307,7 @@
                 android:ellipsize="end"/>
 
             <EditText
-                android:id="@+id/editText_eventAddress_modify"
+                android:id="@+id/address_data2"
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="25dp"
                 android:layout_marginTop="15dp"
@@ -358,7 +361,7 @@
                 android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout_country_select"
+                android:id="@+id/constraintLayout_option_select"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -366,7 +369,7 @@
                 android:layout_marginStart="25dp">
 
                 <TextView
-                    android:id="@+id/textView_country_select"
+                    android:id="@+id/textView_option_select"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/radious_button_graycolor"

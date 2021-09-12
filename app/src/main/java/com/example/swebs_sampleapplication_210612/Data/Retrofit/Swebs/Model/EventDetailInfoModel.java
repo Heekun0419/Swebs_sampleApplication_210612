@@ -7,6 +7,7 @@ public class EventDetailInfoModel {
     private String corp_name;
     private String start_date;
     private String end_date;
+    private String now_date;
     private String file_srl;
     @Nullable
     private String content_file_srl;
@@ -31,6 +32,10 @@ public class EventDetailInfoModel {
 
     public String getEnd_date() {
         return end_date;
+    }
+
+    public String getNow_date() {
+        return now_date;
     }
 
     public String getFile_srl() {

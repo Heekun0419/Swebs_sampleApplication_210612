@@ -1,10 +1,13 @@
 package com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -22,6 +25,9 @@ import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.EventViewModel;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityEventBinding;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class EventActivity extends AppCompatActivity {
     private ActivityEventBinding binding;
     private EventViewModel viewModel;
@@ -35,16 +41,16 @@ public class EventActivity extends AppCompatActivity {
         viewModel = new EventViewModel(getApplication());
         setContentView(binding.getRoot());
 
+
         viewModel.getEventDetailFromServer(getIntent().getStringExtra("eventSrl"));
 
         // 이벤트 신청...
         binding.btnEventApply.setOnClickListener(v -> {
-            if(isApplied) {
+            if (isApplied) {
                 Intent intent = new Intent(getApplicationContext(), EventApplyActivity.class);
-                startActivity(intent);
+                intent.putExtra("eventSrl", getIntent().getStringExtra("eventSrl"));
+                finishResult.launch(intent);
                 overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
-            } else {
-                Toast.makeText(this, "참여한 이벤트 입니다.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -82,7 +88,8 @@ public class EventActivity extends AppCompatActivity {
                         .into(binding.imageViewEventInfo);
 
             // 이벤트 참여 가능...
-            renderEventApplyButton(models.isCan_join());
+            String eventStatus = getStatusFromDate(models.getNow_date(), models.getStart_date(), models.getEnd_date());
+            renderEventApplyButton(models.isCan_join(), eventStatus);
 
             // 이벤트 본문
             binding.textViewEventInfoDetailText.setText(htmlToString(models.getContent()));
@@ -116,6 +123,42 @@ public class EventActivity extends AppCompatActivity {
 
     }
 
+    private final ActivityResultLauncher<Intent> finishResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    if (result.getData() != null)
+                        if (result.getData().getStringExtra("data").equals("finish"))
+                            finish();
+                }
+            }
+    );
+
+    private String getStatusFromDate(String now_Date, String start_Date, String end_Date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = null, endDate = null, nowDate = null;
+        try {
+            startDate = simpleDateFormat.parse(start_Date);
+            endDate = simpleDateFormat.parse(end_Date);
+            nowDate = simpleDateFormat.parse(now_Date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (nowDate.compareTo(startDate) >= 0
+                && nowDate.compareTo(endDate) <= 0) {
+            // 이벤트 기간 남았을 경우...
+            return "progress";
+        } else {
+            int statusType;
+            String statusText;
+            if (nowDate.compareTo(endDate) <= 0) {
+                return "notProgress";
+            } else {
+                return "deadLine";
+            }
+        }
+    }
+
     private String getImageViewUrl(String fileSrl, String Width) {
         String result = getString(R.string.IMAGE_VIEW_URL) + "?inputFileSrl=" + fileSrl;
         if (Width != null) result += "&inputImageWidth=" + Width;
@@ -126,15 +169,21 @@ public class EventActivity extends AppCompatActivity {
         return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString();
     }
 
-    private void renderEventApplyButton(boolean isCanJoin) {
-        if (isCanJoin) {
+    private void renderEventApplyButton(boolean isCanJoin, String eventStatus) {
+        if (isCanJoin && eventStatus.equals("progress")) {
             binding.btnEventApply.setImageResource(R.drawable.radious_button_swebscolor);
             binding.textviewEventApply.setText("이벤트 신청하기");
             isApplied = true;
         } else {
             binding.btnEventApply.setImageResource(R.drawable.radious_button_graycolor);
-            binding.textviewEventApply.setText("신청 완료");
             isApplied = false;
+            
+            if (eventStatus.equals("notProgress"))
+                binding.textviewEventApply.setText("미 진행 이벤트");
+            else if (eventStatus.equals("deadLine"))
+                binding.textviewEventApply.setText("마감된 이벤트");
+            else
+                binding.textviewEventApply.setText("신청된 이벤트");
         }
     }
 }
