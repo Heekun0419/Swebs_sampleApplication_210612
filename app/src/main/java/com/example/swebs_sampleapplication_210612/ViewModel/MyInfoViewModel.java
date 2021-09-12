@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventAddressModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LoginModel;
 import com.example.swebs_sampleapplication_210612.Data.Room.Swebs.Entity.MyInfo;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
@@ -25,6 +26,9 @@ public class MyInfoViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> progressResult = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
+
+    // 이벤트 배송지
+    private final MutableLiveData<EventAddressModel> eventAddressInfo = new MutableLiveData<>();
 
     public MyInfoRepository myInfoRepository;
 
@@ -53,6 +57,10 @@ public class MyInfoViewModel extends AndroidViewModel {
 
     public MutableLiveData<Boolean> getIsLoading() {
         return isLoading;
+    }
+
+    public MutableLiveData<EventAddressModel> getEventAddressInfo() {
+        return eventAddressInfo;
     }
 
     public void loginForNormal(String email, String password) {
@@ -157,5 +165,59 @@ public class MyInfoViewModel extends AndroidViewModel {
 
             }
         });
+    }
+
+    // 기본 배송지 수정
+    public void addressModify(String name, String phoneNumber, String address1, String address2) {
+        isLoading.setValue(true);
+
+        myInfoRepository.pushAddressModify(
+                sPmanager.getUserSrl(),
+                name,
+                phoneNumber,
+                address1,
+                address2
+        ).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()
+                && response.body() != null) {
+                    if (response.body())
+                        progressResult.setValue("modifySuccess");
+                    else
+                        progressResult.setValue("modifyFailed");
+                }
+
+                isLoading.setValue(false);
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                isLoading.setValue(false);
+                progressResult.setValue("serverError");
+            }
+        });
+    }
+
+    // 이벤트 배송지 얻어오기
+    public void getEventAddressFromServer() {
+        isLoading.setValue(true);
+
+        myInfoRepository.getAddressModify(sPmanager.getUserSrl())
+                .enqueue(new Callback<EventAddressModel>() {
+                    @Override
+                    public void onResponse(Call<EventAddressModel> call, Response<EventAddressModel> response) {
+                        if (response.isSuccessful()
+                        && response.body() != null)
+                            eventAddressInfo.setValue(response.body());
+
+                        isLoading.setValue(false);
+                    }
+
+                    @Override
+                    public void onFailure(Call<EventAddressModel> call, Throwable t) {
+                        isLoading.setValue(false);
+                    }
+                });
     }
 }

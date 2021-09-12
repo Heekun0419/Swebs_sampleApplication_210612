@@ -4,10 +4,13 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -22,6 +25,7 @@ import com.google.android.gms.tasks.Task;
 public class AdressModifyActivity extends AppCompatActivity {
     private ActivityAdressModifyBinding binding;
     private MyInfoViewModel viewModel;
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +34,9 @@ public class AdressModifyActivity extends AppCompatActivity {
 
         viewModel = new MyInfoViewModel(getApplication());
 
+        // 이벤트 정보 얻어오기
+        viewModel.getEventAddressFromServer();
+
         binding.btnInformationActivityBack.setOnClickListener(v -> onBackPressed());
 
         binding.btnAddressSearch.setOnClickListener(v -> {
@@ -37,9 +44,52 @@ public class AdressModifyActivity extends AppCompatActivity {
             AddressResult.launch(intent);
         });
 
-        binding.btnMakeAccountOk.setOnClickListener(v -> {
-
+        // 저장하기...
+        binding.btnModifyProgress.setOnClickListener(v -> {
+            modifyEventInfo();
         });
+
+        // 서버에서 얻오기
+        viewModel.getEventAddressInfo().observe(this, models -> {
+            if (models != null) {
+                if (models.getName() != null)
+                    binding.editTextName.setText(models.getName());
+                if (models.getPhone_number() != null)
+                    binding.editTextPhoneNumber.setText(models.getPhone_number());
+                if (models.getAddress1() != null)
+                    binding.addressData1.setText(models.getAddress1());
+                if (models.getAddress2() != null)
+                    binding.addressData2.setText(models.getAddress2());
+            }
+        });
+
+        // 수정 완료
+        viewModel.getProgressResult().observe(this, s -> {
+            if (s != null) {
+                switch (s) {
+                    case "modifySuccess":
+                        finish();
+                        break;
+                    case "modifyFailed":
+
+                        break;
+                    case "serverError":
+
+                        break;
+                }
+            }
+        });
+
+        // 로딩
+        viewModel.getIsLoading().observe(this, aBoolean -> {
+            if (aBoolean != null) {
+                if (aBoolean)
+                    binding.loadingView.getRoot().setOnTouchListener((v, event) -> true);
+                binding.loadingView.getRoot().setVisibility(aBoolean ? View.VISIBLE : View.GONE);
+            }
+        });
+
+        binding.editTextPhoneNumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
     }
 
     private final ActivityResultLauncher<Intent> AddressResult = registerForActivityResult(
@@ -50,4 +100,13 @@ public class AdressModifyActivity extends AppCompatActivity {
             }
         }
     );
+
+    private void modifyEventInfo() {
+        viewModel.addressModify(
+                binding.editTextName.getText().toString(),
+                binding.editTextPhoneNumber.getText().toString(),
+                binding.addressData1.getText().toString(),
+                binding.addressData2.getText().toString()
+        );
+    }
 }
