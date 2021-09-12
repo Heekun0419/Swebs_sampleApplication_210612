@@ -3,6 +3,7 @@ package com.example.swebs_sampleapplication_210612.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,10 @@ import com.example.swebs_sampleapplication_210612.databinding.ItemCommentBinding
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Comment_EventInfoAdapter extends RecyclerView.Adapter<Comment_EventInfoAdapter.CommentViewHolder> {
@@ -53,11 +57,13 @@ public class Comment_EventInfoAdapter extends RecyclerView.Adapter<Comment_Event
 
         // 댓글 본문
         holder.binding.textViewCommentContent.setText(htmlToString(commentModel.getContent()));
+
         // 댓글 등록 일자
-        if (commentModel.getRegdate().equals(commentModel.getLastupadate()))
-            holder.binding.textViewCommentDate.setText(commentModel.getRegdate());
+        if (commentModel.getLastupdate() == null || commentModel.getLastupdate().equals(""))
+            holder.binding.textViewCommentDate.setText(fullDateToShortDate(commentModel.getRegdate()));
         else
-            holder.binding.textViewCommentDate.setText(commentModel.getRegdate() + "(수정됨)");
+            holder.binding.textViewCommentDate.setText(fullDateToShortDate(commentModel.getLastupdate()) + " (수정됨)");
+
         // 댓글 닉네임
         holder.binding.textViewUserName.setText(commentModel.getNickname());
         // 대댓글
@@ -99,6 +105,10 @@ public class Comment_EventInfoAdapter extends RecyclerView.Adapter<Comment_Event
         return commentModels.size();
     }
 
+    public CommentModel getItem(int position) {
+        return this.commentModels.get(position);
+    }
+
     public static class CommentViewHolder extends RecyclerView.ViewHolder{
         ItemCommentBinding binding;
         CommentClickListener listener;
@@ -136,5 +146,10 @@ public class Comment_EventInfoAdapter extends RecyclerView.Adapter<Comment_Event
         commentModels.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position,commentModels.size());
+    }
+
+    private String fullDateToShortDate(String s) {
+        Date date = new SimpleDateFormat("yyyyMMddHHmmss").parse("20210913185326", new ParsePosition(0));
+        return new SimpleDateFormat("yyyy-MM-dd").format(date);
     }
 }

@@ -6,17 +6,17 @@ public class CommentModel {
     private String content;
     private String member_srl;
     private String regdate;
-    private String lastupadate;
+    private String lastupdate;
     private String nickname;
     private String profile_srl;
     private String recomment_count;
 
-    public CommentModel(String comment_srl, String content, String member_srl, String regdate, String lastupadate, String nickname, String profile_srl, String recomment_count) {
+    public CommentModel(String comment_srl, String content, String member_srl, String regdate, String lastupdate, String nickname, String profile_srl, String recomment_count) {
         this.comment_srl = comment_srl;
         this.content = content;
         this.member_srl = member_srl;
         this.regdate = regdate;
-        this.lastupadate = lastupadate;
+        this.lastupdate = lastupdate;
         this.nickname = nickname;
         this.profile_srl = profile_srl;
         this.recomment_count = recomment_count;
@@ -38,8 +38,8 @@ public class CommentModel {
         return regdate;
     }
 
-    public String getLastupadate() {
-        return lastupadate;
+    public String getLastupdate() {
+        return lastupdate;
     }
 
     public String getNickname() {

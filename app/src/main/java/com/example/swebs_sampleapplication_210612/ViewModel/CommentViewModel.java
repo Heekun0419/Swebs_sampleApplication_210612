@@ -32,6 +32,7 @@ public class CommentViewModel extends AndroidViewModel {
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     private final MutableLiveData<List<CommentModel>> CommentLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<CommentModel>> ReCommentLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Integer> liveDeleteCommentPosition = new MutableLiveData<>();
     private final CommentRepository commentRepository;
     private final SPmanager sPmanager;
     private Call<List<CommentModel>> callGetComment;
@@ -102,7 +103,7 @@ public class CommentViewModel extends AndroidViewModel {
                                 , content.toString()
                                 , sPmanager.getUserSrl()
                                 , new SimpleDateFormat("yyyy-MM-dd").format(new Date())
-                                , new SimpleDateFormat("yyyy-MM-dd").format(new Date())
+                                , null
                                 , response.body().getNickname()
                                 , response.body().getProfile_srl()
                                 , "0"
@@ -114,6 +115,29 @@ public class CommentViewModel extends AndroidViewModel {
 
             @Override
             public void onFailure(Call<CommentInputModel> call, Throwable t) {
+
+            }
+        });
+    }
+
+    // 댓글 삭제
+    public void pushCommentDelete(String commentSrl, int position) {
+        commentRepository.pushCommentDelete(
+                sPmanager.getUserSrl(),
+                commentSrl
+        ).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()
+                && response.body() != null) {
+                    if (response.body())
+                        liveDeleteCommentPosition.setValue(position);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
 
             }
         });
@@ -146,5 +170,9 @@ public class CommentViewModel extends AndroidViewModel {
 
     private String stringToHtml(Editable string) {
         return HtmlCompat.toHtml(string, HtmlCompat.TO_HTML_PARAGRAPH_LINES_INDIVIDUAL);
+    }
+
+    public MutableLiveData<Integer> getLiveDeleteCommentPosition() {
+        return liveDeleteCommentPosition;
     }
 }

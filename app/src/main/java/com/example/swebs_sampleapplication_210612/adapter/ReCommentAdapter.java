@@ -17,6 +17,9 @@ import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 import com.example.swebs_sampleapplication_210612.adapter.Listener.CommentClickListener;
 import com.example.swebs_sampleapplication_210612.databinding.ItemReCommentBinding;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ReCommentAdapter extends RecyclerView.Adapter<ReCommentAdapter.ReCommentViewHolder> {
@@ -46,11 +49,13 @@ public class ReCommentAdapter extends RecyclerView.Adapter<ReCommentAdapter.ReCo
 
         // 댓글 본문
         holder.binding.textviewRecommentContent.setText(htmlToString(model.getContent()));
+
         // 댓글 등록 일자
-        if (model.getRegdate().equals(model.getLastupadate()))
-            holder.binding.textViewRecommentRegDate.setText(model.getRegdate());
+        if (model.getLastupdate() == null || model.getLastupdate().equals(""))
+            holder.binding.textViewRecommentRegDate.setText(fullDateToShortDate(model.getRegdate()));
         else
-            holder.binding.textViewRecommentRegDate.setText(model.getRegdate() + "(수정됨)");
+            holder.binding.textViewRecommentRegDate.setText(fullDateToShortDate(model.getLastupdate()) + " (수정됨)");
+
         // 댓글 닉네임
         holder.binding.textViewRecommentName.setText(model.getNickname());
 
@@ -74,6 +79,10 @@ public class ReCommentAdapter extends RecyclerView.Adapter<ReCommentAdapter.ReCo
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public CommentModel getItem(int position) {
+        return this.list.get(position);
     }
 
     public static class ReCommentViewHolder extends RecyclerView.ViewHolder {
@@ -103,9 +112,15 @@ public class ReCommentAdapter extends RecyclerView.Adapter<ReCommentAdapter.ReCo
         notifyItemInserted(position);
     }
 
-    public void removeItem(int position){
+    public void removeItem(int position) {
         list.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position,list.size());
     }
+
+    private String fullDateToShortDate(String s) {
+        Date date = new SimpleDateFormat("yyyyMMddHHmmss").parse("20210913185326", new ParsePosition(0));
+        return new SimpleDateFormat("yyyy-MM-dd").format(date);
+    }
+
 }

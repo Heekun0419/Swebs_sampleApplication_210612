@@ -5,13 +5,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
+import com.example.swebs_sampleapplication_210612.Dialog.TwoButtonBasicDialog;
+import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.CommentViewModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
@@ -72,6 +78,12 @@ public class ReCommentActivity extends AppCompatActivity implements CommentClick
             binding.textViewRecommentCount.setText(adapter.getItemCount() + " 개의 답글");
         });
 
+        // 댓글 삭제...
+        viewModel.getLiveDeleteCommentPosition().observe(this, integer -> {
+            adapter.removeItem(integer);
+            Toast.makeText(this, "삭제 완료", Toast.LENGTH_SHORT).show();
+        });
+
     }
     private String getStringExtra(String key){
         return getIntent().getStringExtra(key);
@@ -115,11 +127,36 @@ public class ReCommentActivity extends AppCompatActivity implements CommentClick
 
     @Override
     public void removeClicked(int position) {
-        adapter.removeItem(position);
+        showCommentDeleteDialog(position);
     }
 
     @Override
     public void reCommentClicked(int position, CommentModel model) {
 
+    }
+
+
+    private void showCommentDeleteDialog(int position) {
+        TwoButtonBasicDialog twoButtonBasicDialog = new TwoButtonBasicDialog(this
+                , new BasicDialogTextModel("댓글 삭제 안내", "선택한 댓글을 삭제 하시겠습니까?", "확인", "취소")
+                , new DialogClickListener() {
+            @Override
+            public void onPositiveClick(int index) {
+                viewModel.pushCommentDelete(adapter.getItem(position).getComment_srl(), position);
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+
+            @Override
+            public void onCloseClick() {
+
+            }
+        });
+        twoButtonBasicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        twoButtonBasicDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        twoButtonBasicDialog.show();
     }
 }

@@ -200,6 +200,13 @@ public interface SwebsAPI {
     Call<List<CommentModel>> getReCommentList(
             @PartMap Map<String,RequestBody> params
     );
+
+    // 댓글 삭제 API
+    @Multipart
+    @POST("src1/comment/comment_delete.php")
+    Call<Boolean> pushCommentDelete(
+            @PartMap Map<String,RequestBody> params
+    );
     // END - Document, Comment API
 
     // START - Like API

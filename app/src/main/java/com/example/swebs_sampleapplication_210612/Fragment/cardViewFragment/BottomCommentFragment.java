@@ -3,6 +3,7 @@ package com.example.swebs_sampleapplication_210612.Fragment.cardViewFragment;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.core.text.HtmlCompat;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -28,6 +30,9 @@ import com.example.swebs_sampleapplication_210612.Data.Repository.CommentReposit
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.CommentInputModel;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
+import com.example.swebs_sampleapplication_210612.Dialog.DialogClickListener;
+import com.example.swebs_sampleapplication_210612.Dialog.TwoButtonBasicDialog;
+import com.example.swebs_sampleapplication_210612.Dialog.dialogModel.BasicDialogTextModel;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.CommentViewModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
@@ -73,10 +78,9 @@ public class BottomCommentFragment extends Fragment implements CommentClickListe
         if (getArguments() != null){
            documentSrl = getArguments().getString("document_srl");
         }
+
         viewModel = new CommentViewModel(requireActivity().getApplication());
         sPmanager = new SPmanager(requireActivity().getApplication());
-
-        viewModel.getCommentList(documentSrl, null, null);
 
         commentRepository = new CommentRepository(requireActivity().getApplication());
         myInfoRepository = new MyInfoRepository(requireActivity().getApplication());
@@ -87,6 +91,8 @@ public class BottomCommentFragment extends Fragment implements CommentClickListe
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentBottomCommentBinding.inflate(inflater,container,false);
+
+        viewModel.getCommentList(documentSrl, null, null);
 
         myInfoRepository.getValueToLiveData("nickName").observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -110,6 +116,12 @@ public class BottomCommentFragment extends Fragment implements CommentClickListe
                 // 초기화
                 initRecyclerView(commentModels);
             }
+        });
+
+        // 댓글 삭제...
+        viewModel.getLiveDeleteCommentPosition().observe(getViewLifecycleOwner(), integer -> {
+            adapter.removeItem(integer);
+            Toast.makeText(requireContext(), "삭제 완료", Toast.LENGTH_SHORT).show();
         });
 
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), aBoolean -> {
@@ -153,8 +165,7 @@ public class BottomCommentFragment extends Fragment implements CommentClickListe
 
     @Override
     public void removeClicked(int position) {
-        Toast.makeText(requireContext(), "삭제", Toast.LENGTH_SHORT).show();
-        adapter.removeItem(position);
+        showCommentDeleteDialog(position);
     }
 
     @Override
@@ -169,5 +180,30 @@ public class BottomCommentFragment extends Fragment implements CommentClickListe
         intent.putExtra("commentSrl",model.getComment_srl());
         startActivity(intent);
         requireActivity().overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    }
+
+
+    private void showCommentDeleteDialog(int position) {
+        TwoButtonBasicDialog twoButtonBasicDialog = new TwoButtonBasicDialog(requireContext()
+                , new BasicDialogTextModel("댓글 삭제 안내", "선택한 댓글을 삭제 하시겠습니까?", "확인", "취소")
+                , new DialogClickListener() {
+            @Override
+            public void onPositiveClick(int index) {
+                viewModel.pushCommentDelete(adapter.getItem(position).getComment_srl(), position);
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+
+            @Override
+            public void onCloseClick() {
+
+            }
+        });
+        twoButtonBasicDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        twoButtonBasicDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        twoButtonBasicDialog.show();
     }
 }

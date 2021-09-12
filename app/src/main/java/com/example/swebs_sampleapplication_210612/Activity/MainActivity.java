@@ -53,7 +53,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends FragmentActivity {
 
@@ -128,26 +131,31 @@ public class MainActivity extends FragmentActivity {
         binding.navView.textviewNavDrawerPurchaseQuestion.setOnClickListener(v -> {
             IntentInfoActivity("purchase_question");
         });
+
         // 공지사항
         binding.navView.textviewNavDrawerNotice.setOnClickListener(v -> {
             IntentInfoActivity("notice");
         });
+
         // 복제품 신고
         binding.navView.textviewNavDrawerReportCopy.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), ScanHistoryActivity.class);
             intent.putExtra("resultCode","copy");
             startActivity(intent);
         });
+
         // 스캔 히스토리
         binding.navView.textviewNavDrawerScanHistory.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), ScanHistoryActivity.class);
             intent.putExtra("resultCode","scanHistory");
             startActivity(intent);
         });
+
         // FAQ
         binding.navView.textviewNavDrawerFaq.setOnClickListener(v -> {
             IntentInfoActivity("FAQ");
         });
+
         // 사용법
         binding.navView.textviewNavDrawerManual.setOnClickListener(v -> {
             IntentInfoActivity("manual");

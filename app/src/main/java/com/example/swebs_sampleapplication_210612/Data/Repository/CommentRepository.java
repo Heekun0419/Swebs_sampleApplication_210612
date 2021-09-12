@@ -56,4 +56,13 @@ public class CommentRepository {
 
         return retroAPI.getReCommentList(map);
     }
+
+    // 댓글 삭제.
+    public Call<Boolean> pushCommentDelete(String userSrl, String commentSrl) {
+        HashMap<String, RequestBody> formData = new HashMap<>();
+        formData.put("inputUserSrl", RequestBody.create(userSrl, MediaType.parse("text/plane")));
+        formData.put("inputCommentSrl", RequestBody.create(commentSrl, MediaType.parse("text/plane")));
+
+        return retroAPI.pushCommentDelete(formData);
+    }
 }
