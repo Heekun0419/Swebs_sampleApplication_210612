@@ -32,6 +32,7 @@ public class SurveyActivity extends AppCompatActivity implements OnItemClickList
     private SurveyVIewModel vIewModel;
     private SurveyButtonAdapter buttonAdapter;
     private String surveySrl;
+    private int selectPosition;
 
 
     @Override
@@ -58,20 +59,11 @@ public class SurveyActivity extends AppCompatActivity implements OnItemClickList
         });
 
 
-        vIewModel.getLiveDataSurveyDetail().observe(this, new Observer<SurveyDetailInfoModel>() {
-            @Override
-            public void onChanged(SurveyDetailInfoModel model) {
+        vIewModel.getLiveDataSurveyDetail().observe(this, model -> {
 
-            }
         });
 
-        vIewModel.getLiveDataSurveyOptionList().observe(this, new Observer<List<SurveyOptionModel>>() {
-            @Override
-            public void onChanged(List<SurveyOptionModel> list) {
-                initButtonAdapter(list);
-            }
-        });
-
+        vIewModel.getLiveDataSurveyOptionList().observe(this, list -> initButtonAdapter(list));
     }
 
     private void initButtonAdapter(List<SurveyOptionModel> list) {
@@ -81,9 +73,19 @@ public class SurveyActivity extends AppCompatActivity implements OnItemClickList
         binding.recyclerViewButton.setAdapter(buttonAdapter);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onItemSelected(View view, int position, String code) {
-        Toast.makeText(getApplicationContext(), "selected : " + position, Toast.LENGTH_SHORT).show();
+        for (int i=0; i<buttonAdapter.getItemCount(); i++) {
+            if (position == i) {
+                selectPosition = i;
+                buttonAdapter.setSelectedList(i, true);
+            } else {
+                buttonAdapter.setSelectedList(i, false);
+            }
+        }
+
+        buttonAdapter.notifyDataSetChanged();
     }
 
 /*

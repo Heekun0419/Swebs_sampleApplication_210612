@@ -82,7 +82,7 @@ public class ReCommentActivity extends AppCompatActivity implements CommentClick
         viewModel.getLiveDeleteCommentPosition().observe(this, integer -> {
             if (integer != null) {
                 adapter.removeItem(integer);
-                Toast.makeText(this, "삭제 완료", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "댓글 삭제 완료", Toast.LENGTH_SHORT).show();
             }
         });
 
