@@ -23,9 +23,20 @@ public class MyEventFragment extends Fragment implements OnItemClickListener {
     private FragmentMyEventBinding binding;
     private EventViewModel viewModel;
     private SPmanager sPmanager;
+
+    public static MyEventFragment newInstance(String tabPosition) {
+        Bundle args = new Bundle();
+        args.putString("tab", tabPosition);
+        MyEventFragment fragment = new MyEventFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null){
+            getArguments().getString("tab");
+        }
         viewModel = new EventViewModel(requireActivity().getApplication());
         sPmanager = new SPmanager(requireContext());
         viewModel.getEventListFromServer("myLike", sPmanager.getUserSrl());

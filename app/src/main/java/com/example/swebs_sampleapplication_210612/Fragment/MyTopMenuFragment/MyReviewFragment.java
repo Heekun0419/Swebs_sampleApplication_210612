@@ -30,6 +30,15 @@ public class MyReviewFragment extends Fragment {
     private ReViewViewModel viewModel;
     private SPmanager sPmanager;
 
+    public static MyReviewFragment newInstance(String tabPosition) {
+        
+        Bundle args = new Bundle();
+        args.putString("tab",tabPosition);
+        MyReviewFragment fragment = new MyReviewFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -16,6 +16,7 @@ import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.Eve
 import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.SurveyActivity;
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity.TopMenuActivity;
+import com.example.swebs_sampleapplication_210612.ViewModel.CertifiedCompanyViewModel;
 import com.example.swebs_sampleapplication_210612.adapter.CertifiedCompanyAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.EventAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
@@ -30,6 +31,7 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @SuppressLint("ClickableViewAccessibility")

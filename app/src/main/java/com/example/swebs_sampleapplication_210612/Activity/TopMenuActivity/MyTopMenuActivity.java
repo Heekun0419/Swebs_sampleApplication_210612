@@ -99,11 +99,11 @@ public class MyTopMenuActivity extends AppCompatActivity {
         public Fragment createFragment(int position) {
             switch (title) {
                 case "my_event":
-                    return new MyEventFragment();
+                    return MyEventFragment.newInstance(String.valueOf(position));
                 case "my_survey":
-                    return new MySurveyFragment();
+                    return MySurveyFragment.newInstance(String.valueOf(position));
                 default:
-                    return new MyReviewFragment();
+                    return MyReviewFragment.newInstance(String.valueOf(position));
             }
         }
 

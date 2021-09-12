@@ -25,11 +25,23 @@ public class MySurveyFragment extends Fragment {
     private FragmentMySurveyBinding binding;
     private SPmanager sPmanager;
     private SurveyVIewModel vIewModel;
+    private String tabPosition;
     SurveyMoreAdapter adapter;
+
+    public static MySurveyFragment newInstance(String tabPosition) {
+        Bundle args = new Bundle();
+        args.putString("tab",tabPosition);
+        MySurveyFragment fragment = new MySurveyFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null){
+            tabPosition = getArguments().getString("tab");
+        }
         sPmanager = new SPmanager(requireContext());
         vIewModel = new SurveyVIewModel(requireActivity().getApplication());
         vIewModel.getMySurveyListFromServer(sPmanager.getUserSrl());

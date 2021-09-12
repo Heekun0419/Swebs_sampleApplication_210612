@@ -21,6 +21,7 @@ import com.example.swebs_sampleapplication_210612.Fragment.MoreTablayoutFragment
 import com.example.swebs_sampleapplication_210612.Fragment.MoreTablayoutFragment.MoreReviewFragment;
 import com.example.swebs_sampleapplication_210612.Fragment.MoreTablayoutFragment.MoreSurveyFragment;
 
+import com.example.swebs_sampleapplication_210612.Fragment.MyTopMenuFragment.MySurveyFragment;
 import com.example.swebs_sampleapplication_210612.ViewModel.CategoryViewModel;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityTopMenuBinding;
 import com.google.android.material.tabs.TabLayout;
@@ -123,7 +124,7 @@ public class TopMenuActivity extends FragmentActivity {
                 case "review":
                     return MoreReviewFragment.newInstance(detailModel.getCategory_srl());
                 default:
-                    return MoreSurveyFragment.newInstance(detailModel.getCategory_srl());
+                    return MySurveyFragment.newInstance(detailModel.getCategory_srl());
             }
         }
 
