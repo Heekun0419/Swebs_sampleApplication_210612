@@ -13,6 +13,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Like
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.LoginModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.NormalSignUpModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanDataPushModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.MyEventListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewListModel;
@@ -207,8 +208,8 @@ public interface SwebsAPI {
 
     // 내 서베이
     @Multipart
-    @POST("src1/survey/survey_history.php")
-    Call<List<SurveyDetailModel>> getMySurveyList(
+    @POST("src1/survey/survey_list.php")
+    Call<SurveyListModel> getSurveyList(
             @PartMap Map<String,RequestBody> params
     );
 

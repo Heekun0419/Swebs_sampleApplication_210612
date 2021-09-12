@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.swebs_sampleapplication_210612.Data.Repository.ReviewRepository;
 import com.example.swebs_sampleapplication_210612.Data.Repository.SurveyRepository;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.EventListDetailModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyListModel;
 import com.example.swebs_sampleapplication_210612.Data.SharedPreference.SPmanager;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.MyEventListModel;
@@ -29,7 +30,7 @@ public class SurveyVIewModel extends AndroidViewModel {
     private MutableLiveData<List<SurveyModel>> liveDataSurveyList = new MutableLiveData<>();
 
     private SurveyRepository surveyRepository;
-    private SPmanager sPmanager;
+    private final SPmanager sPmanager;
 
 
     public SurveyVIewModel(@NonNull Application application) {
@@ -46,78 +47,79 @@ public class SurveyVIewModel extends AndroidViewModel {
         this.liveDataSurveyList.setValue(liveDataSurveyList);
     }
 
-    public void getMySurveyListFromServer(String userSrl) {
-        surveyRepository.getMySurveyList(userSrl, null, null )
-                .enqueue(new Callback<List<SurveyDetailModel>>() {
+    public void getSurveyListFromServer(String categoryType) {
+        surveyRepository.getSurveyList(sPmanager.getUserSrl(), categoryType, null, null)
+                .enqueue(new Callback<SurveyListModel>() {
                     @Override
-                    public void onResponse(Call<List<SurveyDetailModel>> call, Response<List<SurveyDetailModel>> response) {
+                    public void onResponse(Call<SurveyListModel> call, Response<SurveyListModel> response) {
                         if (response.isSuccessful()
-                                && response.body() != null) {
+                        && response.body() != null) {
+                            if (response.body().isSuccess()) {
+                                List<SurveyModel> tempModel = new ArrayList<>();
 
-                            List<SurveyModel> tempModel = new ArrayList<>();
-
-                            int enableCount = 0;
-                            int disableCount = 0;
-                            for(int i =0; i<response.body().size();i++) {
-                                SurveyDetailModel model = response.body().get(i);
-                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                Date startDate = null, endDate = null, nowDate = null;
-                                try {
-                                    startDate = simpleDateFormat.parse(model.getStart_date());
-                                    endDate = simpleDateFormat.parse(model.getEnd_date());
-                                    nowDate = simpleDateFormat.parse(model.getNow_date());
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                if (startDate != null && endDate != null && nowDate != null) {
-                                    if (nowDate.compareTo(startDate) >= 0
-                                            && nowDate.compareTo(endDate) <= 0) {
-                                        //
-                                        tempModel.add(enableCount++,
-                                                new SurveyModel(
-                                                        1
-                                                        , "진행중"
-                                                        , model.getSurvey_srl()
-                                                        , model.getFile_srl()
-                                                        , model.getCategory_title()
-                                                        , model.getSurvey_title()
-                                                        , (endDate.getTime() - nowDate.getTime())/86400000 + "일 남음"
-                                                        , model.getPoint()
-                                                        , model.getJoin_count()
-                                                )
-                                        );
-                                    } else {
-                                        int statusType;
-                                        String statusText;
-                                        if (nowDate.compareTo(endDate) <= 0) {
-                                            statusType = 2;
-                                            statusText = "미 진행";
+                                int enableCount = 0;
+                                int disableCount = 0;
+                                for(int i =0; i<response.body().getSurvey().size();i++) {
+                                    SurveyDetailModel model = response.body().getSurvey().get(i);
+                                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                    Date startDate = null, endDate = null, nowDate = null;
+                                    try {
+                                        startDate = simpleDateFormat.parse(model.getStart_date());
+                                        endDate = simpleDateFormat.parse(model.getEnd_date());
+                                        nowDate = simpleDateFormat.parse(response.body().getNow_date());
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                    if (startDate != null && endDate != null && nowDate != null) {
+                                        if (nowDate.compareTo(startDate) >= 0
+                                                && nowDate.compareTo(endDate) <= 0) {
+                                            //
+                                            tempModel.add(enableCount++,
+                                                    new SurveyModel(
+                                                            1
+                                                            , "진행중"
+                                                            , model.getSurvey_srl()
+                                                            , model.getFile_srl()
+                                                            , model.getCategory_title()
+                                                            , model.getSurvey_title()
+                                                            , (endDate.getTime() - nowDate.getTime())/86400000 + "일 남음"
+                                                            , model.getPoint()
+                                                            , model.getJoin_count()
+                                                    )
+                                            );
                                         } else {
-                                            statusType = 3;
-                                            statusText = "마감";
+                                            int statusType;
+                                            String statusText;
+                                            if (nowDate.compareTo(endDate) <= 0) {
+                                                statusType = 2;
+                                                statusText = "미 진행";
+                                            } else {
+                                                statusType = 3;
+                                                statusText = "마감";
+                                            }
+                                            tempModel.add(enableCount+(disableCount++),
+                                                    new SurveyModel(
+                                                            statusType
+                                                            , statusText
+                                                            , model.getSurvey_srl()
+                                                            , model.getFile_srl()
+                                                            , model.getCategory_title()
+                                                            , model.getSurvey_title()
+                                                            , simpleDateFormat.format(startDate) + " ~ " + simpleDateFormat.format(endDate)
+                                                            , model.getPoint()
+                                                            , model.getJoin_count()
+                                                    )
+                                            );
                                         }
-                                        tempModel.add(enableCount+(disableCount++),
-                                                new SurveyModel(
-                                                        statusType
-                                                        , statusText
-                                                        , model.getSurvey_srl()
-                                                        , model.getFile_srl()
-                                                        , model.getCategory_title()
-                                                        , model.getSurvey_title()
-                                                        , simpleDateFormat.format(startDate) + " ~ " + simpleDateFormat.format(endDate)
-                                                        , model.getPoint()
-                                                        , model.getJoin_count()
-                                                )
-                                        );
                                     }
                                 }
+                                setLiveDataSurveyList(tempModel);
                             }
-                            setLiveDataSurveyList(tempModel);
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<List<SurveyDetailModel>> call, Throwable t) {
+                    public void onFailure(Call<SurveyListModel> call, Throwable t) {
 
                     }
                 });

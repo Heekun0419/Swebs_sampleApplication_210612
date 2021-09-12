@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +24,13 @@ import java.util.List;
 public class MySurveyFragment extends Fragment {
 
     private FragmentMySurveyBinding binding;
-    private SPmanager sPmanager;
     private SurveyVIewModel vIewModel;
     private String tabPosition;
     SurveyMoreAdapter adapter;
 
     public static MySurveyFragment newInstance(String tabPosition) {
         Bundle args = new Bundle();
-        args.putString("tab", tabPosition);
+        args.putString("tabPosition", tabPosition);
         MySurveyFragment fragment = new MySurveyFragment();
         fragment.setArguments(args);
         return fragment;
@@ -39,12 +39,6 @@ public class MySurveyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            tabPosition = getArguments().getString("tab");
-        }
-        sPmanager = new SPmanager(requireContext());
-        vIewModel = new SurveyVIewModel(requireActivity().getApplication());
-        vIewModel.getMySurveyListFromServer(sPmanager.getUserSrl());
     }
 
     @Override
@@ -53,8 +47,29 @@ public class MySurveyFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentMySurveyBinding.inflate(inflater,container,false);
 
+        vIewModel = new SurveyVIewModel(requireActivity().getApplication());
+
+        if (getArguments() != null) {
+            tabPosition = getArguments().getString("tabPosition");
+            switch (tabPosition) {
+                case "0":
+                    vIewModel.getSurveyListFromServer("progress");
+                    break;
+                case "1":
+                    vIewModel.getSurveyListFromServer("closed");
+                    break;
+                case "2":
+                    vIewModel.getSurveyListFromServer("participate");
+                    break;
+            }
+        }
+
         vIewModel.getLiveDataSurveyList().observe(getViewLifecycleOwner(), surveyModels -> {
-            initRecycler(surveyModels);
+            if (surveyModels != null && adapter == null)
+                initRecycler(surveyModels);
+            else {
+
+            }
         });
 
         return binding.getRoot();
@@ -66,6 +81,5 @@ public class MySurveyFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
         binding.recyclerViewMySurvey.setLayoutManager(linearLayoutManager);
         binding.recyclerViewMySurvey.setAdapter(adapter);
-
     }
 }
