@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.Sur
 import com.example.swebs_sampleapplication_210612.Activity.MainActivity;
 import com.example.swebs_sampleapplication_210612.Activity.TopMenuActivity.TopMenuActivity;
 import com.example.swebs_sampleapplication_210612.ViewModel.CertifiedCompanyViewModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.MainProductViewModel;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
 import com.example.swebs_sampleapplication_210612.adapter.CertifiedCompanyAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.EventAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
@@ -24,14 +27,17 @@ import com.example.swebs_sampleapplication_210612.adapter.ReviewAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.SurveyAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMainProductBinding;
 
+import java.util.List;
+
 public class productionInfoFragment extends Fragment implements OnItemClickListener {
 
     private FragmentMainProductBinding binding;
+    private MainProductViewModel viewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        viewModel = new MainProductViewModel(requireActivity().getApplication());
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -45,16 +51,12 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         binding.includedAppbarProduct.imageButton.setOnClickListener(v ->
                 ((MainActivity)requireActivity()).openDrawer());
 
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
         CertifiedCompanyAdapter certifiedCompanyAdapter = new CertifiedCompanyAdapter(requireContext(),this);
         binding.recyclerViewCertifiedCompany.setLayoutManager(linearLayoutManager);
         binding.recyclerViewCertifiedCompany.setAdapter(certifiedCompanyAdapter);
 
-        EventAdapter eventAdapter = new EventAdapter(requireContext(),this);
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
-        binding.recyclerViewEvent.setLayoutManager(linearLayoutManager2);
-        binding.recyclerViewEvent.setAdapter(eventAdapter);
+
 
         ReviewAdapter reviewAdapter = new ReviewAdapter(requireContext());
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
@@ -116,5 +118,12 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
         Intent intent = new Intent(requireContext(), TopMenuActivity.class);
         intent.putExtra("resultCode",code);
         startActivity(intent);
+    }
+
+    private void initEventRecycler(List<EventModel> list){
+        EventAdapter eventAdapter = new EventAdapter(requireContext(),list,this);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false);
+        binding.recyclerViewEvent.setLayoutManager(linearLayoutManager2);
+        binding.recyclerViewEvent.setAdapter(eventAdapter);
     }
 }

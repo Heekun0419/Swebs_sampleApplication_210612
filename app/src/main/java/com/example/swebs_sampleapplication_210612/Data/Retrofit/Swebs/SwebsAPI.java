@@ -201,5 +201,4 @@ public interface SwebsAPI {
             @PartMap Map<String,RequestBody> params
     );
 
-
 }

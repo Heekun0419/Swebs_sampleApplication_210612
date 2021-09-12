@@ -11,21 +11,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.R;
+import com.example.swebs_sampleapplication_210612.ViewModel.Model.EventModel;
 import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.databinding.ItemProductEventBinding;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
 
     Context context;
     private ItemProductEventBinding binding;
-    String ImageUrl = "https://images.otwojob.com/product/l/r/P/lrP1mUhYpnR780M.jpg";
     OnItemClickListener listener;
+    List<EventModel> list;
 
-    public EventAdapter (Context context, OnItemClickListener listener){
+    public EventAdapter (Context context, List<EventModel> list, OnItemClickListener listener){
         this.context = context;
         this.listener = listener;
+        this.list = list;
     }
 
     @NonNull
@@ -33,12 +37,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     @Override
     public EventViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         binding = ItemProductEventBinding.inflate(LayoutInflater.from(context),parent,false);
-        return new EventViewHolder(binding.getRoot(), listener);
+        return new EventViewHolder(binding, listener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull EventViewHolder holder, int position) {
-        GlideImage(holder.view);
         RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) binding.getRoot().getLayoutParams();
         if(position == 0 || position == 9) {
             if (position == 0) {
@@ -52,30 +55,30 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             layoutParams.leftMargin = 50;
             layoutParams.rightMargin = 0;
         }
+
     }
 
     @Override
     public int getItemCount() {
-        return 7;
+        return list.size();
     }
 
     public static class EventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView view;
         OnItemClickListener listener;
-        public EventViewHolder(@NonNull @NotNull View itemView, OnItemClickListener listener) {
-            super(itemView);
+        ItemProductEventBinding binding;
+        public EventViewHolder(ItemProductEventBinding binding, OnItemClickListener listener) {
+            super(binding.getRoot());
             this.listener = listener;
-            view = itemView.findViewById(R.id.imageView_product_event_profile);
-            itemView.setOnClickListener(this);
+            this.binding = binding;
+            view = binding.imageViewProductEventProfile;
+            binding.getRoot().setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            listener.onItemSelected(itemView,getAdapterPosition(),"event");
+            listener.onItemSelected(binding.getRoot(),getAdapterPosition(),"event");
         }
     }
 
-    private void GlideImage(ImageView view){
-        Glide.with(context).load(ImageUrl).into(view);
-    }
 }
