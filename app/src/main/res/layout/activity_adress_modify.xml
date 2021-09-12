@@ -170,37 +170,21 @@
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
-                <LinearLayout
+                <EditText
+                    android:id="@+id/address_data1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
+                    android:paddingStart="20dp"
                     android:layout_marginStart="25dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="25dp"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/address_data1"
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:paddingStart="20dp"
-                        android:background="@drawable/radius_login_edittext"
-                        android:backgroundTint="#E8EAEA"
-                        android:paddingTop="15dp"
-                        android:textSize="13dp"
-                        android:maxLines="1"/>
-
-                    <Button
-                        android:id="@+id/btn_address_search"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:text="주소검색"
-                        android:layout_marginStart="10dp"
-                        android:textStyle="bold"
-                        android:textSize="15dp"
-                        android:background="@drawable/radious_button_graycolor"/>
-
-                </LinearLayout>
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/radius_login_edittext"
+                    android:backgroundTint="#E8EAEA"
+                    android:paddingTop="15dp"
+                    android:gravity="top"
+                    android:textSize="13dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
 
                 <EditText
                     android:id="@+id/address_data2"
@@ -208,12 +192,27 @@
                     android:layout_marginEnd="25dp"
                     android:layout_marginTop="15dp"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:paddingStart="20dp"
+                    android:layout_height="90dp"
+                    android:padding="20dp"
+                    android:maxLines="3"
                     android:hint="상세 주소를 입력해주세요."
                     android:textSize="12dp"
+                    android:gravity="top"
                     android:background="@drawable/radious_button_graycolor"
                     android:backgroundTint="#E8EAEA"/>
+
+                <Button
+                    android:id="@+id/btn_address_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="주소검색"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:background="@drawable/radious_button_graycolor"/>
 
                 <TextView
                     android:layout_width="match_parent"
