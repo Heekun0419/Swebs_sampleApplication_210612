@@ -60,6 +60,7 @@
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/drawable/like_btn_selector.xml" value="0.3055555555555556" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/drawable/product_event_stroke_radius.xml" value="0.287962962962963" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/drawable/progress_bar_custom.xml" value="0.28055555555555556" />
+        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/drawable/progress_bar_custom_gray.xml" value="0.28055555555555556" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/drawable/radious_button_bluecolor.xml" value="0.287962962962963" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/drawable/radious_button_graycolor.xml" value="0.287962962962963" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/drawable/radious_button_swebscolor.xml" value="0.28055555555555556" />
@@ -93,6 +94,7 @@
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_scan_history.xml" value="0.2726449275362319" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_service_not_ready.xml" value="0.2726449275362319" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_survey.xml" value="0.2776268115942029" />
+        <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_survey_detail.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_terms.xml" value="0.26268115942028986" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/activity_top_menu.xml" value="0.291213768115942" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/layout/animation_loading_layout.xml" value="0.16666666666666666" />

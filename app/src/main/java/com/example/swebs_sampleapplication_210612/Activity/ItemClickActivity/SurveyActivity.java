@@ -2,12 +2,15 @@ package com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.swebs_sampleapplication_210612.Activity.SurveyDetailActivity;
+import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivitySurveyBinding;
 
 public class SurveyActivity extends AppCompatActivity {
@@ -23,6 +26,15 @@ public class SurveyActivity extends AppCompatActivity {
 
         ImageView view = binding.imageViewProductSurveyProfile;
         GlideImage(view);
+
+        binding.btnSurveyOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SurveyDetailActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
 
         binding.btnSurvey1.setOnClickListener(v -> { btn_select1(); });
         binding.btnSurvey2.setOnClickListener(v -> btn_select2());

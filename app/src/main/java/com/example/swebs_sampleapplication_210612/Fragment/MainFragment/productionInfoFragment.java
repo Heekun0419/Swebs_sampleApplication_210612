@@ -114,7 +114,6 @@ public class productionInfoFragment extends Fragment implements OnItemClickListe
             Intent intent = new Intent(requireActivity().getApplicationContext(), MyTopMenuActivity.class);
             intent.putExtra("resultCode","my_survey");
             startActivity(intent);
-
         });
 
         binding.includedAppbarProduct.imageButton2.setOnClickListener(v -> {
