@@ -27,12 +27,14 @@
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_modify_user_info.xml" value="0.33" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_my_top_menu.xml" value="0.29393115942028986" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_purchase_info.xml" value="0.31023550724637683" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_scan_history.xml" value="0.3233695652173913" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/activity_top_menu.xml" value="0.29393115942028986" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/appbar_layout.xml" value="0.2672239108409321" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/dialog_input_password.xml" value="0.3671875" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/fragment_app_information.xml" value="0.31023550724637683" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/fragment_bottom_comment.xml" value="0.3233695652173913" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/fragment_bottom_review.xml" value="0.31023550724637683" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/fragment_certified_company_info.xml" value="0.3233695652173913" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/fragment_event_info.xml" value="0.307518115942029" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/fragment_f_a_q.xml" value="0.3020833333333333" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/fragment_faq2.xml" value="0.3020833333333333" />
@@ -54,6 +56,7 @@
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/item_product_certified_company.xml" value="0.31023550724637683" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/item_review_product.xml" value="0.327445652173913" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/item_survey_button.xml" value="0.3233695652173913" />
+        <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/navigation_drawer_header_item.xml" value="0.3233695652173913" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14-2th/app/src/main/res/layout/zxing_barcode_scanner.xml" value="0.23278985507246377" />
         <entry key="..\:/Users/KWH/Downloads/Swebs_14th/app/src/main/res/layout/activity_permission_check2.xml" value="0.5" />
         <entry key="..\:/Users/dnfl4/AndroidStudioProjects/Swebs_13th/app/src/main/res/drawable-v24/indicator_swebscolor2.xml" value="0.287962962962963" />

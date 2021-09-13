@@ -65,11 +65,6 @@ public class EventApplyActivity extends AppCompatActivity {
 
         // 이벤트 신청하기 버튼
         binding.btnEventApplyOk.setOnClickListener(v -> {
-            if(binding.checkBoxTerms.isChecked()) {
-                EventApplyDialog();
-            } else {
-                Toast.makeText(this, "약관 동의가 필요합니다.", Toast.LENGTH_SHORT).show();
-            }
             pushEventApply();
         });
 
@@ -166,6 +161,8 @@ public class EventApplyActivity extends AppCompatActivity {
             dialogMsg = "주소를 입력해주세요.";
         else if (eventOption.size() >= 1 && selectOptionSrl == null)
             dialogMsg = "옵션을 선택 해주세요.";
+        else if (!binding.checkBoxTerms.isChecked())
+            dialogMsg = "개인정보 처리 방침 약관 동의를 해주세요.";
 
         if (dialogMsg != null) {
             showOneButtonDialog(DIALOG_TITLE, dialogMsg);

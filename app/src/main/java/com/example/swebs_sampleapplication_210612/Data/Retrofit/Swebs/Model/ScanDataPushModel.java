@@ -10,6 +10,8 @@ public class ScanDataPushModel {
     @Nullable
     private String scanSrl;
 
+    private String now_date;
+
     @Nullable
     private String reason;
 
@@ -33,5 +35,9 @@ public class ScanDataPushModel {
 
     public void setReason(@Nullable String reason) {
         this.reason = reason;
+    }
+
+    public String getNow_date() {
+        return now_date;
     }
 }

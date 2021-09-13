@@ -207,6 +207,15 @@ public class MainActivity extends FragmentActivity {
                 }
             }
         });
+
+        // profile_picture
+        myInfoRepository.getValueToLiveData("profileSrl").observe(this, s -> {
+            Glide.with(this)
+                    .load(getImageViewUrl(s, "200"))
+                    .placeholder(R.drawable.ic_profile_basic)
+                    .circleCrop()
+                    .into(binding.navView.imageViewProfile);
+        });
     }
 
     @Override
@@ -290,6 +299,13 @@ public class MainActivity extends FragmentActivity {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private String getImageViewUrl(String fileSrl, String Width) {
+        String result = getString(R.string.IMAGE_VIEW_URL) + "?inputFileSrl=" + fileSrl;
+        if (Width != null)
+            result += "&inputImageWidth=" + Width;
+        return result;
     }
 
 }

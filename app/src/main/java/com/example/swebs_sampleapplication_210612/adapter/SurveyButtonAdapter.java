@@ -52,11 +52,13 @@ public class SurveyButtonAdapter extends RecyclerView.Adapter<SurveyButtonAdapte
         holder.binding.textViewSurveyInfo.setText(model.getOption_title());
 
         if (selectedList.get(position)) {
+            Log.d("test_", "선택 됨 : " + position);
+            holder.binding.textViewSurveyInfo.setTextColor(Color.parseColor("#21CCB2"));
             holder.binding.btnSurvey.setSelected(true);
-            binding.textViewSurveyInfo.setTextColor(Color.parseColor("#21CCB2"));
         } else {
+            Log.d("test_", "선택 안됨 : " + position);
+            holder.binding.textViewSurveyInfo.setTextColor(Color.parseColor("#000000"));
             holder.binding.btnSurvey.setSelected(false);
-            binding.textViewSurveyInfo.setTextColor(Color.parseColor("#000000"));
         }
 
         holder.binding.getRoot().setOnClickListener(v -> {

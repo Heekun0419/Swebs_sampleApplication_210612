@@ -128,7 +128,15 @@ public class ScanController {
                     && response.body() != null
                     && response.body().isSuccess()) {
                         if (company != null && code != null)
-                            scanListener.onSwebs(isSwebsUrl, response.body().getScanSrl(), company, code);
+                            scanListener.onSwebs(
+                                    isSwebsUrl,
+                                    response.body().getScanSrl(),
+                                    response.body().getNow_date(),
+                                    gpsLatitude,
+                                    gpsLongitude,
+                                    company,
+                                    code
+                            );
                         else
                             scanListener.onOther();
                     } else {

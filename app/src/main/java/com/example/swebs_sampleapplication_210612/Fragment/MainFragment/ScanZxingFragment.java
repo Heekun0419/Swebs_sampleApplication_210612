@@ -232,10 +232,13 @@ public class ScanZxingFragment extends Fragment {
                 .setScanData(scanData)
                 .setListener(new onScanListener() {
                     @Override
-                    public void onSwebs(boolean isSwebsUrl, String scanSrl, String company, String code) {
+                    public void onSwebs(boolean isSwebsUrl, String scanSrl, String nowDate, String gpsLatitude, String gpsLongitude, String company, String code) {
                         Intent intent = new Intent(requireContext(), AuthenticScanActivity.class);
                         intent.putExtra("url", scanData)
                               .putExtra("scanSrl", scanSrl)
+                              .putExtra("nowDate", nowDate)
+                              .putExtra("gpsLatitude", gpsLatitude)
+                              .putExtra("gpsLongitude", gpsLongitude)
                               .putExtra("company", company)
                               .putExtra("code", code);
 

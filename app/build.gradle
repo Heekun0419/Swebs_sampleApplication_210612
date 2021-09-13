@@ -127,7 +127,6 @@ dependencies {
     // naver login
     implementation 'com.naver.nid:naveridlogin-android-sdk:4.2.6'
 
-
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 
 }

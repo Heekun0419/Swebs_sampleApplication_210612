@@ -68,11 +68,20 @@ public interface SwebsAPI {
             @PartMap Map<String, RequestBody> prams
     );
 
+    // START - SCAN
     @Multipart
     @POST("src1/scan/scan_data_push.php")
     Call<ScanDataPushModel> pushScanHistoryAllData(
             @PartMap Map<String, RequestBody> prams
     );
+
+    @Multipart
+    @POST("src1/scan/scan_auth_push.php")
+    Call<String> pushScanAuth(
+            @PartMap Map<String, RequestBody> prams
+    );
+
+    // END - SCAN
 
     @Multipart
     @POST("src1/login/verify_token.php")

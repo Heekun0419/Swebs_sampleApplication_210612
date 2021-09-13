@@ -20,6 +20,9 @@ import android.widget.FrameLayout;
 
 import com.example.swebs_sampleapplication_210612.Activity.Login_Signup.LoginActivity;
 import com.example.swebs_sampleapplication_210612.Activity.PurchaseApply.PurchaseInfoActivity;
+import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.SwebsCorp.Model.CodeCertifyModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.SwebsCorp.SwebsCorpAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.SwebsCorp.SwebsCorpClient;
@@ -32,6 +35,9 @@ import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityAuthenticScan2Binding;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 import okhttp3.MediaType;
@@ -43,11 +49,13 @@ import retrofit2.Response;
 public class AuthenticScanActivity extends AppCompatActivity {
 
     private ActivityAuthenticScan2Binding binding;
-    private SwebsCorpAPI swebsCorpAPI;
+    private SwebsAPI retroAPI;
     private SPmanager sPmanager;
+    private MyInfoRepository myInfoRepository;
 
-    private String resultUrl, resultCompany, resultCode;
-    private CodeCertifyModel codeModel;
+    private String resultUrl, resultCompany, resultCode, snCode;
+    private String myBirthday, myGender;
+    private String swebsResultCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +65,15 @@ public class AuthenticScanActivity extends AppCompatActivity {
 
         setLoadingVisibility(true);
 
+        myInfoRepository = new MyInfoRepository(getApplication());
         sPmanager = new SPmanager(getApplicationContext());
 
-        swebsCorpAPI = SwebsCorpClient.getRetrofitClient().create(SwebsCorpAPI.class);
+        retroAPI = SwebsClient.getRetrofitClient().create(SwebsAPI.class);
 
         resultUrl = getIntent().getStringExtra("url");
         resultCompany = getIntent().getStringExtra("company");
         resultCode = getIntent().getStringExtra("code");
+        snCode = getNowDateToSnCode(getIntent().getStringExtra("nowDate"));
 
         String loadUrl = "https://www.swebs.co.kr/certchk/" + resultCompany + "/swebs_result.html?q=" + resultCode;
         webViewInit();
@@ -72,47 +82,73 @@ public class AuthenticScanActivity extends AppCompatActivity {
         binding.btnAuthenticScanBack.setOnClickListener(v -> onBackPressed());
 
         binding.btnPurchaseInput.setOnClickListener(v -> {
-            if (codeModel.getCode().equals("S")) {
+            if (swebsResultCode.equals("S")) {
                 Intent intent = new Intent(getApplicationContext(), PurchaseInfoActivity.class);
-                intent.putExtra("prodImageUrl", codeModel.getComp_logo_img());
-                intent.putExtra("corpName", codeModel.getComp_nm());
                 startActivity(intent);
-            } else if (codeModel.getCode().equals("N")) {
+            } else if (swebsResultCode.equals("N")) {
                 Intent intent = new Intent(getApplicationContext(),ScanHistoryActivity.class);
                 intent.putExtra("resultCode","copy");
                 startActivity(intent);
             }
         });
+
+        myInfoRepository.getValueToLiveData("birthday").observe(this, s -> {
+            if (s != null)
+                myBirthday = s;
+        });
+
+        myInfoRepository.getValueToLiveData("gender").observe(this, s -> {
+            if (s != null)
+                myGender = s;
+        });
     }
 
     private void getCodeInfoFromSwebs(String loadUrl, String company, String code) {
-        HashMap<String, RequestBody> body = new HashMap<>();
-        body.put("comp_url", RequestBody.create(company, MediaType.parse("text/plane")));
-        body.put("q_no", RequestBody.create(code, MediaType.parse("text/plane")));
-        body.put("lang", RequestBody.create("kr", MediaType.parse("text/plane")));
+        HashMap<String, RequestBody> formData = new HashMap<>();
+        formData.put("inputUserSrl", RequestBody.create(sPmanager.getUserSrl(), MediaType.parse("text/plane")));
+        formData.put("inputScanSrl", RequestBody.create(getIntent().getStringExtra("scanSrl"), MediaType.parse("text/plane")));
+        formData.put("inputSerialCode", RequestBody.create(snCode, MediaType.parse("text/plane")));
+        formData.put("inputCompany", RequestBody.create(company, MediaType.parse("text/plane")));
+        formData.put("inputCode", RequestBody.create(code, MediaType.parse("text/plane")));
 
-        Call<CodeCertifyModel> call = swebsCorpAPI.getCodeInfo(body);
-        call.enqueue(new Callback<CodeCertifyModel>() {
+        Call<String> call = retroAPI.pushScanAuth(formData);
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<CodeCertifyModel> call, Response<CodeCertifyModel> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        CodeCertifyModel body = response.body();
-                        codeModel = body;
-                        if (body.getCode().equals("S")
-                        || body.getCode().equals("N")) {
-                            webViewLoadUrl(loadUrl);
-                        }
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()
+                && response.body() != null) {
+                    swebsResultCode = response.body();
+                    try {
+                        webViewLoadUrl(loadUrl);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<CodeCertifyModel> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
 
             }
         });
+    }
 
+    private String getNowDateToSnCode(String nowDate) {
+        String year1 = nowDate.substring(0, 2);
+        String year2 = nowDate.substring(2, 4);
+        String month = nowDate.substring(4, 6);
+        String day = nowDate.substring(6, 8);
+        String hour = nowDate.substring(8, 10);
+        String min = nowDate.substring(10, 12);
+        String sec = nowDate.substring(12, 14);
+
+        String resultA = String.valueOf(Integer.parseInt(year1)+Integer.parseInt(min));
+        String resultB = String.valueOf(Integer.parseInt(year2)+Integer.parseInt(hour));
+        String resultC = String.valueOf(Integer.parseInt(month)+Integer.parseInt(day));
+        String resultD = String.valueOf(Integer.parseInt(sec)+Integer.parseInt(sec));
+        resultD = resultD.substring(resultD.length()-1);
+
+        return resultB+resultD+resultA+resultC;
     }
 
     private void webViewInit() {
@@ -144,20 +180,33 @@ public class AuthenticScanActivity extends AppCompatActivity {
         });
     }
 
-    private void webViewLoadUrl(String url) {
-        binding.webView.loadUrl(url);
+    private void webViewLoadUrl(String url) throws UnsupportedEncodingException {
+        String postData = "dn=" + URLEncoder.encode(getIntent().getStringExtra("nowDate"), "UTF-8") +
+                        "&sn=" + URLEncoder.encode(snCode, "UTF-8") +
+                        "&lat=" + URLEncoder.encode(getIntent().getStringExtra("gpsLatitude"), "UTF-8") +
+                        "&lng=" + URLEncoder.encode(getIntent().getStringExtra("gpsLongitude"), "UTF-8") +
+                        "&m_id=" + URLEncoder.encode(sPmanager.getUserSrl(), "UTF-8");
+
+        if (myBirthday != null)
+            postData += "&m_year=" + URLEncoder.encode(myBirthday, "UTF-8");
+        if (myGender != null)
+            postData += "&m_gender=" + URLEncoder.encode(myGender, "UTF-8");
+
+        Log.d("test_", "data : " + postData);
+        Log.d("test_", "url : " + url);
+        binding.webView.postUrl(url, postData.getBytes(StandardCharsets.UTF_8));
     }
 
     private void renderWebViewComplete(int finishCount) {
         if (finishCount >= 2) {
             setLoadingVisibility(false);
             setWebViewVisibility(true);
-            if (codeModel.getCode().equals("S")) {
+            if (swebsResultCode.equals("S")) {
                 binding.purchaseTextView.setText("구매 등록");
                 binding.btnPurchaseInput.setBackground(ContextCompat.getDrawable(this, R.drawable.radious_button_swebscolor));
                 setPurchaseVisibility(true);
-                showNoticeDialog();
-            } else if (codeModel.getCode().equals("N")) {
+                //showNoticeDialog();
+            } else if (swebsResultCode.equals("N")) {
                 binding.purchaseTextView.setText("신고 하기");
                 binding.btnPurchaseInput.setBackground(ContextCompat.getDrawable(this, R.drawable.radious_rectangle_red));
                 setPurchaseVisibility(true);

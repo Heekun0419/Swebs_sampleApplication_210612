@@ -31,7 +31,7 @@ public class AddressSearchActivity extends AppCompatActivity {
             }
         });
 
-        binding.webView.loadUrl("http://dev.swebsapp.com/html/ss.php");
+        binding.webView.loadUrl("http://dev.swebsapp.com/html/address_search.php");
     }
 
     class MyJavaScriptInterface
