@@ -19,6 +19,7 @@ import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.Norm
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.ScanDataPushModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyDetailModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyListModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyParticipateModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.CommentModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.MyEventListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.ReviewListModel;
@@ -272,5 +273,13 @@ public interface SwebsAPI {
     Call<SurveyDetailModel> getSurveyDetailList(
             @PartMap Map<String,RequestBody> params
     );
+
+    // 서베이 참여 등록
+    @Multipart
+    @POST("src1/survey/survey_apply.php")
+    Call<SurveyParticipateModel> getParticipateSurvey(
+            @PartMap Map<String,RequestBody> params
+    );
+
 
 }
