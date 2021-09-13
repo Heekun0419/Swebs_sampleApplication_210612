@@ -23,6 +23,9 @@
         android:theme="@style/Theme.Swebs_sampleApplication_210612"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.ReviewWriteManualActivity"
+            android:exported="true" />
+        <activity
             android:name=".Activity.SurveyDetailActivity"
             android:exported="true" />
         <activity

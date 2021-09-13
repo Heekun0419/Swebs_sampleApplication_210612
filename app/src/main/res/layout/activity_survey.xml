@@ -129,7 +129,8 @@
                 android:id="@+id/textview_join_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="25dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="10dp"
                 android:textSize="15dp" />
 
             <View
@@ -171,9 +172,23 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView_button"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"/>
 
-                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_survey_progress"
+                android:layout_width="410dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
 
                 <!-- 버튼
 
@@ -435,9 +450,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 -->
-
-            </LinearLayout>
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
@@ -475,6 +487,54 @@
                     app:layout_constraintTop_toTopOf="@+id/btn_survey_ok" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout_btn2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:elevation="7dp"
+                android:padding="5dp">
+
+                <ImageButton
+                    android:id="@+id/btn_Re_survey"
+                    android:layout_width="370dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:background="@drawable/radious_button_swebscolor"
+                    android:backgroundTint="#323334"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="다시 설문하기"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn_Re_survey"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_Re_survey"
+                    app:layout_constraintStart_toStartOf="@+id/btn_Re_survey"
+                    app:layout_constraintTop_toTopOf="@+id/btn_Re_survey" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/view11"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="#F9FAFC" />
+
+            <FrameLayout
+                android:id="@+id/frameLayout_survey_detailActivity"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 

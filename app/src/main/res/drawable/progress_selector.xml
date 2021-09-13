@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:enterFadeDuration="@android:integer/config_shortAnimTime"
+    android:exitFadeDuration="@android:integer/config_shortAnimTime">
+
+    <item
+        android:state_selected="true"
+        android:drawable="@drawable/progress_bar_custom"/>
+
+    <item
+        android:state_selected="false"
+        android:drawable="@drawable/progress_bar_custom_gray"/>
+
+</animated-selector>

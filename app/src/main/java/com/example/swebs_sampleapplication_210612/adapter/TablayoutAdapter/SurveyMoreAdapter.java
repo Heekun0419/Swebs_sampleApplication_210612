@@ -3,6 +3,7 @@ package com.example.swebs_sampleapplication_210612.adapter.TablayoutAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyListModel;
+import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.databinding.ItemMoreSurveyBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,10 +26,12 @@ public class SurveyMoreAdapter extends RecyclerView.Adapter<SurveyMoreAdapter.Su
     private ItemMoreSurveyBinding binding;
     Context context;
     List<SurveyListModel> list = new ArrayList<>();
+    OnItemClickListener listener;
 
-    public SurveyMoreAdapter(Context context, List<SurveyListModel>  list){
+    public SurveyMoreAdapter(Context context, List<SurveyListModel>  list, OnItemClickListener listener){
         this.context = context;
         this.list = list;
+        this.listener = listener;
     }
 
     @NotNull
@@ -39,13 +43,20 @@ public class SurveyMoreAdapter extends RecyclerView.Adapter<SurveyMoreAdapter.Su
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull @NotNull SurveyMoreHolder holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull SurveyMoreHolder holder, @SuppressLint("RecyclerView") int position) {
         SurveyListModel model = list.get(position);
         holder.binding.textviewJoinCount.setText(model.getJoinCount()+ "명 참여중");
         holder.binding.textViewDate.setText(model.getDateOfEvent());
         holder.binding.textViewSurveyTitle.setText(model.getTitle());
         holder.binding.textViewCategoryTitle.setText(model.getCategory_title());
         holder.binding.imageViewPoint.setText("+"+model.getPoint()+"P");
+
+        holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemSelected(binding.getRoot(),position,model.getSurveySrl());
+            }
+        });
 
         GlideImage(holder.binding.imageViewProductSurveyProfile,getImageViewUrl(model.getImageSrl(),"1000"));
     }
@@ -59,7 +70,7 @@ public class SurveyMoreAdapter extends RecyclerView.Adapter<SurveyMoreAdapter.Su
 
         ItemMoreSurveyBinding binding;
 
-        public SurveyMoreHolder(ItemMoreSurveyBinding binding) {
+        public SurveyMoreHolder(ItemMoreSurveyBinding binding ) {
             super(binding.getRoot());
             this.binding = binding;
         }

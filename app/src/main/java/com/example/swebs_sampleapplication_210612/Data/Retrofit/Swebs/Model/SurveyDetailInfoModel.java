@@ -7,7 +7,7 @@ public class SurveyDetailInfoModel {
     private String survey_srl;
     private String survey_title;
     private String start_date;
-    private String end_data;
+    private String end_date;
     private String file_srl;
     private String category_srl;
     private String document_srl;
@@ -33,8 +33,8 @@ public class SurveyDetailInfoModel {
         return start_date;
     }
 
-    public String getEnd_data() {
-        return end_data;
+    public String getEnd_date() {
+        return end_date;
     }
 
     public String getFile_srl() {

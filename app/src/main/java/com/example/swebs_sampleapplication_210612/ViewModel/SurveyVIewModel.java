@@ -32,7 +32,6 @@ public class SurveyVIewModel extends AndroidViewModel {
     private SurveyRepository surveyRepository;
     private final SPmanager sPmanager;
 
-
     public SurveyVIewModel(@NonNull Application application) {
         super(application);
         surveyRepository = new SurveyRepository(application);
@@ -41,6 +40,10 @@ public class SurveyVIewModel extends AndroidViewModel {
 
     public MutableLiveData<List<SurveyListModel>> getLiveDataSurveyList() {
         return liveDataSurveyList;
+    }
+
+    public void setLiveDataSurveyOptionList(List<SurveyOptionModel> liveDataSurveyOptionList) {
+        LiveDataSurveyOptionList.setValue(liveDataSurveyOptionList);
     }
 
     public void setLiveDataSurveyList(List<SurveyListModel> liveDataSurveyList) {

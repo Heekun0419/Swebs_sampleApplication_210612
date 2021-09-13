@@ -27,7 +27,6 @@ public class SurveyButtonAdapter extends RecyclerView.Adapter<SurveyButtonAdapte
     private List<Boolean> selectedList;
     private OnItemClickListener listener;
     private ItemSurveyButtonBinding binding;
-    public boolean isClicked = false;
 
     public SurveyButtonAdapter(Context context, List<SurveyOptionModel> list, OnItemClickListener listener) {
         this.context = context;
@@ -52,13 +51,11 @@ public class SurveyButtonAdapter extends RecyclerView.Adapter<SurveyButtonAdapte
         holder.binding.textViewSurveyInfo.setText(model.getOption_title());
 
         if (selectedList.get(position)) {
-            Log.d("test_", "선택 됨 : " + position);
-            holder.binding.textViewSurveyInfo.setTextColor(Color.parseColor("#21CCB2"));
             holder.binding.btnSurvey.setSelected(true);
+            holder.binding.textViewSurveyInfo.setTextColor(Color.parseColor("#21CCB2"));
         } else {
-            Log.d("test_", "선택 안됨 : " + position);
-            holder.binding.textViewSurveyInfo.setTextColor(Color.parseColor("#000000"));
             holder.binding.btnSurvey.setSelected(false);
+            holder.binding.textViewSurveyInfo.setTextColor(Color.parseColor("#000000"));
         }
 
         holder.binding.getRoot().setOnClickListener(v -> {
@@ -66,7 +63,9 @@ public class SurveyButtonAdapter extends RecyclerView.Adapter<SurveyButtonAdapte
         });
     }
 
-
+    public SurveyOptionModel getItem(int position){
+        return list.get(position);
+    }
     @Override
     public int getItemCount() {
         return list.size();
@@ -75,6 +74,12 @@ public class SurveyButtonAdapter extends RecyclerView.Adapter<SurveyButtonAdapte
 
     public void setSelectedList(int position, Boolean select){
         selectedList.set(position, select);
+    }
+
+    public void ClearSelectList(){
+        selectedList.clear();
+        for (int i=0; i<list.size(); i++)
+            selectedList.add(false);
     }
 
     public static class surveyButtonViewHolder extends RecyclerView.ViewHolder {

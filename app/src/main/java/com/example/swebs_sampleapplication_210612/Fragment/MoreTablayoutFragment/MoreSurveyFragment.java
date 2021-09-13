@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyListModel;
+import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.TablayoutAdapter.SurveyMoreAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMoreSurveyBinding;
 
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MoreSurveyFragment extends Fragment {
+public class MoreSurveyFragment extends Fragment implements OnItemClickListener {
 
     private FragmentMoreSurveyBinding binding;
     private String categorySrl;
@@ -44,7 +45,7 @@ public class MoreSurveyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMoreSurveyBinding.inflate(inflater, container, false);
 
-        SurveyMoreAdapter adapter = new SurveyMoreAdapter(requireContext(), list);
+        SurveyMoreAdapter adapter = new SurveyMoreAdapter(requireContext(), list, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
         binding.recyclerViewMoreSurvey.setLayoutManager(linearLayoutManager);
         binding.recyclerViewMoreSurvey.setAdapter(adapter);
@@ -65,5 +66,10 @@ public class MoreSurveyFragment extends Fragment {
                 , "10"
                 , "120"
         ));
+    }
+
+    @Override
+    public void onItemSelected(View view, int position, String code) {
+
     }
 }
