@@ -27,7 +27,6 @@ public class SurveyButtonAdapter extends RecyclerView.Adapter<SurveyButtonAdapte
     private List<Boolean> selectedList;
     private OnItemClickListener listener;
     private ItemSurveyButtonBinding binding;
-    public boolean isClicked = false;
 
     public SurveyButtonAdapter(Context context, List<SurveyOptionModel> list, OnItemClickListener listener) {
         this.context = context;
@@ -53,10 +52,10 @@ public class SurveyButtonAdapter extends RecyclerView.Adapter<SurveyButtonAdapte
 
         if (selectedList.get(position)) {
             holder.binding.btnSurvey.setSelected(true);
-            binding.textViewSurveyInfo.setTextColor(Color.parseColor("#21CCB2"));
+            holder.binding.textViewSurveyInfo.setTextColor(Color.parseColor("#21CCB2"));
         } else {
             holder.binding.btnSurvey.setSelected(false);
-            binding.textViewSurveyInfo.setTextColor(Color.parseColor("#000000"));
+            holder.binding.textViewSurveyInfo.setTextColor(Color.parseColor("#000000"));
         }
 
         holder.binding.getRoot().setOnClickListener(v -> {
@@ -64,7 +63,9 @@ public class SurveyButtonAdapter extends RecyclerView.Adapter<SurveyButtonAdapte
         });
     }
 
-
+    public SurveyOptionModel getItem(int position){
+        return list.get(position);
+    }
     @Override
     public int getItemCount() {
         return list.size();
@@ -73,6 +74,12 @@ public class SurveyButtonAdapter extends RecyclerView.Adapter<SurveyButtonAdapte
 
     public void setSelectedList(int position, Boolean select){
         selectedList.set(position, select);
+    }
+
+    public void ClearSelectList(){
+        selectedList.clear();
+        for (int i=0; i<list.size(); i++)
+            selectedList.add(false);
     }
 
     public static class surveyButtonViewHolder extends RecyclerView.ViewHolder {
@@ -86,9 +93,5 @@ public class SurveyButtonAdapter extends RecyclerView.Adapter<SurveyButtonAdapte
             binding.btnSurvey.setOnClickListener(v ->
                     listener.onItemSelected(binding.btnSurvey,getAdapterPosition(), ""));
         }
-    }
-
-    public void setButtonChange(int position){
-        isClicked = true;
     }
 }

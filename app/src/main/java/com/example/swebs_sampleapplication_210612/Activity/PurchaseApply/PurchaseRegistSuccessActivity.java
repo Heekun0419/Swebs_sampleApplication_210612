@@ -41,6 +41,7 @@ public class PurchaseRegistSuccessActivity extends AppCompatActivity {
 
         binding.btnReviewWrite.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), ReviewWriteActivity.class);
+            intent.putExtra("prod_srl", "");
             startActivity(intent);
         });
 

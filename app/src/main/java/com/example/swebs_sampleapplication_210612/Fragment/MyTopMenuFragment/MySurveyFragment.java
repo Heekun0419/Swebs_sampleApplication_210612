@@ -1,5 +1,6 @@
 package com.example.swebs_sampleapplication_210612.Fragment.MyTopMenuFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,15 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.swebs_sampleapplication_210612.Activity.ItemClickActivity.SurveyActivity;
 import com.example.swebs_sampleapplication_210612.ViewModel.Model.SurveyListModel;
 import com.example.swebs_sampleapplication_210612.ViewModel.SurveyVIewModel;
+import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
 import com.example.swebs_sampleapplication_210612.adapter.TablayoutAdapter.SurveyMoreAdapter;
 import com.example.swebs_sampleapplication_210612.databinding.FragmentMySurveyBinding;
 
 import java.util.List;
 
 
-public class MySurveyFragment extends Fragment {
+public class MySurveyFragment extends Fragment implements OnItemClickListener {
 
     private FragmentMySurveyBinding binding;
     private SurveyVIewModel vIewModel;
@@ -73,9 +76,16 @@ public class MySurveyFragment extends Fragment {
 
 
     private void initRecycler(List<SurveyListModel> list){
-        adapter = new SurveyMoreAdapter(requireContext(), list);
+        adapter = new SurveyMoreAdapter(requireContext(), list, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
         binding.recyclerViewMySurvey.setLayoutManager(linearLayoutManager);
         binding.recyclerViewMySurvey.setAdapter(adapter);
+    }
+
+    @Override
+    public void onItemSelected(View view, int position, String code) {
+        Intent intent = new Intent(requireContext(), SurveyActivity.class);
+        intent.putExtra("surveySrl", code);
+        startActivity(intent);
     }
 }
