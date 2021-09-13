@@ -24,55 +24,89 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".Activity.ReviewWriteManualActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activity.SurveyDetailActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activity.AddressSearchActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activity.ItemClickActivity.ReviewProductActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activity.ReCommentActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activity.TermsActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activity.Login_Signup.MakeSNSAccountActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activity.ServiceNotReadyActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activity.EventApply.EventRegisterSuccessActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activity.EventApply.EventApplyActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activity.ItemClickActivity.ReviewActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activity.ItemClickActivity.SurveyActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activity.ItemClickActivity.EventActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activity.ItemClickActivity.CertifiedCompanyActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activity.TopMenuActivity.MyTopMenuActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".IntroPage.IntroActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activity.ReviewWriteActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activity.PurchaseApply.PurchaseRegistSuccessActivity"
             android:screenOrientation="portrait"

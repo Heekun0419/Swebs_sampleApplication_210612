@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.example.swebs_sampleapplication_210612.Activity.ReviewWriteActivity;
+import com.example.swebs_sampleapplication_210612.Activity.ServiceNotReadyActivity;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityPurchaseRegistSuccessBinding;
 
@@ -40,8 +41,11 @@ public class PurchaseRegistSuccessActivity extends AppCompatActivity {
 
 
         binding.btnReviewWrite.setOnClickListener(v -> {
+            /*
             Intent intent = new Intent(getApplicationContext(), ReviewWriteActivity.class);
             intent.putExtra("prod_srl", "");
+            startActivity(intent);*/
+            Intent intent = new Intent(getApplicationContext(), ServiceNotReadyActivity.class);
             startActivity(intent);
         });
 

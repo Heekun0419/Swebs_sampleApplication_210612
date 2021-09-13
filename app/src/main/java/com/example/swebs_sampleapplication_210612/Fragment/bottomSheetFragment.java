@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.swebs_sampleapplication_210612.Activity.ScanHistoryActivity;
+import com.example.swebs_sampleapplication_210612.Activity.ServiceNotReadyActivity;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.adapter.BottomSheetAdapter;
 import com.example.swebs_sampleapplication_210612.adapter.Listener.OnItemClickListener;
@@ -54,15 +55,17 @@ public class bottomSheetFragment extends BottomSheetDialogFragment implements On
     @Override
     public void onItemSelected(View view, int position, String code) {
         if (position == 0){ // 스캔 히스토리
-            IntentActivity("scanHistory");
+            //IntentActivity("scanHistory");
 
         }else if(position == 1) { // 구매등록 리스트
-            IntentActivity("purchaseList");
+           // IntentActivity("purchaseList");
 
         }else if(position ==2){ // 복제품 신고
-            IntentActivity("copy");
+          //  IntentActivity("copy");
 
         }
+        Intent intent = new Intent(requireContext(), ServiceNotReadyActivity.class);
+        startActivity(intent);
         dismiss();
     }
 }

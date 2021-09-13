@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.swebs_sampleapplication_210612.Activity.ServiceNotReadyActivity;
 import com.example.swebs_sampleapplication_210612.Data.Repository.MyInfoRepository;
 import com.example.swebs_sampleapplication_210612.R;
 import com.example.swebs_sampleapplication_210612.databinding.ActivityPurchaseInfoBinding;
@@ -51,7 +52,11 @@ public class PurchaseInfoActivity extends AppCompatActivity {
 
         binding.btnPurchaseInfoBack.setOnClickListener(v -> onBackPressed());
 
-        binding.btnPurchaseRegister.setOnClickListener(v -> IntentSuccessActivity());
+        binding.btnPurchaseRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), ServiceNotReadyActivity.class);
+            startActivity(intent);
+            // IntentSuccessActivity();
+        });
 
         // 달력보기
         binding.btnPurchaseDatePicker.setOnClickListener(v -> DatePicker());
