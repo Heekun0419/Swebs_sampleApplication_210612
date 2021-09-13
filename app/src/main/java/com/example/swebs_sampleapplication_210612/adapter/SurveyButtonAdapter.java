@@ -94,8 +94,4 @@ public class SurveyButtonAdapter extends RecyclerView.Adapter<SurveyButtonAdapte
                     listener.onItemSelected(binding.btnSurvey,getAdapterPosition(), ""));
         }
     }
-
-    public void setButtonChange(int position){
-        isClicked = true;
-    }
 }

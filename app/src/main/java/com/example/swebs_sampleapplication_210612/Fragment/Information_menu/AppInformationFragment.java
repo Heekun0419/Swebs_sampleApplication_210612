@@ -2,7 +2,9 @@ package com.example.swebs_sampleapplication_210612.Fragment.Information_menu;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -139,12 +141,21 @@ public class AppInformationFragment extends Fragment {
         binding.textViewAppInfoDelete.setOnClickListener(v ->
                 ((InformationActivity)requireActivity()).moveFragment(new DeleteIdFargment(),"탈퇴하기"));
 
-        binding.textViewServiceAgree.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String s = getString(R.string.service_terms_agree1);
-                ((InformationActivity)requireActivity()).moveFragment(new ServiceTermsFragment(),s);
-            }
+        binding.textViewServiceAgree.setOnClickListener(v -> {
+            String s = getString(R.string.service_terms_agree1);
+            ((InformationActivity)requireActivity()).moveFragment(new ServiceTermsFragment(),s);
+        });
+
+        // 인스타 클릭
+        binding.layoutInstargram.setOnClickListener(v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/sealticker"));
+            startActivity(browserIntent);
+        });
+
+        // 페이스북 클릭
+        binding.layoutFacebook.setOnClickListener(v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/SWEBS.official"));
+            startActivity(browserIntent);
         });
         return binding.getRoot();
     }

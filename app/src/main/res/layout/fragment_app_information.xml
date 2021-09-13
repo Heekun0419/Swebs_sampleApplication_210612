@@ -189,6 +189,7 @@
             app:layout_constraintTop_toBottomOf="@+id/view3">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_instargram"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -242,6 +243,7 @@
             app:layout_constraintTop_toBottomOf="@+id/cardView">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_facebook"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
