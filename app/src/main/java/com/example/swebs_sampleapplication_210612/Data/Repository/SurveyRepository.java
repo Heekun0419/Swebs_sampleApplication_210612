@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyDetailModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyListModel;
+import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.Model.SurveyParticipateModel;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsAPI;
 import com.example.swebs_sampleapplication_210612.Data.Retrofit.Swebs.SwebsClient;
 
@@ -39,6 +40,15 @@ public class SurveyRepository {
         formBody.put("inputSurveySrl", RequestBody.create(inputSurveySrl, MediaType.parse("text/plane")));
 
         return retroAPI.getSurveyDetailList(formBody);
+    }
+
+    public Call<SurveyParticipateModel> getParticipateInfo(String inputSurveySrl, String inputUserSrl, String inputOption){
+        HashMap<String, RequestBody> formBody = new HashMap<>();
+        formBody.put("inputUserSrl", RequestBody.create(inputUserSrl, MediaType.parse("text/plane")));
+        formBody.put("inputSurveySrl", RequestBody.create(inputSurveySrl, MediaType.parse("text/plane")));
+        formBody.put("inputOption", RequestBody.create(inputOption, MediaType.parse("text/plane")));
+
+        return retroAPI.getParticipateSurvey(formBody);
     }
 
 }

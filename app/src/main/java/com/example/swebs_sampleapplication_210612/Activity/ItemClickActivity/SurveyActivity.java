@@ -138,6 +138,8 @@ public class SurveyActivity extends AppCompatActivity implements OnItemClickList
         });
 
 
+
+
     }
 
     private void initButtonAdapter(List<SurveyOptionModel> list) {
