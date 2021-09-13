@@ -144,6 +144,11 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
             }
         });
 
+        viewModel.getUserInfoFromKey("profileSrl").observe(this, s -> {
+            //디폴트 프로필 이미지 생성
+            setProfileImageFromUri(getImageViewUrl(s, "500"));
+        });
+
 
         binding.imageViewProfileModify.setOnClickListener(v -> {
             dialog = new ImagePickerDialog(ModifyUserInfoActivity.this, new DialogClickListener() {
@@ -281,24 +286,9 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
                 .into(binding.imageViewProfileModify);
     }
 
-    private void setProfileImageFromUrl(String url) {
-        Glide.with(getApplicationContext()).load(url)
-                .placeholder(R.drawable.ic_profile_basic)
-                .override(600)
-                .circleCrop()
-                .into(binding.imageViewProfileModify);
-    }
-
     @Override
     public void onResume() {
         super.onResume();
-
-        // START - data Observe
-        // profile_image
-        viewModel.getUserInfoFromKey("profileSrl").observe(this, s -> {
-            //디폴트 프로필 이미지 생성
-            setProfileImageFromUrl(getImageViewUrl(s, "500"));
-        });
 
         // nickname
         viewModel.getUserInfoFromKey("nickName").observe(this, s -> {

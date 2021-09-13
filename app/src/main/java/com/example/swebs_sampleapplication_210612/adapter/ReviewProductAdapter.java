@@ -144,7 +144,7 @@ public class ReviewProductAdapter extends RecyclerView.Adapter<ReviewProductAdap
             listener.CommentClicked(position, model);
         });
 
-        holder.binding.textViewCommentOfReview.setText("0개의 댓글");
+        holder.binding.textViewCommentOfReview.setText(model.getComment_count()+"개의 댓글");
 
         GlideImage(holder.binding.imageViewMyReviewUserProfile, getImageViewUrl(model.getProfile_srl(), "100"));
 

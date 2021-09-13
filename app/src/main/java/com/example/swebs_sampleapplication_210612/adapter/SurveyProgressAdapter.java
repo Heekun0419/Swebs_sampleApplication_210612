@@ -33,6 +33,8 @@ public class SurveyProgressAdapter extends RecyclerView.Adapter<SurveyProgressAd
         this.selectedList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++)
             selectedList.add(false);
+        for (int i = 0; i < list.size(); i++)
+            integers.add(0);
     }
 
     @NonNull
@@ -46,6 +48,7 @@ public class SurveyProgressAdapter extends RecyclerView.Adapter<SurveyProgressAd
     @Override
     public void onBindViewHolder(@NonNull SurveyProgressViewHolder holder, int position) {
         SurveyOptionModel model = list.get(position);
+        setVote(position, model.getVote_count());
         int percentage = integers.get(position);
         // 버튼 이름
         holder.binding.textViewSurveyProgressTitle.setText(model.getOption_title());
@@ -60,8 +63,8 @@ public class SurveyProgressAdapter extends RecyclerView.Adapter<SurveyProgressAd
             holder.binding.textViewPercentageOfSurvey1.setText(""+percentage+ "%");
             holder.binding.textViewVoteCount.setText("(" + (Integer.parseInt(model.getVote_count()) + 1) + ")");
             holder.binding.btnSurvey1.setProgress(percentage);
-            holder.binding.textViewPercentageOfSurvey1.setTextColor(Color.parseColor("#FF72B9"));
-            holder.binding.textViewVoteCount.setTextColor(Color.parseColor("#FF72B9"));
+            holder.binding.textViewPercentageOfSurvey1.setTextColor(Color.parseColor("#000000"));
+            holder.binding.textViewVoteCount.setTextColor(Color.parseColor("#000000"));
             holder.binding.textViewSurveyProgressTitle.setTextColor(Color.parseColor("#FFFFFF"));
         } else {
             holder.binding.btnSurvey1.setSelected(false);
@@ -83,6 +86,7 @@ public class SurveyProgressAdapter extends RecyclerView.Adapter<SurveyProgressAd
     }
 
     public void setVote(int position, String vote){
+        Log.d("votev", "position : "+ position +" vote : "+vote);
         int sum = 0;
         for(int i=0; i<list.size(); i++) {
             if (position == i) {
@@ -95,13 +99,11 @@ public class SurveyProgressAdapter extends RecyclerView.Adapter<SurveyProgressAd
         for (int j =0; j<list.size(); j++){
             if (position == j){
                 if (sum != 0){
-                    integers.add((Integer.parseInt(vote)/sum)*100);
-                } else {
-                    integers.add(0);
+                    integers.set(j,(Integer.parseInt(vote)/sum)*100);
                 }
             } else {
                 if( sum != 0){
-                    integers.add((Integer.parseInt(list.get(j).getVote_count())/sum)*100);
+                    integers.set(j,(Integer.parseInt(list.get(j).getVote_count())/sum)*100);
                 }
             }
         }

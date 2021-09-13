@@ -19,6 +19,8 @@ public class ReviewModel {
     private String regdate;
     // 리뷰 타이틀 - 사용자가 작성한 리뷰 타이틀
     private String review_title;
+    // 댓글 갯수
+    private String comment_count;
     // 별점
     private String rate;
     // 리뷰 작성 내용
@@ -43,6 +45,10 @@ public class ReviewModel {
     private String review_count;
     // 해당 회원 리뷰 갯수
     private String member_review_count;
+
+    public String getComment_count() {
+        return comment_count;
+    }
 
     public String getProd_file_srl() {
         return prod_file_srl;

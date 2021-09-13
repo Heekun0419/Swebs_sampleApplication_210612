@@ -290,5 +290,12 @@ public interface SwebsAPI {
             @PartMap Map<String,RequestBody> params
     );
 
+    // 서베이 재 참여 등록
+    @Multipart
+    @POST("src1/survey/survey_reapply.php")
+    Call<SurveyParticipateModel> getReParticipateSurvey(
+            @PartMap Map<String,RequestBody> params
+    );
+
 
 }

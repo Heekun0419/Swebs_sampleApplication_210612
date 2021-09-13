@@ -83,7 +83,10 @@ public class AuthenticScanActivity extends AppCompatActivity {
 
         binding.btnPurchaseInput.setOnClickListener(v -> {
             if (swebsResultCode.equals("S")) {
+                /*
                 Intent intent = new Intent(getApplicationContext(), PurchaseInfoActivity.class);
+                startActivity(intent);*/
+                Intent intent = new Intent(getApplicationContext(), ServiceNotReadyActivity.class);
                 startActivity(intent);
             } else if (swebsResultCode.equals("N")) {
                 Intent intent = new Intent(getApplicationContext(),ScanHistoryActivity.class);
